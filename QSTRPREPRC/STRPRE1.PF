@@ -1,0 +1,35 @@
+      *=====================================================================*
+      *                                                                     *
+      *  Kurzdokumentation :                                                *
+      *                                                                     *
+      *  Bereich . . . : STRPREPRC                                          *
+      *  Objekt  . . . : STRPRE1                                            *
+      *  Beschreibung  : Tool: STRPREPRC  (Starten Pre-Proz.  ) Ctrl File   *
+      *  Author  . . . : Thomas Raddatz   <thomas.raddatz@tools400.de>      *
+      *  Datum . . . . : 21.11.2000                                         *
+      *                                                                     *
+      *=====================================================================*
+      * >>PRE-COMPILER<<                                                    *
+      *                                                                     *
+      *   >>CRTCMD<< CRTPF        FILE(&LI/&OB) +                           *
+      *                           SRCFILE(&SL/&SF) +                        *
+      *                           SRCMBR(&SM);                              *
+      *                                                                     *
+      *   >>COMPILE<<                                                       *
+      *     >>PARM<< MAXMBRS(1);                                            *
+      *     >>PARM<< OPTION(*EVENTF);                                       *
+      *   >>END-COMPILE<<                                                   *
+      *                                                                     *
+      *   >>EXECUTE<<                                                       *
+      *                                                                     *
+      * >>END-PRE-COMPILER<<                                                *
+      *=====================================================================*
+     A                                      UNIQUE
+      *
+     A          R FSTRPRE1
+     A            MODE          30A         TEXT('Mode')
+     A            NEWMODE       30A         TEXT('Next Mode')
+      *
+     A          K MODE
+     A          K NEWMODE
+      *

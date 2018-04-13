@@ -1,0 +1,233 @@
+     /* =================================================================== */
+     /*                                                                     */
+     /*  Documentation:                                                     */
+     /*                                                                     */
+     /*  Utility . . . : STRPREPRC                                          */
+     /*  Object  . . . : A_INSTALL  (PGM)                                   */
+     /*  Source member : A_INSTALL                                          */
+     /*  Source type . : CLLE                                               */
+     /*  Description   : STRPREPRC - Installer                              */
+     /*  Author  . . . : Thomas Raddatz   <thomas.raddatz@tools400.de>      */
+     /*  Created . . . :                                                    */
+     /*                                                                     */
+     /* =================================================================== */
+     /*                                                                     */
+     /*  This software is free software, you can redistribute it and/or     */
+     /*  modify it under the terms of the GNU General Public License (GPL)  */
+     /*  as published by the Free Software Foundation.                      */
+     /*                                                                     */
+     /*  See GNU General Public License for details.                        */
+     /*          http://www.opensource.org                                  */
+     /*          http://www.opensource.org/licenses/gpl-license.html        */
+     /*                                                                     */
+     /* =================================================================== */
+     /*  History:                                                           */
+     /*                                                                     */
+     /*  Datum       Name          Änderung                                 */
+     /*  ----------  ------------  ---------------------------------------  */
+     /*                                                                     */
+     /* =================================================================== */
+     /*   >>PRE-COMPILER<<                                                  */
+     /*     >>CRTCMD<<    CRTBNDCL  PGM(QTEMP/&OB) +                        */
+     /*                             SRCFILE(&SL/&SF) SRCMBR(&SM);           */
+     /*     >>IMPORTANT<<                                                   */
+     /*       >>PARM<<    OPTION(*EVENTF);                                  */
+     /*     >>END-IMPORTANT<<                                               */
+     /*     >>EXECUTE<<                                                     */
+     /*     >>CMD<<       CALL   PGM(QTEMP/A_INSTALL) +                     */
+     /*                          PARM('*CURRENT' '&SF' '&LI' 'GER' 'NO');   */
+     /*     >>CMD<<       DLTPGM PGM(QTEMP/A_INSTALL);                      */
+     /*   >>END-PRE-COMPILER<<                                              */
+     /* =================================================================== */
+             PGM        PARM(&TGTRLS &SRCFILE &TOLIB &LNG &TAGSREQ)
+
+             DCL        VAR(&TGTRLS   ) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&SRCFILE  ) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&TOLIB    ) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&LNG      ) TYPE(*CHAR) LEN( 3)
+             DCL        VAR(&TAGSREQ  ) TYPE(*CHAR) LEN(10)
+
+             DCL        VAR(&SRCLIB   ) TYPE(*CHAR) LEN(10)
+
+             DCL        VAR(&CRTMSGF  ) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&MSGF     ) TYPE(*CHAR) LEN(10) VALUE('STRPREPRC')
+             DCL        VAR(&PNLGRP   ) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&CMD      ) TYPE(*CHAR) LEN(10)
+
+             DCL        VAR(&CMDSTR   ) TYPE(*CHAR) LEN(500)
+             DCL        VAR(&CMDLEN   ) TYPE(*DEC ) LEN(15 5) VALUE(500)
+
+             CHGVAR     VAR(&SRCLIB) VALUE(&TOLIB   )
+
+     /* -------------------------------- */
+     /*  Delete old objects              */
+     /* -------------------------------- */
+             DLTCMD    CMD(&TOLIB/STRPREPRC)
+             MONMSG     MSGID(CPF2105)
+
+             DLTPGM    PGM(&TOLIB/STRPREPRC)
+             MONMSG     MSGID(CPF2105)
+
+             DLTMOD    MODULE(&TOLIB/STRPREPRC1)
+             MONMSG     MSGID(CPF2105)
+
+             DLTMOD    MODULE(&TOLIB/STRPREPRC2)
+             MONMSG     MSGID(CPF2105)
+
+             DLTMOD    MODULE(&TOLIB/STRPREPRC3)
+             MONMSG     MSGID(CPF2105)
+
+             DLTMOD    MODULE(&TOLIB/STRPREPRC4)
+             MONMSG     MSGID(CPF2105)
+
+             DLTPNLGRP PNLGRP(&TOLIB/STRPREPRCP)
+             MONMSG     MSGID(CPF2105)
+
+             DLTF    FILE(&TOLIB/STRPRE1)
+             MONMSG     MSGID(CPF2105)
+
+             DLTF    FILE(&TOLIB/STRPRE2)
+             MONMSG     MSGID(CPF2105)
+
+             DLTMSGF    MSGF(&TOLIB/&MSGF)
+             MONMSG     MSGID(CPF2105)
+
+             RMVMSG     PGMQ(*SAME (*)) CLEAR(*ALL)
+
+     /* -------------------------------- */
+     /*  Create message file             */
+     /* -------------------------------- */
+             IF         COND(&LNG *EQ 'ENG') THEN(DO)
+                CHGVAR     VAR(&CRTMSGF) VALUE('A_MSG_ENG')
+                CHGVAR     VAR(&PNLGRP ) VALUE('STRPREPRCQ')
+                CHGVAR     VAR(&CMD    ) VALUE('STRPREPRCE')
+             ENDDO
+             ELSE       CMD(DO)
+                CHGVAR     VAR(&CRTMSGF) VALUE('A_MSG_GER')
+                CHGVAR     VAR(&PNLGRP ) VALUE('STRPREPRCP')
+                CHGVAR     VAR(&CMD    ) VALUE('STRPREPRCG')
+             ENDDO
+
+             CRTMSGF    MSGF(&TOLIB/&MSGF) +
+                          TEXT('Tool: STRPREPRC  (Start Pre-Processor) Ger')
+
+             CRTCLPGM   PGM(QTEMP/&CRTMSGF) +
+                          SRCFILE(&SRCLIB/&SRCFILE) SRCMBR(*PGM) +
+                          OPTION(*LSTDBG) +
+                          TGTRLS(&TGTRLS)
+             DLTSPLF    FILE(&CRTMSGF  ) JOB(*) SPLNBR(*LAST)
+             MONMSG     MSGID(CPF0000)
+
+             CALL       PGM(QTEMP/&CRTMSGF) PARM(&TOLIB)
+             DLTPGM     PGM(QTEMP/&CRTMSGF)
+
+     /* -------------------------------- */
+     /*  Create files                    */
+     /* -------------------------------- */
+             CRTPF      FILE(&TOLIB/STRPRE1) +
+                          SRCFILE(&SRCLIB/&SRCFILE) SRCMBR(STRPRE1) +
+                          MAXMBRS(1)
+             DLTSPLF    FILE(STRPRE1   ) JOB(*) SPLNBR(*LAST)
+             MONMSG     MSGID(CPF0000)
+
+             CRTPF      FILE(&TOLIB/STRPRE2) +
+                          SRCFILE(&SRCLIB/&SRCFILE) SRCMBR(STRPRE2) +
+                          MAXMBRS(1)
+             DLTSPLF    FILE(STRPRE2   ) JOB(*) SPLNBR(*LAST)
+             MONMSG     MSGID(CPF0000)
+
+     /* -------------------------------- */
+     /*  Create modules                  */
+     /* -------------------------------- */
+             CRTCLMOD MODULE(&TOLIB/STRPREPRC1) +
+                          SRCFILE(&SRCLIB/&SRCFILE) +
+                          SRCMBR(*MODULE) TEXT(*SRCMBRTXT) +
+                          DBGVIEW(*LIST) +
+                          TGTRLS(&TGTRLS)
+             DLTSPLF    FILE(STRPREPRC1) JOB(*) SPLNBR(*LAST)
+             MONMSG     MSGID(CPF0000)
+
+             CRTRPGMOD  MODULE(&TOLIB/STRPREPRC2) +
+                          SRCFILE(&SRCLIB/&SRCFILE) SRCMBR(*MODULE) +
+                          TEXT(*SRCMBRTXT) DBGVIEW(*LIST) +
+                          TRUNCNBR(*NO) +
+                          TGTRLS(&TGTRLS)
+             DLTSPLF    FILE(STRPREPRC2) JOB(*) SPLNBR(*LAST)
+             MONMSG     MSGID(CPF0000)
+
+             CRTRPGMOD MODULE(&TOLIB/STRPREPRC3) +
+                          SRCFILE(&SRCLIB/&SRCFILE) +
+                          SRCMBR(*MODULE) TEXT(*SRCMBRTXT) +
+                          DBGVIEW(*LIST) TRUNCNBR(*NO) +
+                          TGTRLS(&TGTRLS)
+             DLTSPLF    FILE(STRPREPRC3) JOB(*) SPLNBR(*LAST)
+             MONMSG     MSGID(CPF0000)
+
+             CRTRPGMOD MODULE(&TOLIB/STRPREPRC4) +
+                          SRCFILE(&SRCLIB/&SRCFILE) +
+                          SRCMBR(*MODULE) TEXT(*SRCMBRTXT) +
+                          DBGVIEW(*LIST) TRUNCNBR(*NO) +
+                          TGTRLS(&TGTRLS)
+             DLTSPLF    FILE(STRPREPRC4) JOB(*) SPLNBR(*LAST)
+             MONMSG     MSGID(CPF0000)
+
+     /* -------------------------------- */
+     /*  Create programs                 */
+     /* -------------------------------- */
+             CRTPGM     PGM(&TOLIB/STRPREPRC) +
+                          MODULE(&TOLIB/STRPREPRC1  +
+                                 &TOLIB/STRPREPRC2  +
+                                 &TOLIB/STRPREPRC3  +
+                                 &TOLIB/STRPREPRC4) +
+                          ENTMOD(&TOLIB/STRPREPRC1) +
+                          BNDSRVPGM(&TOLIB/BASICS1  +
+                                    &TOLIB/EVENTF   +
+                                    &TOLIB/JOBLOG)  +
+                          DETAIL(*BASIC)            +
+                          ACTGRP(*NEW) +
+                          TGTRLS(&TGTRLS)
+             DLTSPLF    FILE(STRPREPRC ) JOB(*) SPLNBR(*LAST)
+             MONMSG     MSGID(CPF0000)
+
+     /* -------------------------------- */
+     /*  Create panel groups             */
+     /* -------------------------------- */
+             CRTPNLGRP PNLGRP(&TOLIB/STRPREPRCP) +
+                          SRCFILE(&SRCLIB/&SRCFILE) +
+                          SRCMBR(&PNLGRP)
+             DLTSPLF    FILE(&PNLGRP   ) JOB(*) SPLNBR(*LAST)
+             MONMSG     MSGID(CPF0000)
+
+     /* -------------------------------- */
+     /*  Create commands                 */
+     /* -------------------------------- */
+             CRTCMD     CMD(&TOLIB/STRPREPRC) PGM(&TOLIB/STRPREPRC) +
+                          SRCFILE(&SRCLIB/&SRCFILE) +
+                          SRCMBR(&CMD) MSGF(&TOLIB/STRPREPRC) +
+                          HLPPNLGRP(&TOLIB/STRPREPRCP) +
+                          HLPID(STRPREPRC) PRDLIB(&TOLIB)
+             DLTSPLF    FILE(&CMD      ) JOB(*) SPLNBR(*LAST)
+             MONMSG     MSGID(CPF0000)
+
+             IF         COND(&TAGSREQ *EQ 'YES') THEN(DO)
+                CHGVAR     VAR(&TAGSREQ) VALUE('*YES')
+             ENDDO
+             ELSE       CMD(DO)
+                CHGVAR     VAR(&TAGSREQ) VALUE('*NO')
+             ENDDO
+
+             CHGVAR     VAR(&CMDSTR) +
+                          VALUE('CHGCMDDFT +
+                                 CMD(' *CAT &TOLIB *TCAT '/STRPREPRC) +
+                                 NEWDFT(''TAGSREQ(' *CAT &TAGSREQ *TCAT ')'')')
+             CALL       PGM(QCMDEXC) PARM(&CMDSTR &CMDLEN)
+
+     /* -------------------------------- */
+     /*  Delete obsolete objects         */
+     /* -------------------------------- */
+             DLTMOD    MODULE(&TOLIB/STRPREPRC1)
+             DLTMOD    MODULE(&TOLIB/STRPREPRC2)
+             DLTMOD    MODULE(&TOLIB/STRPREPRC3)
+             DLTMOD    MODULE(&TOLIB/STRPREPRC4)
+
+             ENDPGM

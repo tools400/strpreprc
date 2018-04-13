@@ -1,0 +1,41 @@
+      *=====================================================================*
+      *                                                                     *
+      *  Kurzdokumentation :                                                *
+      *                                                                     *
+      *  Bereich . . . : STRPREPRC                                          *
+      *  Objekt  . . . : STRPRE2                                            *
+      *  Beschreibung  : Tool: STRPREPRC  (Starten Pre-Proz.  ) MsgID File  *
+      *  Author  . . . : Thomas Raddatz   <thomas.raddatz@tools400.de>      *
+      *  Datum . . . . : 15.05.2015                                         *
+      *                                                                     *
+      *=====================================================================*
+      * >>PRE-COMPILER<<                                                    *
+      *                                                                     *
+      *   >>CRTCMD<< CRTPF        FILE(&LI/&OB) +                           *
+      *                           SRCFILE(&SL/&SF) +                        *
+      *                           SRCMBR(&SM);                              *
+      *                                                                     *
+      *   >>COMPILE<<                                                       *
+      *     >>PARM<< MAXMBRS(1);                                            *
+      *     >>PARM<< OPTION(*EVENTF);                                       *
+      *   >>END-COMPILE<<                                                   *
+      *                                                                     *
+      *   >>EXECUTE<<                                                       *
+      *                                                                     *
+      * >>END-PRE-COMPILER<<                                                *
+      *=====================================================================*
+     A                                      UNIQUE
+      *
+     A          R FSTRPRE2
+     A            MSGFILE       10A         TEXT('Message File')
+     A            MSGLIB        10A         TEXT('Message File Library: *LIBL')
+     A                                      DFT('*LIBL')
+     A            MSGID          7A         TEXT('Message ID')
+     A            FMT            2S 0       TEXT('Message format field that co+
+     A                                      ntains the line number, -1=ignore ')
+     A            TEXT          50A         TEXT('Message Text (Comment)')
+      *
+     A          K MSGFILE
+     A          K MSGLIB
+     A          K MSGID
+      *

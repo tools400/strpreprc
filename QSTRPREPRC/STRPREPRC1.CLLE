@@ -1,0 +1,347 @@
+     /* =================================================================== */
+     /*                                                                     */
+     /*  Kurzdokumentation :                                                */
+     /*                                                                     */
+     /*  Bereich . . . : STRPREPRC                                          */
+     /*  Objekt  . . . : STRPREPRC1                                         */
+     /*  Beschreibung  : Start Pre-Processor - CPP                          */
+     /*  Author  . . . : Thomas Raddatz   <thomas.raddatz@tools400.de>      */
+     /*  Datum . . . . : 21.11.2000                                         */
+     /*                                                                     */
+     /* =================================================================== */
+     /*                                                                     */
+     /*  This software is free software, you can redistribute it and/or     */
+     /*  modify it under the terms of the GNU General Public License (GPL)  */
+     /*  as published by the Free Software Foundation.                      */
+     /*                                                                     */
+     /*  See GNU General Public License for details.                        */
+     /*          http://www.opensource.org                                  */
+     /*          http://www.opensource.org/licenses/gpl-license.html        */
+     /*                                                                     */
+     /* =================================================================== */
+     /*  History:                                                           */
+     /*                                                                     */
+     /*  Datum       Name          Änderung                                 */
+     /*  ----------  ------------  ---------------------------------------  */
+     /*  07.03.2014  Th.Raddatz    Added special value *DFT to parameters   */
+     /*                            SRCLIB, SRCFILE and SRCMBR.              */
+     /*                                                                     */
+     /*  09.04.2015  Hildebrandt   Added parameter EXICMDEXC to command.    */
+     /*                                                                     */
+     /*  14.07.2015  Th.Raddatz    Fixed problem, that parameter &XMSGFLIB  */
+     /*                            was not properly initialized.            */
+     /*                                                                     */
+     /*  15.09.2017  Th.Raddatz    Added parameter LIBL to STRPREPRC        */
+     /*                            command.                                 */
+     /*                                                                     */
+     /*  16.09.2017  Th.Raddatz    Changed length of parameter CMD from     */
+     /*                            2048 to 8192.                            */
+     /*                                                                     */
+     /*  20.09.2017  Th.Raddatz    Added parameter USELIBL to let STRPREPRC */
+     /*                            run the XCRTSQLOBJ command of CMOne      */
+     /*                            for source members without a STRPREPRC   */
+     /*                            header.                                  */
+     /*                                                                     */
+     /*  22.09.2017  Th.Raddatz    Added parameter USRDEFVAR to STRPREPRC   */
+     /*                                                                     */
+     /* =================================================================== */
+     /* >>PRE-COMPILER<<                                                    */
+     /*   >>CRTCMD<< CRTCLMOD     MODULE(&LI/&OB) +                         */
+     /*                           SRCFILE(&SL/&SF) SRCMBR(&SM);             */
+     /*   >>COMPILE<<                                                       */
+     /*     >>PARM<< DBGVIEW(*LIST);                                        */
+     /*     >>PARM<< OPTION(*EVENTF);                                       */
+     /*   >>END-COMPILE<<                                                   */
+     /*   >>EXECUTE<<                                                       */
+     /*   >>CMD<<    CRTPGM       PGM(&LI/STRPREPRC ) +                     */
+     /*                           MODULE(&LI/STRPREPRC1 +                   */
+     /*                                  &LI/STRPREPRC2 +                   */
+     /*                                  &LI/STRPREPRC3 +                   */
+     /*                                  &LI/STRPREPRC4 ) +                 */
+     /*                           ENTMOD(&LI/STRPREPRC1) +                  */
+     /*                           BNDSRVPGM(&LI/BASICS1 +                   */
+     /*                                     &LI/EVENTF  +                   */
+     /*                                     &LI/JOBLOG ) +                  */
+     /*                           ACTGRP(*NEW) +                            */
+     /*                           DETAIL(*BASIC);                           */
+     /* >>END-PRE-COMPILER<<                                                */
+     /* =================================================================== */
+             PGM        PARM(&QUSESRCF   +
+                             &USESRCMBR  +
+                             &CMD        +
+                             &OPTION     +
+                             &CHGOBJD    +
+                             &OBJTYPE    +
+                             &OBJSRCFILE +
+                             &OBJSRCLIB  +
+                             &OBJSRCMBR  +
+                             &XLIB       +
+                             &XOBJ       +
+                             &XTYPECODE  +
+                             &XSRCLIB    +
+                             &XSRCFILE   +
+                             &XSRCMBR    +
+                             &XTESTLIB   +
+                             &XTESTOBJ   +
+                             &XTGTRLS    +
+                             &XFRMSRCLIB +
+                             &XFRMSRCFIL +
+                             &XFRMSRCMBR +
+                             &XUSER0     +
+                             &XUSER1     +
+                             &XUSER2     +
+                             &XUSER3     +
+                             &XUSER4     +
+                             &XUSER5     +
+                             &XUSER6     +
+                             &XUSER7     +
+                             &XUSER8     +
+                             &XUSER9     +
+                             &USRDEFVAR  +
+                             &LIBL       +
+                             &USELIBL    +
+                             &XTAGSREQ   +
+                             &XMSGF      +
+                             &EXICMDEXC  )
+
+             DCL        VAR(&QUSESRCF  ) TYPE(*CHAR) LEN(  20)
+             DCL        VAR(&USESRCMBR ) TYPE(*CHAR) LEN(  10)
+             DCL        VAR(&CMD       ) TYPE(*CHAR) LEN(8192)
+             DCL        VAR(&OPTION    ) TYPE(*CHAR) LEN(  52)
+             DCL        VAR(&CHGOBJD   ) TYPE(*CHAR) LEN(   4)
+             DCL        VAR(&OBJTYPE   ) TYPE(*CHAR) LEN(   4)
+             DCL        VAR(&OBJSRCFILE) TYPE(*CHAR) LEN(  10)
+             DCL        VAR(&OBJSRCLIB ) TYPE(*CHAR) LEN(  10)
+             DCL        VAR(&OBJSRCMBR ) TYPE(*CHAR) LEN(  10)
+             DCL        VAR(&XLIB      ) TYPE(*CHAR) LEN(  10)
+             DCL        VAR(&XOBJ      ) TYPE(*CHAR) LEN(  10)
+             DCL        VAR(&XTYPECODE ) TYPE(*CHAR) LEN(   6)
+             DCL        VAR(&XSRCLIB   ) TYPE(*CHAR) LEN(  10)
+             DCL        VAR(&XSRCFILE  ) TYPE(*CHAR) LEN(  10)
+             DCL        VAR(&XSRCMBR   ) TYPE(*CHAR) LEN(  10)
+             DCL        VAR(&XTESTLIB  ) TYPE(*CHAR) LEN(  10)
+             DCL        VAR(&XTESTOBJ  ) TYPE(*CHAR) LEN(  10)
+             DCL        VAR(&XTGTRLS   ) TYPE(*CHAR) LEN(  10)
+             DCL        VAR(&XFRMSRCLIB) TYPE(*CHAR) LEN(  10)
+             DCL        VAR(&XFRMSRCFIL) TYPE(*CHAR) LEN(  10)
+             DCL        VAR(&XFRMSRCMBR) TYPE(*CHAR) LEN(  10)
+             DCL        VAR(&XUSER0    ) TYPE(*CHAR) LEN(  50)
+             DCL        VAR(&XUSER1    ) TYPE(*CHAR) LEN(  50)
+             DCL        VAR(&XUSER2    ) TYPE(*CHAR) LEN(  50)
+             DCL        VAR(&XUSER3    ) TYPE(*CHAR) LEN(  50)
+             DCL        VAR(&XUSER4    ) TYPE(*CHAR) LEN(  50)
+             DCL        VAR(&XUSER5    ) TYPE(*CHAR) LEN(  50)
+             DCL        VAR(&XUSER6    ) TYPE(*CHAR) LEN(  50)
+             DCL        VAR(&XUSER7    ) TYPE(*CHAR) LEN(  50)
+             DCL        VAR(&XUSER8    ) TYPE(*CHAR) LEN(  50)
+             DCL        VAR(&XUSER9    ) TYPE(*CHAR) LEN(  50)
+             DCL        VAR(&XTAGSREQ  ) TYPE(*LGL ) LEN(   1)
+             DCL        VAR(&XMSGF     ) TYPE(*CHAR) LEN(  10)
+             DCL        VAR(&XMSGFLIB  ) TYPE(*CHAR) LEN(  10)
+             DCL        VAR(&EXICMDEXC ) TYPE(*CHAR) LEN(  20)
+             DCL        VAR(&PGMCMDEXC ) TYPE(*CHAR) LEN(  10)
+             DCL        VAR(&LPGMCMDEXC) TYPE(*CHAR) LEN(  10)
+
+             DCL        VAR(&USRDEFVAR ) TYPE(*CHAR) LEN(2282)
+                /* number of items:            BINARY(2)               */
+                /* array of item offsets       BINARY(2)               */
+                /* for each item:                                      */
+                /*    number of sub-items      BINARY(2)               */
+                /*    first sub-item           CHAR(10)                */
+                /*    second sub-item          CHAR(100)               */
+
+             DCL        VAR(&LIBL      ) TYPE(*CHAR) LEN(2514)
+             DCL        VAR(&USELIBL   ) TYPE(*LGL ) LEN(   1)
+                /* number of elements:         BINARY(2)               */
+                /* current library:            CHAR(10)                */
+                /* offset user libraries:      BINARY(2)               */
+                /* number of user libraries:   BINARY(2)               */
+                /* user libraries:             Array(250) of CHAR(10)  */
+
+             DCL        VAR(&USESRCFILE) TYPE(*CHAR) LEN(  10)
+             DCL        VAR(&USESRCLIB ) TYPE(*CHAR) LEN(  10)
+
+/* Fehlerbehandlung     */
+             DCL        VAR(&ERROR    )  TYPE(*LGL) +
+                          VALUE('0')
+             DCL        VAR(&TRUE     )  TYPE(*LGL) +
+                          VALUE('1')
+             DCL        VAR(&FALSE    )  TYPE(*LGL) +
+                          VALUE('0')
+             DCL        VAR(&ERRMSGKEY)  TYPE(*CHAR) LEN(4)
+
+             DCL        VAR(&ERRMSGTYP)  TYPE(*CHAR) LEN(10) +
+                          VALUE('*DIAG     ')
+             DCL        VAR(&ERRNBRTYP)  TYPE(*CHAR) LEN(4) +
+                          VALUE(X'00000001')
+             DCL        VAR(&ERRPGMMSGQ) TYPE(*CHAR) LEN(10) +
+                          VALUE('*PGMBDY')
+             DCL        VAR(&ERRSTKCTR)  TYPE(*CHAR) LEN(4) +
+                          VALUE(X'00000001')
+             DCL        VAR(&ERRCODE  )  TYPE(*CHAR) LEN(4) +
+                          VALUE(X'00000000')
+
+/* Sende alle Fehler zur Error Handling Routine */
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERROR))
+
+             CHGVAR     VAR(&ERROR    ) VALUE(&FALSE)
+
+ /* -------------------------------------------------------------- */
+ /*  Los geht's                                                    */
+ /* -------------------------------------------------------------- */
+
+             CHGVAR     VAR(&USESRCFILE) VALUE(%SST(&QUSESRCF  1 10))
+             CHGVAR     VAR(&USESRCLIB ) VALUE(%SST(&QUSESRCF 11 10))
+
+ /* - - - - - - - - - - - - - - - - - - */
+ /*  Prüfen der Quelldatei/-teildatei   */
+ /* - - - - - - - - - - - - - - - - - - */
+             CHKOBJ     OBJ(&USESRCLIB) OBJTYPE(*LIB)
+             CHKOBJ     OBJ(&USESRCLIB/&USESRCFILE) OBJTYPE(*FILE)
+             CHKOBJ     OBJ(&USESRCLIB/&USESRCFILE) OBJTYPE(*FILE) +
+                          MBR(&USESRCMBR)
+
+ /* - - - - - - - - - - - - - - - - - - */
+ /*  Prüfen der Steuerdatei STRPRE1     */
+ /* - - - - - - - - - - - - - - - - - - */
+             CHKOBJ     OBJ(*LIBL/STRPRE1) OBJTYPE(*FILE)
+             CHKOBJ     OBJ(*LIBL/STRPRE1) OBJTYPE(*FILE) +
+                          MBR(*FIRST)
+             CALLPRC    PRC(P_INITPREPRZ)
+
+ /* - - - - - - - - - - - - - - - - - - */
+ /*  Ermitteln Bibliothek der MsgF      */
+ /* - - - - - - - - - - - - - - - - - - */
+             QSYS/RTVOBJD OBJ(*LIBL/&XMSGF) OBJTYPE(*MSGF) +
+                            RTNLIB(&XMSGFLIB)
+
+ /* - - - - - - - - - - - - - - - - - - */
+ /*  Prüfen Befehl CHGOBJDA             */
+ /* - - - - - - - - - - - - - - - - - - */
+             IF         COND(&CHGOBJD *EQ '*YES') THEN(DO)
+               CHKOBJ     OBJ(*LIBL/CHGOBJDA) OBJTYPE(*CMD)
+               MONMSG     MSGID(CPF9801) EXEC(DO)
+                 SNDPGMMSG  MSGID(PRZ0021) MSGF(&XMSGFLIB/&XMSGF) +
+                            TOPGMQ(*PRV (*PGMBDY)) MSGTYPE(*DIAG)
+                 SNDPGMMSG  MSGID(PRZ0022) MSGF(&XMSGFLIB/&XMSGF) +
+                            TOPGMQ(*PRV (*PGMBDY)) MSGTYPE(*ESCAPE)
+               ENDDO
+             ENDDO
+
+ /* - - - - - - - - - - - - - - - - - - */
+ /*  Starten Pre-Prozessor              */
+ /* - - - - - - - - - - - - - - - - - - */
+             OVRDBF     FILE(SRCFILE)                     +
+                          TOFILE(&USESRCLIB/&USESRCFILE)  +
+                          MBR(&USESRCMBR)                 +
+                          OVRSCOPE(*CALLLVL)
+
+             IF         COND(&XSRCLIB *EQ '*DFT') THEN(DO)
+                CHGVAR     VAR(&XSRCLIB) VALUE(&USESRCLIB)
+             ENDDO
+
+             IF         COND(&XSRCFILE *EQ '*DFT') THEN(DO)
+                CHGVAR     VAR(&XSRCFILE) VALUE(&USESRCFILE)
+             ENDDO
+
+             IF         COND(&XSRCMBR *EQ '*DFT') THEN(DO)
+                CHGVAR     VAR(&XSRCMBR) VALUE(&USESRCMBR)
+             ENDDO
+
+             IF         COND(&OBJSRCFILE *EQ '*DFT') THEN(DO)
+                CHGVAR     VAR(&OBJSRCFILE) VALUE(&XSRCFILE)
+             ENDDO
+
+             IF         COND(&OBJSRCLIB *EQ '*DFT') THEN(DO)
+                CHGVAR     VAR(&OBJSRCLIB) VALUE(&XSRCLIB)
+             ENDDO
+
+             IF         COND(&OBJSRCMBR *EQ '*DFT') THEN(DO)
+                CHGVAR     VAR(&OBJSRCMBR) VALUE(&XSRCMBR)
+             ENDDO
+
+             IF         COND(&XOBJ *EQ '*DFT') THEN(DO)
+                CHGVAR     VAR(&XOBJ) VALUE(&XSRCMBR)
+             ENDDO
+
+             CHGVAR     VAR(&PGMCMDEXC) VALUE(%SST(&EXICMDEXC 1 10))
+             CHGVAR     VAR(&LPGMCMDEXC) VALUE(%SST(&EXICMDEXC 11 10))
+
+             CALLPRC    PRC(STRPREPRC) PARM(&USESRCFILE +
+                                            &USESRCLIB  +
+                                            &USESRCMBR  +
+                                            &CMD        +
+                                            &CHGOBJD    +
+                                            &OBJTYPE    +
+                                            &OBJSRCFILE +
+                                            &OBJSRCLIB  +
+                                            &OBJSRCMBR  +
+                                            &XLIB       +
+                                            &XOBJ       +
+                                            &XTYPECODE  +
+                                            &XSRCLIB    +
+                                            &XSRCFILE   +
+                                            &XSRCMBR    +
+                                            &XTESTLIB   +
+                                            &XTESTOBJ   +
+                                            &XTGTRLS    +
+                                            &XFRMSRCLIB +
+                                            &XFRMSRCFIL +
+                                            &XFRMSRCMBR +
+                                            &XUSER0     +
+                                            &XUSER1     +
+                                            &XUSER2     +
+                                            &XUSER3     +
+                                            &XUSER4     +
+                                            &XUSER5     +
+                                            &XUSER6     +
+                                            &XUSER7     +
+                                            &XUSER8     +
+                                            &XUSER9     +
+                                            &XTAGSREQ   +
+                                            &XMSGF      +
+                                            &XMSGFLIB   +
+                                            &PGMCMDEXC  +
+                                            &LPGMCMDEXC +
+                                            &OPTION     +
+                                            &LIBL       +
+                                            &USELIBL    +
+                                            &USRDEFVAR  )
+
+             DLTOVR     FILE(SRCFILE) LVL(*)
+
+ /* -------------------------------------------------------------- */
+ /*  Programm beenden                                              */
+ /* -------------------------------------------------------------- */
+
+ENDE:
+
+/* -------------------------------------------------------------- */
+/*    Fehler aufgetreten ?                                        */
+/* -------------------------------------------------------------- */
+
+             IF         COND(&ERROR) THEN(DO)
+               /* Sende letzte *ESCAPE nochmals   */
+               CALL       PGM(QMHRSNEM) PARM(&ERRMSGKEY &ERRCODE)
+               MONMSG     MSGID(CPF0000)
+             ENDDO
+
+             RETURN
+
+/* ---------------- */
+/* Nachrichten      */
+/* weiterreichen    */
+/* ---------------- */
+
+ ERROR:
+             IF         COND(&ERROR) THEN(GOTO CMDLBL(ENDE))
+             ELSE       CHGVAR     VAR(&ERROR) VALUE(&TRUE)
+
+/* Verschiebe alle *DIAG Nachrichten zur             */
+/* vorangegangenen Programmwarteschlange             */
+             CALL       PGM(QMHMOVPM) PARM(&ERRMSGKEY &ERRMSGTYP +
+                          &ERRNBRTYP &ERRPGMMSGQ &ERRSTKCTR &ERRCODE)
+
+             GOTO       CMDLBL(ENDE)
+
+             ENDPGM
