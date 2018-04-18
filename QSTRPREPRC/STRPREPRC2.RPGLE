@@ -1959,7 +1959,7 @@
          x = %scan(' ': i_cmd: x);
 
          // suchen Token im vorhandenen Befehlstring
-         dow (startPos < %len(i_cmd));
+         dow (x > 0 and startPos < %len(i_cmd));
             startPos = %scan(token: i_cmd: x);
             if ((startPos > 1)   and
                 (%subst(i_cmd: startPos - 1: 1) <> ' '));
