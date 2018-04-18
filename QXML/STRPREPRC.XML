@@ -51,7 +51,7 @@
       appblddate CDATA #REQUIRED
      >
      ]>
-<upload  appname="STRPREPRC"  appauthor="Thomas Raddatz"  appblddate="11/22/2017">
+<upload  appname="STRPREPRC"  appauthor="Thomas Raddatz"  appblddate=" 4/18/2018">
 <install_instructions><![CDATA[
      *----------------------------------------------------------------      ------
      *  1. Upload entire XML to your AS/400 to a source file 112 long, into any mbr
@@ -444,6 +444,9 @@
       *
       * Set variable &TGTRLS
      C                   callp     setVariable('tgtrls': TgtRls)
+      *
+      * Set variable &SRCFILE
+     C                   callp     setVariable('srcfile': ParseSrcFile)
       *
       * Override Input file to uploaded text file
      C                   eval      bldexc = 'OVRDBF FILE(XMLINPUT) TOFILE(' +
@@ -1152,7 +1155,7 @@
          string = %replace(tmpKeyword + '(' + %trimR(i_value) + ')'
                            : i_string: x: l);
          Return string;
-      *
+
       /END-FREE
      P                 E
       *---------------------------------------------------------------------------------------------
@@ -1313,7 +1316,7 @@ srccssid=  "00273">
      /* =================================================================== */
      /*  History:                                                           */
      /*                                                                     */
-     /*  Datum       Name          Ã„nderung                                 */
+     /*  Datum       Name          Änderung                                 */
      /*  ----------  ------------  ---------------------------------------  */
      /*                                                                     */
      /* =================================================================== */
@@ -1541,7 +1544,7 @@ srccssid=  "00273">
              DCL        VAR(&LI) TYPE(*CHAR) LEN(10)
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0001                    */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0001                    */
      /* Falsche Reihenfolge im Betriebsmodus.                       */
      /* ----------------------------------------------------------- */
 
@@ -1569,7 +1572,7 @@ the corresponding END-xxx tag.' +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0002                    */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0002                    */
      /* Verarbeitung in Zeile &1 abgebrochen.                       */
      /* ----------------------------------------------------------- */
 
@@ -1595,8 +1598,8 @@ during the creation command was checked.' +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0003                    */
-     /* Parameteranweisung in der Betriebsart &1 unzulÃ¤ssig.        */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0003                    */
+     /* Parameteranweisung in der Betriebsart &1 unzulässig.        */
      /* ----------------------------------------------------------- */
 
              RMVMSGD MSGID(PRZ0003) MSGF(&LI/STRPREPRC)
@@ -1617,8 +1620,8 @@ during the creation command was checked.' +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0004                    */
-     /* Die Marke &1 ist auÃŸerhalb der Betriebsart &2 nicht erlaubt */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0004                    */
+     /* Die Marke &1 ist außerhalb der Betriebsart &2 nicht erlaubt */
      /* ----------------------------------------------------------- */
 
              RMVMSGD MSGID(PRZ0004) MSGF(&LI/STRPREPRC)
@@ -1640,8 +1643,8 @@ during the creation command was checked.' +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0005                    */
-     /* UngÃ¼ltiges Fortsetzungszeichen &1 in Zeile &2 gefunden.     */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0005                    */
+     /* Ungültiges Fortsetzungszeichen &1 in Zeile &2 gefunden.     */
      /* ----------------------------------------------------------- */
 
              RMVMSGD MSGID(PRZ0005) MSGF(&LI/STRPREPRC)
@@ -1663,8 +1666,8 @@ during the creation command was checked.' +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0006                    */
-     /* Das Ende des SchlÃ¼sselwortes &1 konnte nicht gefunden werde */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0006                    */
+     /* Das Ende des Schlüsselwortes &1 konnte nicht gefunden werde */
      /* ----------------------------------------------------------- */
 
              RMVMSGD MSGID(PRZ0006) MSGF(&LI/STRPREPRC)
@@ -1685,7 +1688,7 @@ during the creation command was checked.' +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0007                    */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0007                    */
      /* Befehlszeichenfolge ist zu lang.                            */
      /* ----------------------------------------------------------- */
 
@@ -1711,7 +1714,7 @@ during the creation command was checked.' +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0008                    */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0008                    */
      /* Das Zeilenendekennzeichen konnte nicht gefunden werden.     */
      /* ----------------------------------------------------------- */
 
@@ -1739,8 +1742,8 @@ inuation with blanks.'                                                +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0009                    */
-     /* Unbekannter Wert "&1" fÃ¼r Fortsetzungszeichen gefunden.     */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0009                    */
+     /* Unbekannter Wert "&1" für Fortsetzungszeichen gefunden.     */
      /* ----------------------------------------------------------- */
 
              RMVMSGD MSGID(PRZ0009) MSGF(&LI/STRPREPRC)
@@ -1761,8 +1764,8 @@ inuation with blanks.'                                                +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0010                    */
-     /* Modus fÃ¼r Marke &1 nicht definiert.                         */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0010                    */
+     /* Modus für Marke &1 nicht definiert.                         */
      /* ----------------------------------------------------------- */
 
              RMVMSGD MSGID(PRZ0010) MSGF(&LI/STRPREPRC)
@@ -1787,8 +1790,8 @@ the internal functiono f_tagToMode.'                                  +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0011                    */
-     /* Die DatensatzlÃ¤nge der Eingabedatei ist zu lang.            */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0011                    */
+     /* Die Datensatzlänge der Eingabedatei ist zu lang.            */
      /* ----------------------------------------------------------- */
 
              RMVMSGD MSGID(PRZ0011) MSGF(&LI/STRPREPRC)
@@ -1817,8 +1820,8 @@ yte. The maximum record length is &2 byte. &N Recovery-
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0012                    */
-     /* Fehler beim Ã–ffnen der Quellendatei &2/&1, Teildatei &3.    */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0012                    */
+     /* Fehler beim Öffnen der Quellendatei &2/&1, Teildatei &3.    */
      /* ----------------------------------------------------------- */
 
              RMVMSGD MSGID(PRZ0012) MSGF(&LI/STRPREPRC)
@@ -1841,8 +1844,8 @@ yte. The maximum record length is &2 byte. &N Recovery-
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0013                    */
-     /* Fehler beim Ã–ffnen der Steuerdatei &2/&1, Teildatei &3.     */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0013                    */
+     /* Fehler beim Öffnen der Steuerdatei &2/&1, Teildatei &3.     */
      /* ----------------------------------------------------------- */
 
              RMVMSGD MSGID(PRZ0013) MSGF(&LI/STRPREPRC)
@@ -1865,8 +1868,8 @@ yte. The maximum record length is &2 byte. &N Recovery-
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0014                    */
-     /* AuszufÃ¼hrender Befehl fehlt. Weitere Verarbeitung nicht mÃ¶g */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0014                    */
+     /* Auszuführender Befehl fehlt. Weitere Verarbeitung nicht mög */
      /* ----------------------------------------------------------- */
 
              RMVMSGD MSGID(PRZ0014) MSGF(&LI/STRPREPRC)
@@ -1891,7 +1894,7 @@ add a >>CRTCMD<< tag to the source file.'                             +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0015                    */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0015                    */
      /* Fehler im Erstellungsbefehl gefunden.                       */
      /* ----------------------------------------------------------- */
 
@@ -1916,8 +1919,8 @@ add a >>CRTCMD<< tag to the source file.'                             +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0016                    */
-     /* Der Parameter 'OBJSRCFILE' ist nicht zulÃ¤ssig, wenn CHGOBJD */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0016                    */
+     /* Der Parameter 'OBJSRCFILE' ist nicht zulässig, wenn CHGOBJD */
      /* ----------------------------------------------------------- */
 
              RMVMSGD MSGID(PRZ0016) MSGF(&LI/STRPREPRC)
@@ -1937,8 +1940,8 @@ specified.'                                                           +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0017                    */
-     /* Der Parameter 'OBJSRCLIB' ist nicht zulÃ¤ssig, wenn CHGOBJD( */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0017                    */
+     /* Der Parameter 'OBJSRCLIB' ist nicht zulässig, wenn CHGOBJD( */
      /* ----------------------------------------------------------- */
 
              RMVMSGD MSGID(PRZ0017) MSGF(&LI/STRPREPRC)
@@ -1958,8 +1961,8 @@ specified.'                                                           +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0018                    */
-     /* Der Parameter 'OBJSRCMBR' ist nicht zulÃ¤ssig, wenn CHGOBJD( */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0018                    */
+     /* Der Parameter 'OBJSRCMBR' ist nicht zulässig, wenn CHGOBJD( */
      /* ----------------------------------------------------------- */
 
              RMVMSGD MSGID(PRZ0018) MSGF(&LI/STRPREPRC)
@@ -1979,8 +1982,8 @@ specified.'                                                           +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0019                    */
-     /* Der Parameter 'OBJTYPE' ist nicht zulÃ¤ssig, wenn CHGOBJD(*N */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0019                    */
+     /* Der Parameter 'OBJTYPE' ist nicht zulässig, wenn CHGOBJD(*N */
      /* ----------------------------------------------------------- */
 
              RMVMSGD MSGID(PRZ0019) MSGF(&LI/STRPREPRC)
@@ -2000,7 +2003,7 @@ specified.'                                                           +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0020                    */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0020                    */
      /* Der Parameter 'OBJTYPE' muss angegeben werden, wenn CHGOBJD */
      /* ----------------------------------------------------------- */
 
@@ -2021,8 +2024,8 @@ specified.'                                                           +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0021                    */
-     /* Befehl CHGOBJDA nicht gefunden oder unvollstÃ¤ndig.          */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0021                    */
+     /* Befehl CHGOBJDA nicht gefunden oder unvollständig.          */
      /* ----------------------------------------------------------- */
 
              RMVMSGD MSGID(PRZ0021) MSGF(&LI/STRPREPRC)
@@ -2041,7 +2044,7 @@ specified.'                                                           +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0022                    */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0022                    */
      /* Verarbeitung abgebrochen.                                   */
      /* ----------------------------------------------------------- */
 
@@ -2061,7 +2064,7 @@ specified.'                                                           +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0023                    */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0023                    */
      /* Missing value for replacement variable &1.                  */
      /* ----------------------------------------------------------- */
 
@@ -2088,7 +2091,7 @@ string.'                                                              +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0024                    */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0024                    */
      /* No Pre-Compiler instructions found in source file &2/&1, so */
      /* ----------------------------------------------------------- */
 
@@ -2113,7 +2116,7 @@ r &3.'                                                                +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0025                    */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0025                    */
      /* Could not open EVFEVENT file or job log.                    */
      /* ----------------------------------------------------------- */
 
@@ -2135,7 +2138,7 @@ r &3.'                                                                +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0026                    */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0026                    */
      /* Could not prepare the event file.                           */
      /* ----------------------------------------------------------- */
 
@@ -2155,7 +2158,7 @@ r &3.'                                                                +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0027                    */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0027                    */
      /* When option '*EVENTF' is specified, parameters LIB() and OB */
      /* ----------------------------------------------------------- */
 
@@ -2176,7 +2179,7 @@ r &3.'                                                                +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0028                    */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0028                    */
      /* Object creation command not found in member &3 of file &2/& */
      /*-------------------------------------------------------------*/
 
@@ -2205,7 +2208,7 @@ on command'' (CMD).'                                                  +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0029                    */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0029                    */
      /* &1                                                          */
      /*-------------------------------------------------------------*/
 
@@ -2227,7 +2230,7 @@ on command'' (CMD).'                                                  +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0030                    */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0030                    */
      /* &1                                                          */
      /*-------------------------------------------------------------*/
 
@@ -2269,7 +2272,7 @@ srccssid=  "00273">
              DCL        VAR(&LI) TYPE(*CHAR) LEN(10)
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0001                    */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0001                    */
      /* Falsche Reihenfolge im Betriebsmodus.                       */
      /* ----------------------------------------------------------- */
 
@@ -2296,7 +2299,7 @@ art &2 umgeschaltet werden.'                                          +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0002                    */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0002                    */
      /* Verarbeitung in Zeile &1 abgebrochen.                       */
      /* ----------------------------------------------------------- */
 
@@ -2311,7 +2314,7 @@ art &2 umgeschaltet werden.'                                          +
                 ) +
                 SECLVL(+
 'Hinweis . . . . :   Ist als fehlerhafte Programmzeilenummer 0,00 ange-
-geben, so trat der Fehler bei der PrÃ¼fung der Ã¼ber gebenen Befehlszeic-
+geben, so trat der Fehler bei der Prüfung der über gebenen Befehlszeic-
 henkette auf.'                                                        +
                 ) +
                 SEV(50) +
@@ -2323,8 +2326,8 @@ henkette auf.'                                                        +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0003                    */
-     /* Parameteranweisung in der Betriebsart &1 unzulÃ¤ssig.        */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0003                    */
+     /* Parameteranweisung in der Betriebsart &1 unzulässig.        */
      /* ----------------------------------------------------------- */
 
              RMVMSGD MSGID(PRZ0003) MSGF(&LI/STRPREPRC)
@@ -2334,7 +2337,7 @@ henkette auf.'                                                        +
                 MSGID(PRZ0003) +
                 MSGF(&LI/STRPREPRC) +
                 MSG(+
-'Parameteranweisung in der Betriebsart &1 unzulÃ¤ssig.'                +
+'Parameteranweisung in der Betriebsart &1 unzulässig.'                +
                 ) +
                 SEV(00) +
                 FMT( +
@@ -2345,8 +2348,8 @@ henkette auf.'                                                        +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0004                    */
-     /* Die Marke &1 ist auÃŸerhalb der Betriebsart &2 nicht erlaubt */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0004                    */
+     /* Die Marke &1 ist außerhalb der Betriebsart &2 nicht erlaubt */
      /* ----------------------------------------------------------- */
 
              RMVMSGD MSGID(PRZ0004) MSGF(&LI/STRPREPRC)
@@ -2356,7 +2359,7 @@ henkette auf.'                                                        +
                 MSGID(PRZ0004) +
                 MSGF(&LI/STRPREPRC) +
                 MSG(+
-'Die Marke &1 ist auÃŸerhalb der Betriebsart &2 nicht erlaubt.'        +
+'Die Marke &1 ist außerhalb der Betriebsart &2 nicht erlaubt.'        +
                 ) +
                 SEV(00) +
                 FMT( +
@@ -2368,8 +2371,8 @@ henkette auf.'                                                        +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0005                    */
-     /* UngÃ¼ltiges Fortsetzungszeichen &1 in Zeile &2 gefunden.     */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0005                    */
+     /* Ungültiges Fortsetzungszeichen &1 in Zeile &2 gefunden.     */
      /* ----------------------------------------------------------- */
 
              RMVMSGD MSGID(PRZ0005) MSGF(&LI/STRPREPRC)
@@ -2379,7 +2382,7 @@ henkette auf.'                                                        +
                 MSGID(PRZ0005) +
                 MSGF(&LI/STRPREPRC) +
                 MSG(+
-'UngÃ¼ltiges Fortsetzungszeichen &1 in Zeile &2 gefunden.'             +
+'Ungültiges Fortsetzungszeichen &1 in Zeile &2 gefunden.'             +
                 ) +
                 SEV(40) +
                 FMT( +
@@ -2391,8 +2394,8 @@ henkette auf.'                                                        +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0006                    */
-     /* Das Ende des SchlÃ¼sselwortes &1 konnte nicht gefunden werde */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0006                    */
+     /* Das Ende des Schlüsselwortes &1 konnte nicht gefunden werde */
      /* ----------------------------------------------------------- */
 
              RMVMSGD MSGID(PRZ0006) MSGF(&LI/STRPREPRC)
@@ -2402,7 +2405,7 @@ henkette auf.'                                                        +
                 MSGID(PRZ0006) +
                 MSGF(&LI/STRPREPRC) +
                 MSG(+
-'Das Ende des SchlÃ¼sselwortes &1 konnte nicht gefunden werden.'       +
+'Das Ende des Schlüsselwortes &1 konnte nicht gefunden werden.'       +
                 ) +
                 SEV(40) +
                 FMT( +
@@ -2413,7 +2416,7 @@ henkette auf.'                                                        +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0007                    */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0007                    */
      /* Befehlszeichenfolge ist zu lang.                            */
      /* ----------------------------------------------------------- */
 
@@ -2427,8 +2430,8 @@ henkette auf.'                                                        +
 'Befehlszeichenfolge ist zu lang.'                                    +
                 ) +
                 SECLVL(+
-'Hinweis . . . . :   Die maximale LÃ¤nge einer Befehlszeichenfolge darf-
- &1 Zeichen nicht Ã¼berschreiten.'                                     +
+'Hinweis . . . . :   Die maximale Länge einer Befehlszeichenfolge darf-
+ &1 Zeichen nicht überschreiten.'                                     +
                 ) +
                 SEV(40) +
                 FMT( +
@@ -2439,7 +2442,7 @@ henkette auf.'                                                        +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0008                    */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0008                    */
      /* Das Zeilenendekennzeichen konnte nicht gefunden werden.     */
      /* ----------------------------------------------------------- */
 
@@ -2453,8 +2456,8 @@ henkette auf.'                                                        +
 'Das Zeilenendekennzeichen konnte nicht gefunden werden.'             +
                 ) +
                 SECLVL(+
-'Fehlerbeseitigung :   FÃ¼gen Sie ein Zeilenendekennzeichen in die Zeil-
-e &1 ein. &N &N GÃ¼ltige Zeilendenekennzeichen sind: &B &B '';'' = Zeil-
+'Fehlerbeseitigung :   Fügen Sie ein Zeilenendekennzeichen in die Zeil-
+e &1 ein. &N &N Gültige Zeilendenekennzeichen sind: &B &B '';'' = Zeil-
 enende &B ''+'' = Fortsetzungszeile ohne Leerzeichen &B ''-'' = Fortse-
 tzungszeile mit Leerzeichen.'                                         +
                 ) +
@@ -2467,8 +2470,8 @@ tzungszeile mit Leerzeichen.'                                         +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0009                    */
-     /* Unbekannter Wert "&1" fÃ¼r Fortsetzungszeichen gefunden.     */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0009                    */
+     /* Unbekannter Wert "&1" für Fortsetzungszeichen gefunden.     */
      /* ----------------------------------------------------------- */
 
              RMVMSGD MSGID(PRZ0009) MSGF(&LI/STRPREPRC)
@@ -2478,7 +2481,7 @@ tzungszeile mit Leerzeichen.'                                         +
                 MSGID(PRZ0009) +
                 MSGF(&LI/STRPREPRC) +
                 MSG(+
-'Unbekannter Wert "&1" fÃ¼r Fortsetzungszeichen gefunden.'             +
+'Unbekannter Wert "&1" für Fortsetzungszeichen gefunden.'             +
                 ) +
                 SEV(40) +
                 FMT( +
@@ -2489,8 +2492,8 @@ tzungszeile mit Leerzeichen.'                                         +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0010                    */
-     /* Modus fÃ¼r Marke &1 nicht definiert.                         */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0010                    */
+     /* Modus für Marke &1 nicht definiert.                         */
      /* ----------------------------------------------------------- */
 
              RMVMSGD MSGID(PRZ0010) MSGF(&LI/STRPREPRC)
@@ -2500,10 +2503,10 @@ tzungszeile mit Leerzeichen.'                                         +
                 MSGID(PRZ0010) +
                 MSGF(&LI/STRPREPRC) +
                 MSG(+
-'Modus fÃ¼r Marke &1 nicht definiert.'                                 +
+'Modus für Marke &1 nicht definiert.'                                 +
                 ) +
                 SECLVL(+
-'Fehlerbeseitigung :   Definieren des Betriebsmodus fÃ¼r die Marke &1 i-
+'Fehlerbeseitigung :   Definieren des Betriebsmodus für die Marke &1 i-
 n der Funktion f_tagToMode.'                                          +
                 ) +
                 SEV(40) +
@@ -2515,8 +2518,8 @@ n der Funktion f_tagToMode.'                                          +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0011                    */
-     /* Die DatensatzlÃ¤nge der Eingabedatei ist zu lang.            */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0011                    */
+     /* Die Datensatzlänge der Eingabedatei ist zu lang.            */
      /* ----------------------------------------------------------- */
 
              RMVMSGD MSGID(PRZ0011) MSGF(&LI/STRPREPRC)
@@ -2526,13 +2529,13 @@ n der Funktion f_tagToMode.'                                          +
                 MSGID(PRZ0011) +
                 MSGF(&LI/STRPREPRC) +
                 MSG(+
-'Die DatensatzlÃ¤nge der Eingabedatei ist zu lang.'                    +
+'Die Datensatzlänge der Eingabedatei ist zu lang.'                    +
                 ) +
                 SECLVL(+
-'Ursache . . . . . :   Die DatensatzlÃ¤nge der Datei &3/&4 betrÃ¤gt &1 B-
-yte. Die maximale DatensatzlÃ¤nge ist auf &2 Byte begrenzt. &N Fehlerbe-
-seitigung :   WÃ¤hlen Sie eine Eingabedatei aus, deren DatensatzlÃ¤nge n-
-icht grÃ¶ÃŸer als &2 Byte ist.'                                         +
+'Ursache . . . . . :   Die Datensatzlänge der Datei &3/&4 beträgt &1 B-
+yte. Die maximale Datensatzlänge ist auf &2 Byte begrenzt. &N Fehlerbe-
+seitigung :   Wählen Sie eine Eingabedatei aus, deren Datensatzlänge n-
+icht größer als &2 Byte ist.'                                         +
                 ) +
                 SEV(40) +
                 FMT( +
@@ -2546,8 +2549,8 @@ icht grÃ¶ÃŸer als &2 Byte ist.'                                         +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0012                    */
-     /* Fehler beim Ã–ffnen der Quellendatei &2/&1, Teildatei &3.    */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0012                    */
+     /* Fehler beim Öffnen der Quellendatei &2/&1, Teildatei &3.    */
      /* ----------------------------------------------------------- */
 
              RMVMSGD MSGID(PRZ0012) MSGF(&LI/STRPREPRC)
@@ -2557,7 +2560,7 @@ icht grÃ¶ÃŸer als &2 Byte ist.'                                         +
                 MSGID(PRZ0012) +
                 MSGF(&LI/STRPREPRC) +
                 MSG(+
-'Fehler beim Ã–ffnen der Quellendatei &2/&1, Teildatei &3.'            +
+'Fehler beim Öffnen der Quellendatei &2/&1, Teildatei &3.'            +
                 ) +
                 SEV(40) +
                 FMT( +
@@ -2570,8 +2573,8 @@ icht grÃ¶ÃŸer als &2 Byte ist.'                                         +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0013                    */
-     /* Fehler beim Ã–ffnen der Steuerdatei &2/&1, Teildatei &3.     */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0013                    */
+     /* Fehler beim Öffnen der Steuerdatei &2/&1, Teildatei &3.     */
      /* ----------------------------------------------------------- */
 
              RMVMSGD MSGID(PRZ0013) MSGF(&LI/STRPREPRC)
@@ -2581,7 +2584,7 @@ icht grÃ¶ÃŸer als &2 Byte ist.'                                         +
                 MSGID(PRZ0013) +
                 MSGF(&LI/STRPREPRC) +
                 MSG(+
-'Fehler beim Ã–ffnen der Steuerdatei &2/&1, Teildatei &3.'             +
+'Fehler beim Öffnen der Steuerdatei &2/&1, Teildatei &3.'             +
                 ) +
                 SEV(40) +
                 FMT( +
@@ -2594,8 +2597,8 @@ icht grÃ¶ÃŸer als &2 Byte ist.'                                         +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0014                    */
-     /* AuszufÃ¼hrender Befehl fehlt. Weitere Verarbeitung nicht mÃ¶g */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0014                    */
+     /* Auszuführender Befehl fehlt. Weitere Verarbeitung nicht mög */
      /* ----------------------------------------------------------- */
 
              RMVMSGD MSGID(PRZ0014) MSGF(&LI/STRPREPRC)
@@ -2605,13 +2608,13 @@ icht grÃ¶ÃŸer als &2 Byte ist.'                                         +
                 MSGID(PRZ0014) +
                 MSGF(&LI/STRPREPRC) +
                 MSG(+
-'AuszufÃ¼hrender Befehl fehlt. Weitere Verarbeitung nicht mÃ¶glich.'    +
+'Auszuführender Befehl fehlt. Weitere Verarbeitung nicht möglich.'    +
                 ) +
                 SECLVL(+
-'Ursache . . . . . :   Der Parameter CMD() wurde mit Leerzeichen Ã¼berg-
-eben und es wurde kein SchlÃ¼sselwort >>CRTCMD<< in der Quellenteildate-
+'Ursache . . . . . :   Der Parameter CMD() wurde mit Leerzeichen überg-
+eben und es wurde kein Schlüsselwort >>CRTCMD<< in der Quellenteildate-
 i gefunden.  &N Fehlerbeseitigung :   Angeben Parameter CMD() oder ein-
-fÃ¼gen SchlÃ¼sselwort >>CRTCMD<< in der Quellenteildatei.'              +
+fügen Schlüsselwort >>CRTCMD<< in der Quellenteildatei.'              +
                 ) +
                 SEV(40) +
      /*   Keine Ersatzvariablen definiert!                          */ +
@@ -2620,7 +2623,7 @@ fÃ¼gen SchlÃ¼sselwort >>CRTCMD<< in der Quellenteildatei.'              +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0015                    */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0015                    */
      /* Fehler im Erstellungsbefehl gefunden.                       */
      /* ----------------------------------------------------------- */
 
@@ -2645,8 +2648,8 @@ fÃ¼gen SchlÃ¼sselwort >>CRTCMD<< in der Quellenteildatei.'              +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0016                    */
-     /* Der Parameter 'OBJSRCFILE' ist nicht zulÃ¤ssig, wenn CHGOBJD */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0016                    */
+     /* Der Parameter 'OBJSRCFILE' ist nicht zulässig, wenn CHGOBJD */
      /* ----------------------------------------------------------- */
 
              RMVMSGD MSGID(PRZ0016) MSGF(&LI/STRPREPRC)
@@ -2656,7 +2659,7 @@ fÃ¼gen SchlÃ¼sselwort >>CRTCMD<< in der Quellenteildatei.'              +
                 MSGID(PRZ0016) +
                 MSGF(&LI/STRPREPRC) +
                 MSG(+
-'Der Parameter ''OBJSRCFILE'' ist nicht zulÃ¤ssig, wenn CHGOBJD(*NO) an-
+'Der Parameter ''OBJSRCFILE'' ist nicht zulässig, wenn CHGOBJD(*NO) an-
 gegeben ist.'                                                         +
                 ) +
                 SEV(40) +
@@ -2666,8 +2669,8 @@ gegeben ist.'                                                         +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0017                    */
-     /* Der Parameter 'OBJSRCLIB' ist nicht zulÃ¤ssig, wenn CHGOBJD( */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0017                    */
+     /* Der Parameter 'OBJSRCLIB' ist nicht zulässig, wenn CHGOBJD( */
      /* ----------------------------------------------------------- */
 
              RMVMSGD MSGID(PRZ0017) MSGF(&LI/STRPREPRC)
@@ -2677,7 +2680,7 @@ gegeben ist.'                                                         +
                 MSGID(PRZ0017) +
                 MSGF(&LI/STRPREPRC) +
                 MSG(+
-'Der Parameter ''OBJSRCLIB'' ist nicht zulÃ¤ssig, wenn CHGOBJD(*NO) ang-
+'Der Parameter ''OBJSRCLIB'' ist nicht zulässig, wenn CHGOBJD(*NO) ang-
 egeben ist.'                                                          +
                 ) +
                 SEV(40) +
@@ -2687,8 +2690,8 @@ egeben ist.'                                                          +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0018                    */
-     /* Der Parameter 'OBJSRCMBR' ist nicht zulÃ¤ssig, wenn CHGOBJD( */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0018                    */
+     /* Der Parameter 'OBJSRCMBR' ist nicht zulässig, wenn CHGOBJD( */
      /* ----------------------------------------------------------- */
 
              RMVMSGD MSGID(PRZ0018) MSGF(&LI/STRPREPRC)
@@ -2698,7 +2701,7 @@ egeben ist.'                                                          +
                 MSGID(PRZ0018) +
                 MSGF(&LI/STRPREPRC) +
                 MSG(+
-'Der Parameter ''OBJSRCMBR'' ist nicht zulÃ¤ssig, wenn CHGOBJD(*NO) ang-
+'Der Parameter ''OBJSRCMBR'' ist nicht zulässig, wenn CHGOBJD(*NO) ang-
 egeben ist.'                                                          +
                 ) +
                 SEV(40) +
@@ -2708,8 +2711,8 @@ egeben ist.'                                                          +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0019                    */
-     /* Der Parameter 'OBJTYPE' ist nicht zulÃ¤ssig, wenn CHGOBJD(*N */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0019                    */
+     /* Der Parameter 'OBJTYPE' ist nicht zulässig, wenn CHGOBJD(*N */
      /* ----------------------------------------------------------- */
 
              RMVMSGD MSGID(PRZ0019) MSGF(&LI/STRPREPRC)
@@ -2719,7 +2722,7 @@ egeben ist.'                                                          +
                 MSGID(PRZ0019) +
                 MSGF(&LI/STRPREPRC) +
                 MSG(+
-'Der Parameter ''OBJTYPE'' ist nicht zulÃ¤ssig, wenn CHGOBJD(*NO) angeg-
+'Der Parameter ''OBJTYPE'' ist nicht zulässig, wenn CHGOBJD(*NO) angeg-
 eben ist.'                                                            +
                 ) +
                 SEV(40) +
@@ -2729,7 +2732,7 @@ eben ist.'                                                            +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0020                    */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0020                    */
      /* Der Parameter 'OBJTYPE' muss angegeben werden, wenn CHGOBJD */
      /* ----------------------------------------------------------- */
 
@@ -2750,8 +2753,8 @@ ngegeben ist.'                                                        +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0021                    */
-     /* Befehl CHGOBJDA nicht gefunden oder unvollstÃ¤ndig.          */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0021                    */
+     /* Befehl CHGOBJDA nicht gefunden oder unvollständig.          */
      /* ----------------------------------------------------------- */
 
              RMVMSGD MSGID(PRZ0021) MSGF(&LI/STRPREPRC)
@@ -2761,7 +2764,7 @@ ngegeben ist.'                                                        +
                 MSGID(PRZ0021) +
                 MSGF(&LI/STRPREPRC) +
                 MSG(+
-'Befehl CHGOBJDA nicht gefunden oder unvollstÃ¤ndig.'                  +
+'Befehl CHGOBJDA nicht gefunden oder unvollständig.'                  +
                 ) +
                 SEV(40) +
      /*   Keine Ersatzvariablen definiert!                          */ +
@@ -2770,7 +2773,7 @@ ngegeben ist.'                                                        +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0022                    */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0022                    */
      /* Verarbeitung abgebrochen.                                   */
      /* ----------------------------------------------------------- */
 
@@ -2790,8 +2793,8 @@ ngegeben ist.'                                                        +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0023                    */
-     /* Fehlender Wert fÃ¼r Variable &1.                             */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0023                    */
+     /* Fehlender Wert für Variable &1.                             */
      /* ----------------------------------------------------------- */
 
              RMVMSGD MSGID(PRZ0023) MSGF(&LI/STRPREPRC)
@@ -2801,7 +2804,7 @@ ngegeben ist.'                                                        +
                 MSGID(PRZ0023) +
                 MSGF(&LI/STRPREPRC) +
                 MSG(+
-'Fehlender Wert fÃ¼r Variable an Position &1 des auszufÃ¼hrenden -
+'Fehlender Wert für Variable an Position &1 des auszuführenden -
 Befehls.'                                                             +
                 ) +
                 SECLVL(+
@@ -2817,7 +2820,7 @@ Befehls.'                                                             +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0024                    */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0024                    */
      /* Keine Pre-Compiler Anweisungen in Quellendatei &2/&1, Teild */
      /* ----------------------------------------------------------- */
 
@@ -2842,7 +2845,7 @@ funden.'                                                              +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0025                    */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0025                    */
      /* Could not open EVFEVENT file or job log.                    */
      /* ----------------------------------------------------------- */
 
@@ -2854,7 +2857,7 @@ funden.'                                                              +
                 MSGF(&LI/STRPREPRC) +
                 MSG(+
 'EVFEVENT Datei in Bibliothek &1 oder das Job Protokoll konnte nicht g+
-eÃ¶ffnet werden.'                                                      +
+eöffnet werden.'                                                      +
                 ) +
                 SEV(40) +
                 FMT( +
@@ -2865,7 +2868,7 @@ eÃ¶ffnet werden.'                                                      +
                 /*  -EOF-  */
 
      /* ----------------------------------------------------------- */
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0026                    */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0026                    */
      /* Could not prepare the event file.                           */
      /* ----------------------------------------------------------- */
 
@@ -2885,8 +2888,8 @@ eÃ¶ffnet werden.'                                                      +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0027                    */
-     /* Wenn die Option '*EVENTF' angegeben ist, mÃ¼ssen auch die Pa */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0027                    */
+     /* Wenn die Option '*EVENTF' angegeben ist, müssen auch die Pa */
      /*-------------------------------------------------------------*/
 
              RMVMSGD MSGID(PRZ0027) MSGF(&LI/STRPREPRC)
@@ -2896,7 +2899,7 @@ eÃ¶ffnet werden.'                                                      +
                 MSGID(PRZ0027) +
                 MSGF(&LI/STRPREPRC) +
                 MSG(+
-'Wenn die Option ''*EVENTF'' angegeben ist, mÃ¼ssen auch die Parameter -
+'Wenn die Option ''*EVENTF'' angegeben ist, müssen auch die Parameter -
 LIB() und OBJ() angegeben werden.'                                    +
                 ) +
                 SEV(40) +
@@ -2906,7 +2909,7 @@ LIB() und OBJ() angegeben werden.'                                    +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0028                    */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0028                    */
      /* Erstellungsbefehl nicht gefunden in Quellendatei &2/&1, Tei */
      /*-------------------------------------------------------------*/
 
@@ -2921,8 +2924,8 @@ LIB() und OBJ() angegeben werden.'                                    +
 '                                                                     +
                 ) +
                 SECLVL(+
-'Ursache . . . . . :   Die Teildatei enthÃ¤lt keine Pre-Compiler Anweis-
-ungen und es wurde kein Erstellungsbefehl im Parameter ''AuszufÃ¼hrende-
+'Ursache . . . . . :   Die Teildatei enthält keine Pre-Compiler Anweis-
+ungen und es wurde kein Erstellungsbefehl im Parameter ''Auszuführende-
 r Befehl'' (CMD) angegeben.'                                          +
                 ) +
                 SEV(40) +
@@ -2936,7 +2939,7 @@ r Befehl'' (CMD) angegeben.'                                          +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0029                    */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0029                    */
      /* &1                                                          */
      /*-------------------------------------------------------------*/
 
@@ -2958,7 +2961,7 @@ r Befehl'' (CMD) angegeben.'                                          +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0030                    */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0030                    */
      /* &1                                                          */
      /*-------------------------------------------------------------*/
 
@@ -2969,7 +2972,7 @@ r Befehl'' (CMD) angegeben.'                                          +
                 MSGID(PRZ0030) +
                 MSGF(&LI/STRPREPRC) +
                 MSG(+
-'Die Option *ADDJOBLOG ist nur in Verbindung mit *EVENTF zulÃ¤ssig.'   +
+'Die Option *ADDJOBLOG ist nur in Verbindung mit *EVENTF zulässig.'   +
                 ) +
                 SEV(30) +
                 FMT( +
@@ -2995,24 +2998,25 @@ srclib  =  "selected  "
 srclen  =  "00112"
 srccssid=  "00273">
 <copysrc><![CDATA[
-23.01.2007   The new parameter TAGSREQ (STRPREPRC tags required in source member) controls
-             the behaviour of STRPREPRC when it does not find STRPREPRC tags in the source
-             member. Please refer to the help text to get more information about it. The
-             INSTALLER will ask you how to set the command default of parameter TAGSREQ:
-                Default for TAGSREQ(*YES|*NO)
-             Please answer this question with *YES or *NO:
-                *YES     Message PRZ0024 is send if the source member does not contain
-                         STRPREPRC tags.
-                *NO      The source member must not contain STRPREPRC tags. This is the
-                         default of the previous versions of STRPREPRC
+STRPREPRC - A Tools/400 Utility
+-------------------------------
 
+STRPREPRC is utility for retrieving object creation parameters from the
+source member that is compiled and building and executing the final
+object creation command.
 
+Dependencies: BASICS1, EVENTF, JOBLOG
 
+Compile members with the following PDM option:
 
+   STRPREPRC USESRCFILE(&L/&F) USESRCMBR(&N) OPTION(*EVENTF) CHGOBJD(*NO)
+     LIB(&O) OBJ(&N) SRCLIB(&L) SRCFILE(&F) SRCMBR(&N) USER0(&X)
+     USER1(*LIST) USER2(*FULL)
 
+Members of type MAKPGM or BND are used for linking programs (MAKPGM)
+and service programs (BND).
 
-
-
+2018, Thomas Raddatz
 ]]>  </copysrc>
 </mbr>
 <sendmsg  sendmsgid="CPF9897" sendmsgtype = "*STATUS   "><![CDATA[
@@ -3029,13 +3033,13 @@ srclen  =  "00112"
 srccssid=  "00273">
 <copysrc><![CDATA[
       /if not defined(COPYRIGHT_DSPEC)
-     h COPYRIGHT('V1.15.2 - 22.11.2017 - mailto: thomas.raddatz@tools400.de')
+     h COPYRIGHT('V1.15.3 - 18.04.2018 - mailto: thomas.raddatz@tools400.de')
       /eof
       /endif
      d STRPREPRC_VERSION...
-     d                 C                   '1.15.2'
+     d                 C                   '1.15.3'
      d STRPREPRC_DATE...
-     d                 C                   '22.11.2017'
+     d                 C                   '18.04.2018'
       *
 ]]>  </copysrc>
 </mbr>
@@ -3151,7 +3155,7 @@ srclen  =  "00112"
 srccssid=  "00273">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
-      * Datenstruktur fÃ¼r Message-ID : PRZ0001
+      * Datenstruktur für Message-ID : PRZ0001
       *
       * Falsche Reihenfolge im Betriebsmodus.
       *
@@ -3176,7 +3180,7 @@ srclen  =  "00112"
 srccssid=  "00273">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
-      * Datenstruktur fÃ¼r Message-ID : PRZ0002
+      * Datenstruktur für Message-ID : PRZ0002
       *
       * Verarbeitung in Zeile &1 abgebrochen.
       *
@@ -3200,9 +3204,9 @@ srclen  =  "00112"
 srccssid=  "00273">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
-      * Datenstruktur fÃ¼r Message-ID : PRZ0003
+      * Datenstruktur für Message-ID : PRZ0003
       *
-      * Parameteranweisung in der Betriebsart &1 unzulÃ¤ssig.
+      * Parameteranweisung in der Betriebsart &1 unzulässig.
       *
      D PRZ0003         DS
      D  PRZ00031                    030A   INZ(*BLANKS)
@@ -3217,16 +3221,16 @@ Installing PRZ0004  type RPGLE - in progress.
 <mbr
 mbrname =  "PRZ0004   "
 mbrtype =  "RPGLE     "
-mbrtext =  "MSG: Die Marke  1 ist auÃŸerhalb der Betriebsart  2"
+mbrtext =  "MSG: Die Marke  1 ist außerhalb der Betriebsart  2"
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
 srccssid=  "00273">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
-      * Datenstruktur fÃ¼r Message-ID : PRZ0004
+      * Datenstruktur für Message-ID : PRZ0004
       *
-      * Die Marke &1 ist auÃŸerhalb der Betriebsart &2 nicht erlaubt
+      * Die Marke &1 ist außerhalb der Betriebsart &2 nicht erlaubt
       *
      D PRZ0004         DS
      D  PRZ00041                    030A   INZ(*BLANKS)
@@ -3242,16 +3246,16 @@ Installing PRZ0005  type RPGLE - in progress.
 <mbr
 mbrname =  "PRZ0005   "
 mbrtype =  "RPGLE     "
-mbrtext =  "MSG: UngÃ¼ltiges Fortsetzungszeichen  1 in Zeile  2"
+mbrtext =  "MSG: Ungültiges Fortsetzungszeichen  1 in Zeile  2"
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
 srccssid=  "00273">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
-      * Datenstruktur fÃ¼r Message-ID : PRZ0005
+      * Datenstruktur für Message-ID : PRZ0005
       *
-      * UngÃ¼ltiges Fortsetzungszeichen &1 in Zeile &2 gefunden.
+      * Ungültiges Fortsetzungszeichen &1 in Zeile &2 gefunden.
       *
      D PRZ0005         DS
      D  PRZ00051                    010A   INZ(*BLANKS)
@@ -3267,16 +3271,16 @@ Installing PRZ0006  type RPGLE - in progress.
 <mbr
 mbrname =  "PRZ0006   "
 mbrtype =  "RPGLE     "
-mbrtext =  "MSG: Das Ende des SchlÃ¼sselwortes  1 konnte nicht "
+mbrtext =  "MSG: Das Ende des Schlüsselwortes  1 konnte nicht "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
 srccssid=  "00273">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
-      * Datenstruktur fÃ¼r Message-ID : PRZ0006
+      * Datenstruktur für Message-ID : PRZ0006
       *
-      * Das Ende des SchlÃ¼sselwortes &1 konnte nicht gefunden werde
+      * Das Ende des Schlüsselwortes &1 konnte nicht gefunden werde
       *
      D PRZ0006         DS
      D  PRZ00061                    010A   INZ(*BLANKS)
@@ -3298,7 +3302,7 @@ srclen  =  "00112"
 srccssid=  "00273">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
-      * Datenstruktur fÃ¼r Message-ID : PRZ0007
+      * Datenstruktur für Message-ID : PRZ0007
       *
       * Befehlszeichenfolge ist zu lang.
       *
@@ -3322,7 +3326,7 @@ srclen  =  "00112"
 srccssid=  "00273">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
-      * Datenstruktur fÃ¼r Message-ID : PRZ0008
+      * Datenstruktur für Message-ID : PRZ0008
       *
       * Das Zeilenendekennzeichen konnte nicht gefunden werden.
       *
@@ -3339,16 +3343,16 @@ Installing PRZ0009  type RPGLE - in progress.
 <mbr
 mbrname =  "PRZ0009   "
 mbrtype =  "RPGLE     "
-mbrtext =  "MSG: Unbekannter Wert   1  fÃ¼r Fortsetzungszeichen"
+mbrtext =  "MSG: Unbekannter Wert   1  für Fortsetzungszeichen"
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
 srccssid=  "00273">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
-      * Datenstruktur fÃ¼r Message-ID : PRZ0009
+      * Datenstruktur für Message-ID : PRZ0009
       *
-      * Unbekannter Wert "&1" fÃ¼r Fortsetzungszeichen gefunden.
+      * Unbekannter Wert "&1" für Fortsetzungszeichen gefunden.
       *
      D PRZ0009         DS
      D  PRZ00091                    010A   INZ(*BLANKS)
@@ -3363,16 +3367,16 @@ Installing PRZ0010  type RPGLE - in progress.
 <mbr
 mbrname =  "PRZ0010   "
 mbrtype =  "RPGLE     "
-mbrtext =  "MSG: Modus fÃ¼r Marke  1 nicht definiert.          "
+mbrtext =  "MSG: Modus für Marke  1 nicht definiert.          "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
 srccssid=  "00273">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
-      * Datenstruktur fÃ¼r Message-ID : PRZ0010
+      * Datenstruktur für Message-ID : PRZ0010
       *
-      * Modus fÃ¼r Marke &1 nicht definiert.
+      * Modus für Marke &1 nicht definiert.
       *
      D PRZ0010         DS
      D  PRZ00101                    030A   INZ(*BLANKS)
@@ -3387,16 +3391,16 @@ Installing PRZ0011  type RPGLE - in progress.
 <mbr
 mbrname =  "PRZ0011   "
 mbrtype =  "RPGLE     "
-mbrtext =  "MSG: Die DatensatzlÃ¤nge der Eingabedatei ist zu la"
+mbrtext =  "MSG: Die Datensatzlänge der Eingabedatei ist zu la"
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
 srccssid=  "00273">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
-      * Datenstruktur fÃ¼r Message-ID : PRZ0011
+      * Datenstruktur für Message-ID : PRZ0011
       *
-      * Die DatensatzlÃ¤nge der Eingabedatei ist zu lang.
+      * Die Datensatzlänge der Eingabedatei ist zu lang.
       *
      D PRZ0011         DS
      D  PRZ00111                    010P 0 INZ(*ZEROS )
@@ -3414,16 +3418,16 @@ Installing PRZ0012  type RPGLE - in progress.
 <mbr
 mbrname =  "PRZ0012   "
 mbrtype =  "RPGLE     "
-mbrtext =  "MSG: Fehler beim Ã–ffnen der Quellendatei  2/ 1, Te"
+mbrtext =  "MSG: Fehler beim Öffnen der Quellendatei  2/ 1, Te"
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
 srccssid=  "00273">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
-      * Datenstruktur fÃ¼r Message-ID : PRZ0012
+      * Datenstruktur für Message-ID : PRZ0012
       *
-      * Fehler beim Ã–ffnen der Quellendatei &2/&1, Teildatei &3.
+      * Fehler beim Öffnen der Quellendatei &2/&1, Teildatei &3.
       *
      D PRZ0012         DS
      D  PRZ00121                    010A   INZ(*BLANKS)
@@ -3440,16 +3444,16 @@ Installing PRZ0013  type RPGLE - in progress.
 <mbr
 mbrname =  "PRZ0013   "
 mbrtype =  "RPGLE     "
-mbrtext =  "MSG: Fehler beim Ã–ffnen der Steuerdatei  2/ 1, Tei"
+mbrtext =  "MSG: Fehler beim Öffnen der Steuerdatei  2/ 1, Tei"
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
 srccssid=  "00273">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
-      * Datenstruktur fÃ¼r Message-ID : PRZ0013
+      * Datenstruktur für Message-ID : PRZ0013
       *
-      * Fehler beim Ã–ffnen der Steuerdatei &2/&1, Teildatei &3.
+      * Fehler beim Öffnen der Steuerdatei &2/&1, Teildatei &3.
       *
      D PRZ0013         DS
      D  PRZ00131                    010A   INZ(*BLANKS)
@@ -3466,16 +3470,16 @@ Installing PRZ0014  type RPGLE - in progress.
 <mbr
 mbrname =  "PRZ0014   "
 mbrtype =  "RPGLE     "
-mbrtext =  "MSG: AuszufÃ¼hrender Befehl fehlt. Weitere Verarbei"
+mbrtext =  "MSG: Auszuführender Befehl fehlt. Weitere Verarbei"
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
 srccssid=  "00273">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
-      * Datenstruktur fÃ¼r Message-ID : PRZ0014
+      * Datenstruktur für Message-ID : PRZ0014
       *
-      * AuszufÃ¼hrender Befehl fehlt. Weitere Verarbeitung nicht mÃ¶g
+      * Auszuführender Befehl fehlt. Weitere Verarbeitung nicht mög
       *
      D PRZ0014         DS
       *   Keine Ersatzvariablen definiert!
@@ -3497,7 +3501,7 @@ srclen  =  "00112"
 srccssid=  "00273">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
-      * Datenstruktur fÃ¼r Message-ID : PRZ0015
+      * Datenstruktur für Message-ID : PRZ0015
       *
       * Fehler im Erstellungsbefehl gefunden.
       *
@@ -3514,16 +3518,16 @@ Installing PRZ0016  type RPGLE - in progress.
 <mbr
 mbrname =  "PRZ0016   "
 mbrtype =  "RPGLE     "
-mbrtext =  "MSG: Der Parameter  OBJSRCFILE  ist nicht zulÃ¤ss  "
+mbrtext =  "MSG: Der Parameter  OBJSRCFILE  ist nicht zuläss  "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
 srccssid=  "00273">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
-      * Datenstruktur fÃ¼r Message-ID : PRZ0016
+      * Datenstruktur für Message-ID : PRZ0016
       *
-      * Der Parameter 'OBJSRCFILE' ist nicht zulÃ¤ssig, wenn CHGOBJD
+      * Der Parameter 'OBJSRCFILE' ist nicht zulässig, wenn CHGOBJD
       *
      D PRZ0016         DS
       *   Keine Ersatzvariablen definiert!
@@ -3538,16 +3542,16 @@ Installing PRZ0017  type RPGLE - in progress.
 <mbr
 mbrname =  "PRZ0017   "
 mbrtype =  "RPGLE     "
-mbrtext =  "MSG: Der Parameter  OBJSRCLIB  ist nicht zulÃ¤ssi  "
+mbrtext =  "MSG: Der Parameter  OBJSRCLIB  ist nicht zulässi  "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
 srccssid=  "00273">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
-      * Datenstruktur fÃ¼r Message-ID : PRZ0017
+      * Datenstruktur für Message-ID : PRZ0017
       *
-      * Der Parameter 'OBJSRCLIB' ist nicht zulÃ¤ssig, wenn CHGOBJD(
+      * Der Parameter 'OBJSRCLIB' ist nicht zulässig, wenn CHGOBJD(
       *
      D PRZ0017         DS
       *   Keine Ersatzvariablen definiert!
@@ -3562,16 +3566,16 @@ Installing PRZ0018  type RPGLE - in progress.
 <mbr
 mbrname =  "PRZ0018   "
 mbrtype =  "RPGLE     "
-mbrtext =  "MSG: Der Parameter  OBJSRCMBR  ist nicht zulÃ¤ssi  "
+mbrtext =  "MSG: Der Parameter  OBJSRCMBR  ist nicht zulässi  "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
 srccssid=  "00273">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
-      * Datenstruktur fÃ¼r Message-ID : PRZ0018
+      * Datenstruktur für Message-ID : PRZ0018
       *
-      * Der Parameter 'OBJSRCMBR' ist nicht zulÃ¤ssig, wenn CHGOBJD(
+      * Der Parameter 'OBJSRCMBR' ist nicht zulässig, wenn CHGOBJD(
       *
      D PRZ0018         DS
       *   Keine Ersatzvariablen definiert!
@@ -3586,16 +3590,16 @@ Installing PRZ0019  type RPGLE - in progress.
 <mbr
 mbrname =  "PRZ0019   "
 mbrtype =  "RPGLE     "
-mbrtext =  "MSG: Der Parameter  OBJTYPE  ist nicht zulÃ¤ssig,  "
+mbrtext =  "MSG: Der Parameter  OBJTYPE  ist nicht zulässig,  "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
 srccssid=  "00273">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
-      * Datenstruktur fÃ¼r Message-ID : PRZ0019
+      * Datenstruktur für Message-ID : PRZ0019
       *
-      * Der Parameter 'OBJTYPE' ist nicht zulÃ¤ssig, wenn CHGOBJD(*N
+      * Der Parameter 'OBJTYPE' ist nicht zulässig, wenn CHGOBJD(*N
       *
      D PRZ0019         DS
       *   Keine Ersatzvariablen definiert!
@@ -3617,7 +3621,7 @@ srclen  =  "00112"
 srccssid=  "00273">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
-      * Datenstruktur fÃ¼r Message-ID : PRZ0020
+      * Datenstruktur für Message-ID : PRZ0020
       *
       * Der Parameter 'OBJTYPE' muss angegeben werden, wenn CHGOBJD
       *
@@ -3634,16 +3638,16 @@ Installing PRZ0021  type RPGLE - in progress.
 <mbr
 mbrname =  "PRZ0021   "
 mbrtype =  "RPGLE     "
-mbrtext =  "MSG: Befehl CHGOBJDA nicht gefunden oder unvollstÃ¤"
+mbrtext =  "MSG: Befehl CHGOBJDA nicht gefunden oder unvollstä"
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
 srccssid=  "00273">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
-      * Datenstruktur fÃ¼r Message-ID : PRZ0021
+      * Datenstruktur für Message-ID : PRZ0021
       *
-      * Befehl CHGOBJDA nicht gefunden oder unvollstÃ¤ndig.
+      * Befehl CHGOBJDA nicht gefunden oder unvollständig.
       *
      D PRZ0021         DS
       *   Keine Ersatzvariablen definiert!
@@ -3665,7 +3669,7 @@ srclen  =  "00112"
 srccssid=  "00273">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
-      * Datenstruktur fÃ¼r Message-ID : PRZ0022
+      * Datenstruktur für Message-ID : PRZ0022
       *
       * Verarbeitung abgebrochen.
       *
@@ -3682,16 +3686,16 @@ Installing PRZ0023  type RPGLE - in progress.
 <mbr
 mbrname =  "PRZ0023   "
 mbrtype =  "RPGLE     "
-mbrtext =  "MSG: Fehlender Wert fÃ¼r Variable an Position  1 de"
+mbrtext =  "MSG: Fehlender Wert für Variable an Position  1 de"
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
 srccssid=  "00273">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
-      * Datenstruktur fÃ¼r Message-ID : PRZ0023
+      * Datenstruktur für Message-ID : PRZ0023
       *
-      * Fehlender Wert fÃ¼r Variable an Position &1 des auszufÃ¼hrend
+      * Fehlender Wert für Variable an Position &1 des auszuführend
       *
      D PRZ0023         DS
      D  PRZ00231                    010P 0 INZ(*ZEROS )
@@ -3714,7 +3718,7 @@ srclen  =  "00112"
 srccssid=  "00273">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
-      * Datenstruktur fÃ¼r Message-ID : PRZ0024
+      * Datenstruktur für Message-ID : PRZ0024
       *
       * Keine Pre-Compiler Anweisungen in Quellendatei &2/&1, Teildatei &3 gefunden.
       *
@@ -3740,9 +3744,9 @@ srclen  =  "00112"
 srccssid=  "00273">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
-      * Datenstruktur fÃ¼r Message-ID : PRZ0025
+      * Datenstruktur für Message-ID : PRZ0025
       *
-      * EVFEVENT Datei in Bibliothek &1 oder das Job Protokoll konnte nicht geÃ¶ffne
+      * EVFEVENT Datei in Bibliothek &1 oder das Job Protokoll konnte nicht geöffne
       *
      D PRZ0025         DS
      D  PRZ00251                    010A   INZ(*BLANKS)
@@ -3764,7 +3768,7 @@ srclen  =  "00112"
 srccssid=  "00273">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
-      * Datenstruktur fÃ¼r Message-ID : PRZ0026
+      * Datenstruktur für Message-ID : PRZ0026
       *
       * EVFEVENT Datei konnte nicht zur Ausgabe vorbereitet werden.
       *
@@ -3781,16 +3785,16 @@ Installing PRZ0027  type RPGLE - in progress.
 <mbr
 mbrname =  "PRZ0027   "
 mbrtype =  "RPGLE     "
-mbrtext =  "MSG: Wenn die Option  *EVENTF  angegeben ist, mÃ¼ss"
+mbrtext =  "MSG: Wenn die Option  *EVENTF  angegeben ist, müss"
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
 srccssid=  "00273">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
-      * Datenstruktur fÃ¼r Message-ID : PRZ0027
+      * Datenstruktur für Message-ID : PRZ0027
       *
-      * Wenn die Option '*EVENTF' angegeben ist, mÃ¼ssen auch die Pa
+      * Wenn die Option '*EVENTF' angegeben ist, müssen auch die Pa
       *
      D PRZ0027         DS
       *   Keine Ersatzvariablen definiert!
@@ -3812,7 +3816,7 @@ srclen  =  "00112"
 srccssid=  "00273">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
-      * Datenstruktur fÃ¼r Message-ID : PRZ0028
+      * Datenstruktur für Message-ID : PRZ0028
       *
       * Erstellungsbefehl nicht gefunden in Quellendatei &2/&1, Teildatei &3.
       *
@@ -3838,7 +3842,7 @@ srclen  =  "00112"
 srccssid=  "00273">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
-      * Datenstruktur fÃ¼r Message-ID : PRZ0029
+      * Datenstruktur für Message-ID : PRZ0029
       *
       * &1.
       *
@@ -3862,9 +3866,9 @@ srclen  =  "00112"
 srccssid=  "00273">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
-      * Datenstruktur fÃ¼r Message-ID : PRZ0030
+      * Datenstruktur für Message-ID : PRZ0030
       *
-      * Wenn die Option '*EVENTF' angegeben ist, mÃ¼ssen auch die Pa
+      * Wenn die Option '*EVENTF' angegeben ist, müssen auch die Pa
       * Die Option *ADDJOBLOG ist nur in Verbindung mit *EVENTF zul
       *
      D PRZ0030         DS
@@ -4875,7 +4879,7 @@ srccssid=  "00273">
 .*=====================================================================*
 .*  History:                                                           *
 .*                                                                     *
-.*  Datum       Name          Ã„nderung                                 *
+.*  Datum       Name          Änderung                                 *
 .*  ----------  ------------  ---------------------------------------  *
 .*  23.01.2007  Th.Raddatz    Added parameter TAGSREQ(...) to command. *
 .*                                                                     *
@@ -4971,27 +4975,27 @@ Pre-Prozessor starten - Hilfe
 :P.
 Der Befehl STRPREPRC startet den Pre-Prozessor. Der Pre-Prozessor
 durchsucht die angegebene Quellenteildatei nach Pre-Prozessor Marken und
-fÃ¼gt die dort gefundenen SchlÃ¼sselworte in den Erstellungsbefehl ein,
-bzw. ersetzt bereits vorhandene SchlÃ¼sselworte. Zu ersetzende SchlÃ¼sselwÃ¶rte
-mÃ¼ssen durch :HP3.>>PARM<<:EHP3. Marken definiert werden.
+fügt die dort gefundenen Schlüsselworte in den Erstellungsbefehl ein,
+bzw. ersetzt bereits vorhandene Schlüsselworte. Zu ersetzende Schlüsselwörte
+müssen durch :HP3.>>PARM<<:EHP3. Marken definiert werden.
 :P.
 Weiterhin kann der Pre-Prozessor Vor- und Nachlaufbefehle vor, bzw. nach
-dem eigentlichen Erstellungsbefehl ausfÃ¼hren.
+dem eigentlichen Erstellungsbefehl ausführen.
 :P.
-Ãœber eine PDM-Kurzbefehl lassen sich die Objekte, die Ã¼ber Pre-Prozessor
-Anweisungen in der Quellenteildatei verfÃ¼gen, leicht erstellen:
+Über eine PDM-Kurzbefehl lassen sich die Objekte, die über Pre-Prozessor
+Anweisungen in der Quellenteildatei verfügen, leicht erstellen:
 :P.
 :LINES.
 STRPREPRC USESRCFILE(&L/&F) USESRCMBR(&N) LIB(&O) OBJ(&N)
             SRCLIB(&L) SRCFILE(&F) SRCMBR(&N)
 :ELINES.
 :P.
-Obwohl der Befehl STRPREPRC ursprÃ¼nglich entwickelt worden ist, um
-die eingesetzte Change Management Software an eigene BedÃ¼rfnisse
+Obwohl der Befehl STRPREPRC ursprünglich entwickelt worden ist, um
+die eingesetzte Change Management Software an eigene Bedürfnisse
 anzupassen, kann er auch ausserhalb der Change Management Software
 verwendet werden und gute Dienste leisten.
 :P.
-Der Anweisungsblock fÃ¼r den Pre-Prozessor kann wie folgt aussehen:
+Der Anweisungsblock für den Pre-Prozessor kann wie folgt aussehen:
 :P.
 :LINES.
 0001.00    >>PRE-COMPILER<<
@@ -5016,7 +5020,7 @@ Der Anweisungsblock fÃ¼r den Pre-Prozessor kann wie folgt aussehen:
 0020.00                               MBR(*FIRST) +
 0021.00                               OVRSCOPE(*JOB);
 0022.00
-0023.00        /* Ã„ndern Bibliotheksliste */
+0023.00        /* Ändern Bibliotheksliste */
 0024.00        >>CURLIB<<           *CRTDFT;
 0025.00        >>LIBL<<             &LL;
 0026.00
@@ -5034,14 +5038,14 @@ Der Anweisungsblock fÃ¼r den Pre-Prozessor kann wie folgt aussehen:
 :HP1.Verwendung von Variablen im Pre-Prozessor-Abschnitt::EHP1.
 :P.
 Im Pre-Prozessor-Abschnitt lassen sich Variablen einbinden, um flexibler
-auf Ã¤ussere Anforderungen reagieren zu kÃ¶nnen. So kÃ¶nnte es bspw. sinnvoll
-sein, die Objektbibliothek von aussen mitgeben zu kÃ¶nnen, um das Objekt
-je nach Anforderung in verschiedene Bibliotheken erstellen zu kÃ¶nnen.
+auf äussere Anforderungen reagieren zu können. So könnte es bspw. sinnvoll
+sein, die Objektbibliothek von aussen mitgeben zu können, um das Objekt
+je nach Anforderung in verschiedene Bibliotheken erstellen zu können.
 :P.
-Die mÃ¶glichen Variablen kÃ¶nnen am STRPREPRC Prompt per F9 eingeblendet
-werden, um die entsprechenden Werte angeben zu kÃ¶nnen.
+Die möglichen Variablen können am STRPREPRC Prompt per F9 eingeblendet
+werden, um die entsprechenden Werte angeben zu können.
 :P.
-Im Zusammenspiel mit einem PDM-Kurzbefehl (siehe oben) lÃ¤ÃŸt sich dies
+Im Zusammenspiel mit einem PDM-Kurzbefehl (siehe oben) läßt sich dies
 komfortabel automatisieren.
 :P.
 :HP1.Die Bedeutung der Marken im Einzelnen::EHP1.
@@ -5053,104 +5057,104 @@ ein.
 
 :PT.>>END-PRE-COMPILER<<
 :PD.Diese Marke beendet den Pre-Prozessor-Abschnitt in der
-Quellendatei. Alle sonstigen Marken des Pre-Prozessors mÃ¼ssen sich zwischen
+Quellendatei. Alle sonstigen Marken des Pre-Prozessors müssen sich zwischen
 diesen beiden Marken befinden.
 
 :PT.>>IMPORTANT<<
-:PD.Diese Marke leitet den Abschnitt fÃ¼r die Compiler-SchlÃ¼sselworte ein.
+:PD.Diese Marke leitet den Abschnitt für die Compiler-Schlüsselworte ein.
 
 :PT.>>END-IMPORTANT<<
-:PD.Diese Marke beendet den Abschnitt fÃ¼r die
-Compiler-SchlÃ¼sselworte. Zwischen diesen beiden Marken werden die
-BefehlsschlÃ¼sselwÃ¶rter Ã¼ber :HP3.>>PARM<<:EHP3. Marken angegeben. Von
+:PD.Diese Marke beendet den Abschnitt für die
+Compiler-Schlüsselworte. Zwischen diesen beiden Marken werden die
+Befehlsschlüsselwörter über :HP3.>>PARM<<:EHP3. Marken angegeben. Von
 der Verabeitung her betrachtet gibt es keinen Unterschied zwischen
-den Abschnitten IMPORTANT, COMPILE und LINK. Die Abschnitte kÃ¶nnen daher
-frei nach GefÃ¼hl verwendet werden.
+den Abschnitten IMPORTANT, COMPILE und LINK. Die Abschnitte können daher
+frei nach Gefühl verwendet werden.
 
 :PT.>>COMPILE<<
-:PD.Diese Marke leitet den Abschnitt fÃ¼r die Compiler-SchlÃ¼sselworte ein.
+:PD.Diese Marke leitet den Abschnitt für die Compiler-Schlüsselworte ein.
 
 :PT.>>END-COMPILE<<
-:PD.Diese Marke beendet den Abschnitt fÃ¼r die
-Compiler-SchlÃ¼sselworte. Zwischen diesen beiden Marken werden die
-BefehlsschlÃ¼sselwÃ¶rter Ã¼ber :HP3.>>PARM<<:EHP3. Marken angegeben. Von
+:PD.Diese Marke beendet den Abschnitt für die
+Compiler-Schlüsselworte. Zwischen diesen beiden Marken werden die
+Befehlsschlüsselwörter über :HP3.>>PARM<<:EHP3. Marken angegeben. Von
 der Verabeitung her betrachtet gibt es keinen Unterschied zwischen
-den Abschnitten IMPORTANT, COMPILE und LINK. Die Abschnitte kÃ¶nnen daher
-frei nach GefÃ¼hl verwendet werden.
+den Abschnitten IMPORTANT, COMPILE und LINK. Die Abschnitte können daher
+frei nach Gefühl verwendet werden.
 
 :PT.>>LINK<<
-:PD.Diese Marke leitet den Abschnitt fÃ¼r die Linker-SchlÃ¼sselworte ein.
+:PD.Diese Marke leitet den Abschnitt für die Linker-Schlüsselworte ein.
 
 :PT.>>END-LINK<<
-:PD.Diese Marke beendet den Abschnitt fÃ¼r die
-Linker SchlÃ¼sselworte. Zwischen diesen beiden Marken werden die
-BefehlsschlÃ¼sselwÃ¶rter Ã¼ber :HP3.>>PARM<<:EHP3. Marken angegeben. Von
+:PD.Diese Marke beendet den Abschnitt für die
+Linker Schlüsselworte. Zwischen diesen beiden Marken werden die
+Befehlsschlüsselwörter über :HP3.>>PARM<<:EHP3. Marken angegeben. Von
 der Verabeitung her betrachtet gibt es keinen Unterschied zwischen
-den Abschnitten IMPORTANT, COMPILE und LINK. Die Abschnitte kÃ¶nnen daher
-frei nach GefÃ¼hl verwendet werden.
+den Abschnitten IMPORTANT, COMPILE und LINK. Die Abschnitte können daher
+frei nach Gefühl verwendet werden.
 
 :PT.>>LIBL<<
-:PD.Diese Marke fÃ¼r den Befehl CHGLIBL aus, um die Bbliotheksliste
-auf den angegebenen Wert zu setzen. Die angegebenen Bibliotheken mÃ¼ssen
-durch Leerzeichen getrennt angegeben sein. Die Ã¼berschriebene Bibliotheksliste
-steht anschlieÃŸend in der Variablen :HP2.&LX:EHP2. zur VerfÃ¼gung.
+:PD.Diese Marke für den Befehl CHGLIBL aus, um die Bbliotheksliste
+auf den angegebenen Wert zu setzen. Die angegebenen Bibliotheken müssen
+durch Leerzeichen getrennt angegeben sein. Die überschriebene Bibliotheksliste
+steht anschließend in der Variablen :HP2.&LX:EHP2. zur Verfügung.
 
 :PT.>>CURLIB<<
-:PD.Diese Marke fÃ¼r den Befehl CHGLIBL aus, um die aktuelle Bibliothek
-auf den angegebenen Wert zu setzen. Die Ã¼berschriebene aktuelle Bibliothek
-steht anschlieÃŸend in der Variablen :HP2.&CX:EHP2. zur VerfÃ¼gung.
+:PD.Diese Marke für den Befehl CHGLIBL aus, um die aktuelle Bibliothek
+auf den angegebenen Wert zu setzen. Die überschriebene aktuelle Bibliothek
+steht anschließend in der Variablen :HP2.&CX:EHP2. zur Verfügung.
 
 :PT.>>PARM<<
-:PD.Diese Marke definiert ein SchlÃ¼sselwort fÃ¼r den
+:PD.Diese Marke definiert ein Schlüsselwort für den
 Erstellungsbefehl. >>PARM<< Marken sind nur innerhalb der
-Compiler- und Linker-Abschnitte zulÃ¤ssig. Ãœber >>PARM<<
-definierte SchlÃ¼sselwÃ¶rter Ã¼berschreiben SchlÃ¼sselwÃ¶rte
-eines Ã¼bergebenen oder unter :HP3.>>CMD<<:EHP3. angegebenen
+Compiler- und Linker-Abschnitte zulässig. Über >>PARM<<
+definierte Schlüsselwörter überschreiben Schlüsselwörte
+eines übergebenen oder unter :HP3.>>CMD<<:EHP3. angegebenen
 Befehls.
 
 :PT.>>CMD<<
 :PD.Diese Marke definiert einen OS/400 CL-Befehl, der an dieser Stelle
-der Pre-Prozessor-Anweisungen ausgefÃ¼hrt werden soll. Wenn diese Marke vor
+der Pre-Prozessor-Anweisungen ausgeführt werden soll. Wenn diese Marke vor
 einer :HP3.>>EXECUTE<<:EHP3. Marke angegeben wird, so entspricht dies
-einem Vorlaufbefehl, der vor dem Erstellungsbefehl ausgefÃ¼hrt wird. Wenn
+einem Vorlaufbefehl, der vor dem Erstellungsbefehl ausgeführt wird. Wenn
 diese Marke nach einer :HP3.>>EXECUTE<<:EHP3. Marke angegeben wird, so
 entspricht dies einem Nachlaufbefehl, der nach dem Erstellungsbefehl
-ausgefÃ¼hrt wird. >>CMD<< Marken dÃ¼rfen mehrfach vorkommen.
+ausgeführt wird. >>CMD<< Marken dürfen mehrfach vorkommen.
 
 :PT.>>CRTCMD<<
-:PD.Diese Marke definiert den Ã¼ber >>EXECUTE<< auszufÃ¼hrenden
+:PD.Diese Marke definiert den über >>EXECUTE<< auszuführenden
 Erstellungsbefehl.
 Die >>CRTCMD<< Marke ist optional. Der Erstellungsbefehl kann
-alternativ auch Ã¼ber den Befehl STRPREPRC mitgegeben werden. Wenn
+alternativ auch über den Befehl STRPREPRC mitgegeben werden. Wenn
 die >>CRTCMD<< Marke angegeben wird, dann sollte sie nur einmal
 am Anfang der Pre-Prozessor-Anweisungen definiert werden.
 
 :PT.>>EXECUTE<<
-:PD.Diese Marke lÃ¤sst den Erstellungsbefehl ausfÃ¼hren. Die >>EXECUTE<<
+:PD.Diese Marke lässt den Erstellungsbefehl ausführen. Die >>EXECUTE<<
 Marke sollte nur einmal angegeben werden. Wenn die >>EXECUTE<< Marke
 nicht angegeben wird, dann wird der Erstellungsbefehl impliziet am
-Ende der Pre-Prozessor-Anweisungen ausgefÃ¼hrt.
+Ende der Pre-Prozessor-Anweisungen ausgeführt.
 :EPARML.
 
 :P.
 :HP1.Die Bedeutung der Zeilenendezeichen im Einzelnen::EHP1.
 :P.
 Die Marken :HP3.>>PARM<<:EHP3., :HP3.>>CMD<<:EHP3. und
-:HP3.>>EXECUTE<<:EHP3. mÃ¼ssen mit einem Zeilenendekennzeichen
+:HP3.>>EXECUTE<<:EHP3. müssen mit einem Zeilenendekennzeichen
 abgeschlossen werden.
 :P.
 :PARML.
 :PT.:PV.'+' - Zeichen:EPV.
 :PD.Die Zeile ist nicht abgeschlossen. Es folgt eine weitere Zeile. Die
-nachfolgende Zeile wird :HP1.ohne:EHP1. fÃ¼hrende Leerzeichen hinzugefÃ¼gt.
+nachfolgende Zeile wird :HP1.ohne:EHP1. führende Leerzeichen hinzugefügt.
 
 :PT.:PV.'-' - Zeichen:EPV.
 :PD.Die Zeile ist nicht abgeschlossen. Es folgt eine weitere Zeile. Die
-nachfolgende Zeile wird :HP1.mit:EHP1. fÃ¼hrenden Leerzeichen
-hinzugefÃ¼gt. Die Anzahl
-der fÃ¼hrenden Leerzeichen richtet sich nach der Position des
-BefehlsschlÃ¼sselwortes. Wird z.B. OVRDBF(...) angegeben, so wird die
-Startposition der nÃ¤chsten Zeile durch das 'O' von OVRDBF(...)
+nachfolgende Zeile wird :HP1.mit:EHP1. führenden Leerzeichen
+hinzugefügt. Die Anzahl
+der führenden Leerzeichen richtet sich nach der Position des
+Befehlsschlüsselwortes. Wird z.B. OVRDBF(...) angegeben, so wird die
+Startposition der nächsten Zeile durch das 'O' von OVRDBF(...)
 gekennzeichnet.
 
 :PT.:PV.';' - Zeichen:EPV.
@@ -5172,7 +5176,7 @@ Quellendatei (USESRCFILE) - Hilfe
 :XH3.Quellendatei (USESRCFILE)
 :P.
 Name der Quellendatei, welche die Quellenteildatei mit den
-Pre-Prozessor-Anweisungen fÃ¼r die Objekterstellung enthÃ¤lt.
+Pre-Prozessor-Anweisungen für die Objekterstellung enthält.
 :IMHELP name='COM/REQPARM'.
 :P.
 :IMHELP name='COM/VALUES'.
@@ -5180,7 +5184,7 @@ Pre-Prozessor-Anweisungen fÃ¼r die Objekterstellung enthÃ¤lt.
 :PT.:PV.Name der Quellendatei:EPV.
 :PD.Name der Quellendatei.
 :PT.:PV.Bibliothek:EPV.
-:PD.Name der Bibliothek, welche die Quellendatei enthÃ¤lt.
+:PD.Name der Bibliothek, welche die Quellendatei enthält.
 :EPARML.
 :EHELP.
 
@@ -5191,8 +5195,8 @@ Pre-Prozessor-Anweisungen fÃ¼r die Objekterstellung enthÃ¤lt.
 Teildatei (USESRCMBR) - Hilfe
 :XH3.Teildatei (USESRCMBR)
 :P.
-Name der Quellenteildatei, welche die Pre-Prozessor-Anweisungen enthÃ¤lt. In
-der Regel ist dies die gleiche Quellenteildatei, die auch fÃ¼r die
+Name der Quellenteildatei, welche die Pre-Prozessor-Anweisungen enthält. In
+der Regel ist dies die gleiche Quellenteildatei, die auch für die
 Objekterstellung verwendet wird.
 :IMHELP name='COM/REQPARM'.
 :P.
@@ -5200,7 +5204,7 @@ Objekterstellung verwendet wird.
 :PARML.
 :PT.:PV.Name der Quellenteildatei:EPV.
 :PD.Geben sie den Namen der Quellenteildatei ein, welche die
-Pre-Prozessor-Anweisungen enthÃ¤lt.
+Pre-Prozessor-Anweisungen enthält.
 :EPARML.
 :EHELP.
 
@@ -5208,21 +5212,21 @@ Pre-Prozessor-Anweisungen enthÃ¤lt.
 .*  Keyword:  CMD
 .********************************************
 :HELP NAME='STRPREPRC/CMD'.
-AuszufÃ¼hrender Befehl (CMD) - Hilfe
-:XH3.AuszufÃ¼hrender Befehl (CMD)
+Auszuführender Befehl (CMD) - Hilfe
+:XH3.Auszuführender Befehl (CMD)
 :P.
 Befehlszeichenfolge, mit der das Objekt erstellt werden soll. Die hier
-angegebene Befehlszeichenfolge wird Ã¼ber die Marke :HP3.>>EXECUTE<<:EHP3.
-ausgefÃ¼hrt. Wenn kein Befehl angegeben wird, dann muss der Erstellungsbefehl
+angegebene Befehlszeichenfolge wird über die Marke :HP3.>>EXECUTE<<:EHP3.
+ausgeführt. Wenn kein Befehl angegeben wird, dann muss der Erstellungsbefehl
 in der Quellenteildatei an der :HP3.>>CRTCMD<<:EHP3. Marke angegeben werden.
 :IMHELP name='COM/REQPARM'.
 :P.
 :IMHELP name='COM/VALUES'.
 :PARML.
-:PT.:PV.AuszufÃ¼hrender Befehl:EPV.
+:PT.:PV.Auszuführender Befehl:EPV.
 :PD.
 Befehlszeichenfolge der Objekterstellungsbefehls. Der
-hier angegeben Befehl Ã¼berschreibt einen in der
+hier angegeben Befehl überschreibt einen in der
 Quellenteildatei angegebenen Befehl.
 :PT.keine Angabe eines Erstellungsbefehls
 :PD.
@@ -5235,17 +5239,17 @@ Quellenteildatei angegeben ist.
 .*  Keyword:  OPTION  (optional)
 .********************************************
 :HELP NAME='STRPREPRC/OPTION'.
-Ereignisdatei AuswahlmÃ¶gl. - Hilfe
-:XH3.Ereignisdatei AuswahlmÃ¶gl. (OPTION)
+Ereignisdatei Auswahlmögl. - Hilfe
+:XH3.Ereignisdatei Auswahlmögl. (OPTION)
 :P.
-Gibt an, ob eine Ereignisdatei fÃ¼r die Verwendung durch Client-Tools
+Gibt an, ob eine Ereignisdatei für die Verwendung durch Client-Tools
 erstellt wird.
 :P.
 :HP3.Achtung::EHP3. Wird die Option :HP3.*EVENTF:EHP3. zur Ausgabe einer
 Ereignisdatei gesetzt, so werden die Stellen 1-20 des Local Data Area (*LDA)
 verwendet, um den Namen der Bibliothek und des Objekts an RDi/WDSCi zu
-Ã¼bergeben. Die Bibliothek zur Ausgabe der EVFEreignisdatei wird in folgender
-Reihenfolge durchgefÃ¼hrt, bis eine benannte Bibliothek gefunden wurde:
+übergeben. Die Bibliothek zur Ausgabe der EVFEreignisdatei wird in folgender
+Reihenfolge durchgeführt, bis eine benannte Bibliothek gefunden wurde:
 :P.
 :LINES.
  - Objektbibliothek (LIB)
@@ -5253,21 +5257,21 @@ Reihenfolge durchgefÃ¼hrt, bis eine benannte Bibliothek gefunden wurde:
  - Bibliothek der gelesenen Quellendatei (USESRCFILE)
 :ELINES.
 :P.
-Mit der Auswahl *EVENTF werden grundsÃ¤tzlich EintrÃ¤ge in die Ereignisdatei
-gestellt. Erzeugt der IBM Objekterstellungsbefehl EintrÃ¤ge, so werden diese
-verwendet. Ansonsten werden die wÃ¤hrend der AusfÃ¼hrung des Befehls im Jobprotokoll
-erstellen EintrÃ¤ge in die Ereignisdatei Ã¼bernommen.
+Mit der Auswahl *EVENTF werden grundsätzlich Einträge in die Ereignisdatei
+gestellt. Erzeugt der IBM Objekterstellungsbefehl Einträge, so werden diese
+verwendet. Ansonsten werden die während der Ausführung des Befehls im Jobprotokoll
+erstellen Einträge in die Ereignisdatei übernommen.
 :P.
-In einigen FÃ¤llen kann es vorkommen, dass ein Problem durch die von der IBM in die
-Ereignisdatei gestellten Eintrage nicht ausreichend beschrieben wird. FÃ¼r einenn
-solchen Fall lassen sich die EintrÃ¤ge des Jobprotokolls mit den Auswahl *ADDJOBLOG
-den IBM Ereignissen hinzufÃ¼gen.
+In einigen Fällen kann es vorkommen, dass ein Problem durch die von der IBM in die
+Ereignisdatei gestellten Eintrage nicht ausreichend beschrieben wird. Für einenn
+solchen Fall lassen sich die Einträge des Jobprotokolls mit den Auswahl *ADDJOBLOG
+den IBM Ereignissen hinzufügen.
 :P.
-In der Datei STRPRE2 kÃ¶nnen Paarungen Nachrichten-ID/Ersatzvariable
+In der Datei STRPRE2 können Paarungen Nachrichten-ID/Ersatzvariable
 hinterlegt werden, anhand derer STRPREPRC Informationen aus dem
 Jobprotokoll hinsichtlich der fehlerhaften Zeilennummer ziehen kann.
-Die Spalte FMT enthÃ¤lt hierfÃ¼r die Nummer der Ersatzvariablen, welche
-die Nummer der fehlerhaften Zeile enthÃ¤lt.
+Die Spalte FMT enthält hierfür die Nummer der Ersatzvariablen, welche
+die Nummer der fehlerhaften Zeile enthält.
 :P.
 Wird in der Spalte FMT '-1' eingetragen, so bedeutet dies, dass die
 zugeordnete Nachrichten-ID beim Auswerten des Job Protokolls ignoriert
@@ -5282,13 +5286,13 @@ wird.
 :PT.:PV.*EVENTF:EPV.
 :PD.Es wird eine Ereignisdatei zur Verwendung durch Client-Tools erstellt.
 :PT.:PK DEF.*NOJOBLOG:EPK.
-:PD.Es werden keine zusÃ¤tzlichen JobprotokolleintrÃ¤ge zur Ausgabe hinzugefÃ¼gt.
-Das Jobprotokoll wird unabhÃ¤ngig von der Vorgabe *NOJOBLOG auch dann
+:PD.Es werden keine zusätzlichen Jobprotokolleinträge zur Ausgabe hinzugefügt.
+Das Jobprotokoll wird unabhängig von der Vorgabe *NOJOBLOG auch dann
 geschrieben, wenn der Erstellungsbefehl keine Ereignisdatei ausgegeben hat.
 :PT.:PV.*ADDJOBLOG:EPV.
 :PD.Einer durch einen IBM Erstellungsbefehl erzeugten Ereignisdatei werden
-JobprotokolleintrÃ¤ge hinzugefÃ¼gt. Diese Auswahl ist nur in Verbindung mit
-*EVENTF zulÃ¤ssig.
+Jobprotokolleinträge hinzugefügt. Diese Auswahl ist nur in Verbindung mit
+*EVENTF zulässig.
 :EPARML.
 
 :EHELP.
@@ -5297,12 +5301,12 @@ JobprotokolleintrÃ¤ge hinzugefÃ¼gt. Diese Auswahl ist nur in Verbindung mit
 .*  Keyword:  CHGOBJD (optional)
 .********************************************
 :HELP NAME='STRPREPRC/CHGOBJD'.
-Ã„ndern Objektbeschreibung - Hilfe
-:XH3.Ã„ndern Objektbeschreibung (CHGOBJD)
+Ändern Objektbeschreibung - Hilfe
+:XH3.Ändern Objektbeschreibung (CHGOBJD)
 :P.
 Gibt an, ob die Objektbeschreibung des zu erstellenden Objektes
-geÃ¤ndert werden soll. Dies kann bei nicht quellenbasierten Objekten
-sinnvoll sein, wenn diese Ã¼ber ein Skript erstellt werden und der
+geändert werden soll. Dies kann bei nicht quellenbasierten Objekten
+sinnvoll sein, wenn diese über ein Skript erstellt werden und der
 Standort des Skripts im Objekt abgelegt werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -5310,9 +5314,9 @@ Standort des Skripts im Objekt abgelegt werden soll.
 
 :PARML.
 :PT.:PK DEF.*NO:EPK.
-:PD.Die Objektbeschreibung wird nicht geÃ¤ndert.
+:PD.Die Objektbeschreibung wird nicht geändert.
 :PT.:PV.*YES:EPV.
-:PD.Die Objektbeschreibung wird geÃ¤ndert.
+:PD.Die Objektbeschreibung wird geändert.
 :EPARML.
 
 :EHELP.
@@ -5324,7 +5328,7 @@ Standort des Skripts im Objekt abgelegt werden soll.
 Objekttyp - Hilfe
 :XH3.Objekttyp (OBJTYPE)
 :P.
-Gibt den Typ des Objekts an, dessen Objektbeschreibung geÃ¤ndert
+Gibt den Typ des Objekts an, dessen Objektbeschreibung geändert
 werden soll.
 :IMHELP name='COM/REQPARM1'.
 :P.
@@ -5332,7 +5336,7 @@ werden soll.
 
 :PARML.
 :PT.:PV.Objekt-Typ:EPV.
-:PD.Typ des Objekts, dessen Objektbeschreibung geÃ¤ndert
+:PD.Typ des Objekts, dessen Objektbeschreibung geändert
 werden soll.
 :EPARML.
 
@@ -5352,7 +5356,7 @@ Quellendatei, aus der das Objekt erstellt worden ist.
 
 :PARML.
 :PT.:PK DEF.*SAME:EPK.
-:PD.Die Angabe der Quellendatei wird nicht geÃ¤ndert.
+:PD.Die Angabe der Quellendatei wird nicht geändert.
 :PT.:PV.*DFT:EPV.
 :PD.Name der Bibliothek, wie am Parameter :HP2.SRCFILE:EHP2. angegeben.
 :PT.:PV.Quellendatei:EPV.
@@ -5375,7 +5379,7 @@ Quellenbibliothek, aus der das Objekt erstellt worden ist.
 
 :PARML.
 :PT.:PK DEF.*SAME:EPK.
-:PD.Die Angabe der Quellenbibliothek wird nicht geÃ¤ndert.
+:PD.Die Angabe der Quellenbibliothek wird nicht geändert.
 :PT.:PV.*DFT:EPV.
 :PD.Name der Bibliothek, wie am Parameter :HP2.SRCLIB:EHP2. angegeben.
 :PT.:PV.Quellenbibliothek:EPV.
@@ -5398,7 +5402,7 @@ Quellenteildatei, aus der das Objekt erstellt worden ist.
 
 :PARML.
 :PT.:PK DEF.*SAME:EPK.
-:PD.Die Angabe der Quellenteildatei wird nicht geÃ¤ndert.
+:PD.Die Angabe der Quellenteildatei wird nicht geändert.
 :PT.:PV.*DFT:EPV.
 :PD.Name der Quellenteildatei, wie am Parameter :HP2.SRCMBR:EHP2. angegeben.
 :PT.:PV.Name der Quellenteildatei:EPV.
@@ -5411,10 +5415,10 @@ Quellenteildatei, aus der das Objekt erstellt worden ist.
 .*  Keyword:  LIB (optional)
 .********************************************
 :HELP NAME='STRPREPRC/LIB'.
-Wert fÃ¼r Bibliothek      (&LI) (LIB) - Hilfe
-:XH3.Wert fÃ¼r Bibliothek      (&LI) (LIB)
+Wert für Bibliothek      (&LI) (LIB) - Hilfe
+:XH3.Wert für Bibliothek      (&LI) (LIB)
 :P.
-Wert, der fÃ¼r die Ersatzvariable 'Bibliothek' (&LI) eingetragen
+Wert, der für die Ersatzvariable 'Bibliothek' (&LI) eingetragen
 werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -5434,10 +5438,10 @@ Objekt erstellt wird.
 .*  Keyword:  OBJ (optional)
 .********************************************
 :HELP NAME='STRPREPRC/OBJ'.
-Wert fÃ¼r Objekt          (&OB) (OBJ) - Hilfe
-:XH3.Wert fÃ¼r Objekt          (&OB) (OBJ)
+Wert für Objekt          (&OB) (OBJ) - Hilfe
+:XH3.Wert für Objekt          (&OB) (OBJ)
 :P.
-Wert, der fÃ¼r die Ersatzvariable 'Objekt' (&OBJ) eingetragen
+Wert, der für die Ersatzvariable 'Objekt' (&OBJ) eingetragen
 werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -5458,10 +5462,10 @@ werden soll.
 .*  Keyword:  TYPECODE (optional)
 .********************************************
 :HELP NAME='STRPREPRC/TYPECODE'.
-Wert fÃ¼r Type Code       (&TY) (TYPECODE) - Hilfe
-:XH3.Wert fÃ¼r Type Code       (&TY) (TYPECODE)
+Wert für Type Code       (&TY) (TYPECODE) - Hilfe
+:XH3.Wert für Type Code       (&TY) (TYPECODE)
 :P.
-Wert, der fÃ¼r die Ersatzvariable 'Type Code' (&TY) eingetragen
+Wert, der für die Ersatzvariable 'Type Code' (&TY) eingetragen
 werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -5480,10 +5484,10 @@ werden soll.
 .*  Keyword:  SRCLIB (optional)
 .********************************************
 :HELP NAME='STRPREPRC/SRCLIB'.
-Wert fÃ¼r Quellenbibl.    (&SL) (SRCLIB) - Hilfe
-:XH3.Wert fÃ¼r Quellenbibl.    (&SL) (SRCLIB)
+Wert für Quellenbibl.    (&SL) (SRCLIB) - Hilfe
+:XH3.Wert für Quellenbibl.    (&SL) (SRCLIB)
 :P.
-Wert, der fÃ¼r die Ersatzvariable 'Quellenbibliothek' (&SL) eingetragen
+Wert, der für die Ersatzvariable 'Quellenbibliothek' (&SL) eingetragen
 werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -5504,10 +5508,10 @@ werden soll.
 .*  Keyword:  SRCFILE (optional)
 .********************************************
 :HELP NAME='STRPREPRC/SRCFILE'.
-Wert fÃ¼r Quellendatei    (&SF) (SRCFILE) - Hilfe
-:XH3.Wert fÃ¼r Quellendatei    (&SF) (SRCFILE)
+Wert für Quellendatei    (&SF) (SRCFILE) - Hilfe
+:XH3.Wert für Quellendatei    (&SF) (SRCFILE)
 :P.
-Wert, der fÃ¼r die Ersatzvariable 'Quellendatei' (&SF) eingetragen
+Wert, der für die Ersatzvariable 'Quellendatei' (&SF) eingetragen
 werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -5520,7 +5524,7 @@ werden soll.
 :PD.Name der Quellendatei, wie am Parameter :HP2.USESRCFILE:EHP2. angegeben.
 :PT.:PV.Name der Quellendatei:EPV.
 :PD.Den Namen der Quellendatei eingeben, die die
-umzuwandelnde Quellenteildatei enthÃ¤lt.
+umzuwandelnde Quellenteildatei enthält.
 :EPARML.
 
 :EHELP.
@@ -5529,10 +5533,10 @@ umzuwandelnde Quellenteildatei enthÃ¤lt.
 .*  Keyword:  SRCMBR (optional)
 .********************************************
 :HELP NAME='STRPREPRC/SRCMBR'.
-Wert fÃ¼r Quell.Teildatei (&SM) (SRCMBR) - Hilfe
-:XH3.Wert fÃ¼r Quell.Teildatei (&SM) (SRCMBR)
+Wert für Quell.Teildatei (&SM) (SRCMBR) - Hilfe
+:XH3.Wert für Quell.Teildatei (&SM) (SRCMBR)
 :P.
-Wert, der fÃ¼r die Ersatzvariable 'Quellenteildatei' (&SM)
+Wert, der für die Ersatzvariable 'Quellenteildatei' (&SM)
 eingetragen werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -5553,10 +5557,10 @@ eingetragen werden soll.
 .*  Keyword:  TESTLIB (optional)
 .********************************************
 :HELP NAME='STRPREPRC/TESTLIB'.
-Wert fÃ¼r Testbibliothek  (&TL) (TESTLIB) - Hilfe
-:XH3.Wert fÃ¼r Testbibliothek  (&TL) (TESTLIB)
+Wert für Testbibliothek  (&TL) (TESTLIB) - Hilfe
+:XH3.Wert für Testbibliothek  (&TL) (TESTLIB)
 :P.
-Wert, der fÃ¼r die Ersatzvariable 'Testbibliothek' (&TL)
+Wert, der für die Ersatzvariable 'Testbibliothek' (&TL)
 eingetragen werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -5575,10 +5579,10 @@ eingetragen werden soll.
 .*  Keyword:  TESTOBJ (optional)
 .********************************************
 :HELP NAME='STRPREPRC/TESTOBJ'.
-Wert fÃ¼r Testobjekt      (&TO) (TESTOBJ) - Hilfe
-:XH3.Wert fÃ¼r Testobjekt      (&TO) (TESTOBJ)
+Wert für Testobjekt      (&TO) (TESTOBJ) - Hilfe
+:XH3.Wert für Testobjekt      (&TO) (TESTOBJ)
 :P.
-Wert, der fÃ¼r die Ersatzvariable 'Testobjekt' (&TO)
+Wert, der für die Ersatzvariable 'Testobjekt' (&TO)
 eingetragen werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -5597,10 +5601,10 @@ eingetragen werden soll.
 .*  Keyword:  TGTRLS (optional)
 .********************************************
 :HELP NAME='STRPREPRC/TGTRLS'.
-Wert fÃ¼r Zielrelease     (&TR) (TGTRLS) - Hilfe
-:XH3.Wert fÃ¼r Zielrelease     (&TR) (TGTRLS)
+Wert für Zielrelease     (&TR) (TGTRLS) - Hilfe
+:XH3.Wert für Zielrelease     (&TR) (TGTRLS)
 :P.
-Wert, der fÃ¼r die Ersatzvariable 'Zielrelease' (&TR)
+Wert, der für die Ersatzvariable 'Zielrelease' (&TR)
 eingetragen werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -5619,10 +5623,10 @@ eingetragen werden soll.
 .*  Keyword:  FRMSRCLIB (optional)
 .********************************************
 :HELP NAME='STRPREPRC/FRMSRCLIB'.
-Wert fÃ¼r Von-Quellenbibl.(&FL) (FRMSRCLIB) - Hilfe
-:XH3.Wert fÃ¼r Von-Quellenbibl.(&FL) (FRMSRCLIB)
+Wert für Von-Quellenbibl.(&FL) (FRMSRCLIB) - Hilfe
+:XH3.Wert für Von-Quellenbibl.(&FL) (FRMSRCLIB)
 :P.
-Wert, der fÃ¼r die Ersatzvariable 'von Quellenbibliothek' (&FL) eingetragen
+Wert, der für die Ersatzvariable 'von Quellenbibliothek' (&FL) eingetragen
 werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -5641,10 +5645,10 @@ werden soll.
 .*  Keyword:  FRMSRCFILE (optional)
 .********************************************
 :HELP NAME='STRPREPRC/FRMSRCFILE'.
-Wert fÃ¼r Von-Quellendatei(&FF) (FRMSRCFILE) - Hilfe
-:XH3.Wert fÃ¼r Von-Quellendatei(&FF) (FRMSRCFILE)
+Wert für Von-Quellendatei(&FF) (FRMSRCFILE) - Hilfe
+:XH3.Wert für Von-Quellendatei(&FF) (FRMSRCFILE)
 :P.
-Wert, der fÃ¼r die Ersatzvariable 'von Quellendatei' (&FF) eingetragen
+Wert, der für die Ersatzvariable 'von Quellendatei' (&FF) eingetragen
 werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -5663,10 +5667,10 @@ werden soll.
 .*  Keyword:  FRMSRCMBR (optional)
 .********************************************
 :HELP NAME='STRPREPRC/FRMSRCMBR'.
-Wert fÃ¼r Von-Quell.Teild.(&FM) (FRMSRCMBR) - Hilfe
-:XH3.Wert fÃ¼r Von-Quell.Teild.(&FM) (FRMSRCMBR)
+Wert für Von-Quell.Teild.(&FM) (FRMSRCMBR) - Hilfe
+:XH3.Wert für Von-Quell.Teild.(&FM) (FRMSRCMBR)
 :P.
-Wert, der fÃ¼r die Ersatzvariable 'von Quellenteildatei' (&FM)
+Wert, der für die Ersatzvariable 'von Quellenteildatei' (&FM)
 eingetragen werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -5685,10 +5689,10 @@ eingetragen werden soll.
 .*  Keyword:  USER0 (optional)
 .********************************************
 :HELP NAME='STRPREPRC/USER0'.
-Wert fÃ¼r Parameter       (&U0) (USER0) - Hilfe
-:XH3.Wert fÃ¼r Parameter       (&U0) (USER0)
+Wert für Parameter       (&U0) (USER0) - Hilfe
+:XH3.Wert für Parameter       (&U0) (USER0)
 :P.
-Wert, der fÃ¼r die benutzerdefinierte Ersatzvariable 0 (&U0)
+Wert, der für die benutzerdefinierte Ersatzvariable 0 (&U0)
 eingetragen werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -5698,7 +5702,7 @@ eingetragen werden soll.
 :PT.:PK DEF.*NONE:EPK.
 :PD.Es ist kein Wert angegeben.
 :PT.:PV.benutzerdefinierte Variable 0:EPV.
-:PD.Wert fÃ¼r die benutzerdefinierte Ersatzvariable 0 (&U0).
+:PD.Wert für die benutzerdefinierte Ersatzvariable 0 (&U0).
 :EPARML.
 :IMHELP name='COM/RPLVAR'.
 
@@ -5708,10 +5712,10 @@ eingetragen werden soll.
 .*  Keyword:  USER1 (optional)
 .********************************************
 :HELP NAME='STRPREPRC/USER1'.
-Wert fÃ¼r Parameter       (&U1) (USER1) - Hilfe
-:XH3.Wert fÃ¼r Parameter       (&U1) (USER1)
+Wert für Parameter       (&U1) (USER1) - Hilfe
+:XH3.Wert für Parameter       (&U1) (USER1)
 :P.
-Wert, der fÃ¼r die benutzerdefinierte Ersatzvariable 1 (&U1)
+Wert, der für die benutzerdefinierte Ersatzvariable 1 (&U1)
 eingetragen werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -5721,7 +5725,7 @@ eingetragen werden soll.
 :PT.:PK DEF.*NONE:EPK.
 :PD.Es ist kein Wert angegeben.
 :PT.:PV.benutzerdefinierte Variable 1:EPV.
-:PD.Wert fÃ¼r die benutzerdefinierte Ersatzvariable 1 (&U1).
+:PD.Wert für die benutzerdefinierte Ersatzvariable 1 (&U1).
 :EPARML.
 :IMHELP name='COM/RPLVAR'.
 
@@ -5731,10 +5735,10 @@ eingetragen werden soll.
 .*  Keyword:  USER2 (optional)
 .********************************************
 :HELP NAME='STRPREPRC/USER2'.
-Wert fÃ¼r Parameter       (&U2) (USER2) - Hilfe
-:XH3.Wert fÃ¼r Parameter       (&U2) (USER2)
+Wert für Parameter       (&U2) (USER2) - Hilfe
+:XH3.Wert für Parameter       (&U2) (USER2)
 :P.
-Wert, der fÃ¼r die benutzerdefinierte Ersatzvariable 2 (&U2)
+Wert, der für die benutzerdefinierte Ersatzvariable 2 (&U2)
 eingetragen werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -5744,7 +5748,7 @@ eingetragen werden soll.
 :PT.:PK DEF.*NONE:EPK.
 :PD.Es ist kein Wert angegeben.
 :PT.:PV.benutzerdefinierte Variable 2:EPV.
-:PD.Wert fÃ¼r die benutzerdefinierte Ersatzvariable 2 (&U2).
+:PD.Wert für die benutzerdefinierte Ersatzvariable 2 (&U2).
 :EPARML.
 :IMHELP name='COM/RPLVAR'.
 
@@ -5754,10 +5758,10 @@ eingetragen werden soll.
 .*  Keyword:  USER3 (optional)
 .********************************************
 :HELP NAME='STRPREPRC/USER3'.
-Wert fÃ¼r Parameter       (&U3) (USER3) - Hilfe
-:XH3.Wert fÃ¼r Parameter       (&U3) (USER3)
+Wert für Parameter       (&U3) (USER3) - Hilfe
+:XH3.Wert für Parameter       (&U3) (USER3)
 :P.
-Wert, der fÃ¼r die benutzerdefinierte Ersatzvariable 3 (&U3)
+Wert, der für die benutzerdefinierte Ersatzvariable 3 (&U3)
 eingetragen werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -5767,7 +5771,7 @@ eingetragen werden soll.
 :PT.:PK DEF.*NONE:EPK.
 :PD.Es ist kein Wert angegeben.
 :PT.:PV.benutzerdefinierte Variable 3:EPV.
-:PD.Wert fÃ¼r die benutzerdefinierte Ersatzvariable 3 (&U3).
+:PD.Wert für die benutzerdefinierte Ersatzvariable 3 (&U3).
 :EPARML.
 :IMHELP name='COM/RPLVAR'.
 
@@ -5777,10 +5781,10 @@ eingetragen werden soll.
 .*  Keyword:  USER4 (optional)
 .********************************************
 :HELP NAME='STRPREPRC/USER4'.
-Wert fÃ¼r Parameter       (&U4) (USER4) - Hilfe
-:XH3.Wert fÃ¼r Parameter       (&U4) (USER4)
+Wert für Parameter       (&U4) (USER4) - Hilfe
+:XH3.Wert für Parameter       (&U4) (USER4)
 :P.
-Wert, der fÃ¼r die benutzerdefinierte Ersatzvariable 4 (&U4)
+Wert, der für die benutzerdefinierte Ersatzvariable 4 (&U4)
 eingetragen werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -5790,7 +5794,7 @@ eingetragen werden soll.
 :PT.:PK DEF.*NONE:EPK.
 :PD.Es ist kein Wert angegeben.
 :PT.:PV.benutzerdefinierte Variable 4:EPV.
-:PD.Wert fÃ¼r die benutzerdefinierte Ersatzvariable 4 (&U4).
+:PD.Wert für die benutzerdefinierte Ersatzvariable 4 (&U4).
 :EPARML.
 :IMHELP name='COM/RPLVAR'.
 
@@ -5800,10 +5804,10 @@ eingetragen werden soll.
 .*  Keyword:  USER5 (optional)
 .********************************************
 :HELP NAME='STRPREPRC/USER5'.
-Wert fÃ¼r Parameter       (&U5) (USER5) - Hilfe
-:XH3.Wert fÃ¼r Parameter       (&U5) (USER5)
+Wert für Parameter       (&U5) (USER5) - Hilfe
+:XH3.Wert für Parameter       (&U5) (USER5)
 :P.
-Wert, der fÃ¼r die benutzerdefinierte Ersatzvariable 5 (&U5)
+Wert, der für die benutzerdefinierte Ersatzvariable 5 (&U5)
 eingetragen werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -5813,7 +5817,7 @@ eingetragen werden soll.
 :PT.:PK DEF.*NONE:EPK.
 :PD.Es ist kein Wert angegeben.
 :PT.:PV.benutzerdefinierte Variable 5:EPV.
-:PD.Wert fÃ¼r die benutzerdefinierte Ersatzvariable 5 (&U5).
+:PD.Wert für die benutzerdefinierte Ersatzvariable 5 (&U5).
 :EPARML.
 :IMHELP name='COM/RPLVAR'.
 
@@ -5823,10 +5827,10 @@ eingetragen werden soll.
 .*  Keyword:  USER6 (optional)
 .********************************************
 :HELP NAME='STRPREPRC/USER6'.
-Wert fÃ¼r Parameter       (&U6) (USER6) - Hilfe
-:XH3.Wert fÃ¼r Parameter       (&U6) (USER6)
+Wert für Parameter       (&U6) (USER6) - Hilfe
+:XH3.Wert für Parameter       (&U6) (USER6)
 :P.
-Wert, der fÃ¼r die benutzerdefinierte Ersatzvariable 6 (&U6)
+Wert, der für die benutzerdefinierte Ersatzvariable 6 (&U6)
 eingetragen werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -5836,7 +5840,7 @@ eingetragen werden soll.
 :PT.:PK DEF.*NONE:EPK.
 :PD.Es ist kein Wert angegeben.
 :PT.:PV.benutzerdefinierte Variable 6:EPV.
-:PD.Wert fÃ¼r die benutzerdefinierte Ersatzvariable 6 (&U6).
+:PD.Wert für die benutzerdefinierte Ersatzvariable 6 (&U6).
 :EPARML.
 :IMHELP name='COM/RPLVAR'.
 
@@ -5846,10 +5850,10 @@ eingetragen werden soll.
 .*  Keyword:  USER7 (optional)
 .********************************************
 :HELP NAME='STRPREPRC/USER7'.
-Wert fÃ¼r Parameter       (&U7) (USER7) - Hilfe
-:XH3.Wert fÃ¼r Parameter       (&U7) (USER7)
+Wert für Parameter       (&U7) (USER7) - Hilfe
+:XH3.Wert für Parameter       (&U7) (USER7)
 :P.
-Wert, der fÃ¼r die benutzerdefinierte Ersatzvariable 7 (&U7)
+Wert, der für die benutzerdefinierte Ersatzvariable 7 (&U7)
 eingetragen werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -5859,7 +5863,7 @@ eingetragen werden soll.
 :PT.:PK DEF.*NONE:EPK.
 :PD.Es ist kein Wert angegeben.
 :PT.:PV.benutzerdefinierte Variable 7:EPV.
-:PD.Wert fÃ¼r die benutzerdefinierte Ersatzvariable 7 (&U7).
+:PD.Wert für die benutzerdefinierte Ersatzvariable 7 (&U7).
 :EPARML.
 :IMHELP name='COM/RPLVAR'.
 
@@ -5869,10 +5873,10 @@ eingetragen werden soll.
 .*  Keyword:  USER8 (optional)
 .********************************************
 :HELP NAME='STRPREPRC/USER8'.
-Wert fÃ¼r Parameter       (&U8) (USER8) - Hilfe
-:XH3.Wert fÃ¼r Parameter       (&U8) (USER8)
+Wert für Parameter       (&U8) (USER8) - Hilfe
+:XH3.Wert für Parameter       (&U8) (USER8)
 :P.
-Wert, der fÃ¼r die benutzerdefinierte Ersatzvariable 8 (&U8)
+Wert, der für die benutzerdefinierte Ersatzvariable 8 (&U8)
 eingetragen werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -5882,7 +5886,7 @@ eingetragen werden soll.
 :PT.:PK DEF.*NONE:EPK.
 :PD.Es ist kein Wert angegeben.
 :PT.:PV.benutzerdefinierte Variable 8:EPV.
-:PD.Wert fÃ¼r die benutzerdefinierte Ersatzvariable 8 (&U8).
+:PD.Wert für die benutzerdefinierte Ersatzvariable 8 (&U8).
 :EPARML.
 :IMHELP name='COM/RPLVAR'.
 
@@ -5892,10 +5896,10 @@ eingetragen werden soll.
 .*  Keyword:  USER9 (optional)
 .********************************************
 :HELP NAME='STRPREPRC/USER9'.
-Wert fÃ¼r Parameter       (&U9) (USER9) - Hilfe
-:XH3.Wert fÃ¼r Parameter       (&U9) (USER9)
+Wert für Parameter       (&U9) (USER9) - Hilfe
+:XH3.Wert für Parameter       (&U9) (USER9)
 :P.
-Wert, der fÃ¼r die benutzerdefinierte Ersatzvariable 9 (&U9)
+Wert, der für die benutzerdefinierte Ersatzvariable 9 (&U9)
 eingetragen werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -5905,7 +5909,7 @@ eingetragen werden soll.
 :PT.:PK DEF.*NONE:EPK.
 :PD.Es ist kein Wert angegeben.
 :PT.:PV.benutzerdefinierte Variable 9:EPV.
-:PD.Wert fÃ¼r die benutzerdefinierte Ersatzvariable 9 (&U9).
+:PD.Wert für die benutzerdefinierte Ersatzvariable 9 (&U9).
 :EPARML.
 :IMHELP name='COM/RPLVAR'.
 
@@ -5921,24 +5925,24 @@ Benutzerdefinierte Variablen (USRDEFVAR) - Hilfe
 Definiert eine Liste von bis zu 20 benutzerdefinierten Variablen
 und deren zugeordnete Werte. Benutzerdefinierte Variablen werden
 vor den STRPREPRC Variablen ersetzt, um benutzerdefinierte
-Variablen STRPREPRC Variablen zuordnen zu kÃ¶nnen. Dies kann
-erforderlich sein, wenn es nicht mÃ¶glich ist, eine Variable
-(mit & beginnend) an einen Befehl zu Ã¼bergeben.
+Variablen STRPREPRC Variablen zuordnen zu können. Dies kann
+erforderlich sein, wenn es nicht möglich ist, eine Variable
+(mit & beginnend) an einen Befehl zu übergeben.
 :P.
 Dies kann zum Beispiel wie folgt aussehen:
 :P.
 STRPREPRC CMD(XCRTSQLOBJ ... LIBL(V_LX)) USRDEFVAR(V_LX '&LX')
 :P.
 Damit ersetzt STRPREPC den Wert 'V_LX' des LIBL Parameters des
-XCRTSQLOBJ Befehls mit einer bei der AusfÃ¼hrung des >>LIBL<<
+XCRTSQLOBJ Befehls mit einer bei der Ausführung des >>LIBL<<
 gesicherten Bibliotheksliste.
 :P.
 Wird die aktuelle Bibliothek mit
-dem :HP2.>>CURLIB<<:EHP2. tag geÃ¤ndert, so steht der alte Wert in der
-Variablen :HP2.&CX:EHP2. zur VerfÃ¼gung.
+dem :HP2.>>CURLIB<<:EHP2. tag geändert, so steht der alte Wert in der
+Variablen :HP2.&CX:EHP2. zur Verfügung.
 :P.
-:HP2.Die Bibliotheksliste wird am Ende des Programms grundsÃ¤tzlich auf den
-Anfangswert zurÃ¼ckgesetzt.:EHP2.
+:HP2.Die Bibliotheksliste wird am Ende des Programms grundsätzlich auf den
+Anfangswert zurückgesetzt.:EHP2.
 :P.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -5949,17 +5953,17 @@ Anfangswert zurÃ¼ckgesetzt.:EHP2.
 :PT.:PK DEF.*NONE:EPK.
 :PD.Es ist kein Wert angegeben.
 :PT.:PV.*SAME:EPV.
-:PD.Die aktuelle Bibliothek in der Bibliotheksliste fÃ¼r
-den aktuellen Thread wird nicht geÃ¤ndert.
+:PD.Die aktuelle Bibliothek in der Bibliotheksliste für
+den aktuellen Thread wird nicht geändert.
 :PT.:PV.*CRTDFT:EPV.
-:PD.Die Bibliotheksliste fÃ¼r den aktuellen Thread soll
+:PD.Die Bibliotheksliste für den aktuellen Thread soll
 keine Bibliothek enthalten. Wenn Objekte in der
 aktuellen Bibliothek erstellt werden, wird die
 Bibliothek QGPL als aktuelle Standardbibliothek
 verwendet.
 :PT.:PV.Name:EPV.
 :PD.Den Namen der Bibliothek angeben, die den aktuellen
-Bibliothekseintrag in der Bibliotheksliste fÃ¼r den
+Bibliothekseintrag in der Bibliotheksliste für den
 aktuellen Thread ersetzt.
 :EPARML.
 :P.
@@ -5969,9 +5973,9 @@ aktuellen Thread ersetzt.
 :PD.Es ist kein Wert angegeben.
 :PT.:PV.Name:EPV.
 :PD.Die Namen der Bibliotheken angeben, die dem
-Benutzerteil der Bibliotheksliste fÃ¼r den aktuellen
-Thread in der Reihenfolge hinzugefÃ¼gt werden sollen,
-in der sie durchsucht werden sollen. Es kÃ¶nnen bis zu
+Benutzerteil der Bibliotheksliste für den aktuellen
+Thread in der Reihenfolge hinzugefügt werden sollen,
+in der sie durchsucht werden sollen. Es können bis zu
 250 Namen angegeben werden.
 :EPARML.
 :IMHELP name='COM/RPLVAR'.
@@ -5986,17 +5990,17 @@ Bibliotheksliste (LIBL) - Hilfe
 :XH3.Bibliotheksliste (LIBL)
 :P.
 Gibt eine optional zu verwendende Bibliotheksliste an. Die
-Bibliotheksliste steht in der Variablen :HP2.&LL:EHP2. zur VerfÃ¼gung. Wird
+Bibliotheksliste steht in der Variablen :HP2.&LL:EHP2. zur Verfügung. Wird
 die Bibliotheksliste im Pre-Prozessor Abschnitt mit dem :HP2.>>LIBL<<:EHP2.
-tag geÃ¤ndert, so steht die alte Bibliotheksliste in der
-Variablen :HP2.&LX:EHP2. zur VerfÃ¼gung.
+tag geändert, so steht die alte Bibliotheksliste in der
+Variablen :HP2.&LX:EHP2. zur Verfügung.
 :P.
 Wird die aktuelle Bibliothek mit
-dem :HP2.>>CURLIB<<:EHP2. tag geÃ¤ndert, so steht der alte Wert in der
-Variablen :HP2.&CX:EHP2. zur VerfÃ¼gung.
+dem :HP2.>>CURLIB<<:EHP2. tag geändert, so steht der alte Wert in der
+Variablen :HP2.&CX:EHP2. zur Verfügung.
 :P.
-:HP2.Die Bibliotheksliste wird am Ende des Programms grundsÃ¤tzlich auf den
-Anfangswert zurÃ¼ckgesetzt.:EHP2.
+:HP2.Die Bibliotheksliste wird am Ende des Programms grundsätzlich auf den
+Anfangswert zurückgesetzt.:EHP2.
 :P.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -6007,17 +6011,17 @@ Anfangswert zurÃ¼ckgesetzt.:EHP2.
 :PT.:PK DEF.*NONE:EPK.
 :PD.Es ist kein Wert angegeben.
 :PT.:PV.*SAME:EPV.
-:PD.Die aktuelle Bibliothek in der Bibliotheksliste fÃ¼r
-den aktuellen Thread wird nicht geÃ¤ndert.
+:PD.Die aktuelle Bibliothek in der Bibliotheksliste für
+den aktuellen Thread wird nicht geändert.
 :PT.:PV.*CRTDFT:EPV.
-:PD.Die Bibliotheksliste fÃ¼r den aktuellen Thread soll
+:PD.Die Bibliotheksliste für den aktuellen Thread soll
 keine Bibliothek enthalten. Wenn Objekte in der
 aktuellen Bibliothek erstellt werden, wird die
 Bibliothek QGPL als aktuelle Standardbibliothek
 verwendet.
 :PT.:PV.Name:EPV.
 :PD.Den Namen der Bibliothek angeben, die den aktuellen
-Bibliothekseintrag in der Bibliotheksliste fÃ¼r den
+Bibliothekseintrag in der Bibliotheksliste für den
 aktuellen Thread ersetzt.
 :EPARML.
 :P.
@@ -6027,9 +6031,9 @@ aktuellen Thread ersetzt.
 :PD.Es ist kein Wert angegeben.
 :PT.:PV.Name:EPV.
 :PD.Die Namen der Bibliotheken angeben, die dem
-Benutzerteil der Bibliotheksliste fÃ¼r den aktuellen
-Thread in der Reihenfolge hinzugefÃ¼gt werden sollen,
-in der sie durchsucht werden sollen. Es kÃ¶nnen bis zu
+Benutzerteil der Bibliotheksliste für den aktuellen
+Thread in der Reihenfolge hinzugefügt werden sollen,
+in der sie durchsucht werden sollen. Es können bis zu
 250 Namen angegeben werden.
 :EPARML.
 :IMHELP name='COM/RPLVAR'.
@@ -6044,7 +6048,7 @@ Verwende Bibl.-Liste implizit - Hilfe
 :XH3.Verwende Bibl.-Liste implizit (USELIBL)
 :P.
 Gibt an, ob eine am Parameter :HP2.LIBL:EHP2. angegebene
-Bibliotheksliste implizit vor der AusfÃ¼hrung des Erstellungsbefehls
+Bibliotheksliste implizit vor der Ausführung des Erstellungsbefehls
 gesetzt wird, sofern kein STRPREPRC Anweisungsblock in der Quelle enthalten
 ist.
 :IMHELP name='COM/OPTPARM'.
@@ -6053,10 +6057,10 @@ ist.
 
 :PARML.
 :PT.:PV.*NO:EPV.
-:PD.Die Bibliotheksliste wird nicht gesetzt, wenn die Quelle nicht Ã¼ber
-einen STRPREPRC Anweisungsblock verfÃ¼gt.
+:PD.Die Bibliotheksliste wird nicht gesetzt, wenn die Quelle nicht über
+einen STRPREPRC Anweisungsblock verfügt.
 :PT.:PV.*YES:EPV.
-:PD.Eine angegebene Bibliotheksliste wird implizit vor der AusfÃ¼hrung des
+:PD.Eine angegebene Bibliotheksliste wird implizit vor der Ausführung des
 Erstellungsbefehls gesetzt, wenn in der Quelle kein STRPREPRC
 Anweisungsblock enthalten ist.
 :EPARML.
@@ -6071,16 +6075,16 @@ Pre-Proz. Marken erforderlich - Hilfe
 :XH3.Pre-Proz. Marken erforderlich (TAGSREQ)
 :P.
 Gibt an, ob in der zugrunde liegenden Quellenteildatei
-Pro-Prozessor Marken enthalten sein mÃ¼ssen oder nicht.
+Pro-Prozessor Marken enthalten sein müssen oder nicht.
 :IMHELP name='COM/OPTPARM'.
 :P.
 :IMHELP name='COM/VALUES'.
 
 :PARML.
 :PT.:PV.*NO:EPV.
-:PD.Es mÃ¼ssen keine Pre-Prozessor Anweisungen vorhanden sein.
+:PD.Es müssen keine Pre-Prozessor Anweisungen vorhanden sein.
 :PT.:PV.*YES:EPV.
-:PD.Pre-Prozessor Anweisungen mÃ¼ssen vorhanden sein. Bei fehlenden
+:PD.Pre-Prozessor Anweisungen müssen vorhanden sein. Bei fehlenden
 Pre-Prozessor Anweisungen wird eine Fehlernachricht PRZ0024
 geschickt.
 :EPARML.
@@ -6091,12 +6095,12 @@ geschickt.
 .*  Keyword:  EXICMDEXC
 .********************************************
 :HELP NAME='STRPREPRC/EXICMDEXC'.
-Ausgangspgm. BefehlsausfÃ¼hrung (EXICMDEXC) - Hilfe
-:XH3.Ausgangspgm. BefehlsausfÃ¼hrung (EXICMDEXC)
+Ausgangspgm. Befehlsausführung (EXICMDEXC) - Hilfe
+:XH3.Ausgangspgm. Befehlsausführung (EXICMDEXC)
 :P.
 Gibt den Namen und die Bibliothek eines Exitprogramms an, welches
-vor der AusfÃ¼hrung des Befehgl der >>EXECUTE<< Marke aufgerufen wird, um
-den Befehl vor der AusfÃ¼hrung noch nach Bedarf Ã¤nderung zu kÃ¶nnen.
+vor der Ausführung des Befehgl der >>EXECUTE<< Marke aufgerufen wird, um
+den Befehl vor der Ausführung noch nach Bedarf änderung zu können.
 :P.
 :HP2.Dieser Exit wird zum Beispiel von CMOne verwendet.:EHP2.
 :IMHELP name='COM/OPTPARM'.
@@ -6143,7 +6147,7 @@ Dieser Parameter ist erforderlich.
 :HELP NAME='COM/REQPARM1'.
 :P.
 Dieser Parameter muss nur dann angebenen werden, wenn die
-Objektbeschreibung geÃ¤ndert werden soll.
+Objektbeschreibung geändert werden soll.
 :EHELP.
 
 .********************************************
@@ -6159,7 +6163,7 @@ Dieser Parameter ist optional.
 .********************************************
 :HELP NAME='COM/VALUES'.
 :P.
-MÃ¶gliche Werte sind:
+Mögliche Werte sind:
 :EHELP.
 
 .********************************************
@@ -6167,7 +6171,7 @@ MÃ¶gliche Werte sind:
 .********************************************
 :HELP NAME='COM/LIBRARY'.
 :P.
-GÃ¼ltige Bibliothekswerte sind:
+Gültige Bibliothekswerte sind:
 :EHELP.
 
 .********************************************
@@ -6175,8 +6179,8 @@ GÃ¼ltige Bibliothekswerte sind:
 .********************************************
 :HELP NAME='COM/RPLVAR'.
 :P.
-Ersatzvariablen kÃ¶nnen an jeder Stelle der Pre-Complieranweisungen
-eingefÃ¼gt und benutzt werden. Bei der Abarbeitung der
+Ersatzvariablen können an jeder Stelle der Pre-Complieranweisungen
+eingefügt und benutzt werden. Bei der Abarbeitung der
 Pre-Prozessor-Anweisungen wird die Ersatzvariable durch den
 im Befehl STRPREPRC angegebenen Wert ersetzt.
 :P.
@@ -6235,7 +6239,7 @@ srccssid=  "00273">
 .*=====================================================================*
 .*  History:                                                           *
 .*                                                                     *
-.*  Datum       Name          Ã„nderung                                 *
+.*  Datum       Name          Änderung                                 *
 .*  ----------  ------------  ---------------------------------------  *
 .*  23.01.2007  Th.Raddatz    Added parameter TAGSREQ(...) to command. *
 .*                                                                     *
@@ -7642,7 +7646,7 @@ srccssid=  "00273">
      /* =================================================================== */
      /*  History:                                                           */
      /*                                                                     */
-     /*  Datum       Name          Ã„nderung                                 */
+     /*  Datum       Name          Änderung                                 */
      /*  ----------  ------------  ---------------------------------------  */
      /*  07.03.2014  Th.Raddatz    Added special value *DFT to parameters   */
      /*                            SRCLIB, SRCFILE and SRCMBR.              */
@@ -7815,7 +7819,7 @@ srccssid=  "00273">
              CHGVAR     VAR(&USESRCLIB ) VALUE(%SST(&QUSESRCF 11 10))
 
  /* - - - - - - - - - - - - - - - - - - */
- /*  PrÃ¼fen der Quelldatei/-teildatei   */
+ /*  Prüfen der Quelldatei/-teildatei   */
  /* - - - - - - - - - - - - - - - - - - */
              CHKOBJ     OBJ(&USESRCLIB) OBJTYPE(*LIB)
              CHKOBJ     OBJ(&USESRCLIB/&USESRCFILE) OBJTYPE(*FILE)
@@ -7823,7 +7827,7 @@ srccssid=  "00273">
                           MBR(&USESRCMBR)
 
  /* - - - - - - - - - - - - - - - - - - */
- /*  PrÃ¼fen der Steuerdatei STRPRE1     */
+ /*  Prüfen der Steuerdatei STRPRE1     */
  /* - - - - - - - - - - - - - - - - - - */
              CHKOBJ     OBJ(*LIBL/STRPRE1) OBJTYPE(*FILE)
              CHKOBJ     OBJ(*LIBL/STRPRE1) OBJTYPE(*FILE) +
@@ -7837,7 +7841,7 @@ srccssid=  "00273">
                             RTNLIB(&XMSGFLIB)
 
  /* - - - - - - - - - - - - - - - - - - */
- /*  PrÃ¼fen Befehl CHGOBJDA             */
+ /*  Prüfen Befehl CHGOBJDA             */
  /* - - - - - - - - - - - - - - - - - - */
              IF         COND(&CHGOBJD *EQ '*YES') THEN(DO)
                CHKOBJ     OBJ(*LIBL/CHGOBJDA) OBJTYPE(*CMD)
@@ -8004,7 +8008,7 @@ srccssid=  "00273">
       *=====================================================================*
       *  History:                                                           *
       *                                                                     *
-      *  Datum       Name          Ã„nderung                                 *
+      *  Datum       Name          Änderung                                 *
       *  ----------  ------------  ---------------------------------------  *
       *  21.05.2002  Th.Raddatz    Removed special characters from src mbr  *
       *                                                                     *
@@ -8615,14 +8619,14 @@ srccssid=  "00273">
      d  o_fc                         12a          options(*omit)
       *
       * -------------------------------------------------------------
-      *  DateischlÃ¼ssel
+      *  Dateischlüssel
       * -------------------------------------------------------------
      D P1Key2          ds                  qualified
      D  MODE                               like(P1MODE)
      D  NEWMODE                            like(P1NEWMODE)
       *
       * =============================================================
-      *  AusfÃ¼hren Pre-Prozessor
+      *  Ausführen Pre-Prozessor
       * =============================================================
      P STRPREPRC...
      P                 B                   export
@@ -8671,23 +8675,23 @@ srccssid=  "00273">
      D  i_usrDefVars                              likeds(inpUsrDefVars_t)
       *
       *  Nachrichten
-      *  ... Die DatensatzlÃ¤nge der Eingabedatei ist zu lang.
+      *  ... Die Datensatzlänge der Eingabedatei ist zu lang.
       /COPY QSTRPREPRC,PRZ0011
-      *  ... Fehler beim Ã–ffnen der Quellendatei &2/&1, Teildatei &3.
+      *  ... Fehler beim Öffnen der Quellendatei &2/&1, Teildatei &3.
       /COPY QSTRPREPRC,PRZ0012
-      *  ... Fehler beim Ã–ffnen der Steuerdatei &2/&1, Teildatei &3.
+      *  ... Fehler beim Öffnen der Steuerdatei &2/&1, Teildatei &3.
       /COPY QSTRPREPRC,PRZ0013
-      *  ... AuszufÃ¼hrender Befehl fehlt. Weitere Verarbeitung nich . . .
+      *  ... Auszuführender Befehl fehlt. Weitere Verarbeitung nich . . .
       /COPY QSTRPREPRC,PRZ0014
       *  ... Keine Pre-Compiler Anweisungen in Quellendatei &2/&1, Teildatei &3 gefunden.
       /COPY QSTRPREPRC,PRZ0024
-      *  ... EVFEVENT Datei in Bibliothek &1 oder das Job Protokoll konnte nicht geÃ¶ffnet
+      *  ... EVFEVENT Datei in Bibliothek &1 oder das Job Protokoll konnte nicht geöffnet
       /COPY QSTRPREPRC,PRZ0025
       *  ... EVFEVENT Datei konnte nicht zur Ausgabe vorbereitet werden.
       /COPY QSTRPREPRC,PRZ0026
       *  ... Erstellungsbefehl nicht gefunden in Quellendatei &2/&1, Teildatei &3.
       /COPY QSTRPREPRC,PRZ0028
-      *  ... Die Option *ADDJOBLOG ist nur in Verbindung mit *EVENTF zulÃ¤ssig.
+      *  ... Die Option *ADDJOBLOG ist nur in Verbindung mit *EVENTF zulässig.
       /COPY QSTRPREPRC,PRZ0030
       *
       *  Arbeitsfelder
@@ -8850,10 +8854,10 @@ srccssid=  "00273">
             endAbnormal();
          endif;
 
-         // Entfernen der "Ã–ffnen" Nachrichten
+         // Entfernen der "Öffnen" Nachrichten
          p_rmvPgmMsg(cMsg_Rmv_All);
 
-         // PrÃ¼fen der DatensatzlÃ¤nge
+         // Prüfen der Datensatzlänge
          if (f1.rcdLen > cMaxRcdLen);
             clear PRZ0011;
             PRZ00111 = f1.rcdLen;
@@ -8871,15 +8875,15 @@ srccssid=  "00273">
          mode = cMODE_SCAN;
          pushMode(mode);
 
-         // Initialisieren "AusfÃ¼hren Befehl implizit"
+         // Initialisieren "Ausführen Befehl implizit"
          // Der Erstellungsbefehl wird ohne Pre-Prozessor
-         // Abschnitt ausgefÃ¼hrt
+         // Abschnitt ausgeführt
          execCmdImplizit = cTrue;
 
          // Initialisieren "STRPREPRC" Anweisungen gefunden
          foundPrePrcTags = cFalse;
 
-         // Berechnen DatenlÃ¤nge
+         // Berechnen Datenlänge
          srcDtaLen = getSrcDataLength();
 
          // Initialisieren Fortsetzungszeile
@@ -8896,7 +8900,7 @@ srccssid=  "00273">
 
             f1_line_number = f1_line_number + 1;
 
-            // Extrahieren Datenteil gemÃ¤ÃŸ der DatensatzlÃ¤nge
+            // Extrahieren Datenteil gemäß der Datensatzlänge
             srcDta = %subst(ds_srcFile.srcDta: 1: srcDtaLen);
 
             // Wenn sich in der Programmzeile ein Tag befindet, ...
@@ -8904,7 +8908,7 @@ srccssid=  "00273">
                // ermitteln neue Betriebsart
                newMode = tagToMode(tag);
 
-               // prÃ¼fen Betriebsartenwechsel
+               // prüfen Betriebsartenwechsel
                if (not checkMode(mode: newMode));
                   endAbnormal();
                endif;
@@ -8967,7 +8971,7 @@ srccssid=  "00273">
                                           : srcDta
                                           : lineData.continue);
 
-               // prÃ¼fen auf Fortsetzungszeile
+               // prüfen auf Fortsetzungszeile
                if (lineData.continue <> cEND_OF_LINE);
                   iter;
                else;
@@ -8988,13 +8992,13 @@ srccssid=  "00273">
                   endAbnormal();
                endif;
 
-               // zufÃ¼gen SchlÃ¼sselwortdaten
+               // zufügen Schlüsselwortdaten
                lineData.keyData = addData(cTAG_PARM
                                           : lineData.keyData
                                           : srcDta
                                           : lineData.continue );
 
-               // prÃ¼fen auf Fortsetzungszeile
+               // prüfen auf Fortsetzungszeile
                if (lineData.continue <> cEND_OF_LINE);
                   iter;
                else;
@@ -9015,13 +9019,13 @@ srccssid=  "00273">
 
             // Befehl-Anweisung    >>CMD<<
             if (mode = cMODE_CMD);
-               // zufÃ¼gen SchlÃ¼sselwortdaten
+               // zufügen Schlüsselwortdaten
                lineData.keyData = addData(cTAG_CMD
                                           : lineData.keyData
                                           : srcDta
                                           : lineData.continue);
 
-               // prÃ¼fen auf Fortsetzungszeile
+               // prüfen auf Fortsetzungszeile
                if (lineData.continue <> cEND_OF_LINE);
                   iter;
                else;
@@ -9035,13 +9039,13 @@ srccssid=  "00273">
 
             // Befehl-Anweisung    >>LIBL<<
             if (mode = cMODE_LIBL);
-               // zufÃ¼gen SchlÃ¼sselwortdaten
+               // zufügen Schlüsselwortdaten
                lineData.keyData = addData(cTAG_LIBL
                                           : lineData.keyData
                                           : srcDta
                                           : lineData.continue);
 
-               // prÃ¼fen auf Fortsetzungszeile
+               // prüfen auf Fortsetzungszeile
                if (lineData.continue <> cEND_OF_LINE);
                   iter;
                else;
@@ -9057,13 +9061,13 @@ srccssid=  "00273">
 
             // Befehl-Anweisung    >>CURLIB<<
             if (mode = cMODE_CURLIB);
-               // zufÃ¼gen SchlÃ¼sselwortdaten
+               // zufügen Schlüsselwortdaten
                lineData.keyData = addData(cTAG_CURLIB
                                           : lineData.keyData
                                           : srcDta
                                           : lineData.continue);
 
-               // prÃ¼fen auf Fortsetzungszeile
+               // prüfen auf Fortsetzungszeile
                if (lineData.continue <> cEND_OF_LINE);
                   iter;
                else;
@@ -9082,7 +9086,7 @@ srccssid=  "00273">
          close SRCFILE;
          close STRPRE1;
 
-         // AusfÃ¼hren >>EXECUTE<< implizit, weil
+         // Ausführen >>EXECUTE<< implizit, weil
          // kein Pre-Prozessor Abschnitt gefunden werden konnte
          isCmdMissingError = cFalse;
          if (execCmdImplizit = cTrue);
@@ -9213,7 +9217,7 @@ srccssid=  "00273">
      D posOfVar        s                   like(int4_t) inz
      D i               s              5i 0
       *
-      *  ... Fehlender Wert fÃ¼r Variable an Position &1 des auszufÃ¼hrenden Befehls.
+      *  ... Fehlender Wert für Variable an Position &1 des auszuführenden Befehls.
       /COPY QSTRPREPRC,PRZ0023
       /free
 
@@ -9375,7 +9379,7 @@ srccssid=  "00273">
        //     replaceVar('*CX': i_variables.prvLibl.curLib: cmdString);
        //  endif;
 
-         // PrÃ¼fen, ob alle Variablen ersetzt worden sind
+         // Prüfen, ob alle Variablen ersetzt worden sind
          posOfVar = %scan('&': cmdString);
 
          if (posOfVar <> 0);
@@ -9741,7 +9745,7 @@ srccssid=  "00273">
      P                 e
 
       * =============================================================
-      *  Zusammenbauen SchlÃ¼sselwortdaten
+      *  Zusammenbauen Schlüsselwortdaten
       * =============================================================
      P addData...
      P                 b
@@ -9755,11 +9759,11 @@ srccssid=  "00273">
      D keyData         s                   like(keyData_t) inz
       *
       *  Nachrichten
-      *  ... UngÃ¼ltiges Fortsetzungszeichen &1 in Zeile &2 gefunden.
+      *  ... Ungültiges Fortsetzungszeichen &1 in Zeile &2 gefunden.
       /COPY QSTRPREPRC,PRZ0005
       *  ... Das Zeilenendekennzeichen konnte nicht gefunden werden.
       /COPY QSTRPREPRC,PRZ0008
-      *  ... Unbekannter Wert "&1" fÃ¼r Fortsetzungszeichen gefunden.
+      *  ... Unbekannter Wert "&1" für Fortsetzungszeichen gefunden.
       /COPY QSTRPREPRC,PRZ0009
       *
       *  Arbeitsfelder
@@ -9796,10 +9800,10 @@ srccssid=  "00273">
             x = x - 1;
          enddo;
 
-         // ermitteln DatenlÃ¤nge Fortsetzungszeichen
+         // ermitteln Datenlänge Fortsetzungszeichen
          dataLen = x - start;
 
-         // prÃ¼fen DatenlÃ¤nge
+         // prüfen Datenlänge
          if (dataLen < 0);
             clear PRZ0008;
             PRZ00081 = f1_line_number;
@@ -9807,10 +9811,10 @@ srccssid=  "00273">
             endAbnormal();
          endif;
 
-         // Wenn eine DatenlÃ¤nge ermittelt werden konnte, ...
+         // Wenn eine Datenlänge ermittelt werden konnte, ...
          if (dataLen > 0);
             // ... dann
-            //     zufÃ¼gen neue Daten zu SchlÃ¼sselwort bei ...
+            //     zufügen neue Daten zu Schlüsselwort bei ...
             select;
             when (io_continue = cNEW_LINE);     // ... neue Zeile
                keyData = %subst(i_srcDta: start: dataLen);
@@ -9823,8 +9827,8 @@ srccssid=  "00273">
 
             other;
                // ... dieser Fall kann nicht eintreten
-               //     weil Ã¼ber die PrÃ¼fung von dataLen sichergestellt ist,
-               //     dass immer ein gÃ¼ltiges Fortsetzungszeichen vorhanden ist.
+               //     weil über die Prüfung von dataLen sichergestellt ist,
+               //     dass immer ein gültiges Fortsetzungszeichen vorhanden ist.
                //     Dennoch:
                clear PRZ0009;
                PRZ00091 = io_continue;
@@ -9841,7 +9845,7 @@ srccssid=  "00273">
          // ermitteln neues Fortsetzungszeichen
          io_continue = %subst(i_srcdta: x: %len(io_continue));
 
-         // prÃ¼fen neues Fortsetzungszeichen
+         // prüfen neues Fortsetzungszeichen
          if (io_continue <> cEND_OF_LINE) and
             (io_continue <> cTRUNC_CONT) and
             (io_continue <> cCONT);
@@ -9886,7 +9890,7 @@ srccssid=  "00273">
             return width;
          endif;
 
-         // Ãœberspringen von Leerzeichen zwischen >>WIDTH<< und der angegebenen Breite
+         // Überspringen von Leerzeichen zwischen >>WIDTH<< und der angegebenen Breite
          x = x + %len(cTAG_WIDTH);
          x = %check(' ': %subst(i_srcDta: 1: i_length): x);
 
@@ -9906,7 +9910,7 @@ srccssid=  "00273">
      P                 e
       *
       * =============================================================
-      *  Ersetzen/HinzufÃ¼gen SchlÃ¼sselwort
+      *  Ersetzen/Hinzufügen Schlüsselwort
       * =============================================================
      P replaceCmdKeyWord...
      P                 b
@@ -9918,7 +9922,7 @@ srccssid=  "00273">
      D cmd             s                   like(cmdLong_t) inz
       *
       *  Nachrichten
-      *  ... Das Ende des SchlÃ¼sselwortes &1 konnte nicht gefunden werden.
+      *  ... Das Ende des Schlüsselwortes &1 konnte nicht gefunden werden.
       /COPY QSTRPREPRC,PRZ0006
       *
       *  Arbeitsfelder
@@ -9936,13 +9940,13 @@ srccssid=  "00273">
          token = %subst(i_keyData: 1: x);
 
          // ermitteln Ende des Befehlswortes ...
-         // ... Ã¼berspringen fÃ¼hrende Leerzeichen
+         // ... überspringen führende Leerzeichen
          x = %check(' ': i_cmd);
          // ... suchen Leerzeichen nach Befehlswort
          x = %scan(' ': i_cmd: x);
 
          // suchen Token im vorhandenen Befehlstring
-         dow (startPos < %len(i_cmd));
+         dow (x > 0 and startPos < %len(i_cmd));
             startPos = %scan(token: i_cmd: x);
             if ((startPos > 1)   and
                 (%subst(i_cmd: startPos - 1: 1) <> ' '));
@@ -9956,7 +9960,7 @@ srccssid=  "00273">
          // Wenn das Token gefunden werden konnte, ...
          if (startPos <> 0);
             // ... dann
-            //     ermitteln LÃ¤nge des SchlÃ¼sselwortes ...
+            //     ermitteln Länge des Schlüsselwortes ...
             x = startPos + %len(token);
             numBracket = 1;
             dataLen = %len(token);
@@ -9985,10 +9989,10 @@ srccssid=  "00273">
 
             endfor;
 
-            // Wenn der KlammernzÃ¤hler <> 0 ist, ...
+            // Wenn der Klammernzähler <> 0 ist, ...
             if (numBracket <> 0);
                 // ... dann
-                //     konnte das Ende des SchlÃ¼sselwortes
+                //     konnte das Ende des Schlüsselwortes
                 //     nicht gefunden werden
                 clear PRZ0006;
                 PRZ00061 = %subst(token: 1: %len(token) - 1);
@@ -9996,12 +10000,12 @@ srccssid=  "00273">
                 endAbnormal();
             endif;
 
-            // austauschen SchlÃ¼sselwort
+            // austauschen Schlüsselwort
             cmd = %replace(i_keyData: i_cmd: startPos: dataLen);
 
          else;
             // ... sonst
-            //     anfÃ¼gen SchlÃ¼sselwort
+            //     anfügen Schlüsselwort
             cmd = %trim(i_cmd) + ' ' + i_keyData;
          endif;
 
@@ -10011,7 +10015,7 @@ srccssid=  "00273">
      P                 e
       *
       * =============================================================
-      *  Ermitteln LÃ¤nge von srcDta
+      *  Ermitteln Länge von srcDta
       * =============================================================
      P getSrcDataLength...
      P                 b
@@ -10056,7 +10060,7 @@ srccssid=  "00273">
      P                 e
       *
       * =============================================================
-      *  PrÃ¼fen auf gÃ¼ltiges Tag
+      *  Prüfen auf gültiges Tag
       * =============================================================
      P isTag...
      P                 b
@@ -10137,25 +10141,25 @@ srccssid=  "00273">
                leave;
             endif;
 
-            // AusfÃ¼hren "Hauptbefehl"
+            // Ausführen "Hauptbefehl"
             if (retrieveTag(cTAG_EXECUTE: i_srcDta: o_tag));
                isTag = cTrue;
                leave;
             endif;
 
-            // AusfÃ¼hren Pre-/Post-Anweisung
+            // Ausführen Pre-/Post-Anweisung
             if (retrieveTag(cTAG_CMD: i_srcDta: o_tag));
                isTag = cTrue;
                leave;
             endif;
 
-            // AusfÃ¼hren Anweisung zum Setzen einer Bibliotheksliste
+            // Ausführen Anweisung zum Setzen einer Bibliotheksliste
             if (retrieveTag(cTAG_LIBL: i_srcDta: o_tag));
                isTag = cTrue;
                leave;
             endif;
 
-            // AusfÃ¼hren Anweisung zum Setzen der aktuellen Bibliothek
+            // Ausführen Anweisung zum Setzen der aktuellen Bibliothek
             if (retrieveTag(cTAG_CURLIB: i_srcDta: o_tag));
                isTag = cTrue;
                leave;
@@ -10211,7 +10215,7 @@ srccssid=  "00273">
      D mode            s                   like(mode_t) inz
       *
       *  Nachrichten
-      *  ... Das Ende des SchlÃ¼sselwortes &1 konnte nicht gefunden werden.
+      *  ... Das Ende des Schlüsselwortes &1 konnte nicht gefunden werden.
       /COPY QSTRPREPRC,PRZ0010
       /free
 
@@ -10260,25 +10264,25 @@ srccssid=  "00273">
             when (i_tag = cTAG_PARM);
                mode = cMODE_PARM;
 
-            // AusfÃ¼hren "Hauptbefehl"
+            // Ausführen "Hauptbefehl"
          when (i_tag = cTAG_EXECUTE);
             mode  = cMODE_EXECUTE;
 
-            // AusfÃ¼hren Pre-/Post-Befehle
+            // Ausführen Pre-/Post-Befehle
          when (i_tag = cTAG_CMD);
             mode  = cMODE_CMD;
 
-            // AusfÃ¼hren Anweisung zum Setzen einer Bibliotheksliste
+            // Ausführen Anweisung zum Setzen einer Bibliotheksliste
          when (i_tag = cTAG_LIBL);
             mode  = cMODE_LIBL;
 
-            // AusfÃ¼hren Anweisung zum Setzen der aktuellen Bibliothek
+            // Ausführen Anweisung zum Setzen der aktuellen Bibliothek
          when (i_tag = cTAG_CURLIB);
             mode  = cMODE_CURLIB;
 
          other;
             // ... darf nicht vorkommen, da alle Tags, die erkannt werden
-            //     auch umgesetzt werden mÃ¼ssen.
+            //     auch umgesetzt werden müssen.
             //     Dennoch:
             clear PRZ0010;
             PRZ00101 = i_tag;
@@ -10292,7 +10296,7 @@ srccssid=  "00273">
      P                 e
       *
       * =============================================================
-      *  Ã„ndern Betriebsmodus
+      *  Ändern Betriebsmodus
       * =============================================================
      P checkMode...
      P                 b
@@ -10377,14 +10381,14 @@ srccssid=  "00273">
      P                 e
       *
       * =============================================================
-      *  PrÃ¼fen CL Befehl
+      *  Prüfen CL Befehl
       * =============================================================
      P validateCmd...
      P                 b
      D                 pi                         like(bool_t)
      D  i_cmd                              value  like(cmdLong_t)
       *
-      *  Definitionen fÃ¼r QCAPCMD
+      *  Definitionen für QCAPCMD
      D optCtrl         ds                  likeds(cpop0100_t) inz
      D retCmd          s                   like(cmdLongFixLen_t) inz
      D retCmdLenAvl    s             10i 0 inz(%len(retCmd))
@@ -10442,7 +10446,7 @@ srccssid=  "00273">
      D msgFile         s                   like(msg_t.file) inz
      D msgLib          s                   like(msg_t.lib) inz
       *
-      * Definitionen fÃ¼r Ausgangsprogramm
+      * Definitionen für Ausgangsprogramm
      D cmdLongFixLength...
      D                 s                   like(cmdLongFixLen_t)
      D cmdLongLength   s             15P 5
@@ -10453,7 +10457,7 @@ srccssid=  "00273">
      D                                     options(*varsize)
      D  length                       15P 5 options(*nopass: *omit)
       *
-      *  Definitionen fÃ¼r QCAPCMD
+      *  Definitionen für QCAPCMD
      D optCtrl         ds                  likeds(cpop0100_t) inz
      D retCmd          s                   like(cmdLongFixLen_t) inz
      D retCmdLenAvl    s             10i 0 inz(%len(retCmd))
@@ -10648,7 +10652,7 @@ srccssid=  "00273">
       *  ... Fehler im Erstellungsbefehl gefunden.
       /COPY QSTRPREPRC,PRZ0015
       *
-      *  Definitionen fÃ¼r QCAPCMD
+      *  Definitionen für QCAPCMD
      D cmd             s                   like(i_cmd)
      D optCtrl         ds                  likeds(cpop0100_t) inz
      D retCmd          s                   like(cmdLongFixLen_t) inz
@@ -10679,7 +10683,7 @@ srccssid=  "00273">
             QCAPCMD(cmd: %len(cmd): optCtrl: %size(optCtrl): 'CPOP0100'
                     : retCmd: retCmdLenAvl: retCmdLenRtn: errCode);
 
-         // PrÃ¼fen API-Fehler ...
+         // Prüfen API-Fehler ...
          if (f_isApiError(errCode));
             msg = f_cvtApiErrCodeToMsg(errCode);
             msg.type = cTYPE_DIAG;
@@ -10690,7 +10694,7 @@ srccssid=  "00273">
             endAbnormal();
          endif;
 
-         // PrÃ¼fen LÃ¤nge der Befehlszeichenkette ...
+         // Prüfen Länge der Befehlszeichenkette ...
          if (retCmdLenRtn > retCmdLenAvl);
             clear PRZ0007;
             PRZ00071 = retCmdLenAvl;
@@ -10760,7 +10764,7 @@ srccssid=  "00273">
      D qEventf         ds                  likeds(i_qEventf)
       *
       *  Nachrichten
-      *  ... EVFEVENT Datei in Bibliothek &1 oder das Job Protokoll konnte nicht geÃ¶ffnet
+      *  ... EVFEVENT Datei in Bibliothek &1 oder das Job Protokoll konnte nicht geöffnet
       /COPY QSTRPREPRC,PRZ0025
       /free
 
@@ -10793,7 +10797,7 @@ srccssid=  "00273">
      D  i_chgMsgs                      n   const
       *
      D isEmpty         s               n
-      *  ... EVFEVENT Datei in Bibliothek &1 oder das Job Protokoll konnte nicht geÃ¶ffnet
+      *  ... EVFEVENT Datei in Bibliothek &1 oder das Job Protokoll konnte nicht geöffnet
       /COPY QSTRPREPRC,PRZ0025
       /free
 
@@ -10936,7 +10940,7 @@ srccssid=  "00273">
       *=====================================================================*
       *  History:                                                           *
       *                                                                     *
-      *  Datum       Name          Ã„nderung                                 *
+      *  Datum       Name          Änderung                                 *
       *  ----------  ------------  ---------------------------------------  *
       *  18.05.2015  Th.Raddatz    Converted to /free.                      *
       *                                                                     *
@@ -11144,7 +11148,7 @@ srccssid=  "00273">
       *=====================================================================*
       *  History:                                                           *
       *                                                                     *
-      *  Datum       Name          Ã„nderung                                 *
+      *  Datum       Name          Änderung                                 *
       *  ----------  ------------  ---------------------------------------  *
       *  03.02.2017  Th.Raddatz    Changed, to append the version           *
       *                            information to the job log.              *
@@ -11804,7 +11808,7 @@ srccssid=  "00273">
      /* =================================================================== */
      /*  History:                                                           */
      /*                                                                     */
-     /*  Datum       Name          Ã„nderung                                 */
+     /*  Datum       Name          Änderung                                 */
      /*  ----------  ------------  ---------------------------------------  */
      /*  23.01.2007  Th.Raddatz    Added parameter TAGSREQ(...) to command. */
      /*  09.04.2015  Hildebrandt   Added parameter EXICMDEXC to command.    */
@@ -11854,7 +11858,7 @@ srccssid=  "00273">
              PARM       KWD(CMD       ) TYPE(*CMDSTR)      +
                           LEN(8192)                        +
                           MIN(0)                           +
-                          PROMPT('AuszufÃ¼hrender Befehl')
+                          PROMPT('Auszuführender Befehl')
 
              PARM       KWD(OPTION    ) TYPE(*CHAR)        +
                           LEN(10)                          +
@@ -11865,7 +11869,7 @@ srccssid=  "00273">
                                  *NOEVENTF                 +
                                  *ADDJOBLOG                +
                                  *NOJOBLOG)                +
-                          PROMPT('Ereignisdatei AuswahlmÃ¶gl.')
+                          PROMPT('Ereignisdatei Auswahlmögl.')
 
              PARM       KWD(CHGOBJD   ) TYPE(*CHAR  )      +
                           LEN(4)                           +
@@ -11873,7 +11877,7 @@ srccssid=  "00273">
                           DFT(*NO)                         +
                           RSTD(*YES)                       +
                           VALUES(*NO *YES)                 +
-                          PROMPT('Ã„ndern Objektbeschreibung')
+                          PROMPT('Ändern Objektbeschreibung')
 
              PARM       KWD(OBJTYPE   ) TYPE(*CHAR  )      +
                           LEN(10)                          +
@@ -11937,7 +11941,7 @@ srccssid=  "00273">
                           MIN(0)                           +
                           DFT(*NONE)                       +
                           PMTCTL(*PMTRQS)                  +
-                          PROMPT('Wert fÃ¼r Bibliothek      (&LI)')
+                          PROMPT('Wert für Bibliothek      (&LI)')
 
              PARM       KWD(OBJ       ) TYPE(*CHAR)        +
                           LEN(10)                          +
@@ -11945,7 +11949,7 @@ srccssid=  "00273">
                           DFT(*NONE)                       +
                           SPCVAL((*NONE) (*DFT))           +
                           PMTCTL(*PMTRQS)                  +
-                          PROMPT('Wert fÃ¼r Objekt          (&OB)')
+                          PROMPT('Wert für Objekt          (&OB)')
 
              PARM       KWD(TYPECODE  ) TYPE(*CHAR)        +
                           LEN(6)                           +
@@ -11953,7 +11957,7 @@ srccssid=  "00273">
                           DFT(*NONE)                       +
                           SPCVAL((*NONE))                  +
                           PMTCTL(*PMTRQS)                  +
-                          PROMPT('Wert fÃ¼r Type Code       (&TY)')
+                          PROMPT('Wert für Type Code       (&TY)')
 
              PARM       KWD(SRCLIB    ) TYPE(*CHAR)        +
                           LEN(10)                          +
@@ -11961,7 +11965,7 @@ srccssid=  "00273">
                           DFT(*NONE)                       +
                           SPCVAL((*NONE) (*DFT))           +
                           PMTCTL(*PMTRQS)                  +
-                          PROMPT('Wert fÃ¼r Quellenbibl.    (&SL)')
+                          PROMPT('Wert für Quellenbibl.    (&SL)')
 
              PARM       KWD(SRCFILE   ) TYPE(*CHAR)        +
                           LEN(10)                          +
@@ -11969,7 +11973,7 @@ srccssid=  "00273">
                           DFT(*NONE)                       +
                           SPCVAL((*NONE) (*DFT))           +
                           PMTCTL(*PMTRQS)                  +
-                          PROMPT('Wert fÃ¼r Quellendatei    (&SF)')
+                          PROMPT('Wert für Quellendatei    (&SF)')
 
              PARM       KWD(SRCMBR    ) TYPE(*CHAR)        +
                           LEN(10)                          +
@@ -11977,7 +11981,7 @@ srccssid=  "00273">
                           DFT(*NONE)                       +
                           SPCVAL((*NONE) (*DFT))           +
                           PMTCTL(*PMTRQS)                  +
-                          PROMPT('Wert fÃ¼r Quell.Teildatei (&SM)')
+                          PROMPT('Wert für Quell.Teildatei (&SM)')
 
              PARM       KWD(TESTLIB   ) TYPE(*CHAR)        +
                           LEN(10)                          +
@@ -11985,7 +11989,7 @@ srccssid=  "00273">
                           DFT(*NONE)                       +
                           SPCVAL((*NONE))                  +
                           PMTCTL(*PMTRQS)                  +
-                          PROMPT('Wert fÃ¼r Testbibliothek  (&TL)')
+                          PROMPT('Wert für Testbibliothek  (&TL)')
 
              PARM       KWD(TESTOBJ   ) TYPE(*CHAR)        +
                           LEN(10)                          +
@@ -11993,7 +11997,7 @@ srccssid=  "00273">
                           DFT(*NONE)                       +
                           SPCVAL((*NONE))                  +
                           PMTCTL(*PMTRQS)                  +
-                          PROMPT('Wert fÃ¼r Testobjekt      (&TO)')
+                          PROMPT('Wert für Testobjekt      (&TO)')
 
              PARM       KWD(TGTRLS    ) TYPE(*CHAR)        +
                           LEN(10)                          +
@@ -12001,7 +12005,7 @@ srccssid=  "00273">
                           DFT(*NONE)                       +
                           SPCVAL((*NONE))                  +
                           PMTCTL(*PMTRQS)                  +
-                          PROMPT('Wert fÃ¼r Zielrelease     (&TR)')
+                          PROMPT('Wert für Zielrelease     (&TR)')
 
              PARM       KWD(FRMSRCLIB ) TYPE(*CHAR)        +
                           LEN(10)                          +
@@ -12009,7 +12013,7 @@ srccssid=  "00273">
                           DFT(*NONE)                       +
                           SPCVAL((*NONE))                  +
                           PMTCTL(*PMTRQS)                  +
-                          PROMPT('Wert fÃ¼r Von-Quellenbibl.(&FL)')
+                          PROMPT('Wert für Von-Quellenbibl.(&FL)')
 
              PARM       KWD(FRMSRCFILE) TYPE(*CHAR)        +
                           LEN(10)                          +
@@ -12017,7 +12021,7 @@ srccssid=  "00273">
                           DFT(*NONE)                       +
                           SPCVAL((*NONE))                  +
                           PMTCTL(*PMTRQS)                  +
-                          PROMPT('Wert fÃ¼r Von-Quellendatei(&FF)')
+                          PROMPT('Wert für Von-Quellendatei(&FF)')
 
              PARM       KWD(FRMSRCMBR ) TYPE(*CHAR)        +
                           LEN(10)                          +
@@ -12025,7 +12029,7 @@ srccssid=  "00273">
                           DFT(*NONE)                       +
                           SPCVAL((*NONE))                  +
                           PMTCTL(*PMTRQS)                  +
-                          PROMPT('Wert fÃ¼r Von-Quell.Teild.(&FM)')
+                          PROMPT('Wert für Von-Quell.Teild.(&FM)')
 
              PARM       KWD(USER0     ) TYPE(*CHAR)        +
                           LEN(50)                          +
@@ -12033,7 +12037,7 @@ srccssid=  "00273">
                           DFT(*NONE)                       +
                           SPCVAL((*NONE))                  +
                           PMTCTL(*PMTRQS)                  +
-                          PROMPT('Wert fÃ¼r Parameter       (&U0)')
+                          PROMPT('Wert für Parameter       (&U0)')
 
              PARM       KWD(USER1     ) TYPE(*CHAR)        +
                           LEN(50)                          +
@@ -12041,7 +12045,7 @@ srccssid=  "00273">
                           DFT(*NONE)                       +
                           SPCVAL((*NONE))                  +
                           PMTCTL(*PMTRQS)                  +
-                          PROMPT('Wert fÃ¼r Parameter       (&U1)')
+                          PROMPT('Wert für Parameter       (&U1)')
 
              PARM       KWD(USER2     ) TYPE(*CHAR)        +
                           LEN(50)                          +
@@ -12049,7 +12053,7 @@ srccssid=  "00273">
                           DFT(*NONE)                       +
                           SPCVAL((*NONE))                  +
                           PMTCTL(*PMTRQS)                  +
-                          PROMPT('Wert fÃ¼r Parameter       (&U2)')
+                          PROMPT('Wert für Parameter       (&U2)')
 
              PARM       KWD(USER3     ) TYPE(*CHAR)        +
                           LEN(50)                          +
@@ -12057,7 +12061,7 @@ srccssid=  "00273">
                           DFT(*NONE)                       +
                           SPCVAL((*NONE))                  +
                           PMTCTL(*PMTRQS)                  +
-                          PROMPT('Wert fÃ¼r Parameter       (&U3)')
+                          PROMPT('Wert für Parameter       (&U3)')
 
              PARM       KWD(USER4     ) TYPE(*CHAR)        +
                           LEN(50)                          +
@@ -12065,7 +12069,7 @@ srccssid=  "00273">
                           DFT(*NONE)                       +
                           SPCVAL((*NONE))                  +
                           PMTCTL(*PMTRQS)                  +
-                          PROMPT('Wert fÃ¼r Parameter       (&U4)')
+                          PROMPT('Wert für Parameter       (&U4)')
 
              PARM       KWD(USER5     ) TYPE(*CHAR)        +
                           LEN(50)                          +
@@ -12073,7 +12077,7 @@ srccssid=  "00273">
                           DFT(*NONE)                       +
                           SPCVAL((*NONE))                  +
                           PMTCTL(*PMTRQS)                  +
-                          PROMPT('Wert fÃ¼r Parameter       (&U5)')
+                          PROMPT('Wert für Parameter       (&U5)')
 
              PARM       KWD(USER6     ) TYPE(*CHAR)        +
                           LEN(50)                          +
@@ -12081,7 +12085,7 @@ srccssid=  "00273">
                           DFT(*NONE)                       +
                           SPCVAL((*NONE))                  +
                           PMTCTL(*PMTRQS)                  +
-                          PROMPT('Wert fÃ¼r Parameter       (&U6)')
+                          PROMPT('Wert für Parameter       (&U6)')
 
              PARM       KWD(USER7     ) TYPE(*CHAR)        +
                           LEN(50)                          +
@@ -12089,7 +12093,7 @@ srccssid=  "00273">
                           DFT(*NONE)                       +
                           SPCVAL((*NONE))                  +
                           PMTCTL(*PMTRQS)                  +
-                          PROMPT('Wert fÃ¼r Parameter       (&U7)')
+                          PROMPT('Wert für Parameter       (&U7)')
 
              PARM       KWD(USER8     ) TYPE(*CHAR)        +
                           LEN(50)                          +
@@ -12097,7 +12101,7 @@ srccssid=  "00273">
                           DFT(*NONE)                       +
                           SPCVAL((*NONE))                  +
                           PMTCTL(*PMTRQS)                  +
-                          PROMPT('Wert fÃ¼r Parameter       (&U8)')
+                          PROMPT('Wert für Parameter       (&U8)')
 
              PARM       KWD(USER9     ) TYPE(*CHAR)        +
                           LEN(50)                          +
@@ -12105,7 +12109,7 @@ srccssid=  "00273">
                           DFT(*NONE)                       +
                           SPCVAL((*NONE))                  +
                           PMTCTL(*PMTRQS)                  +
-                          PROMPT('Wert fÃ¼r Parameter       (&U9)')
+                          PROMPT('Wert für Parameter       (&U9)')
 
              PARM       KWD(USRDEFVAR ) TYPE(USRDEFVAR)    +
                           MIN(0)                           +
@@ -12143,7 +12147,7 @@ srccssid=  "00273">
                           DFT(*NONE)                       +
                           SNGVAL((*NONE))                  +
                           PMTCTL(*PMTRQS)                  +
-                          PROMPT('Ausgangspgm. BefehlsausfÃ¼hrung')
+                          PROMPT('Ausgangspgm. Befehlsausführung')
 
  USRDEFVAR:  ELEM         TYPE(*CHAR)                      +
                           MIN(1)                           +
@@ -12190,7 +12194,7 @@ srccssid=  "00273">
  PMTCTL1:    PMTCTL     CTL(CHGOBJD) COND((*EQ '*YES'))
 
  /* ------------------------- */
- /* PrÃ¼fen der AbhÃ¤ngigkeiten */
+ /* Prüfen der Abhängigkeiten */
  /* ------------------------- */
 
  /* ... Ausgeben Ereignisdatei    */
@@ -12200,7 +12204,7 @@ srccssid=  "00273">
                                (&OBJ *NE '*NONE')) +
                           NBRTRUE(*ALL) MSGID(PRZ0027)
 
- /* ... Ã„ndern Objektbeschreibung */
+ /* ... Ändern Objektbeschreibung */
  /*     ... Objekttyp             */
              DEP        CTL(&CHGOBJD *EQ '*NO') +
                         PARM((&OBJTYPE          +
@@ -12273,7 +12277,7 @@ srccssid=  "00273">
      /* =================================================================== */
      /*  History:                                                           */
      /*                                                                     */
-     /*  Datum       Name          Ã„nderung                                 */
+     /*  Datum       Name          Änderung                                 */
      /*  ----------  ------------  ---------------------------------------  */
      /*  23.01.2007  Th.Raddatz    Added parameter TAGSREQ(...) to command. */
      /*  09.04.2015  Hildebrandt   Added parameter EXICMDEXC to command.    */
