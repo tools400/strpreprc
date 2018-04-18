@@ -8,6 +8,8 @@
 /* -------------------------------------------------------------------------- */
              XMLGENINC  XINCLUDE(*YES)
 
+             XMLGENVRS XSRCFILE(QSTRPREPRC) XSRCLIB(TOOLS400) XSRCMBR(COPYRIGHT)
+
              XMLGENCND  XMSG('Select language (GER, ENG)') +
                           XVALUES(GER ENG) XVAR(&LANG)
 
