@@ -51,7 +51,7 @@
       appblddate CDATA #REQUIRED
      >
      ]>
-<upload  appname="STRPREPRC"  appauthor="Thomas Raddatz"  appblddate=" 4/19/2018">
+<upload  appname="STRPREPRC"  appauthor="Thomas Raddatz"  appblddate=" 5/26/2018">
 <install_instructions><![CDATA[
      *----------------------------------------------------------------      ------
      *  1. Upload entire XML to your AS/400 to a source file 112 long, into any mbr
@@ -1494,7 +1494,7 @@ srccssid=  "00273">
              CRTPNLGRP PNLGRP(&TOLIB/STRPREPRCP) +
                           SRCFILE(&SRCLIB/&SRCFILE) +
                           SRCMBR(&PNLGRP)
-             DLTSPLF    FILE(&PNLGRP   ) JOB(*) SPLNBR(*LAST)
+             DLTSPLF    FILE(STRPREPRCP) JOB(*) SPLNBR(*LAST)
              MONMSG     MSGID(CPF0000)
 
      /* -------------------------------- */

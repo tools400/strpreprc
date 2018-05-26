@@ -195,7 +195,7 @@
              CRTPNLGRP PNLGRP(&TOLIB/STRPREPRCP) +
                           SRCFILE(&SRCLIB/&SRCFILE) +
                           SRCMBR(&PNLGRP)
-             DLTSPLF    FILE(&PNLGRP   ) JOB(*) SPLNBR(*LAST)
+             DLTSPLF    FILE(STRPREPRCP) JOB(*) SPLNBR(*LAST)
              MONMSG     MSGID(CPF0000)
 
      /* -------------------------------- */
