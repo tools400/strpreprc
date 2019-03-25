@@ -26,21 +26,20 @@
       *  03.02.2017  Th.Raddatz    Changed, to append the version           *
       *                            information to the job log.              *
       *                                                                     *
+      *  09.03.2019  Th.Raddatz    Changed, to open the event file for      *
+      *                            modus 'new', when the event file is      *
+      *                            empty.                                   *
+      *                                                                     *
       * =================================================================== *
       * >>PRE-COMPILER<<                                                    *
-      *                                                                     *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
-      *                           SRCFILE(&SL/&SF) +                        *
-      *                           SRCMBR(&SM);                              *
-      *                                                                     *
-      *   >>COMPILE<<                                                       *
+      *                           SRCFILE(&SL/&SF) SRCMBR(&SM);             *
+      *   >>IMPORTANT<<                                                     *
       *     >>PARM<< TRUNCNBR(*NO);                                         *
       *     >>PARM<< DBGVIEW(*LIST);                                        *
       *     >>PARM<< OPTION(*EVENTF);                                       *
-      *   >>END-COMPILE<<                                                   *
-      *                                                                     *
+      *   >>END-IMPORTANT<<                                                 *
       *   >>EXECUTE<<                                                       *
-      *                                                                     *
       * >>END-PRE-COMPILER<<                                                *
       * =================================================================== *
       /COPY QSTRPREPRC,H_SPEC
@@ -263,7 +262,8 @@
 
          if (qEventf.name <> '' and qEventf.lib <> '');
             if (qEventf.name = i_obj and qEventf.lib = i_lib);
-               g_status.openForAppend = cTrue;
+               g_status.openForAppend =
+                  not isEmptyEventFile(qEventf.lib: qEventf.name);
             else;
                g_status.copyEvents = cTrue;
             endif;

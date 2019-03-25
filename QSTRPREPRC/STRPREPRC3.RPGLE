@@ -25,23 +25,16 @@
       *  ----------  ------------  ---------------------------------------  *
       *  18.05.2015  Th.Raddatz    Converted to /free.                      *
       *                                                                     *
-      *  18.02.2016  Th.Raddatz    Added the >IMPORTANT< parameter tag.     *
-      *                                                                     *
       * =================================================================== *
       * >>PRE-COMPILER<<                                                    *
-      *                                                                     *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
-      *                           SRCFILE(&SL/&SF) +                        *
-      *                           SRCMBR(&SM);                              *
-      *                                                                     *
-      *   >>COMPILE<<                                                       *
+      *                           SRCFILE(&SL/&SF) SRCMBR(&SM);             *
+      *   >>IMPORTANT<<                                                     *
       *     >>PARM<< TRUNCNBR(*NO);                                         *
       *     >>PARM<< DBGVIEW(*LIST);                                        *
       *     >>PARM<< OPTION(*EVENTF);                                       *
-      *   >>END-COMPILE<<                                                   *
-      *                                                                     *
+      *   >>END-IMPORTANT<<                                                 *
       *   >>EXECUTE<<                                                       *
-      *                                                                     *
       * >>END-PRE-COMPILER<<                                                *
       * =================================================================== *
      H NOMAIN

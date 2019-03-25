@@ -1,0 +1,48 @@
+     /* =================================================================== */
+     /*                                                                     */
+     /*  Kurzdokumentation :                                                */
+     /*                                                                     */
+     /*  Bereich . . . : STRPREPRC                                          */
+     /*  Objekt  . . . : STRPREPRC                                          */
+     /*  Beschreibung  : Start Pre-Processor - CPP                          */
+     /*  Author  . . . : Thomas Raddatz   <thomas.raddatz@tools400.de>      */
+     /*  Datum . . . . : 11.02.2019                                         */
+     /*                                                                     */
+     /* =================================================================== */
+     /*                                                                     */
+     /*  This software is free software, you can redistribute it and/or     */
+     /*  modify it under the terms of the GNU General Public License (GPL)  */
+     /*  as published by the Free Software Foundation.                      */
+     /*                                                                     */
+     /*  See GNU General Public License for details.                        */
+     /*          http://www.opensource.org                                  */
+     /*          http://www.opensource.org/licenses/gpl-license.html        */
+     /*                                                                     */
+     /* =================================================================== */
+     /*  History:                                                           */
+     /*                                                                     */
+     /*  Datum       Name          Änderung                                 */
+     /*  ----------  ------------  ---------------------------------------  */
+     /*  11.02.2019  Th.Raddatz    Added DSPSRCC to descibe the creation    */
+     /*                            command of the command processing        */
+     /*                            program.                                 */
+     /*                                                                     */
+     /* =================================================================== */
+     /* >>PRE-COMPILER<<                                                    */
+     /*   >>CRTCMD<< CRTPGM       PGM(&LI/STRPREPRC );                      */
+     /*   >>IMPORTANT<<                                                     */
+     /*     >>PARM<< MODULE(&LI/STRPREPRC1 +                                */
+     /*                     &LI/STRPREPRC2 +                                */
+     /*                     &LI/STRPREPRC3 +                                */
+     /*                     &LI/STRPREPRC4 );                               */
+     /*     >>PARM<< ENTMOD(&LI/STRPREPRC1);                                */
+     /*     >>PARM<< BNDSRVPGM(&LI/BASICS1 +                                */
+     /*                        &LI/EVENTF  +                                */
+     /*                        &LI/JOBLOG );                                */
+     /*     >>PARM<< ACTGRP(*NEW);                                          */
+     /*     >>PARM<< DETAIL(*BASIC);                                        */
+     /*   >>END-IMPORTANT<<                                                 */
+     /*   >>EXECUTE<<                                                       */
+     /* >>END-PRE-COMPILER<<                                                */
+     /* =================================================================== */
+

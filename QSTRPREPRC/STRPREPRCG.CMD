@@ -36,37 +36,39 @@
      /*                            header.                                  */
      /*  22.09.2017  Th.Raddatz    Added parameter USRDEFVAR to STRPREPRC   */
      /*                            command.                                 */
+     /*  11.02.2019  Th.Raddatz    Added parameters USESRCSTMF and STMF.    */
      /*                                                                     */
      /* =================================================================== */
      /* >>PRE-COMPILER<<                                                    */
-     /*                                                                     */
      /*   >>CRTCMD<< CRTCMD       CMD(&LI/STRPREPRC) +                      */
-     /*                           SRCFILE(&SL/&SF) +                        */
-     /*                           SRCMBR(&SM);                              */
-     /*                                                                     */
-     /*   >>COMPILE<<                                                       */
+     /*                           SRCFILE(&SL/&SF) SRCMBR(&SM);             */
+     /*   >>IMPORTANT<<                                                     */
      /*     >>PARM<< PGM(*LIBL/STRPREPRC);                                  */
      /*     >>PARM<< HLPPNLGRP(*LIBL/STRPREPRCP);                           */
      /*     >>PARM<< HLPID(STRPREPRC);                                      */
      /*     >>PARM<< MSGF(*LIBL/STRPREPRC);                                 */
      /*     >>PARM<< PRDLIB(&LI);                                           */
-     /*   >>END-COMPILE<<                                                   */
-     /*                                                                     */
+     /*   >>END-IMPORTANT<<                                                 */
      /*   >>EXECUTE<<                                                       */
-     /*                                                                     */
      /* >>END-PRE-COMPILER<<                                                */
      /* =================================================================== */
 
              CMD        PROMPT('Pre-Prozessor starten')
 
              PARM       KWD(USESRCFILE) TYPE(QUAL1)        +
-                        MIN(1)                             +
+                        MIN(0)                             +
                         PROMPT('Quellendatei')
 
              PARM       KWD(USESRCMBR ) TYPE(*CHAR)        +
                           LEN(10)                          +
-                          MIN(1)                           +
+                          MIN(0)                           +
                           PROMPT('Teildatei')
+
+             PARM       KWD(USESRCSTMF) TYPE(*CHAR)        +
+                          LEN(4096)                        +
+                          VARY(*YES *INT2)                 +
+                          MIN(0)                           +
+                          PROMPT('Quellendatenstromdatei')
 
              PARM       KWD(CMD       ) TYPE(*CMDSTR)      +
                           LEN(8192)                        +
@@ -324,6 +326,15 @@
                           PMTCTL(*PMTRQS)                  +
                           PROMPT('Wert für Parameter       (&U9)')
 
+             PARM       KWD(STMF      ) TYPE(*CHAR)        +
+                          LEN(4096)                        +
+                          VARY(*YES *INT2)                 +
+                          MIN(0)                           +
+                          DFT(*NONE)                       +
+                          SPCVAL((*NONE) (*DFT))           +
+                          PMTCTL(*PMTRQS)                  +
+                          PROMPT('Wert für Parameter     (&STMF)')
+
              PARM       KWD(USRDEFVAR ) TYPE(USRDEFVAR)    +
                           MIN(0)                           +
                           MAX(20)                          +
@@ -410,15 +421,48 @@
  /* Prüfen der Abhängigkeiten */
  /* ------------------------- */
 
- /* ... Ausgeben Ereignisdatei    */
- /*     ... Option = *EVENTF      */
+ /* ... Angeben Quellendatenstromdatei  */
+ /*     oder Quelledatei und -teildatei */
+             DEP        CTL(&USESRCFILE *NE ' ') +
+                          PARM((&USESRCSTMF *EQ ' ')) +
+                          NBRTRUE(*ALL) MSGID(PRZ0031)
+
+             DEP        CTL(&USESRCMBR *NE ' ') +
+                          PARM((&USESRCSTMF *EQ ' ')) +
+                          NBRTRUE(*ALL) MSGID(PRZ0031)
+
+             DEP        CTL(&USESRCSTMF *NE ' ') +
+                          PARM((&USESRCFILE *EQ ' ')  +
+                               (&USESRCMBR  *EQ ' ')) +
+                          NBRTRUE(*ALL) MSGID(PRZ0031)
+
+             DEP        CTL(&USESRCFILE *EQ ' ') +
+                          PARM((&USESRCSTMF *NE ' ')) +
+                          NBRTRUE(*ALL) MSGID(PRZ0032)
+
+             DEP        CTL(&USESRCSTMF *EQ ' ') +
+                          PARM((&USESRCFILE *NE ' ')  +
+                               (&USESRCMBR  *NE ' ')) +
+                          NBRTRUE(*ALL) MSGID(PRZ0032)
+
+ /* ... *DFT nicht zulässig für         */
+ /*     SRCLIB, SRCFILE und SRCMBR,     */
+ /*     wenn USESRCSTMF angegeben ist   */
+             DEP        CTL(&USESRCSTMF *NE ' ') +
+                          PARM((&SRCLIB     *NE '*DFT')  +
+                               (&SRCFILE    *NE '*DFT')  +
+                               (&SRCMBR     *NE '*DFT')) +
+                          NBRTRUE(*ALL) MSGID(PRZ0033)
+
+ /* ... Ausgeben Ereignisdatei          */
+ /*     ... Option = *EVENTF            */
              DEP        CTL(&OPTION *EQ '*EVENTF') +
                           PARM((&LIB *NE '*NONE')  +
                                (&OBJ *NE '*NONE')) +
                           NBRTRUE(*ALL) MSGID(PRZ0027)
 
- /* ... Ändern Objektbeschreibung */
- /*     ... Objekttyp             */
+ /* ... Ändern Objektbeschreibung       */
+ /*     ... Objekttyp                   */
              DEP        CTL(&CHGOBJD *EQ '*NO') +
                         PARM((&OBJTYPE          +
                               *EQ '*PGM'))      +
@@ -431,21 +475,21 @@
                         NBRTRUE(*ALL)            +
                         MSGID(PRZ0020)
 
- /*     ... Objekt-Quellendatei   */
+ /*     ... Objekt-Quellendatei         */
              DEP        CTL(&CHGOBJD *EQ '*NO') +
                         PARM((&OBJSRCFILE       +
                               *EQ '*SAME'))     +
                         NBRTRUE(*ALL)           +
                         MSGID(PRZ0016)
 
- /*     ... Objekt-Quellenbibliothek */
+ /*     ... Objekt-Quellenbibliothek    */
              DEP        CTL(&CHGOBJD *EQ '*NO') +
                         PARM((&OBJSRCLIB        +
                               *EQ '*SAME'))     +
                         NBRTRUE(*ALL)           +
                         MSGID(PRZ0017)
 
- /*     ... Objekt-Quellenteildatei  */
+ /*     ... Objekt-Quellenteildatei     */
              DEP        CTL(&CHGOBJD *EQ '*NO') +
                         PARM((&OBJSRCMBR        +
                               *EQ '*SAME'))     +

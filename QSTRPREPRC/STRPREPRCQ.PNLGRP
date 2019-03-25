@@ -45,18 +45,13 @@
 .*  22.09.2017  Th.Raddatz    Added parameter USRDEFVAR to STRPREPRC   *
 .*                            command.                                 *
 .*                                                                     *
+.*  11.02.2019  Th.Raddatz    Added parameters USESRCSTMF and STMF.    *
+.*                                                                     *
 .*=====================================================================*
 .* >>PRE-COMPILER<<                                                    *
-.*                                                                     *
 .*   >>CRTCMD<< CRTPNLGRP    PNLGRP(&LI/STRPREPRCP) +                  *
-.*                           SRCFILE(&SL/&SF) +                        *
-.*                           SRCMBR(&SM);                              *
-.*                                                                     *
-.*   >>COMPILE<<                                                       *
-.*   >>END-COMPILE<<                                                   *
-.*                                                                     *
+.*                           SRCFILE(&SL/&SF) SRCMBR(&SM);             *
 .*   >>EXECUTE<<                                                       *
-.*                                                                     *
 .* >>END-PRE-COMPILER<<                                                *
 .*=====================================================================*
 .*
@@ -73,6 +68,7 @@
 :IMHELP name=STRPREPRC.
 :IMHELP name='STRPREPRC/USESRCFILE'.
 :IMHELP name='STRPREPRC/USESRCMBR'.
+:IMHELP name='STRPREPRC/USESRCSTMF'.
 :IMHELP name='STRPREPRC/CMD'.
 :IMHELP name='STRPREPRC/OPTION'.
 :IMHELP name='STRPREPRC/CHGOBJD'.
@@ -102,6 +98,7 @@
 :IMHELP name='STRPREPRC/USER7'.
 :IMHELP name='STRPREPRC/USER8'.
 :IMHELP name='STRPREPRC/USER9'.
+:IMHELP name='STRPREPRC/STMF'.
 :IMHELP name='STRPREPRC/USRDEFVAR'.
 :IMHELP name='STRPREPRC/LIBL'.
 :IMHELP name='STRPREPRC/USELIBL'.
@@ -336,6 +333,35 @@ the pre-compiler tags.
 :PT.:PV.source-file-member-name:EPV.
 :PD.Enter the name of the source physical file member that
 contains the pre-compiler tags.
+:EPARML.
+:EHELP.
+
+.********************************************
+.*  Keyword:  USESRCSTMF
+.********************************************
+:HELP NAME='STRPREPRC/USESRCSTMF'.
+Source stream file (USESRCSTMF) - Help
+:XH3.Source stream file (USESRCSTMF)
+:P.
+Name of the source stream file, that contains the pre-compiler tags.
+:IMHELP name='COM/REQPARM'.
+:P.
+:IMHELP name='COM/VALUES'.
+:PARML.
+:PT.:PV.Source stream file:EPV.
+:PD.Specifies the path name of the stream file containing the
+pre-compiler statements to be executed.
+:P.
+The path name can be either absolutely or relatively qualified. An
+absolute path name starts with '/'; a relative path name starts with a
+character other than '/'.
+:P.
+If absolutely-qualified, the path name is complete. If
+relatively-qualified, the path name is completed by appending the job's
+current working directory to the path name.
+:P.
+The USESRCFILE and USESRCMBR parameters cannot be specified with the
+USESRCSTMF parameter.
 :EPARML.
 :EHELP.
 
@@ -667,7 +693,7 @@ Value for the replacement variable 'Source Member' (&SM).
 :PT.:PV.*DFT:EPV.
 :PD.Name of the source member as specified at parameter :HP2.USESRCMBR:EHP2..
 :PT.:PV.source-file-member-name:EPV.
-:PD.Name der Quellenteildatei.
+:PD.Source file member name.
 :EPARML.
 
 :EHELP.
@@ -1025,6 +1051,29 @@ Specifies the value for the replacement variable
 :PD.Value for user-defined parameter &U9.
 :EPARML.
 :IMHELP name='COM/RPLVAR'.
+
+:EHELP.
+
+.********************************************
+.*  Keyword:  STMF (optional)
+.********************************************
+:HELP NAME='STRPREPRC/STMF'.
+Value for stream file  (&STMF) (STMF) - Help
+:XH3.Value for stream file  (&STMF) (STMF)
+:P.
+Value for the replacement variable 'Stream File' (&STMF).
+:IMHELP name='COM/OPTPARM'.
+:P.
+:IMHELP name='COM/VALUES'.
+
+:PARML.
+:PT.:PK DEF.*NONE:EPK.
+:PD.Not specified.
+:PT.:PV.*DFT:EPV.
+:PD.Name of the source stream file as specified at parameter :HP2.USESRCSTMF:EHP2..
+:PT.:PV.stream-file-name:EPV.
+:PD.Stream file name.
+:EPARML.
 
 :EHELP.
 

@@ -4,7 +4,7 @@
      /*                                                                     */
      /*  Bereich . . . : STRPREPRC                                          */
      /*  Objekt  . . . : STRPREPRC1                                         */
-     /*  Beschreibung  : Start Pre-Processor - CPP                          */
+     /*  Beschreibung  : Start Pre-Processor - CPP Module                   */
      /*  Author  . . . : Thomas Raddatz   <thomas.raddatz@tools400.de>      */
      /*  Datum . . . . : 21.11.2000                                         */
      /*                                                                     */
@@ -44,30 +44,28 @@
      /*                                                                     */
      /*  22.09.2017  Th.Raddatz    Added parameter USRDEFVAR to STRPREPRC   */
      /*                                                                     */
+     /*  11.02.2019  Th.Raddatz    Replaced OVRDBF of module STRPREPRC1     */
+     /*                            with EXTFILE and EXTMBR in STRPREPRC2    */
+     /*                            Added parameters &USESRCSTMF and &XSTMF. */
+     /*                            Moved checking of object existence to    */
+     /*                            STRPREPRC2.                              */
+     /*                            Moved handling the *DFT special value to */
+     /*                            STRPREPRC2.                              */
+     /*                                                                     */
      /* =================================================================== */
      /* >>PRE-COMPILER<<                                                    */
      /*   >>CRTCMD<< CRTCLMOD     MODULE(&LI/&OB) +                         */
      /*                           SRCFILE(&SL/&SF) SRCMBR(&SM);             */
-     /*   >>COMPILE<<                                                       */
+     /*   >>IMPORTANT<<                                                     */
      /*     >>PARM<< DBGVIEW(*LIST);                                        */
      /*     >>PARM<< OPTION(*EVENTF);                                       */
-     /*   >>END-COMPILE<<                                                   */
+     /*   >>END-IMPORTANT<<                                                 */
      /*   >>EXECUTE<<                                                       */
-     /*   >>CMD<<    CRTPGM       PGM(&LI/STRPREPRC ) +                     */
-     /*                           MODULE(&LI/STRPREPRC1 +                   */
-     /*                                  &LI/STRPREPRC2 +                   */
-     /*                                  &LI/STRPREPRC3 +                   */
-     /*                                  &LI/STRPREPRC4 ) +                 */
-     /*                           ENTMOD(&LI/STRPREPRC1) +                  */
-     /*                           BNDSRVPGM(&LI/BASICS1 +                   */
-     /*                                     &LI/EVENTF  +                   */
-     /*                                     &LI/JOBLOG ) +                  */
-     /*                           ACTGRP(*NEW) +                            */
-     /*                           DETAIL(*BASIC);                           */
      /* >>END-PRE-COMPILER<<                                                */
      /* =================================================================== */
              PGM        PARM(&QUSESRCF   +
                              &USESRCMBR  +
+                             &USESRCSTMF +
                              &CMD        +
                              &OPTION     +
                              &CHGOBJD    +
@@ -97,6 +95,7 @@
                              &XUSER7     +
                              &XUSER8     +
                              &XUSER9     +
+                             &XSTMF      +
                              &USRDEFVAR  +
                              &LIBL       +
                              &USELIBL    +
@@ -106,6 +105,7 @@
 
              DCL        VAR(&QUSESRCF  ) TYPE(*CHAR) LEN(  20)
              DCL        VAR(&USESRCMBR ) TYPE(*CHAR) LEN(  10)
+             DCL        VAR(&USESRCSTMF) TYPE(*CHAR) LEN(4098)
              DCL        VAR(&CMD       ) TYPE(*CHAR) LEN(8192)
              DCL        VAR(&OPTION    ) TYPE(*CHAR) LEN(  52)
              DCL        VAR(&CHGOBJD   ) TYPE(*CHAR) LEN(   4)
@@ -135,6 +135,7 @@
              DCL        VAR(&XUSER7    ) TYPE(*CHAR) LEN(  50)
              DCL        VAR(&XUSER8    ) TYPE(*CHAR) LEN(  50)
              DCL        VAR(&XUSER9    ) TYPE(*CHAR) LEN(  50)
+             DCL        VAR(&XSTMF     ) TYPE(*CHAR) LEN(4098)
              DCL        VAR(&XTAGSREQ  ) TYPE(*LGL ) LEN(   1)
              DCL        VAR(&XMSGF     ) TYPE(*CHAR) LEN(  10)
              DCL        VAR(&XMSGFLIB  ) TYPE(*CHAR) LEN(  10)
@@ -194,14 +195,6 @@
              CHGVAR     VAR(&USESRCLIB ) VALUE(%SST(&QUSESRCF 11 10))
 
  /* - - - - - - - - - - - - - - - - - - */
- /*  Prüfen der Quelldatei/-teildatei   */
- /* - - - - - - - - - - - - - - - - - - */
-             CHKOBJ     OBJ(&USESRCLIB) OBJTYPE(*LIB)
-             CHKOBJ     OBJ(&USESRCLIB/&USESRCFILE) OBJTYPE(*FILE)
-             CHKOBJ     OBJ(&USESRCLIB/&USESRCFILE) OBJTYPE(*FILE) +
-                          MBR(&USESRCMBR)
-
- /* - - - - - - - - - - - - - - - - - - */
  /*  Prüfen der Steuerdatei STRPRE1     */
  /* - - - - - - - - - - - - - - - - - - */
              CHKOBJ     OBJ(*LIBL/STRPRE1) OBJTYPE(*FILE)
@@ -231,38 +224,6 @@
  /* - - - - - - - - - - - - - - - - - - */
  /*  Starten Pre-Prozessor              */
  /* - - - - - - - - - - - - - - - - - - */
-             OVRDBF     FILE(SRCFILE)                     +
-                          TOFILE(&USESRCLIB/&USESRCFILE)  +
-                          MBR(&USESRCMBR)                 +
-                          OVRSCOPE(*CALLLVL)
-
-             IF         COND(&XSRCLIB *EQ '*DFT') THEN(DO)
-                CHGVAR     VAR(&XSRCLIB) VALUE(&USESRCLIB)
-             ENDDO
-
-             IF         COND(&XSRCFILE *EQ '*DFT') THEN(DO)
-                CHGVAR     VAR(&XSRCFILE) VALUE(&USESRCFILE)
-             ENDDO
-
-             IF         COND(&XSRCMBR *EQ '*DFT') THEN(DO)
-                CHGVAR     VAR(&XSRCMBR) VALUE(&USESRCMBR)
-             ENDDO
-
-             IF         COND(&OBJSRCFILE *EQ '*DFT') THEN(DO)
-                CHGVAR     VAR(&OBJSRCFILE) VALUE(&XSRCFILE)
-             ENDDO
-
-             IF         COND(&OBJSRCLIB *EQ '*DFT') THEN(DO)
-                CHGVAR     VAR(&OBJSRCLIB) VALUE(&XSRCLIB)
-             ENDDO
-
-             IF         COND(&OBJSRCMBR *EQ '*DFT') THEN(DO)
-                CHGVAR     VAR(&OBJSRCMBR) VALUE(&XSRCMBR)
-             ENDDO
-
-             IF         COND(&XOBJ *EQ '*DFT') THEN(DO)
-                CHGVAR     VAR(&XOBJ) VALUE(&XSRCMBR)
-             ENDDO
 
              CHGVAR     VAR(&PGMCMDEXC) VALUE(%SST(&EXICMDEXC 1 10))
              CHGVAR     VAR(&LPGMCMDEXC) VALUE(%SST(&EXICMDEXC 11 10))
@@ -270,6 +231,7 @@
              CALLPRC    PRC(STRPREPRC) PARM(&USESRCFILE +
                                             &USESRCLIB  +
                                             &USESRCMBR  +
+                                            &USESRCSTMF +
                                             &CMD        +
                                             &CHGOBJD    +
                                             &OBJTYPE    +
@@ -298,6 +260,7 @@
                                             &XUSER7     +
                                             &XUSER8     +
                                             &XUSER9     +
+                                            &XSTMF      +
                                             &XTAGSREQ   +
                                             &XMSGF      +
                                             &XMSGFLIB   +
@@ -307,8 +270,6 @@
                                             &LIBL       +
                                             &USELIBL    +
                                             &USRDEFVAR  )
-
-             DLTOVR     FILE(SRCFILE) LVL(*)
 
  /* -------------------------------------------------------------- */
  /*  Programm beenden                                              */

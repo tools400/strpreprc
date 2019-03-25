@@ -45,18 +45,13 @@
 .*  22.09.2017  Th.Raddatz    Added parameter USRDEFVAR to STRPREPRC   *
 .*                            command.                                 *
 .*                                                                     *
+.*  11.02.2019  Th.Raddatz    Added parameters USESRCSTMF and STMF.    *
+.*                                                                     *
 .*=====================================================================*
 .* >>PRE-COMPILER<<                                                    *
-.*                                                                     *
 .*   >>CRTCMD<< CRTPNLGRP    PNLGRP(&LI/STRPREPRCP) +                  *
-.*                           SRCFILE(&SL/&SF) +                        *
-.*                           SRCMBR(&SM);                              *
-.*                                                                     *
-.*   >>COMPILE<<                                                       *
-.*   >>END-COMPILE<<                                                   *
-.*                                                                     *
+.*                           SRCFILE(&SL/&SF) SRCMBR(&SM);             *
 .*   >>EXECUTE<<                                                       *
-.*                                                                     *
 .* >>END-PRE-COMPILER<<                                                *
 .*=====================================================================*
 .*
@@ -73,6 +68,7 @@
 :IMHELP name=STRPREPRC.
 :IMHELP name='STRPREPRC/USESRCFILE'.
 :IMHELP name='STRPREPRC/USESRCMBR'.
+:IMHELP name='STRPREPRC/USESRCSTMF'.
 :IMHELP name='STRPREPRC/CMD'.
 :IMHELP name='STRPREPRC/OPTION'.
 :IMHELP name='STRPREPRC/CHGOBJD'.
@@ -102,6 +98,7 @@
 :IMHELP name='STRPREPRC/USER7'.
 :IMHELP name='STRPREPRC/USER8'.
 :IMHELP name='STRPREPRC/USER9'.
+:IMHELP name='STRPREPRC/STMF'.
 :IMHELP name='STRPREPRC/USRDEFVAR'.
 :IMHELP name='STRPREPRC/LIBL'.
 :IMHELP name='STRPREPRC/USELIBL'.
@@ -347,6 +344,37 @@ Objekterstellung verwendet wird.
 :PT.:PV.Name der Quellenteildatei:EPV.
 :PD.Geben sie den Namen der Quellenteildatei ein, welche die
 Pre-Prozessor-Anweisungen enthält.
+:EPARML.
+:EHELP.
+
+.********************************************
+.*  Keyword:  USESRCSTMF
+.********************************************
+:HELP NAME='STRPREPRC/USESRCSTMF'.
+Quellendatenstromdatei (USESRCSTMF) - Hilfe
+:XH3.Quellendatenstromdatei (USESRCSTMF)
+:P.
+Name der Quellendatenstromdatei, welche die Pre-Prozessor-Anweisungen enthält.
+:IMHELP name='COM/REQPARM'.
+:P.
+:IMHELP name='COM/VALUES'.
+:PARML.
+:PT.:PV.Name der Quellendatenstromdatei:EPV.
+:PD.Gibt den Pfadnamen der Datenstromdatei an, welche die
+auszuführenden Pre-Prozessoranweisungen enthält.
+:P.
+Der Pfadname kann entweder absolut oder relativ
+qualifiziert werden. Ein absoluter Pfadname beginnt mit
+'/'; ein relativer Pfadname beginnt mit einem anderen
+Zeichen als '/'.
+:P.
+Wird der Pfadname absolut qualifiziert, ist der Pfadname
+vollständig. Wird der Pfadname relativ qualifiziert, wird
+er vervollständigt, indem das aktuelle Arbeitsverzeichnis
+des Jobs an den Pfadnamen angehängt wird.
+:P.
+Die Parameter USESRCFILE und USESRCMBR können nicht mit dem
+Parameter USESRCSTMF angegeben werden.
 :EPARML.
 :EHELP.
 
@@ -1054,6 +1082,30 @@ eingetragen werden soll.
 :PD.Wert für die benutzerdefinierte Ersatzvariable 9 (&U9).
 :EPARML.
 :IMHELP name='COM/RPLVAR'.
+
+:EHELP.
+
+.********************************************
+.*  Keyword:  STMF (optional)
+.********************************************
+:HELP NAME='STRPREPRC/STMF'.
+Wert für Parameter     (&STMF) - Hilfe
+:XH3.Wert für Parameter     (&STMF) (STMF)
+:P.
+Wert, der für die Ersatzvariable 'Datenstromdatei' (&STMF)
+eingetragen werden soll.
+:IMHELP name='COM/OPTPARM'.
+:P.
+:IMHELP name='COM/VALUES'.
+
+:PARML.
+:PT.:PK DEF.*NONE:EPK.
+:PD.Es ist kein Wert angegeben.
+:PT.:PV.*DFT:EPV.
+:PD.Name der Quellendatenstromdatei, wie am Parameter :HP2.USESRCSTMF:EHP2. angegeben.
+:PT.:PV.Name der Datenstromdatei:EPV.
+:PD.Name der Datenstromdatei.
+:EPARML.
 
 :EHELP.
 

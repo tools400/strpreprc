@@ -710,4 +710,212 @@ on command'' (CMD).'                                                  +
                 CCSID( 65535) +
                 /*  -EOF-  */
 
+     /*-------------------------------------------------------------*/
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0031                    */
+     /* Die Parameter USESRCFILE und USESRCMBR können nicht mit dem */
+     /*-------------------------------------------------------------*/
+
+             RMVMSGD MSGID(PRZ0031) MSGF(&LI/STRPREPRC)
+             MONMSG  MSGID(CPF2419)     /* MsgID nicht gefunden */
+
+             ADDMSGD +
+                MSGID(PRZ0031) +
+                MSGF(&LI/STRPREPRC) +
+                MSG(+
+'The USESRCFILE and USESRCMBR parameters cannot be specified with the -
+USESRCSTMF parameter.'                                                +
+                ) +
+                SEV(30) +
+                FMT( +
+                    (*CHAR 0070) +
+                ) +
+                ALROPT(*NO) +
+                CCSID( 65535) +
+                /*  -EOF-  */
+
+     /*-------------------------------------------------------------*/
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0032                    */
+     /* Either USESRCFILE and USESRCMBR or USESRCSTMF must be speci */
+     /*-------------------------------------------------------------*/
+
+             RMVMSGD MSGID(PRZ0032) MSGF(&LI/STRPREPRC)
+             MONMSG  MSGID(CPF2419)     /* MsgID nicht gefunden */
+
+             ADDMSGD +
+                MSGID(PRZ0032) +
+                MSGF(&LI/STRPREPRC) +
+                MSG(+
+'Either USESRCFILE and USESRCMBR or USESRCSTMF must be specified.'    +
+                ) +
+                SEV(30) +
+                FMT( +
+                    (*CHAR 0070) +
+                ) +
+                ALROPT(*NO) +
+                CCSID( 65535) +
+                /*  -EOF-  */
+
+     /*-------------------------------------------------------------*/
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0033                    */
+     /* Value *DFT is not allowed for SRCFILE, SRCLIB and SRCMBR wh */
+     /*-------------------------------------------------------------*/
+
+             RMVMSGD MSGID(PRZ0033) MSGF(&LI/STRPREPRC)
+             MONMSG  MSGID(CPF2419)     /* MsgID nicht gefunden */
+
+             ADDMSGD +
+                MSGID(PRZ0033) +
+                MSGF(&LI/STRPREPRC) +
+                MSG(+
+'Value *DFT is not allowed for SRCFILE, SRCLIB and SRCMBR when USESRCS-
+TMF is specified.'                                                    +
+                ) +
+                SEV(30) +
+                FMT( +
+                    (*CHAR 0070) +
+                ) +
+                ALROPT(*NO) +
+                CCSID( 65535) +
+                /*  -EOF-  */
+
+     /*-------------------------------------------------------------*/
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0034                    */
+     /* Unable to open file &1.                                     */
+     /*-------------------------------------------------------------*/
+
+             RMVMSGD MSGID(PRZ0034) MSGF(&LI/STRPREPRC)
+             MONMSG  MSGID(CPF2419)     /* MsgID nicht gefunden */
+
+             ADDMSGD +
+                MSGID(PRZ0034) +
+                MSGF(&LI/STRPREPRC) +
+                MSG(+
+'Unable to open file &1.'                                             +
+                ) +
+                SEV(30) +
+                FMT( +
+                    (*CHAR 0512) +
+                ) +
+                ALROPT(*NO) +
+                CCSID( 65535) +
+                /*  -EOF-  */
+
+     /*-------------------------------------------------------------*/
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0035                    */
+     /* Library &1 not found.                                       */
+     /*-------------------------------------------------------------*/
+
+             RMVMSGD MSGID(PRZ0035) MSGF(&LI/STRPREPRC)
+             MONMSG  MSGID(CPF2419)     /* MsgID nicht gefunden */
+
+             ADDMSGD +
+                MSGID(PRZ0035) +
+                MSGF(&LI/STRPREPRC) +
+                MSG(+
+'Library &1 not found.'                                               +
+                ) +
+                SEV(30) +
+                FMT( +
+                    (*CHAR 0010) +
+                ) +
+                ALROPT(*NO) +
+                CCSID( 65535) +
+                /*  -EOF-  */
+
+     /*-------------------------------------------------------------*/
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0036                    */
+     /* File &1 in library &2 not found.                            */
+     /*-------------------------------------------------------------*/
+
+             RMVMSGD MSGID(PRZ0036) MSGF(&LI/STRPREPRC)
+             MONMSG  MSGID(CPF2419)     /* MsgID nicht gefunden */
+
+             ADDMSGD +
+                MSGID(PRZ0036) +
+                MSGF(&LI/STRPREPRC) +
+                MSG(+
+'File &1 in library &2 not found.'                                    +
+                ) +
+                SEV(30) +
+                FMT( +
+                    (*CHAR 0010) +
+                    (*CHAR 0010) +
+                ) +
+                ALROPT(*NO) +
+                CCSID( 65535) +
+                /*  -EOF-  */
+
+     /*-------------------------------------------------------------*/
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0037                    */
+     /* Member &3 file &1 in library &2 not found.                  */
+     /*-------------------------------------------------------------*/
+
+             RMVMSGD MSGID(PRZ0037) MSGF(&LI/STRPREPRC)
+             MONMSG  MSGID(CPF2419)     /* MsgID nicht gefunden */
+
+             ADDMSGD +
+                MSGID(PRZ0037) +
+                MSGF(&LI/STRPREPRC) +
+                MSG(+
+'Member &3 file &1 in library &2 not found.'                          +
+                ) +
+                SEV(30) +
+                FMT( +
+                    (*CHAR 0010) +
+                    (*CHAR 0010) +
+                    (*CHAR 0010) +
+                ) +
+                ALROPT(*NO) +
+                CCSID( 65535) +
+                /*  -EOF-  */
+
+     /* ----------------------------------------------------------- */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0038                    */
+     /* No Pre-Compiler instructions found in source file &1.       */
+     /* ----------------------------------------------------------- */
+
+             RMVMSGD MSGID(PRZ0038) MSGF(&LI/STRPREPRC)
+             MONMSG  MSGID(CPF2419)     /* MsgID nicht gefunden */
+
+             ADDMSGD +
+                MSGID(PRZ0038) +
+                MSGF(&LI/STRPREPRC) +
+                MSG(+
+'No Pre-Compiler instructions found in source file &1.'               +
+                ) +
+                SEV(40) +
+                FMT( +
+                    (*CHAR 512) +
+                ) +
+                ALROPT(*NO) +
+                CCSID( 65535) +
+                /*  -EOF-  */
+
+     /*-------------------------------------------------------------*/
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0039                    */
+     /* Object creation command not found in member &3 of file &2/& */
+     /*-------------------------------------------------------------*/
+
+             RMVMSGD MSGID(PRZ0039) MSGF(&LI/STRPREPRC)
+             MONMSG  MSGID(CPF2419)     /* MsgID nicht gefunden */
+
+             ADDMSGD +
+                MSGID(PRZ0039) +
+                MSGF(&LI/STRPREPRC) +
+                MSG(+
+'Object creation command not found in source file &1.'                +
+                ) +
+                SECLVL(+
+'Cause . . . . . . :   The source file does not contain pre-compiler t-
+ags and no creation command had been specified at parameter ''Creation-
+ command'' (CMD).'                                                    +
+                ) +
+                SEV(40) +
+                FMT( +
+                    (*CHAR 512) +
+                ) +
+                ALROPT(*NO) +
+                CCSID( 65535) +
+                /*  -EOF-  */
+
              ENDPGM

@@ -1,9 +1,9 @@
       /if not defined(COPYRIGHT_DSPEC)
-     h COPYRIGHT('V1.15.3 - 18.04.2018 - mailto: thomas.raddatz@tools400.de')
+     h COPYRIGHT('V2.0.1 - 25.03.2019 - mailto: thomas.raddatz@tools400.de')
       /eof
       /endif
      d STRPREPRC_VERSION...
-     d                 C                   '1.15.3'
+     d                 C                   '2.0.1'
      d STRPREPRC_DATE...
-     d                 C                   '18.04.2018'
+     d                 C                   '25.03.2019'
       *
