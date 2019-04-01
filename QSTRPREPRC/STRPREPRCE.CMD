@@ -61,14 +61,8 @@
 
              PARM       KWD(USESRCMBR ) TYPE(*CHAR)        +
                           LEN(10)                          +
-                          MIN(0)                           +
+                          MIN(1)                           +
                           PROMPT('Source member')
-
-             PARM       KWD(USESRCSTMF) TYPE(*CHAR)        +
-                          LEN(4096)                        +
-                          VARY(*YES *INT2)                 +
-                          MIN(0)                           +
-                          PROMPT('Source stream file')
 
              PARM       KWD(CMD       ) TYPE(*CMDSTR)      +
                           LEN(8192)                        +
@@ -326,15 +320,6 @@
                           PMTCTL(*PMTRQS)                  +
                           PROMPT('Value for user-def. par. (&U9)')
 
-             PARM       KWD(STMF      ) TYPE(*CHAR)        +
-                          LEN(4096)                        +
-                          VARY(*YES *INT2)                 +
-                          MIN(0)                           +
-                          DFT(*NONE)                       +
-                          SPCVAL((*NONE) (*DFT))           +
-                          PMTCTL(*PMTRQS)                  +
-                          PROMPT('Value for stream file  (&STMF)')
-
              PARM       KWD(USRDEFVAR ) TYPE(USRDEFVAR)    +
                           MIN(0)                           +
                           MAX(20)                          +
@@ -420,39 +405,6 @@
  /* ------------------------- */
  /* Check dependencies        */
  /* ------------------------- */
-
- /* ... Specify source stream file      */
- /*     or source file and member.      */
-             DEP        CTL(&USESRCFILE *NE ' ') +
-                          PARM((&USESRCSTMF *EQ ' ')) +
-                          NBRTRUE(*ALL) MSGID(PRZ0031)
-
-             DEP        CTL(&USESRCMBR *NE ' ') +
-                          PARM((&USESRCSTMF *EQ ' ')) +
-                          NBRTRUE(*ALL) MSGID(PRZ0031)
-
-             DEP        CTL(&USESRCSTMF *NE ' ') +
-                          PARM((&USESRCFILE *EQ ' ')  +
-                               (&USESRCMBR  *EQ ' ')) +
-                          NBRTRUE(*ALL) MSGID(PRZ0031)
-
-             DEP        CTL(&USESRCFILE *EQ ' ') +
-                          PARM((&USESRCSTMF *NE ' ')) +
-                          NBRTRUE(*ALL) MSGID(PRZ0032)
-
-             DEP        CTL(&USESRCSTMF *EQ ' ') +
-                          PARM((&USESRCFILE *NE ' ')  +
-                               (&USESRCMBR  *NE ' ')) +
-                          NBRTRUE(*ALL) MSGID(PRZ0032)
-
- /* ... *DFT ist not allowed for        */
- /*     SRCLIB, SRCFILE und SRCMBR,     */
- /*     when USESRCSTMF is specified.   */
-             DEP        CTL(&USESRCSTMF *NE ' ') +
-                          PARM((&SRCLIB     *NE '*DFT')  +
-                               (&SRCFILE    *NE '*DFT')  +
-                               (&SRCMBR     *NE '*DFT')) +
-                          NBRTRUE(*ALL) MSGID(PRZ0033)
 
  /* ... Create Event File         */
  /*     ... Option = *EVENTF      */

@@ -45,8 +45,7 @@
      /*  22.09.2017  Th.Raddatz    Added parameter USRDEFVAR to STRPREPRC   */
      /*                                                                     */
      /*  11.02.2019  Th.Raddatz    Replaced OVRDBF of module STRPREPRC1     */
-     /*                            with EXTFILE and EXTMBR in STRPREPRC2    */
-     /*                            Added parameters &USESRCSTMF and &XSTMF. */
+     /*                            with EXTFILE and EXTMBR in STRPREPRC2.   */
      /*                            Moved checking of object existence to    */
      /*                            STRPREPRC2.                              */
      /*                            Moved handling the *DFT special value to */
@@ -65,7 +64,6 @@
      /* =================================================================== */
              PGM        PARM(&QUSESRCF   +
                              &USESRCMBR  +
-                             &USESRCSTMF +
                              &CMD        +
                              &OPTION     +
                              &CHGOBJD    +
@@ -95,7 +93,6 @@
                              &XUSER7     +
                              &XUSER8     +
                              &XUSER9     +
-                             &XSTMF      +
                              &USRDEFVAR  +
                              &LIBL       +
                              &USELIBL    +
@@ -105,7 +102,6 @@
 
              DCL        VAR(&QUSESRCF  ) TYPE(*CHAR) LEN(  20)
              DCL        VAR(&USESRCMBR ) TYPE(*CHAR) LEN(  10)
-             DCL        VAR(&USESRCSTMF) TYPE(*CHAR) LEN(4098)
              DCL        VAR(&CMD       ) TYPE(*CHAR) LEN(8192)
              DCL        VAR(&OPTION    ) TYPE(*CHAR) LEN(  52)
              DCL        VAR(&CHGOBJD   ) TYPE(*CHAR) LEN(   4)
@@ -135,7 +131,6 @@
              DCL        VAR(&XUSER7    ) TYPE(*CHAR) LEN(  50)
              DCL        VAR(&XUSER8    ) TYPE(*CHAR) LEN(  50)
              DCL        VAR(&XUSER9    ) TYPE(*CHAR) LEN(  50)
-             DCL        VAR(&XSTMF     ) TYPE(*CHAR) LEN(4098)
              DCL        VAR(&XTAGSREQ  ) TYPE(*LGL ) LEN(   1)
              DCL        VAR(&XMSGF     ) TYPE(*CHAR) LEN(  10)
              DCL        VAR(&XMSGFLIB  ) TYPE(*CHAR) LEN(  10)
@@ -231,7 +226,6 @@
              CALLPRC    PRC(STRPREPRC) PARM(&USESRCFILE +
                                             &USESRCLIB  +
                                             &USESRCMBR  +
-                                            &USESRCSTMF +
                                             &CMD        +
                                             &CHGOBJD    +
                                             &OBJTYPE    +
@@ -260,7 +254,6 @@
                                             &XUSER7     +
                                             &XUSER8     +
                                             &XUSER9     +
-                                            &XSTMF      +
                                             &XTAGSREQ   +
                                             &XMSGF      +
                                             &XMSGFLIB   +

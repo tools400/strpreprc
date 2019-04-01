@@ -97,8 +97,7 @@
       *                            restore the library list.                *
       *                                                                     *
       *  11.02.2019  Th.Raddatz    Replaced OVRDBF of module STRPREPRC1     *
-      *                            with EXTFILE and EXTMBR in STRPREPRC2    *
-      *                            Added parameters &USESRCSTMF and &XSTMF. *
+      *                            with EXTFILE and EXTMBR in STRPREPRC2.   *
       *                            Moved checking of object existence to    *
       *                            STRPREPRC2.                              *
       *                            Moved handling the *DFT special value to *
@@ -136,7 +135,6 @@
      D g_useSrcFile    ds                  qualified
      D  name                         21a   varying
      D  member                       10a   varying
-     D  hStmf                          *
       *
      D cMaxRcdLen      c                   256
       *
@@ -144,10 +142,6 @@
      D  srcSeq                             like(srcSeq_t) inz
      D  srcDat                             like(srcDat_t) inz
      D  srcDta                             like(srcDta_t) inz
-      *
-     D g_readBuffer    ds                  qualified
-     D  size                         10i 0
-     D  data                        512a
       *
      D f1              ds                  qualified
      D  status                11     15S 0
@@ -172,7 +166,6 @@
      D srcFile_t       s             10a   based(pDummy)
      D srcLib_t        s             10a   based(pDummy)
      D srcMbr_t        s             10a   based(pDummy)
-     D stmf_t          s           4096a   based(pDummy) varying
      D cmd_t           s           8192a   based(pDummy)
      D cmdLong_t       s          32702a   based(pDummy) varying
      D cmdLongFixLen_t...
@@ -267,7 +260,6 @@
      D  user7                              like(userParm_t)
      D  user8                              like(userParm_t)
      D  user9                              like(userParm_t)
-     D  srcStmf                            like(stmf_t)
      D  libl                               likeds(liblList_t)
      D  usrDefVars                         likeds(usrDefVars_t)
      D  useLibl                            like(bool_t)
@@ -386,8 +378,6 @@
       * -------------------------------------------------------------
       *  Importierte Prototypen
       * -------------------------------------------------------------
-      /define USE_IFS_IO
-      /copy QSTRPREPRC,CLIB3
       /copy QSTRPREPRC,QMHRCVPM
       /copy QBASICS1,PBASICS1
       /copy QSTRPREPRC,PROTO_H
@@ -403,7 +393,6 @@
      D  i_useSrcFile                              like(srcFile_t)
      D  i_useSrcLib                               like(srcLib_t)
      D  i_useSrcMbr                               like(srcMbr_t)
-     D  i_useSrcStmf                              like(stmf_t)
      D  i_cmd                                     like(cmd_t)
      D  i_chgObjD                                 like(chgObjD_t)
      D  i_objType                                 like(objType_t)
@@ -432,7 +421,6 @@
      D  i_user7                                   like(userParm_t)
      D  i_user8                                   like(userParm_t)
      D  i_user9                                   like(userParm_t)
-     D  i_stmf                                    like(stmf_t)
      D  i_tagsReq                                 like(bool_t)
      D  i_msgFile                                 like(msg_t.file)
      D  i_msgFileLib                              like(msg_t.lib)
@@ -446,10 +434,12 @@
      D  i_usrDefVars                              likeds(inpUsrDefVars_t)
       *
      D getSpcValDft...
-     D                 pr                  like(stmf_t)
+     D                 pr                  like(keyData_t)
      D                                     extproc('getValue')
-     D  i_actual                           const like(stmf_t) options(*varsize)
-     D  i_default                          const like(stmf_t) options(*varsize)
+     D  i_actual                           const like(keyData_t)
+     D                                     options(*varsize)
+     D  i_default                          const like(keyData_t)
+     D                                     options(*varsize)
       *
      D restoreLibraryList...
      D                 pr
@@ -617,10 +607,6 @@
      D  i_value                            value  like(cmdLong_t)
      D  io_string                                 like(cmdLong_t)
       *
-     D chkStmf...
-     D                 PR                  extproc('chkStmf')
-     D  i_stmf                     4096a   const varying options(*varsize)
-      *
      D chkMbr...
      D                 PR                  extproc('chkMbr')
      D  i_file                       10a   const
@@ -685,7 +671,6 @@
      D  i_useSrcFile                              like(srcFile_t)
      D  i_useSrcLib                               like(srcLib_t)
      D  i_useSrcMbr                               like(srcMbr_t)
-     D  i_useSrcStmf                              like(stmf_t)
      D  i_cmd                                     like(cmd_t)
      D  i_chgObjD                                 like(chgObjD_t)
      D  i_objType                                 like(objType_t)
@@ -714,7 +699,6 @@
      D  i_user7                                   like(userParm_t)
      D  i_user8                                   like(userParm_t)
      D  i_user9                                   like(userParm_t)
-     D  i_stmf                                    like(stmf_t)
      D  i_tagsReq                                 like(bool_t)
      D  i_msgFile                                 like(msg_t.file)
      D  i_msgFileLib                              like(msg_t.lib)
@@ -746,10 +730,6 @@
       /COPY QSTRPREPRC,PRZ0028
       *  ... Die Option *ADDJOBLOG ist nur in Verbindung mit *EVENTF zulässig.
       /COPY QSTRPREPRC,PRZ0030
-      *  ... Keine Pre-Compiler Anweisungen in Datei &1 gefunden.
-      /COPY QSTRPREPRC,PRZ0038
-      *  ... Erstellungsbefehl nicht gefunden in Datei &1.
-      /COPY QSTRPREPRC,PRZ0039
       *
       *  Arbeitsfelder
      D i               S             10i 0 inz
@@ -858,7 +838,6 @@
          variables.user7 = i_user7;
          variables.user8 = i_user8;
          variables.user9 = i_user9;
-         variables.srcStmf = getSpcValDft(i_stmf: i_useSrcStmf);
          variables.libl = i_libl;
          variables.useLibl = i_useLibl;
 
@@ -901,27 +880,19 @@
             cmdChgObjD = '';
          endif;
 
-         if (i_useSrcStmf <> '');
-            chkStmf(i_useSrcStmf);
-         else;
-            chkMbr(i_useSrcFile: i_useSrcLib: i_useSrcMbr);
-         endif;
+         chkMbr(i_useSrcFile: i_useSrcLib: i_useSrcMbr);
 
          g_useSrcFile.name = %trim(i_useSrcLib) + '/' + %trim(i_useSrcFile);
          g_useSrcFile.member = %trim(i_useSrcMbr);
 
-         if (i_useSrcStmf <> '');
-            g_useSrcFile.hStmf = fopen(i_useSrcStmf: 'r, ccsid=0');
-         else;
-            open(E) SRCFILE;
-            if (%error());
-               clear PRZ0012;
-               PRZ00121 = f1.file;
-               PRZ00122 = f1.lib;
-               PRZ00123 = f1.mbr;
-               sendMsg(f_newMsg('PRZ0012': PRZ0012: cTYPE_DIAG));
-               endAbnormal();
-            endif;
+         open(E) SRCFILE;
+         if (%error());
+            clear PRZ0012;
+            PRZ00121 = f1.file;
+            PRZ00122 = f1.lib;
+            PRZ00123 = f1.mbr;
+            sendMsg(f_newMsg('PRZ0012': PRZ0012: cTYPE_DIAG));
+            endAbnormal();
          endif;
 
          open(E) STRPRE1;
@@ -938,20 +909,17 @@
          p_rmvPgmMsg(cMsg_Rmv_All);
 
          // Prüfen der Datensatzlänge
-         if (%open(SRCFILE));
-            if (f1.rcdLen > cMaxRcdLen);
-               clear PRZ0011;
-               PRZ00111 = f1.rcdLen;
-               PRZ00112 = cMaxRcdLen;
-               PRZ00113 = f1.lib;
-               PRZ00114 = f1.file;
-               sendMsg(f_newMsg('PRZ0011': PRZ0011: cTYPE_DIAG));
-               endAbnormal();
-            endif;
-            srcDtaLen = getSrcDataLength();
-         else;
-            srcDtaLen = %size(srcDta);
+         if (f1.rcdLen > cMaxRcdLen);
+            clear PRZ0011;
+            PRZ00111 = f1.rcdLen;
+            PRZ00112 = cMaxRcdLen;
+            PRZ00113 = f1.lib;
+            PRZ00114 = f1.file;
+            sendMsg(f_newMsg('PRZ0011': PRZ0011: cTYPE_DIAG));
+            endAbnormal();
          endif;
+
+         srcDtaLen = getSrcDataLength();
 
          // Formatieren Befehl
          cmd = formatCmd(%trim(i_cmd));
@@ -976,23 +944,12 @@
 
          dow '1';
 
-            if (g_useSrcFile.hStmf <> *null);
-               g_readBuffer.size = %size(g_readBuffer.data);
-               fgets(%addr(g_readBuffer.data)
-                     : g_readBuffer.size: g_useSrcFile.hStmf);
-               if (feof(g_useSrcFile.hStmf) <> 0);
-                  leave;
-               else;
-                  srcDta = %trimr(%str(%addr(g_readBuffer.data)): x'25');
-               endif;
-            else;
-               read SRCFILE ds_srcFile;
-               if (%eof());
-                  leave;
-               else;
-                  srcDta = %subst(ds_srcFile.srcDta: 1: srcDtaLen);
-               endif;
+            read SRCFILE ds_srcFile;
+            if (%eof());
+               leave;
             endif;
+
+            srcDta = %subst(ds_srcFile.srcDta: 1: srcDtaLen);
 
             f1_line_number = f1_line_number + 1;
 
@@ -1176,14 +1133,8 @@
 
          enddo;
 
-
          if (%open(SRCFILE));
             close SRCFILE;
-         endif;
-
-         if (g_useSrcFile.hStmf <> *null);
-            fclose(g_useSrcFile.hStmf);
-            g_useSrcFile.hStmf = *null;
          endif;
 
          if (%open(STRPRE1));
@@ -1234,31 +1185,19 @@
          // Senden Abbruchnachricht, weil keine STRPREPRC Anweisungen
          // gefunden worden sind
          if (not foundPrePrcTags and i_tagsReq);
-            if (i_useSrcStmf <> '');
-               clear PRZ0038;
-               PRZ00381 = i_useSrcStmf;
-               sendMsg(f_newMsg('PRZ0038': PRZ0038: cTYPE_ESCAPE));
-            else;
-               clear PRZ0024;
-               PRZ00241 = f1.file;
-               PRZ00242 = f1.lib;
-               PRZ00243 = f1.mbr;
-               sendMsg(f_newMsg('PRZ0024': PRZ0024: cTYPE_ESCAPE));
-            endif;
+            clear PRZ0024;
+            PRZ00241 = f1.file;
+            PRZ00242 = f1.lib;
+            PRZ00243 = f1.mbr;
+            sendMsg(f_newMsg('PRZ0024': PRZ0024: cTYPE_ESCAPE));
          endif;
 
          if (isCmdMissingError);
-            if (i_useSrcStmf <> '');
-               clear PRZ0039;
-               PRZ00391 = i_useSrcStmf;
-               sendMsg(f_newMsg('PRZ0039': PRZ0039: cTYPE_ESCAPE));
-            else;
-               clear PRZ0028;
-               PRZ00281 = f1.file;
-               PRZ00282 = f1.lib;
-               PRZ00283 = f1.mbr;
-               sendMsg(f_newMsg('PRZ0028': PRZ0028: cTYPE_ESCAPE));
-            endif;
+            clear PRZ0028;
+            PRZ00281 = f1.file;
+            PRZ00282 = f1.lib;
+            PRZ00283 = f1.mbr;
+            sendMsg(f_newMsg('PRZ0028': PRZ0028: cTYPE_ESCAPE));
          endif;
 
       /end-free
@@ -1285,9 +1224,11 @@
       * =============================================================
      P getSpcValDft...
      P                 b
-     D                 pi                  like(stmf_t)
-     D  i_actual                           const like(stmf_t) options(*varsize)
-     D  i_default                          const like(stmf_t) options(*varsize)
+     D                 pi                  like(keyData_t)
+     D  i_actual                           const like(keyData_t)
+     D                                     options(*varsize)
+     D  i_default                          const like(keyData_t)
+     D                                     options(*varsize)
       /free
 
          if (i_actual = '*DFT');
@@ -1514,11 +1455,6 @@
        //  if (i_variables.prvLibl.curLib <> '');
        //     replaceVar('*CX': i_variables.prvLibl.curLib: cmdString);
        //  endif;
-
-         // Ersetzen Parameter  (&STMF)
-         if (i_variables.prvLibl.curLib <> '');
-            replaceVar('&STMF': i_variables.srcStmf: cmdString);
-         endif;
 
          // Prüfen, ob alle Variablen ersetzt worden sind
          posOfVar = %scan('&': cmdString);
@@ -2166,12 +2102,8 @@
      D srcDtaLen       s                   like(int4_t) inz
       /free
 
-         if (%open(SRCFILE));
-            srcDtaLen = f1.rcdLen -
-                        (%size(ds_srcFile.srcSeq) + %size(ds_srcFile.srcDat));
-         else;
-            srcDtaLen = g_readBuffer.size;
-         endif;
+         srcDtaLen = f1.rcdLen -
+                     (%size(ds_srcFile.srcSeq) + %size(ds_srcFile.srcDat));
 
          return srcDtaLen;
 
@@ -2884,11 +2816,6 @@
             close SRCFILE;
          endif;
 
-         if (g_useSrcFile.hStmf <> *null);
-            fclose(g_useSrcFile.hStmf);
-            g_useSrcFile.hStmf = *null;
-         endif;
-
          if (%open(STRPRE1));
             close STRPRE1;
          endif;
@@ -3026,64 +2953,6 @@
             endif;
             x = %scan(%trim(i_var): io_string);
          enddo;
-
-      /end-free
-     P                 E
-      *
-      *===============================================================*
-      *  Check existence of a stream file
-      *===============================================================*
-     P chkStmf...
-     P                 b                   export
-     D                 pi
-     D  i_stmf                     4096a   const varying options(*varsize)
-     D
-      *
-     D rc              s             10i 0
-     D st_stat         ds                  likeds(st_stat_t) inz
-      *
-      *  0/-1 = stat()--Get File Information                include <sys/stat.h>
-     D stat...
-     D                 pr            10i 0        extproc('stat')               = int
-     D  i_pPath                        *   value options(*string)               = *path
-     D  o_stat                             const likeds(st_stat_t)              = *buf
-      *
-     D st_stat_t       ds                  qualified based(pDummy) align(*full)
-     D  mode                         10u 0                                      mode_t =uint
-     D  ino                          10u 0                                      ino_t  =uint
-     D  nlink                         5u 0                                      nlink_t=ushort
-     D  reserved2                     2a
-     D  uid                          10u 0                                      uid_t  =uint
-     D  gid                          10u 0                                      gid_t  =uint
-     D  size                         10i 0                                      off_t  =int
-     D  atime                        10i 0                                      time_t =long
-     D  mtime                        10i 0                                      time_t =long
-     D  ctime                        10i 0                                      time_t =long
-     D  dev                          10u 0                                      dev_t  =uint
-     D  blksize                      10u 0                                      size_t =uint
-     D  allocsize                    10u 0                                      ulong
-     D  objtype                      11A                                        qp0l_objtype_t
-     D  reserved3                     1a
-     D  codepage                      5u 0                                      ushort
-     D  ccsid                         5u 0                                      ushort
-     D  rdev                         10u 0                                      dev_t  =uint
-     D  nlink32                      10u 0                                      nlink32_t=ulng
-     D  rdev64                       20U 0                                      dev64_t=ullng
-     D  dev64                        20U 0                                      dev64_t=ullng
-     D  reserved1                    36A
-     D  ino_gen_id                   10u 0                                      uint
-      *
-      *  Nachrichten
-      *  ... Datei &1 kann nicht geöffnet werden.
-      /COPY QSTRPREPRC,PRZ0034
-      /free
-
-         rc = stat(i_stmf: st_stat);
-         if (rc < 0);
-            clear PRZ0034;
-            PRZ00341 = i_stmf;
-            sendMsg(f_newMsg('PRZ0034': PRZ0034: cTYPE_ESCAPE));
-         endif;
 
       /end-free
      P                 E
