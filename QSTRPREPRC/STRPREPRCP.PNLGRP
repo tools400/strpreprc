@@ -235,7 +235,7 @@ durch Leerzeichen getrennt angegeben sein. Die überschriebene Bibliotheksliste
 steht anschließend in der Variablen :HP2.&LX:EHP2. zur Verfügung.
 
 :PT.>>CURLIB<<
-:PD.Diese Marke für den Befehl CHGLIBL aus, um die aktuelle Bibliothek
+:PD.Diese Marke führt den Befehl CHGLIBL aus, um die aktuelle Bibliothek
 auf den angegebenen Wert zu setzen. Die überschriebene aktuelle Bibliothek
 steht anschließend in der Variablen :HP2.&CX:EHP2. zur Verfügung.
 
