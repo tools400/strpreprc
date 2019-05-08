@@ -103,6 +103,8 @@
       *                            Moved handling the *DFT special value to *
       *                            STRPREPRC2.                              *
       *                                                                     *
+      *  08.05.2019  Th.Raddatz    Added procedure readLine().              *
+      *                                                                     *
       * =================================================================== *
       * >>PRE-COMPILER<<                                                    *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
@@ -138,10 +140,10 @@
       *
      D cMaxRcdLen      c                   256
       *
-     D ds_srcFile      ds                  qualified
-     D  srcSeq                             like(srcSeq_t) inz
-     D  srcDat                             like(srcDat_t) inz
-     D  srcDta                             like(srcDta_t) inz
+     D ds_srcFile_t    ds                  qualified based(pDummy)
+     D  srcSeq                             like(srcSeq_t)
+     D  srcDat                             like(srcDat_t)
+     D  srcDta                             like(srcDta_t)
       *
      D f1              ds                  qualified
      D  status                11     15S 0
@@ -432,6 +434,11 @@
      D  i_libl                                    likeds(inpLibList_t)
      D  i_useLibl                                 like(bool_t)
      D  i_usrDefVars                              likeds(inpUsrDefVars_t)
+      *
+     D readLine...
+     D                 pr              n
+     D                                     extproc('readLine')
+     D  io_srcDta                                 like(ds_srcFile_t.srcDta)
       *
      D getSpcValDft...
      D                 pr                  like(keyData_t)
@@ -733,7 +740,7 @@
       *
       *  Arbeitsfelder
      D i               S             10i 0 inz
-     D srcDta          S                   like(ds_srcFile.srcDta)
+     D srcDta          S                   like(ds_srcFile_t.srcDta)
      D tag             S                   like(tag_t) inz
      D mode            S                   like(mode_t) inz
      D newMode         S                   like(mode_t) inz
@@ -942,16 +949,7 @@
          // Lesen der Quellenteildatei
          f1_line_number = 0;
 
-         dow '1';
-
-            read SRCFILE ds_srcFile;
-            if (%eof());
-               leave;
-            endif;
-
-            srcDta = %subst(ds_srcFile.srcDta: 1: srcDtaLen);
-
-            f1_line_number = f1_line_number + 1;
+         dow readLine(srcDta);
 
             // Wenn sich in der Programmzeile ein Tag befindet, ...
             if (isTag(srcDta: tag));
@@ -1061,8 +1059,7 @@
 
             // Execute-Anweisung   >>EXECUTE<<
             if (mode = cMODE_EXECUTE);
-               cmdString = cmd;
-               performExecute(replaceVars(cmdString: variables): cmdChgObjD);
+               performExecute(replaceVars(cmd: variables): cmdChgObjD);
                mode = popMode();
                iter;
             endif;
@@ -1079,8 +1076,7 @@
                if (lineData.continue <> cEND_OF_LINE);
                   iter;
                else;
-                  cmdString = lineData.keyData;
-                  performCmd(replaceVars(cmdString: variables));
+                  performCmd(replaceVars(lineData.keyData: variables));
                   resetLineData(lineData);
                   mode = popMode();
                   iter;
@@ -1099,10 +1095,9 @@
                if (lineData.continue <> cEND_OF_LINE);
                   iter;
                else;
-                  cmdString = 'CHGLIBL +
-                               LIBL(' + lineData.keyData + ')';
+                  cmdString = 'CHGLIBL LIBL(' + lineData.keyData + ')';
                   performSetLibraryList(
-                     replaceVars(cmdString: variables): variables);
+                     replaceVars(cmdString: variables): variables); // TODO: test it
                   resetLineData(lineData);
                   mode = popMode();
                   iter;
@@ -1121,10 +1116,9 @@
                if (lineData.continue <> cEND_OF_LINE);
                   iter;
                else;
-                  cmdString = 'CHGLIBL +
-                               CURLIB(' + lineData.keyData + ')';
+                  cmdString = 'CHGLIBL CURLIB(' + lineData.keyData + ')';
                   performSetCurrentLibrary(
-                     replaceVars(cmdString: variables): variables);
+                     replaceVars(cmdString: variables): variables); // TODO: test it
                   resetLineData(lineData);
                   mode = popMode();
                   iter;
@@ -1199,6 +1193,32 @@
             PRZ00283 = f1.mbr;
             sendMsg(f_newMsg('PRZ0028': PRZ0028: cTYPE_ESCAPE));
          endif;
+
+      /end-free
+     P                 E
+
+      * =============================================================
+      *  Reads a line from the source input file.
+      * =============================================================
+     P readLine...
+     P                 b
+     D                 pi              n
+     D  io_srcDta                                 like(ds_srcFile_t.srcDta)
+      *
+     D ds_srcFile      ds                  likeds(ds_srcFile_t) inz
+      /free
+
+         read SRCFILE ds_srcFile;
+         if (%eof());
+            io_srcDta = '';
+            return cFalse;
+         endif;
+
+         io_srcDta = %subst(ds_srcFile.srcDta: 1: getSrcDataLength());
+
+         f1_line_number = f1_line_number + 1;
+
+         return cTrue;
 
       /end-free
      P                 E
@@ -2103,7 +2123,7 @@
       /free
 
          srcDtaLen = f1.rcdLen -
-                     (%size(ds_srcFile.srcSeq) + %size(ds_srcFile.srcDat));
+                     (%size(ds_srcFile_t.srcSeq) + %size(ds_srcFile_t.srcDat));
 
          return srcDtaLen;
 
