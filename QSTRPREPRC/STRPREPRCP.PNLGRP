@@ -45,6 +45,13 @@
 .*  22.09.2017  Th.Raddatz    Added parameter USRDEFVAR to STRPREPRC   *
 .*                            command.                                 *
 .*                                                                     *
+.*  17.05.2019  Th.Raddatz    Added new tags for monitoring messages   *
+.*                            of 'CMD' tags. The new tags are:         *
+.*                              'CMD'  CHKOBJ FOO/BAR *FILE;           *
+.*                              'MONMSG'                               *
+.*                                'MSGID' CPF9801; // Object not found *
+.*                              'END-MONMSG'                           *
+.*                                                                     *
 .*=====================================================================*
 .* >>PRE-COMPILER<<                                                    *
 .*   >>CRTCMD<< CRTPNLGRP    PNLGRP(&LI/STRPREPRCP) +                  *
@@ -195,6 +202,14 @@ ein.
 Quellendatei. Alle sonstigen Marken des Pre-Prozessors müssen sich zwischen
 diesen beiden Marken befinden.
 
+:PT.>>CRTCMD<<
+:PD.Diese Marke definiert den über >>EXECUTE<< auszuführenden
+Erstellungsbefehl.
+Die >>CRTCMD<< Marke ist optional. Der Erstellungsbefehl kann
+alternativ auch über den Befehl STRPREPRC mitgegeben werden. Wenn
+die >>CRTCMD<< Marke angegeben wird, dann sollte sie nur einmal
+am Anfang der Pre-Prozessor-Anweisungen definiert werden.
+
 :PT.>>IMPORTANT<<
 :PD.Diese Marke leitet den Abschnitt für die Compiler-Schlüsselworte ein.
 
@@ -255,14 +270,21 @@ einem Vorlaufbefehl, der vor dem Erstellungsbefehl ausgeführt wird. Wenn
 diese Marke nach einer :HP3.>>EXECUTE<<:EHP3. Marke angegeben wird, so
 entspricht dies einem Nachlaufbefehl, der nach dem Erstellungsbefehl
 ausgeführt wird. >>CMD<< Marken dürfen mehrfach vorkommen.
-
-:PT.>>CRTCMD<<
-:PD.Diese Marke definiert den über >>EXECUTE<< auszuführenden
-Erstellungsbefehl.
-Die >>CRTCMD<< Marke ist optional. Der Erstellungsbefehl kann
-alternativ auch über den Befehl STRPREPRC mitgegeben werden. Wenn
-die >>CRTCMD<< Marke angegeben wird, dann sollte sie nur einmal
-am Anfang der Pre-Prozessor-Anweisungen definiert werden.
+:P.
+Bei Vor- und Nachlaufbefehlen können auftretende Fehler ignoriert
+werden, wie in folgendem Beispiel gezeigt:
+:P.
+:LINES.
+0001.00    >>PRE-COMPILER<<
+0002.00      >>CMD<<  DLTF FILE(QGPL/QFOO);
+0003.00      >>MONMSG<<
+0004.00        >>MSGID<< CPF2105; // Object FOO not found;
+0005.00      >>END-MONMSG<<
+0006.00    >>END-PRE-COMPILER<<
+:ELINES.
+:P.
+Es können bis zu 50 Nachrichten angegeben werden, die bei einem
+auftretenden Fehler ignoriert werden.
 
 :PT.>>EXECUTE<<
 :PD.Diese Marke lässt den Erstellungsbefehl ausführen. Die >>EXECUTE<<

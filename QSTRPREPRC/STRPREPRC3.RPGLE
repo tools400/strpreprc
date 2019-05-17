@@ -71,7 +71,7 @@
       * -------------------------------------------------------------
       *  Globale Variablen
       * -------------------------------------------------------------
-     D ctrlEntry       S             60A   dim(17) ctdata perrcd(1)
+     D ctrlEntry       S             60A   dim(21) ctdata perrcd(1)
      D msgIDs          S             83A   dim(25) ctdata perrcd(1)
       *
       * -------------------------------------------------------------
@@ -158,6 +158,10 @@
 >>PRE-COMPILER<<              >>WIDTH<<
 >>PRE-COMPILER<<              >>CURLIB<<
 >>PRE-COMPILER<<              >>LIBL<<
+>>PRE-COMPILER<<              >>MONMSG<<
+>>CMD<<                       >>MONMSG<<
+>>MONMSG<<                    >>END-MONMSG<<
+>>MONMSG<<                    >>MSGID<<
 ** CTDATA(msgIDs)                12345678901234567890123456789012345678901234567890
 QCPFMSG    *LIBL      CPD5CDB 04 The signature of an export block has been trun ...     # 1
 QCPFMSG    *LIBL      CPD5CDC 04 The signature of an export block has been padd ...     # 2

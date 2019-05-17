@@ -105,6 +105,13 @@
       *                                                                     *
       *  08.05.2019  Th.Raddatz    Added procedure readLine().              *
       *                                                                     *
+      *  17.05.2019  Th.Raddatz    Added new tags for monitoring messages   *
+      *                            of 'CMD' tags. The new tags are:         *
+      *                              'CMD'  CHKOBJ FOO/BAR *FILE;           *
+      *                              'MONMSG'                               *
+      *                                'MSGID' CPF9801; // Object not found *
+      *                              'END-MONMSG'                           *
+      *                                                                     *
       * =================================================================== *
       * >>PRE-COMPILER<<                                                    *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
@@ -239,6 +246,9 @@
      D  continue                           like(continue_t)
      D  keyData                            like(keyData_t)
       *
+     D monMsgIds_t     ds                  qualified based(pDummy)
+     D  item                               like(msgId_t) dim(50)
+      *
      D variables_t     ds                  qualified based(pDummy)
      D  lib                                like(lib_t)
      D  obj                                like(obj_t)
@@ -291,6 +301,11 @@
      D cTAG_ENDIMPORTANT...
      D                 c                   '>>END-IMPORTANT<<'
       *
+     D cTAG_MONMSG     c                   '>>MONMSG<<'
+     D cTAG_MSGID      c                   '>>MSGID<<'
+     D cTAG_ENDMONMSG...
+     D                 c                   '>>END-MONMSG<<'
+      *
      D cTAG_WIDTH      c                   '>>WIDTH<<'
      D cTAG_CRTCMD     c                   '>>CRTCMD<<'
      D cTAG_PARM       c                   '>>PARM<<'
@@ -316,6 +331,11 @@
      D                 c                   '>>IMPORTANT<<'
      D cMODE_ENDIMPORTANT...
      D                 c                   '>>END-IMPORTANT<<'
+      *
+     D cMODE_MONMSG    c                   '>>MONMSG<<'
+     D cMODE_MSGID     c                   '>>MSGID<<'
+     D cMODE_ENDMONMSG...
+     D                 c                   '>>END-MONMSG<<'
       *
      D cMODE_WIDTH     c                   '>>WIDTH<<'
      D cMODE_CRTCMD    c                   '>>CRTCMD<<'
@@ -440,6 +460,11 @@
      D                                     extproc('readLine')
      D  io_srcDta                                 like(ds_srcFile_t.srcDta)
       *
+     D readPrvLine...
+     D                 pr              n
+     D                                     extproc('readPrvLine')
+     D  io_srcDta                                 like(ds_srcFile_t.srcDta)
+      *
      D getSpcValDft...
      D                 pr                  like(keyData_t)
      D                                     extproc('getValue')
@@ -490,6 +515,16 @@
      D                                     extproc('performSetCurrentLibrary')
      D  i_libl                             value  like(cmdLong_t)
      D  io_variables                              likeds(variables_t)
+      *
+     D loadMonitoredMessageIDs...
+     D                 pr                  likeds(monMsgIds_t)
+     D                                     extproc('loadMonitoredMessageIDs')
+      *
+     D isMonitoredMessageID...
+     D                 pr              n
+     D                                     extproc('isMonitoredMessageID')
+     D  i_errMsgId                         value like(msgId_t)
+     D  i_monMsgIds                        value likeds(monMsgIds_t)
       *
      D retrieveLibraryList...
      D                 pr                  likeds(liblList_t)
@@ -578,6 +613,7 @@
      D                                     extproc('executeCmd')
      D  i_monErr                           value  like(bool_t)
      D  i_cmd                              value  like(cmdLong_t)
+     D  o_errMsgId                                like(msgId_t) options(*nopass)
       *
      D appendToJobLog...
      D                 PR
@@ -662,13 +698,6 @@
      d  i_procPtr                      *   const  procptr
      d  o_fc                         12a          options(*omit)
       *
-      * -------------------------------------------------------------
-      *  Dateischlüssel
-      * -------------------------------------------------------------
-     D P1Key2          ds                  qualified
-     D  MODE                               like(P1MODE)
-     D  NEWMODE                            like(P1NEWMODE)
-      *
       * =============================================================
       *  Ausführen Pre-Prozessor
       * =============================================================
@@ -719,6 +748,8 @@
      D  i_usrDefVars                              likeds(inpUsrDefVars_t)
       *
       *  Nachrichten
+      *  ... Falsche Reihenfolge im Betriebsmodus.
+      /COPY QSTRPREPRC,PRZ0001
       *  ... Die Datensatzlänge der Eingabedatei ist zu lang.
       /COPY QSTRPREPRC,PRZ0011
       *  ... Fehler beim Öffnen der Quellendatei &2/&1, Teildatei &3.
@@ -753,6 +784,8 @@
      D cmdChgObjD      S                   like(cmdLong_t)
      D cmd             S                   like(cmdLong_t)
      D isCmdMissingError...
+     D                 S               n   inz(cFalse)
+     D isMonMsgAllowed...
      D                 S               n   inz(cFalse)
       *
      D lineData        ds                  likeds(lineData_t) inz
@@ -953,12 +986,29 @@
 
             // Wenn sich in der Programmzeile ein Tag befindet, ...
             if (isTag(srcDta: tag));
+
                // ermitteln neue Betriebsart
                newMode = tagToMode(tag);
 
                // prüfen Betriebsartenwechsel
                if (not checkMode(mode: newMode));
                   endAbnormal();
+               endif;
+
+               if (newMode = cMODE_MONMSG);
+                  if (not isMonMsgAllowed);
+                     clear PRZ0001;
+                     PRZ00011 = mode;
+                     PRZ00012 = newMode;
+                     sendMsg(f_newMsg('PRZ0001': PRZ0001: cTYPE_DIAG));
+                     endAbnormal();
+                  endif;
+               endif;
+
+               if (newMode = cMODE_CMD);
+                  isMonMsgAllowed = cTrue;
+               else;
+                  isMonMsgAllowed = cFalse;
                endif;
 
                // umschalten Betriebsartenwechsel
@@ -1005,6 +1055,13 @@
                iter;
             endif;
 
+            // Ende MONMSG
+            if (mode = cMODE_ENDMONMSG);
+               mode = popMode();
+               mode = popMode();
+               iter;
+            endif;
+
             // Breite der Quellenangaben >>WIDTH<<
             if (mode  = cMODE_WIDTH);
                srcDtaLen = getWidthValue(srcDta: srcDtaLen);
@@ -1030,6 +1087,13 @@
                   mode = popMode();
                   iter;
                endif;
+            endif;
+
+            // MsgID-Anweisung     >>MSGID<<
+            if (mode = cMODE_MSGID);
+               // Ignore >>MSGID<< tags not related to >>CMD<<
+               mode = popMode();
+               iter;
             endif;
 
             // Parm-Anweisung      >>PARM<<
@@ -1217,6 +1281,32 @@
          io_srcDta = %subst(ds_srcFile.srcDta: 1: getSrcDataLength());
 
          f1_line_number = f1_line_number + 1;
+
+         return cTrue;
+
+      /end-free
+     P                 E
+
+      * =============================================================
+      *  Read the previous line from the source input file.
+      * =============================================================
+     P readPrvLine...
+     P                 b
+     D                 pi              n
+     D  io_srcDta                                 like(ds_srcFile_t.srcDta)
+      *
+     D ds_srcFile      ds                  likeds(ds_srcFile_t) inz
+      /free
+
+         readp SRCFILE ds_srcFile;
+         if (%eof());
+            io_srcDta = '';
+            return cFalse;
+         endif;
+
+         io_srcDta = %subst(ds_srcFile.srcDta: 1: getSrcDataLength());
+
+         f1_line_number = f1_line_number - 1;
 
          return cTrue;
 
@@ -1574,6 +1664,9 @@
      D                 pi
      D  i_cmd                              value  like(cmdLong_t)
       *
+     D errMsgId        s                   like(msgId_t)
+     D monMsgIds       ds                  likeds(monMsgIds_t)
+      *
       *  ... EVFEVENT Datei konnte nicht zur Ausgabe vorbereitet werden.
       /COPY QSTRPREPRC,PRZ0026
       /free
@@ -1592,13 +1685,146 @@
             endAbnormal();
          endif;
 
-         if (not executeCmd(cTrue: i_cmd));
-            if (%scan(cEVENTF_YES: i_cmd) > 0);
-               endAbnormal(retrieveEventFile(i_cmd)); // EVENT file created by command
-            else;
-               endAbnormal();
-            endif;
+         if (not executeCmd(cTrue: i_cmd: errMsgId));
+            monMsgIds = loadMonitoredMessageIDs();
+            if (not isMonitoredMessageId(errMsgId: monMsgIds));
+               if (%scan(cEVENTF_YES: i_cmd) > 0);
+                  endAbnormal(retrieveEventFile(i_cmd)); // EVENT file created by command
+               else;
+                  endAbnormal();
+               endif;
+               endif;
          endif;
+
+      /end-free
+     P                 e
+
+      * =============================================================
+      *  Loads monitored message IDs from >>MONMSG<< section.
+      * =============================================================
+     P loadMonitoredMessageIDs...
+     P                 b
+     D                 pi                  likeds(monMsgIds_t)
+      *
+     D monMsgIds       ds                  likeds(monMsgIds_t)
+      *
+     D isFirstLine     s               n   inz(cTrue)
+     D count           s             10i 0
+     D srcDta          S                   like(ds_srcFile_t.srcDta)
+     D tag             S                   like(tag_t) inz
+     D mode            s                   like(mode_t) inz
+     D newMode         s                   like(mode_t) inz
+     D lineData        ds                  likeds(lineData_t) inz
+      /free
+
+         count = 0;
+         isFirstLine = cTrue;
+
+         mode = cMODE_CMD;
+
+         dow readLine(srcDta);
+
+            // Wenn sich in der Programmzeile ein Tag befindet, ...
+            if (isTag(srcDta: tag));
+
+               if (isFirstLine and tag <> cTAG_MONMSG);
+                  readPrvLine(srcDta);
+                  leave;
+               else;
+                  isFirstLine = cFalse;
+               endif;
+
+               // ermitteln neue Betriebsart
+               newMode = tagToMode(tag);
+
+               // prüfen Betriebsartenwechsel
+               if (not checkMode(mode: newMode));
+                  endAbnormal();
+               endif;
+
+               // umschalten Betriebsartenwechsel
+               mode = newMode;
+
+               // Betriebsart merken
+               pushMode(mode);
+            endif;
+
+            // MsgID-Anweisung     >>MSGID<<
+            if (mode = cMODE_MSGID);
+
+               // zufügen Schlüsselwortdaten
+               lineData.keyData = addData(cTAG_MSGID
+                                          : lineData.keyData
+                                          : srcDta
+                                          : lineData.continue );
+
+               // prüfen auf Fortsetzungszeile
+               if (lineData.continue <> cEND_OF_LINE);
+                  iter;
+               else;
+                  count += 1;
+                  monMsgIds.item(count) = lineData.keyData;
+                  resetLineData(lineData);
+                  mode = popMode();
+                  iter;
+               endif;
+            endif;
+
+            // Ende MONMSG
+            if (mode = cMODE_ENDMONMSG);
+               mode = popMode();
+               mode = popMode();
+               leave;
+            endif;
+
+         enddo;
+
+         return monMsgIds;
+
+      /end-free
+     P                 e
+
+      * =============================================================
+      *  Checks whether a given message ID is covered by a list
+      *  of monitored message IDs.
+      * =============================================================
+     P isMonitoredMessageID...
+     P                 b
+     D                 pi              n
+     D  i_errMsgId                         value like(msgId_t)
+     D  i_monMsgIds                        value likeds(monMsgIds_t)
+      *
+     D i               s             10i 0
+     D msgId           s                   like(msgId_t)
+     D cmpLen          s             10i 0
+      /free
+
+         if (i_errMsgId = '');
+            return cTrue;
+         endif;
+
+         i = 1;
+
+         dow (i <= %elem(i_monMsgIds.item) and i_monMsgIds.item(i) <> '');
+            msgId = i_monMsgIds.item(i);
+
+            select;
+            when (%subst(msgId: 4: 4) = '0000');
+               cmpLen = 3;
+            when (%subst(msgId: 6: 2) = '00');
+               cmpLen = 5;
+            other;
+               cmpLen = 7;
+            endsl;
+
+            if (%subst(i_errMsgId: 1: cmpLen) = %subst(msgId: 1: cmpLen));
+               return cTrue;
+            endif;
+
+            i += 1;
+         enddo;
+
+         return cFalse;
 
       /end-free
      P                 e
@@ -2220,6 +2446,18 @@
                leave;
             endif;
 
+            // Anfang MONMSG
+            if (retrieveTag(cTAG_MONMSG: i_srcDta: o_tag));
+               isTag = cTrue;
+               leave;
+            endif;
+
+            // Ende MONMSG
+            if (retrieveTag(cTAG_ENDMONMSG: i_srcDta: o_tag));
+               isTag = cTrue;
+               leave;
+            endif;
+
             // Breite der Quellenangaben
             if (retrieveTag(cTAG_WIDTH: i_srcDta: o_tag));
                isTag = cTrue;
@@ -2234,6 +2472,12 @@
 
             // Parameter
             if (retrieveTag(cTAG_PARM: i_srcDta: o_tag));
+               isTag = cTrue;
+               leave;
+            endif;
+
+            // Message ID
+            if (retrieveTag(cTAG_MSGID: i_srcDta: o_tag));
                isTag = cTrue;
                leave;
             endif;
@@ -2349,6 +2593,14 @@
             when (i_tag = cTAG_ENDIMPORTANT);
                mode = cMODE_ENDIMPORTANT;
 
+            // Anfang MONMSG
+            when (i_tag = cTAG_MONMSG);
+               mode = cMODE_MONMSG;
+
+            // Ende MONMSG
+            when (i_tag = cTAG_ENDMONMSG);
+               mode = cMODE_ENDMONMSG;
+
             // Maximale Breite der Quellendaten
             when (i_tag = cTAG_WIDTH);
                mode = cMODE_WIDTH;
@@ -2360,6 +2612,10 @@
             // Parameter
             when (i_tag = cTAG_PARM);
                mode = cMODE_PARM;
+
+            // Message ID
+            when (i_tag = cTAG_MSGID);
+               mode = cMODE_MSGID;
 
             // Ausführen "Hauptbefehl"
          when (i_tag = cTAG_EXECUTE);
@@ -2400,6 +2656,11 @@
      D                 pi              n
      D  i_mode                             value  like(mode_t)
      D  i_newMode                          value  like(mode_t)
+      *
+      *  Access key of file STRPRE1 (Pre-compiler modes)
+     D P1Key2          ds                  qualified
+     D  MODE                               like(P1MODE)
+     D  NEWMODE                            like(P1NEWMODE)
       *
       *  Nachrichten
       *  ... Falsche Reihenfolge im Betriebsmodus.
@@ -2536,6 +2797,9 @@
      D                 pi                         like(bool_t)
      D  i_monErr                           value  like(bool_t)
      D  i_cmd                              value  like(cmdLong_t)
+     D  o_errMsgId                                like(msgId_t) options(*nopass)
+      *
+     D p_errMsgId      c                   3
       *
       *  Fields for getMsgInf()
      D msgID           s                   like(msgID_t) inz
@@ -2597,16 +2861,20 @@
 
             appendToJobLog(i_cmd);
 
+            getMsgInf('STRPREPRC': 'STRPREPRC2': 'executeCmd'
+                      : errCode.excID: msgID: msgDta: msgFile: msgLib);
+
             if (not g_option.isEventf);
                clear PRZ0015;
                PRZ00151 = i_cmd;
-               getMsgInf('STRPREPRC': 'STRPREPRC2': 'executeCmd'
-                         : errCode.excID: msgID: msgDta: msgFile: msgLib);
                sendMsg(f_newMsg('PRZ0015': PRZ0015: cTYPE_DIAG));
                sendMsg(f_newMsg(msgID: msgDta: cTYPE_DIAG: msgFile: msgLib));
             endif;
 
             if (i_monErr);
+               if (%parms() >= p_errMsgId and %addr(o_errMsgId) <> *null);
+                  o_errMsgId = msgID;
+               endif;
                return cFalse;
             else;
                endAbnormal();

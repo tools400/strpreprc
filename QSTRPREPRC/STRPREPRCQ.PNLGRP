@@ -45,6 +45,20 @@
 .*  22.09.2017  Th.Raddatz    Added parameter USRDEFVAR to STRPREPRC   *
 .*                            command.                                 *
 .*                                                                     *
+.*  17.05.2019  Th.Raddatz    Added new tags for monitoring messages   *
+.*                            of >>CMD<< tags. The new tags are:       *
+.*                              >>CMD<<  CHKOBJ FOO/BAR *FILE;         *
+.*                              >>MONMSG<<                             *
+.*                                >>MSGID<<  CPF9801; // Obj not found *
+.*                              >>END-MONMSG<<                         *
+.*                                                                     *
+.*  17.05.2019  Th.Raddatz    Added new tags for monitoring messages   *
+.*                            of 'CMD' tags. The new tags are:         *
+.*                              'CMD'  CHKOBJ FOO/BAR *FILE;           *
+.*                              'MONMSG'                               *
+.*                                'MSGID' CPF9801; // Object not found *
+.*                              'END-MONMSG'                           *
+.*                                                                     *
 .*=====================================================================*
 .* >>PRE-COMPILER<<                                                    *
 .*   >>CRTCMD<< CRTPNLGRP    PNLGRP(&LI/STRPREPRCP) +                  *
@@ -257,6 +271,19 @@ then the command specified acts as a pre-command. If this
 tag has been specified after an :HP3.>>EXECUTE<<:EHP3. tag, then
 the command specified acts as a post-command. Any number of >>CMD<<
 tags can be specified.
+:P.
+Errors of pre- and post commands can be monitored as shown below:
+:P.
+:LINES.
+0001.00    >>PRE-COMPILER<<
+0002.00      >>CMD<<  DLTF FILE(QGPL/QFOO);
+0003.00      >>MONMSG<<
+0004.00        >>MSGID<< CPF2105; // Object FOO not found;
+0005.00      >>END-MONMSG<<
+0006.00    >>END-PRE-COMPILER<<
+:ELINES.
+:P.
+You can specify up to 50 message IDs, that are monitored.
 
 :PT.>>EXECUTE<<
 :PD.This tag is used to execute the creation command. It should be
