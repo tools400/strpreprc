@@ -46,13 +46,6 @@
 .*                            command.                                 *
 .*                                                                     *
 .*  17.05.2019  Th.Raddatz    Added new tags for monitoring messages   *
-.*                            of >>CMD<< tags. The new tags are:       *
-.*                              >>CMD<<  CHKOBJ FOO/BAR *FILE;         *
-.*                              >>MONMSG<<                             *
-.*                                >>MSGID<<  CPF9801; // Obj not found *
-.*                              >>END-MONMSG<<                         *
-.*                                                                     *
-.*  17.05.2019  Th.Raddatz    Added new tags for monitoring messages   *
 .*                            of 'CMD' tags. The new tags are:         *
 .*                              'CMD'  CHKOBJ FOO/BAR *FILE;           *
 .*                              'MONMSG'                               *
