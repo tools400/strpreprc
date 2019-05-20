@@ -1687,13 +1687,15 @@
 
          if (not executeCmd(cTrue: i_cmd: errMsgId));
             monMsgIds = loadMonitoredMessageIDs();
-            if (not isMonitoredMessageId(errMsgId: monMsgIds));
+            if (isMonitoredMessageId(errMsgId: monMsgIds));
+               // TODO: remove job log entries
+            else;
                if (%scan(cEVENTF_YES: i_cmd) > 0);
                   endAbnormal(retrieveEventFile(i_cmd)); // EVENT file created by command
                else;
                   endAbnormal();
                endif;
-               endif;
+            endif;
          endif;
 
       /end-free
