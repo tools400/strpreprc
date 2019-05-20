@@ -51,7 +51,7 @@
       appblddate CDATA #REQUIRED
      >
      ]>
-<upload  appname="STRPREPRC"  appauthor="Thomas Raddatz"  appblddate=" 5/17/2019">
+<upload  appname="STRPREPRC"  appauthor="Thomas Raddatz"  appblddate=" 5/20/2019">
 <install_instructions><![CDATA[
      *----------------------------------------------------------------      ------
      *  1. Upload entire XML to your AS/400 to a source file 112 long, into any mbr
@@ -7913,7 +7913,6 @@ srccssid=  "00273">
      /*                        &LI/JOBLOG );                                */
      /*     >>PARM<< ACTGRP(*NEW);                                          */
      /*     >>PARM<< DETAIL(*BASIC);                                        */
-     /*     >>PARM<< TGTRLS(V7R1M0);                                        */
      /*   >>END-IMPORTANT<<                                                 */
      /*   >>EXECUTE<<                                                       */
      /* >>END-PRE-COMPILER<<                                                */
@@ -7994,7 +7993,6 @@ srccssid=  "00273">
      /*   >>IMPORTANT<<                                                     */
      /*     >>PARM<< DBGVIEW(*LIST);                                        */
      /*     >>PARM<< OPTION(*EVENTF);                                       */
-     /*     >>PARM<< TGTRLS(V7R1M0);                                        */
      /*   >>END-IMPORTANT<<                                                 */
      /*   >>EXECUTE<<                                                       */
      /* >>END-PRE-COMPILER<<                                                */
@@ -8373,7 +8371,6 @@ srccssid=  "00273">
       *     >>PARM<< TRUNCNBR(*NO);                                         *
       *     >>PARM<< DBGVIEW(*LIST);                                        *
       *     >>PARM<< OPTION(*EVENTF);                                       *
-      *     >>PARM<< TGTRLS(V7R1M0);                                        *
       *   >>END-IMPORTANT<<                                                 *
       *   >>EXECUTE<<                                                       *
       * >>END-PRE-COMPILER<<                                                *
@@ -9941,13 +9938,15 @@ srccssid=  "00273">
 
          if (not executeCmd(cTrue: i_cmd: errMsgId));
             monMsgIds = loadMonitoredMessageIDs();
-            if (not isMonitoredMessageId(errMsgId: monMsgIds));
+            if (isMonitoredMessageId(errMsgId: monMsgIds));
+               // TODO: remove job log entries
+            else;
                if (%scan(cEVENTF_YES: i_cmd) > 0);
                   endAbnormal(retrieveEventFile(i_cmd)); // EVENT file created by command
                else;
                   endAbnormal();
                endif;
-               endif;
+            endif;
          endif;
 
       /end-free
@@ -11632,7 +11631,6 @@ srccssid=  "00273">
       *     >>PARM<< TRUNCNBR(*NO);                                         *
       *     >>PARM<< DBGVIEW(*LIST);                                        *
       *     >>PARM<< OPTION(*EVENTF);                                       *
-      *     >>PARM<< TGTRLS(V7R1M0);                                        *
       *   >>END-IMPORTANT<<                                                 *
       *   >>EXECUTE<<                                                       *
       * >>END-PRE-COMPILER<<                                                *
@@ -11843,7 +11841,6 @@ srccssid=  "00273">
       *     >>PARM<< TRUNCNBR(*NO);                                         *
       *     >>PARM<< DBGVIEW(*LIST);                                        *
       *     >>PARM<< OPTION(*EVENTF);                                       *
-      *     >>PARM<< TGTRLS(V7R1M0);                                        *
       *   >>END-IMPORTANT<<                                                 *
       *   >>EXECUTE<<                                                       *
       * >>END-PRE-COMPILER<<                                                *
