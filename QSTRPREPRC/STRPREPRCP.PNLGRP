@@ -52,6 +52,8 @@
 .*                                'MSGID' CPF9801; // Object not found *
 .*                              'END-MONMSG'                           *
 .*                                                                     *
+.*  07.08.2019  Th.Raddatz    Added parameter EXECOPT.                 *
+.*                                                                     *
 .*=====================================================================*
 .* >>PRE-COMPILER<<                                                    *
 .*   >>CRTCMD<< CRTPNLGRP    PNLGRP(&LI/STRPREPRCP) +                  *
@@ -107,6 +109,7 @@
 :IMHELP name='STRPREPRC/USELIBL'.
 :IMHELP name='STRPREPRC/TAGSREQ'.
 :IMHELP name='STRPREPRC/EXICMDEXC'.
+:IMHELP name='STRPREPRC/EXECOPT'.
 :EHELP.
 
 .*****************************************************************
@@ -1282,6 +1285,39 @@ wird QGPL verwendet.
 :PT.:PV.Bibliotheksname:EPV.
 :PD.Den Namen der Bibliothek angeben, in der das
 Exitprogramm gespeichert ist.
+:EPARML.
+
+:EHELP.
+
+.********************************************
+.*  Keyword:  EXECOPT  (optional)
+.********************************************
+:HELP NAME='STRPREPRC/EXECOPT'.
+Befehlsausführungsoptionen - Hilfe
+:XH3.Befehlsausführungsoptionen (EXECOPT)
+:P.
+Gibt an, welche Befehle ausgeführt werden. Die zur
+Verfügung stehenden Befehlsgruppen sind:
+:P.
+:LINES.
+ - Vorlaufbefehle
+ - Objekterstellungsbefeh
+ - Nachlaufbefele
+:ELINES.
+:P.
+:IMHELP name='COM/OPTPARM'.
+:P.
+:IMHELP name='COM/VALUES'.
+
+:PARML.
+:PT.:PK DEF.*ALL:EPK.
+:PD.Es werden alle Befehlsgruppe ausgeführt.
+:PT.:PV.*PRECMDS:EPV.
+:PD.Es werden nur die Vorlaufbefehle ausgeführt.
+:PT.:PV.*CRTCMD:EPV.
+:PD.Es wird nur der Objekterstellungsbefehl ausgeführt.
+:PT.:PV.*POSTCMDS:EPV.
+:PD.Es werden nur die Nachlaufbefehle ausgeführt.
 :EPARML.
 
 :EHELP.

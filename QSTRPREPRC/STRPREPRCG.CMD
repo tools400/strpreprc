@@ -37,6 +37,7 @@
      /*  22.09.2017  Th.Raddatz    Added parameter USRDEFVAR to STRPREPRC   */
      /*                            command.                                 */
      /*  11.02.2019  Th.Raddatz    Added parameters USESRCSTMF and STMF.    */
+     /*  07.08.2019  Th.Raddatz    Added parameter EXECOPT.                 */
      /*                                                                     */
      /* =================================================================== */
      /* >>PRE-COMPILER<<                                                    */
@@ -356,7 +357,21 @@
                           DFT(*NONE)                       +
                           SNGVAL((*NONE))                  +
                           PMTCTL(*PMTRQS)                  +
-                          PROMPT('Ausgangspgm. Befehlsausführung')
+                          PROMPT('Exit Program Command Execution')
+
+             PARM       KWD(EXECOPT   ) TYPE(*CHAR)        +
+                          DFT(*ALL)                        +
+                          SNGVAL(*ALL)                     +
+                          LEN(10)                          +
+                          MIN(0)                           +
+                          MAX(3)                           +
+                          RSTD(*YES)                       +
+                          VALUES(*ALL                      +
+                                 *PRECMDS                  +
+                                 *CRTCMD                   +
+                                 *POSTCMDS)                +
+                          PMTCTL(*PMTRQS)                  +
+                          PROMPT('Befehlsausführungsoptionen')
 
  USRDEFVAR:  ELEM         TYPE(*CHAR)                      +
                           MIN(1)                           +

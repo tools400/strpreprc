@@ -216,6 +216,12 @@
      D  name                         10a
      D  value                       100a
       *
+     D DIM_EXECOPTS    c                   3
+      *
+     D execOpt_t       ds                  qualified based(pDummy)
+     D  numElem                       5i 0
+     D  execOpt                      10a   dim(DIM_EXECOPTS)
+      *
      D DIM_LIBLIST     c                   250
       *
      D inpLibList_t    ds                  qualified based(pDummy)
@@ -357,6 +363,11 @@
      D cJOBLOG_NO      c                   '*NOJOBLOG'
      D cJOBLOG_YES     c                   '*ADDJOBLOG'
       *
+     D EXEC_ALL        c                   '*ALL'
+     D EXEC_PRECMDS    c                   '*PRECMDS'
+     D EXEC_CRTCMD     c                   '*CRTCMD'
+     D EXEC_POSTCMDS   c                   '*POSTCMDS'
+      *
      D CURLIB_CRTDFT   c                   '*CRTDFT'
       * -------------------------------------------------------------
       *  Globale Variablen
@@ -378,6 +389,9 @@
      D  doAppendJobLog...
      D                                 n   inz(cFalse)
       *
+     D g_execOpt...
+     D                 ds                  likeds(execOpt_t)
+      *
      D g_srcFile       ds                  qualified
      D  name                         10a
      D  lib                          10a
@@ -397,6 +411,11 @@
      D g_startUpLiblList...
      D                 ds                  likeds(liblList_t) inz
       *
+     D g_prePostCmdsMode...
+     D                 s             10i 0
+      *
+     D MODE_PRECMDS    c                   1
+     D MODE_POSTCMDS   c                   2
       * -------------------------------------------------------------
       *  Importierte Prototypen
       * -------------------------------------------------------------
@@ -454,6 +473,7 @@
      D  i_libl                                    likeds(inpLibList_t)
      D  i_useLibl                                 like(bool_t)
      D  i_usrDefVars                              likeds(inpUsrDefVars_t)
+     D  i_execOpt                                 likeds(execOpt_t)
       *
      D readLine...
      D                 pr              n
@@ -525,6 +545,11 @@
      D                                     extproc('isMonitoredMessageID')
      D  i_errMsgId                         value like(msgId_t)
      D  i_monMsgIds                        value likeds(monMsgIds_t)
+      *
+     D isExecOpt...
+     D                 pr              n
+     D                                     extproc('isExecOpt')
+     D  i_execOpt                          value like(execOpt_t.execOpt)
       *
      D retrieveLibraryList...
      D                 pr                  likeds(liblList_t)
@@ -746,6 +771,7 @@
      D  i_libl                                    likeds(inpLibList_t)
      D  i_useLibl                                 like(bool_t)
      D  i_usrDefVars                              likeds(inpUsrDefVars_t)
+     D  i_execOpt                                 likeds(execOpt_t)
       *
       *  Nachrichten
       *  ... Falsche Reihenfolge im Betriebsmodus.
@@ -803,6 +829,8 @@
 
          g_startUpLiblList = retrieveLibraryList();
 
+         g_prePostCmdsMode = MODE_PRECMDS;
+
          // Initialisieren globaler Variablen
          reset g_msgFile;
          reset g_mode;
@@ -811,6 +839,7 @@
          reset g_libPgmCmdExc;
          reset g_eventf;
          reset g_option;
+         reset g_execOpt;
          g_msgFile = i_msgFile;
          g_pgmCmdExc = i_pgmCmdExc;
          g_libPgmCmdExc = i_libPgmCmdExc;
@@ -853,6 +882,8 @@
                endAbnormal();
             endmon;
          endif;
+
+         g_execOpt = i_execOpt;
 
          clear variables;
          variables.lib = i_lib;
@@ -1619,6 +1650,12 @@
       /COPY QSTRPREPRC,PRZ0026
       /free
 
+         g_prePostCmdsMode = MODE_POSTCMDS;
+
+         if (not isExecOpt(EXEC_CRTCMD));
+            return;
+         endif;
+
          if (g_option.isEventf);
             monitor;
                prepareEventFile();
@@ -1670,6 +1707,16 @@
       *  ... EVFEVENT Datei konnte nicht zur Ausgabe vorbereitet werden.
       /COPY QSTRPREPRC,PRZ0026
       /free
+
+         if (g_prePostCmdsMode = MODE_PRECMDS and
+             not isExecOpt(EXEC_PRECMDS));
+            return;
+         endif;
+
+         if (g_prePostCmdsMode = MODE_POSTCMDS and
+             not isExecOpt(EXEC_POSTCMDS));
+            return;
+         endif;
 
          if (g_option.isEventf);
             monitor;
@@ -1825,6 +1872,30 @@
 
             i += 1;
          enddo;
+
+         return cFalse;
+
+      /end-free
+     P                 e
+
+      * =============================================================
+      *  Checks whether a given message ID is covered by a list
+      *  of monitored message IDs.
+      * =============================================================
+     P isExecOpt...
+     P                 b
+     D                 pi              n
+     D  i_execOpt                          value like(execOpt_t.execOpt)
+      *
+     D i               s             10i 0
+      /free
+
+         for i = 1 to g_execOpt.numElem;
+            if (g_execOpt.execOpt(i) = EXEC_ALL or
+                g_execOpt.execOpt(i) = i_execOpt);
+              return cTrue;
+            endif;
+         endfor;
 
          return cFalse;
 

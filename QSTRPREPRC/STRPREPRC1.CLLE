@@ -98,7 +98,8 @@
                              &USELIBL    +
                              &XTAGSREQ   +
                              &XMSGF      +
-                             &EXICMDEXC  )
+                             &EXICMDEXC  +
+                             &EXECOPT    )
 
              DCL        VAR(&QUSESRCF  ) TYPE(*CHAR) LEN(  20)
              DCL        VAR(&USESRCMBR ) TYPE(*CHAR) LEN(  10)
@@ -137,6 +138,7 @@
              DCL        VAR(&EXICMDEXC ) TYPE(*CHAR) LEN(  20)
              DCL        VAR(&PGMCMDEXC ) TYPE(*CHAR) LEN(  10)
              DCL        VAR(&LPGMCMDEXC) TYPE(*CHAR) LEN(  10)
+             DCL        VAR(&EXECOPT   ) TYPE(*CHAR) LEN(  32)
 
              DCL        VAR(&USRDEFVAR ) TYPE(*CHAR) LEN(2282)
                 /* number of items:            BINARY(2)               */
@@ -262,7 +264,8 @@
                                             &OPTION     +
                                             &LIBL       +
                                             &USELIBL    +
-                                            &USRDEFVAR  )
+                                            &USRDEFVAR  +
+                                            &EXECOPT    )
 
  /* -------------------------------------------------------------- */
  /*  Programm beenden                                              */
