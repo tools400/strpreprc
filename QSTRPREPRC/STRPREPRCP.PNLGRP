@@ -54,6 +54,8 @@
 .*                                                                     *
 .*  07.08.2019  Th.Raddatz    Added parameter EXECOPT.                 *
 .*                                                                     *
+.*  26.04.2020  Th.Raddatz    Added 'INCLUDE' tag.                     *
+.*                                                                     *
 .*=====================================================================*
 .* >>PRE-COMPILER<<                                                    *
 .*   >>CRTCMD<< CRTPNLGRP    PNLGRP(&LI/STRPREPRCP) +                  *
@@ -147,37 +149,40 @@ Der Anweisungsblock für den Pre-Prozessor kann wie folgt aussehen:
 0002.00        >>CRTCMD<<           CRTRPGMOD(&LI/&OB) +
 0003.00                               SRCFILE(&SL/&SF) +
 0004.00                               SRCMBR(&SM);
-0005.00        >>IMPORTANT<<
-0006.00            >>PARM<<         TRUNCNBR(*NO);
-0007.00        >>END-IMPORTANT<<
-0008.00
-0009.00        >>COMPILE<<
-0010.00            >>PARM<<         TRUNCNBR(*NO);
-0011.00        >>END-COMPILE<<
-0012.00
-0013.00        >>LINK<<
-0014.00            >>PARM<<         ACTGRP(*CALLER);
-0015.00        >>END-LINK<<
-0016.00
-0017.00        >>CMD<<              OVRDBF +
-0018.00                               FILE(SRCFILE) +
-0019.00                               FROMFILE(QRPGLESRC) +
-0020.00                               MBR(*FIRST) +
-0021.00                               OVRSCOPE(*JOB);
-0022.00
-0023.00        /* Ändern Bibliotheksliste */
-0024.00        >>CURLIB<<           *CRTDFT;
-0025.00        >>LIBL<<             &LL;
-0026.00
-0027.00        >>EXECUTE<<
-0028.00        /* Wiederherstellen Bibliotheksliste */
-0029.00        >>CURLIB<<           &CX;
-0030.00        >>LIBL<<             &LX;
-0031.00
-0032.00        >>CMD<<              DLTOVR +
-0033.00                               FILE(SRCFILE) +
-0034.00                               LVL(*JOB);
-0035.00    >>END-PRE-COMPILER<<
+0005.00
+0006.00        >>INCLUDE<<          &SL/QINCLUDE MYINCLUDE
+0007.00
+0008.00        >>IMPORTANT<<
+0009.00            >>PARM<<         TRUNCNBR(*NO);
+0010.00        >>END-IMPORTANT<<
+0011.00
+0012.00        >>COMPILE<<
+0013.00            >>PARM<<         TRUNCNBR(*NO);
+0014.00        >>END-COMPILE<<
+0015.00
+0016.00        >>LINK<<
+0017.00            >>PARM<<         ACTGRP(*CALLER);
+0018.00        >>END-LINK<<
+0019.00
+0020.00        >>CMD<<              OVRDBF +
+0021.00                               FILE(SRCFILE) +
+0022.00                               FROMFILE(QRPGLESRC) +
+0023.00                               MBR(*FIRST) +
+0024.00                               OVRSCOPE(*JOB);
+0025.00
+0026.00        /* Ändern Bibliotheksliste */
+0027.00        >>CURLIB<<           *CRTDFT;
+0028.00        >>LIBL<<             &LL;
+0029.00
+0030.00        >>EXECUTE<<
+0031.00        /* Wiederherstellen Bibliotheksliste */
+0032.00        >>CURLIB<<           &CX;
+0033.00        >>LIBL<<             &LX;
+0034.00
+0035.00        >>CMD<<              DLTOVR +
+0036.00                               FILE(SRCFILE) +
+0037.00                               LVL(*JOB);
+0038.00    >>END-PRE-COMPILER<<
 :ELINES.
 :P.
 :HP1.Verwendung von Variablen im Pre-Prozessor-Abschnitt::EHP1.
@@ -212,6 +217,11 @@ Die >>CRTCMD<< Marke ist optional. Der Erstellungsbefehl kann
 alternativ auch über den Befehl STRPREPRC mitgegeben werden. Wenn
 die >>CRTCMD<< Marke angegeben wird, dann sollte sie nur einmal
 am Anfang der Pre-Prozessor-Anweisungen definiert werden.
+
+:PT.>>INCLUDE<<
+:PD.Diese Marke bindet eine Teildatei mit Pre-Prozessor-Anweisungen ein.
+Die Syntax folgt hierbei der RPG /copy Anweisung. Ein verschachteltes
+Einbinden von Teildateien ist nicht erlaubt.
 
 :PT.>>IMPORTANT<<
 :PD.Diese Marke leitet den Abschnitt für die Compiler-Schlüsselworte ein.

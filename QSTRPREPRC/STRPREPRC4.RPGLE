@@ -46,7 +46,15 @@
      H NOMAIN BNDDIR('QC2LE')
       *
      FSTRPRE2   IF   E           K DISK    usropn
+     F                                     extfile(g_strpre2.name)
+     F                                     extmbr(g_strpre2.member)
      F                                     prefix(P2)
+      *
+     D g_strpre2       ds                  qualified inz
+     D  name                         21a   varying
+     D  member                       10a   varying
+      *
+      /copy QSTRPREPRC,SDS
       *
       *  Returns cTrue for an ignored message ID, else cFalse.
      D isIgnoredMsgID...
@@ -475,6 +483,8 @@
       /free
 
          if (not %open(STRPRE2));
+            g_strpre2.name = %trim(sds.pgmLib) + '/' + 'STRPRE2';
+            g_strpre2.member = '*FIRST';
             open STRPRE2;
          endif;
 

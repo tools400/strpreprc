@@ -25,6 +25,8 @@
       *  ----------  ------------  ---------------------------------------  *
       *  18.05.2015  Th.Raddatz    Converted to /free.                      *
       *                                                                     *
+      *  26.04.2020  Th.Raddatz    Added 'INCLUDE' tag.                     *
+      *                                                                     *
       * =================================================================== *
       * >>PRE-COMPILER<<                                                    *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
@@ -44,9 +46,21 @@
       *  Verwendete Dateien
       * -------------------------------------------------------------
      FSTRPRE1   UF A E             DISK    usropn
+     F                                     extfile(g_strpre1.name)
+     F                                     extmbr(g_strpre1.member)
      F                                     infds(f1)
      FSTRPRE2   UF A E             DISK    usropn
+     F                                     extfile(g_strpre2.name)
+     F                                     extmbr(g_strpre2.member)
      F                                     infds(f2)
+      *
+     D g_strpre1       ds                  qualified inz
+     D  name                         21a   varying
+     D  member                       10a   varying
+      *
+     D g_strpre2       ds                  qualified inz
+     D  name                         21a   varying
+     D  member                       10a   varying
       *
      D f1              DS                  qualified
      D  status                11     15S 0
@@ -71,8 +85,10 @@
       * -------------------------------------------------------------
       *  Globale Variablen
       * -------------------------------------------------------------
-     D ctrlEntry       S             60A   dim(21) ctdata perrcd(1)
+     D ctrlEntry       S             60A   dim(25) ctdata perrcd(1)
      D msgIDs          S             83A   dim(25) ctdata perrcd(1)
+      *
+      /copy QSTRPREPRC,SDS
       *
       * -------------------------------------------------------------
       *  Prototypen
@@ -89,6 +105,9 @@
       *
      D x               S             10I 0 inz
       /free
+
+         g_strpre1.name = %trim(sds.pgmLib) + '/' + 'STRPRE1';
+         g_strpre1.member = '*FIRST';
 
          open STRPRE1;
 
@@ -111,6 +130,9 @@
          endif;
 
          close STRPRE1;
+
+         g_strpre2.name = %trim(sds.pgmLib) + '/' + 'STRPRE2';
+         g_strpre2.member = '*FIRST';
 
          open STRPRE2;
 
@@ -144,12 +166,16 @@
 *SCAN                         >>PRE-COMPILER<<
 >>COMPILE<<                   >>END-COMPILE<<
 >>COMPILE<<                   >>PARM<<
+>>COMPILE<<                   >>INCLUDE<<
 >>IMPORTANT<<                 >>END-IMPORTANT<<
 >>IMPORTANT<<                 >>PARM<<
+>>IMPORTANT<<                 >>INCLUDE<<
 >>LINK<<                      >>END-LINK<<
 >>LINK<<                      >>PARM<<
+>>LINK<<                      >>INCLUDE<<
 >>PRE-COMPILER<<              *EXIT
 >>PRE-COMPILER<<              >>CMD<<
+>>PRE-COMPILER<<              >>INCLUDE<<
 >>PRE-COMPILER<<              >>COMPILE<<
 >>PRE-COMPILER<<              >>IMPORTANT<<
 >>PRE-COMPILER<<              >>CRTCMD<<

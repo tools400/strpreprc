@@ -112,6 +112,8 @@
       *                                'MSGID' CPF9801; // Object not found *
       *                              'END-MONMSG'                           *
       *                                                                     *
+      *  26.04.2020  Th.Raddatz    Added 'INCLUDE' tag.                     *
+      *                                                                     *
       * =================================================================== *
       * >>PRE-COMPILER<<                                                    *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
@@ -136,12 +138,26 @@
      F                                     extfile(g_useSrcFile.name)
      F                                     extmbr(g_useSrcFile.member)
      F                                     infds(f1)
+     FINCLUDE   IF   F  256        DISK    usropn
+     F                                     extfile(g_include.name)
+     F                                     extmbr(g_include.member)
+     F                                     infds(f3)
       *
      FSTRPRE1   IF   E           K DISK    usropn
      F                                     prefix(P1)
+     F                                     extfile(g_strpre1.name)
+     F                                     extmbr(g_strpre1.member)
      F                                     infds(f2)
       *
-     D g_useSrcFile    ds                  qualified
+     D g_useSrcFile    ds                  qualified inz
+     D  name                         21a   varying
+     D  member                       10a   varying
+      *
+     D g_strpre1       ds                  qualified inz
+     D  name                         21a   varying
+     D  member                       10a   varying
+      *
+     D g_include       ds                  qualified inz
      D  name                         21a   varying
      D  member                       10a   varying
       *
@@ -164,6 +180,17 @@
      D f1_line_number  s             10i 0 inz(-1)
       *
      D f2              ds                  likeds(f1)
+      *
+     D f3              ds                  qualified
+     D  status                11     15S 0
+     D  file                  83     92A
+     D  lib                   93    102A
+     D  rcdLen               125    126B 0
+     D  mbr                  129    138A
+     D  nbrOfKey             387    388B 0
+     D  rcdNbr               397    400B 0
+      *
+     D f3_line_number  s             10i 0 inz(-1)
       *
       * -------------------------------------------------------------
       *  Globale Referenzfelder
@@ -317,6 +344,7 @@
      D cTAG_PARM       c                   '>>PARM<<'
      D cTAG_EXECUTE    c                   '>>EXECUTE<<'
      D cTAG_CMD        c                   '>>CMD<<'
+     D cTAG_INCLUDE    c                   '>>INCLUDE<<'
      D cTAG_LIBL       c                   '>>LIBL<<'
      D cTAG_CURLIB     c                   '>>CURLIB<<'
       *
@@ -348,6 +376,7 @@
      D cMODE_PARM      c                   '>>PARM<<'
      D cMODE_EXECUTE   c                   '>>EXECUTE<<'
      D cMODE_CMD       c                   '>>CMD<<'
+     D cMODE_INCLUDE   c                   '>>INCLUDE<<'
      D cMODE_LIBL      c                   '>>LIBL<<'
      D cMODE_CURLIB    c                   '>>CURLIB<<'
       *
@@ -378,6 +407,7 @@
      D g_pgmCmdExc...
      D                 s                   like(pgm_t) inz
      D g_libPgmCmdExc  s                   like(lib_t) inz
+     D g_width         s             10i 0 inz(-1)
       *
      D g_eventf        ds                  qualified
      D  isOpen                         n   inz(cFalse)
@@ -416,10 +446,14 @@
       *
      D MODE_PRECMDS    c                   1
      D MODE_POSTCMDS   c                   2
+      *
+      /copy QSTRPREPRC,SDS
+      *
       * -------------------------------------------------------------
       *  Importierte Prototypen
       * -------------------------------------------------------------
       /copy QSTRPREPRC,QMHRCVPM
+      /copy QSTRPREPRC,QMHRMVPM
       /copy QBASICS1,PBASICS1
       /copy QSTRPREPRC,PROTO_H
       /copy QSTRPREPRC,QCAPCMD
@@ -523,6 +557,11 @@
      D                 PR
      D                                     extproc('performCmd')
      D  i_cmd                              value  like(cmdLong_t)
+      *
+     D performInclude...
+     D                 PR
+     D                                     extproc('performInclude')
+     D  i_include                          value  like(cmdLong_t)
       *
      D performSetLibraryList...
      D                 pr
@@ -681,17 +720,8 @@
      D  i_lib                        10a   const
      D  i_mbr                        10a   const
       *
-     D QMHRMVPM...
-     D                 PR                         extpgm('QMHRMVPM')
-     D  i_callStackE                 10a   const
-     D  i_callStackC                 10i 0 const
-     D  i_msgKey                      4a   const
-     D  i_msgToRmv                   10a   const
-     D  i_errCode                 32767a         options(*varsize)
-     D  i_lenCalStkE                 10i 0       options(*nopass)
-     D  i_calStkEQual                20a         options(*nopass)
-     D  i_rmvExcp                    10a         options(*nopass)
-     D  i_calStkeDTyp                10a         options(*nopass)
+     D removeFileOpenmessage...
+     D                 pr                  extproc('removeFileOpenmessage')
       *
      D getMsgInf...
      D                 PR
@@ -801,7 +831,6 @@
      D tag             S                   like(tag_t) inz
      D mode            S                   like(mode_t) inz
      D newMode         S                   like(mode_t) inz
-     D srcDtaLen       S                   like(int4_t) inz
      D cmdString       S                   like(cmdLong_t) inz
      D execCmdImplizit...
      D                 S                   like(bool_t)  inz(cTrue)
@@ -959,19 +988,22 @@
          open(E) SRCFILE;
          if (%error());
             clear PRZ0012;
-            PRZ00121 = f1.file;
-            PRZ00122 = f1.lib;
-            PRZ00123 = f1.mbr;
+            PRZ00121 = i_useSrcFile;
+            PRZ00122 = i_useSrcLib;
+            PRZ00123 = i_useSrcMbr;
             sendMsg(f_newMsg('PRZ0012': PRZ0012: cTYPE_DIAG));
             endAbnormal();
          endif;
 
+         g_strpre1.name = %trim(sds.pgmLib) + '/' + 'STRPRE1';
+         g_strpre1.member = '*FIRST';
+
          open(E) STRPRE1;
          if (%error());
             clear PRZ0013;
-            PRZ00131 = f2.file;
-            PRZ00132 = f2.lib;
-            PRZ00133 = f2.mbr;
+            PRZ00131 = 'STRPRE1';
+            PRZ00132 = '*LIBL';
+            PRZ00133 = '*FIRST';
             sendMsg(f_newMsg('PRZ0013': PRZ0013: cTYPE_DIAG));
             endAbnormal();
          endif;
@@ -989,8 +1021,6 @@
             sendMsg(f_newMsg('PRZ0011': PRZ0011: cTYPE_DIAG));
             endAbnormal();
          endif;
-
-         srcDtaLen = getSrcDataLength();
 
          // Formatieren Befehl
          cmd = formatCmd(%trim(i_cmd));
@@ -1095,7 +1125,7 @@
 
             // Breite der Quellenangaben >>WIDTH<<
             if (mode  = cMODE_WIDTH);
-               srcDtaLen = getWidthValue(srcDta: srcDtaLen);
+               g_width = getWidthValue(srcDta: getSrcDataLength());
                mode = popMode();
             endif;
 
@@ -1178,6 +1208,25 @@
                endif;
             endif;
 
+            // Befehl-Anweisung    >>INCLUDE<<
+            if (mode = cMODE_INCLUDE);
+               // zufügen Schlüsselwortdaten
+               lineData.keyData = addData(cTAG_INCLUDE
+                                          : lineData.keyData
+                                          : srcDta
+                                          : lineData.continue);
+
+               // prüfen auf Fortsetzungszeile
+               if (lineData.continue <> cEND_OF_LINE);
+                  iter;
+               else;
+                  performInclude(lineData.keyData);
+                  resetLineData(lineData);
+                  mode = popMode();
+                  iter;
+               endif;
+            endif;
+
             // Befehl-Anweisung    >>LIBL<<
             if (mode = cMODE_LIBL);
                // zufügen Schlüsselwortdaten
@@ -1228,6 +1277,10 @@
 
          if (%open(STRPRE1));
             close STRPRE1;
+         endif;
+
+         if (%open(INCLUDE));
+            close INCLUDE;
          endif;
 
          // Ausführen >>EXECUTE<< implizit, weil
@@ -1303,15 +1356,30 @@
      D ds_srcFile      ds                  likeds(ds_srcFile_t) inz
       /free
 
-         read SRCFILE ds_srcFile;
-         if (%eof());
-            io_srcDta = '';
-            return cFalse;
+         if (%open(INCLUDE));
+
+            read INCLUDE ds_srcFile;
+            if (%eof());
+               close INCLUDE;
+               clear g_include;
+               return readLine(io_srcDta);
+            endif;
+
+            f3_line_number = f3_line_number + 1;
+
+         else;
+
+            read SRCFILE ds_srcFile;
+            if (%eof());
+               io_srcDta = '';
+               return cFalse;
+            endif;
+
+            f1_line_number = f1_line_number + 1;
+
          endif;
 
          io_srcDta = %subst(ds_srcFile.srcDta: 1: getSrcDataLength());
-
-         f1_line_number = f1_line_number + 1;
 
          return cTrue;
 
@@ -1329,15 +1397,30 @@
      D ds_srcFile      ds                  likeds(ds_srcFile_t) inz
       /free
 
-         readp SRCFILE ds_srcFile;
-         if (%eof());
-            io_srcDta = '';
-            return cFalse;
+         if (%open(INCLUDE));
+
+            read INCLUDE ds_srcFile;
+            if (%eof());
+               close INCLUDE;
+               clear g_include;
+               return readPrvLine(io_srcDta);
+            endif;
+
+            f3_line_number = f3_line_number - 1;
+
+         else;
+
+            readp SRCFILE ds_srcFile;
+            if (%eof());
+               io_srcDta = '';
+               return cFalse;
+            endif;
+
+            f1_line_number = f1_line_number - 1;
+
          endif;
 
          io_srcDta = %subst(ds_srcFile.srcDta: 1: getSrcDataLength());
-
-         f1_line_number = f1_line_number - 1;
 
          return cTrue;
 
@@ -1744,6 +1827,99 @@
                endif;
             endif;
          endif;
+
+      /end-free
+     P                 e
+
+      * =============================================================
+      *  Execute >>INCLUDE<< tag (Read /include)
+      * =============================================================
+     P performInclude...
+     P                 b
+     D                 pi
+     D  i_include                          value  like(cmdLong_t)
+      *
+     D s               s             10i 0
+     D e               s             10i 0
+     D library         s             10a   varying
+     D file            s             10a   varying
+     D member          s             10a   varying
+      *
+      *  ... Die Datensatzlänge der Eingabedatei ist zu lang.
+      /COPY QSTRPREPRC,PRZ0011
+      *  ... Fehler beim Öffnen der Quellendatei &2/&1, Teildatei &3.
+      /COPY QSTRPREPRC,PRZ0012
+      *  ... Ungültige INCLUDE Marke in Zeile &1 gefunden.
+      /COPY QSTRPREPRC,PRZ0031
+      /free
+
+         s = 1;
+         e = %scan('/': i_include);
+         if (e - s > 0);
+            library = %subst(i_include: 1: e - s);
+            s = e + 1;
+         else;
+            library = '*LIBL';
+            s = 1;
+         endif;
+
+         if (s < %len(i_include));
+            e = %scan(' ': i_include: s);
+            if (e - s > 0);
+               file = %subst(i_include: s: e - s);
+               s = e + 1;
+            endif;
+         endif;
+
+         if (file = '');
+            clear PRZ0031;
+            PRZ00311 = f1_line_number;
+            sendMsg(f_newMsg('PRZ0031': PRZ0031: cTYPE_DIAG));
+            endAbnormal();
+         endif;
+
+         if (s < %len(i_include));
+            s = %check(' ': i_include: s); // Skip spaces
+            e = %len(%trimr(i_include)) + 1;
+            if (e - s > 0);
+               member = %subst(i_include: s: e - s);
+            endif;
+         endif;
+
+         if (member = '');
+            clear PRZ0031;
+            PRZ00311 = f1_line_number;
+            sendMsg(f_newMsg('PRZ0031': PRZ0031: cTYPE_DIAG));
+            endAbnormal();
+         endif;
+
+         g_include.name = library + '/' + file;
+         g_include.member = member;
+
+         open(E) INCLUDE;
+         if (%error());
+            clear PRZ0012;
+            PRZ00121 = file;
+            PRZ00122 = library;
+            PRZ00123 = member;
+            sendMsg(f_newMsg('PRZ0012': PRZ0012: cTYPE_DIAG));
+            endAbnormal();
+         endif;
+
+         removeFileOpenMessage();
+
+         // Prüfen der Datensatzlänge
+         if (f3.rcdLen > cMaxRcdLen);
+            clear PRZ0011;
+            PRZ00111 = f3.rcdLen;
+            PRZ00112 = cMaxRcdLen;
+            PRZ00113 = f3.lib;
+            PRZ00114 = f3.file;
+            sendMsg(f_newMsg('PRZ0011': PRZ0011: cTYPE_DIAG));
+            endAbnormal();
+         endif;
+
+         f3_line_number = 0;
 
       /end-free
      P                 e
@@ -2421,8 +2597,19 @@
      D srcDtaLen       s                   like(int4_t) inz
       /free
 
-         srcDtaLen = f1.rcdLen -
-                     (%size(ds_srcFile_t.srcSeq) + %size(ds_srcFile_t.srcDat));
+         if (%open(INCLUDE));
+            srcDtaLen =
+               f3.rcdLen -
+               (%size(ds_srcFile_t.srcSeq) + %size(ds_srcFile_t.srcDat));
+         else;
+            srcDtaLen =
+               f1.rcdLen -
+               (%size(ds_srcFile_t.srcSeq) + %size(ds_srcFile_t.srcDat));
+         endif;
+
+         if (g_width <> -1 and g_width < srcDtaLen);
+            srcDtaLen = g_width;
+         endif;
 
          return srcDtaLen;
 
@@ -2567,6 +2754,12 @@
                leave;
             endif;
 
+            // Einlesen /include
+            if (retrieveTag(cTAG_INCLUDE: i_srcDta: o_tag));
+               isTag = cTrue;
+               leave;
+            endif;
+
             // Ausführen Anweisung zum Setzen einer Bibliotheksliste
             if (retrieveTag(cTAG_LIBL: i_srcDta: o_tag));
                isTag = cTrue;
@@ -2698,6 +2891,10 @@
          when (i_tag = cTAG_CMD);
             mode  = cMODE_CMD;
 
+            // Einlesen /include
+         when (i_tag = cTAG_INCLUDE);
+            mode  = cMODE_INCLUDE;
+
             // Ausführen Anweisung zum Setzen einer Bibliotheksliste
          when (i_tag = cTAG_LIBL);
             mode  = cMODE_LIBL;
@@ -2738,6 +2935,8 @@
       *  Nachrichten
       *  ... Falsche Reihenfolge im Betriebsmodus.
       /COPY QSTRPREPRC,PRZ0001
+      *  ... Verschachtelte INCLUDE Marke in Zeile &4 der Datei &2/&1, Teildatei &3 gefunden.
+      /COPY QSTRPREPRC,PRZ0032
       /free
 
          P1KEY2.MODE = i_mode;
@@ -2756,6 +2955,16 @@
                leave;
             endif;
          enddo;
+
+         if (i_newMode = cMODE_INCLUDE and %open(INCLUDE));
+            clear PRZ0032;
+            PRZ00321 = f3.file;
+            PRZ00322 = f3.lib;
+            PRZ00323 = f3.mbr;
+            PRZ00324 = f3_line_number;
+            sendMsg(f_newMsg('PRZ0032': PRZ0032: cTYPE_DIAG));
+            return cFalse;
+         endif;
 
          return cTrue;
 
@@ -3181,6 +3390,10 @@
             close STRPRE1;
          endif;
 
+         if (%open(INCLUDE));
+            close INCLUDE;
+         endif;
+
          clear PRZ0002;
          PRZ00021 = f1_line_number;
          sendMsg(f_newMsg('PRZ0002': PRZ0002: cTYPE_ESCAPE));
@@ -3348,11 +3561,13 @@
       /COPY QSTRPREPRC,PRZ0037
       /free
 
-         rc = system('CHKOBJ OBJ(' + %trim(i_lib) + ') OBJTYPE(*LIB)');
-         if (rc <> 0);
-            clear PRZ0035;
-            PRZ00351 = i_lib;
-            sendMsg(f_newMsg('PRZ0035': PRZ0035: cTYPE_ESCAPE));
+         if (%subst(i_lib: 1: 1) <> '*');
+            rc = system('CHKOBJ OBJ(' + %trim(i_lib) + ') OBJTYPE(*LIB)');
+            if (rc <> 0);
+               clear PRZ0035;
+               PRZ00351 = i_lib;
+               sendMsg(f_newMsg('PRZ0035': PRZ0035: cTYPE_ESCAPE));
+            endif;
          endif;
 
          rc = system('CHKOBJ OBJ(' + %trim(i_lib) + '/' +
@@ -3374,6 +3589,31 @@
             PRZ00373 = i_mbr;
             sendMsg(f_newMsg('PRZ0037': PRZ0037: cTYPE_ESCAPE));
          endif;
+
+      /end-free
+     P                 E
+      *
+      *===============================================================*
+      *  Remove file open message:
+      *  CPF4011 - Buffer length longer than record for member
+      *===============================================================*
+     P removeFileOpenMessage...
+     P                 b
+     D                 pi
+      *
+     D rcvm0100        ds                  likeds(rcvm0100_t)
+     D errCode         ds                  likeds(errCode_t)
+      /free
+
+       errCode = f_newApiErrCode(cTrue); // ignore errors
+
+       QMHRCVPM(rcvm0100: %size(rcvm0100): 'RCVM0100': '*': 1
+                : '*ANY': '': 0: '*SAME': errCode);
+
+       if (not f_isApiError(errCode) and rcvm0100.msgID = 'CPF4011');
+          QMHRMVPM('*' : 1: rcvm0100.msgKey: '*BYKEY': errCode);
+       endif;
+
 
       /end-free
      P                 E

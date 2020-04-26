@@ -710,6 +710,60 @@ on command'' (CMD).'                                                  +
                 CCSID( 65535) +
                 /*  -EOF-  */
 
+     /* ----------------------------------------------------------- */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0031                    */
+     /* Invalid INCLUDE tag found in line &1.                       */
+     /* ----------------------------------------------------------- */
+
+             RMVMSGD MSGID(PRZ0031) MSGF(&LI/STRPREPRC)
+             MONMSG  MSGID(CPF2419)     /* MsgID nicht gefunden */
+
+             ADDMSGD +
+                MSGID(PRZ0031) +
+                MSGF(&LI/STRPREPRC) +
+                MSG(+
+'Invalid INCLUDE tag found in line &1.'                               +
+                ) +
+                SECLVL(+
+'Cause . . . . . :   Either the file or der member name is missing. Th-
+e expected format is: &P >>INCLUDE<< [Library]/File Member;'          +
+                ) +
+                SEV(30) +
+                FMT( +
+                    (*DEC 006 2) +
+                ) +
+                ALROPT(*NO) +
+                CCSID( 65535) +
+                /*  -EOF-  */
+
+     /* ----------------------------------------------------------- */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0032                    */
+     /* Nested INCLUDE tag found in line &4 of file &2/&1, member & */
+     /* ----------------------------------------------------------- */
+
+             RMVMSGD MSGID(PRZ0032) MSGF(&LI/STRPREPRC)
+             MONMSG  MSGID(CPF2419)     /* MsgID nicht gefunden */
+
+             ADDMSGD +
+                MSGID(PRZ0032) +
+                MSGF(&LI/STRPREPRC) +
+                MSG(+
+'Nested INCLUDE tag found in line &4 of file &2/&3, member &3.'       +
+                ) +
+                SECLVL(+
+'Cause . . . . . :   Nested INCLUDE tags are not allowed.'            +
+                ) +
+                SEV(30) +
+                FMT( +
+                    (*CHAR 010) +
+                    (*CHAR 010) +
+                    (*CHAR 010) +
+                    (*DEC 006 2) +
+                ) +
+                ALROPT(*NO) +
+                CCSID( 65535) +
+                /*  -EOF-  */
+
      /*-------------------------------------------------------------*/
      /*   Cmd-ADDMSGD für Message-ID :   PRZ0035                    */
      /* Library &1 not found.                                       */

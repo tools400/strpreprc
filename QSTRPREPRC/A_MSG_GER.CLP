@@ -706,8 +706,62 @@ r Befehl'' (CMD) angegeben.'                                          +
 'Die Option *ADDJOBLOG ist nur in Verbindung mit *EVENTF zulässig.'   +
                 ) +
                 SEV(30) +
+     /*   Keine Ersatzvariablen definiert!                          */ +
+                ALROPT(*NO) +
+                CCSID( 65535) +
+                /*  -EOF-  */
+
+     /* ----------------------------------------------------------- */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0031                    */
+     /* Ungültige INCLUDE Marke in Zeile &1 gefunden.               */
+     /* ----------------------------------------------------------- */
+
+             RMVMSGD MSGID(PRZ0031) MSGF(&LI/STRPREPRC)
+             MONMSG  MSGID(CPF2419)     /* MsgID nicht gefunden */
+
+             ADDMSGD +
+                MSGID(PRZ0031) +
+                MSGF(&LI/STRPREPRC) +
+                MSG(+
+'Ungültige INCLUDE Marke in Zeile &1 gefunden.'                       +
+                ) +
+                SECLVL(+
+'Ursache . . . . :   Es fehlt entweder die Datei oder die Teildatei. D-
+as richtige Format ist:&P >>INCLUDE<< [Bibliothek]/Datei Teildatei;'  +
+                ) +
+                SEV(30) +
                 FMT( +
-                    (*CHAR 0070) +
+                    (*DEC 006 2) +
+                ) +
+                ALROPT(*NO) +
+                CCSID( 65535) +
+                /*  -EOF-  */
+
+     /* ----------------------------------------------------------- */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0032                    */
+     /* Verschachtelte INCLUDE Marke in Zeile &4 der Datei &2/&1, T */
+     /* ----------------------------------------------------------- */
+
+             RMVMSGD MSGID(PRZ0032) MSGF(&LI/STRPREPRC)
+             MONMSG  MSGID(CPF2419)     /* MsgID nicht gefunden */
+
+             ADDMSGD +
+                MSGID(PRZ0032) +
+                MSGF(&LI/STRPREPRC) +
+                MSG(+
+'Verschachtelte INCLUDE Marke in Zeile &4 der Datei &2/&1, Teildatei &+
+3 gefunden.'                                                          +
+                ) +
+                SECLVL(+
+'Ursache . . . . :   Mehrfach verschachtelte INCLUDE Marken sind nicht-
+ erlaubt.'                                                            +
+                ) +
+                SEV(30) +
+                FMT( +
+                    (*CHAR 010) +
+                    (*CHAR 010) +
+                    (*CHAR 010) +
+                    (*DEC 006 2) +
                 ) +
                 ALROPT(*NO) +
                 CCSID( 65535) +
