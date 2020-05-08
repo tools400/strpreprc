@@ -1241,7 +1241,7 @@
                else;
                   cmdString = 'CHGLIBL LIBL(' + lineData.keyData + ')';
                   performSetLibraryList(
-                     replaceVars(cmdString: variables): variables); // TODO: test it
+                     replaceVars(cmdString: variables): variables);
                   resetLineData(lineData);
                   mode = popMode();
                   iter;
@@ -1262,7 +1262,7 @@
                else;
                   cmdString = 'CHGLIBL CURLIB(' + lineData.keyData + ')';
                   performSetCurrentLibrary(
-                     replaceVars(cmdString: variables): variables); // TODO: test it
+                     replaceVars(cmdString: variables): variables);
                   resetLineData(lineData);
                   mode = popMode();
                   iter;
