@@ -1,5 +1,7 @@
       /if not defined(QMHRMVPM)
       /define QMHRMVPM
+      *
+      *  Remove Program Message (QMHRMVPM) API
      d QMHRMVPM...
      d                 PR                         extpgm('QMHRMVPM')
      d  i_callStackE                 10a   const
