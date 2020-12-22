@@ -56,6 +56,9 @@
 .*                                                                     *
 .*  26.04.2020  Th.Raddatz    Added 'INCLUDE' tag.                     *
 .*                                                                     *
+.*  22.12.2020  Th.Raddatz    Fixed description of special value       *
+.*                            *ADDJOBLOG of command parameter OPTION.  *
+.*                                                                     *
 .*=====================================================================*
 .* >>PRE-COMPILER<<                                                    *
 .*   >>CRTCMD<< CRTPNLGRP    PNLGRP(&LI/STRPREPRCP) +                  *
@@ -436,9 +439,9 @@ job log.
 :PT.:PV.*EVENTF:EPV.
 :PD.Create an Event File for use by client tooling.
 :PT.:PK DEF.*NOJOBLOG:EPK.
-:PD.Job log entries are not added to an IBM created event file. Job log
-entries also also added (regardless of *NOJOBLOG), when the IBM object
-creation command did not create an event file.
+:PD.Job log entries are not added to an IBM created event file. But in case
+there is an error and there is no event file, an event file is created and
+job log entries are added.
 :PT.:PV.*ADDJOBLOG:EPV.
 :PD.Job log entries are added to an event file that was created by an
 IBM object creation command. This option can only be specified in

@@ -56,6 +56,9 @@
 .*                                                                     *
 .*  26.04.2020  Th.Raddatz    Added 'INCLUDE' tag.                     *
 .*                                                                     *
+.*  22.12.2020  Th.Raddatz    Fixed description of special value       *
+.*                            *ADDJOBLOG of command parameter OPTION.  *
+.*                                                                     *
 .*=====================================================================*
 .* >>PRE-COMPILER<<                                                    *
 .*   >>CRTCMD<< CRTPNLGRP    PNLGRP(&LI/STRPREPRCP) +                  *
@@ -456,9 +459,10 @@ wird.
 :PT.:PV.*EVENTF:EPV.
 :PD.Es wird eine Ereignisdatei zur Verwendung durch Client-Tools erstellt.
 :PT.:PK DEF.*NOJOBLOG:EPK.
-:PD.Es werden keine zusätzlichen Jobprotokolleinträge zur Ausgabe hinzugefügt.
-Das Jobprotokoll wird unabhängig von der Vorgabe *NOJOBLOG auch dann
-geschrieben, wenn der Erstellungsbefehl keine Ereignisdatei ausgegeben hat.
+:PD.Es werden keine zusätzlichen Jobprotokolleinträge zu einer von einem
+IBM Erstellungsbefehl erzeugten Ereignisdatei hinzugefügt. Kommt es jedoch
+zu einem Fehler und ist keine Ereignisdatei vorhanden, wird eine Ereignisdatei
+mit Joblogeinträgen erstellt.
 :PT.:PV.*ADDJOBLOG:EPV.
 :PD.Einer durch einen IBM Erstellungsbefehl erzeugten Ereignisdatei werden
 Jobprotokolleinträge hinzugefügt. Diese Auswahl ist nur in Verbindung mit
