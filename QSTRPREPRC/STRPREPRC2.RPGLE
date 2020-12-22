@@ -419,6 +419,9 @@
      D  doAppendJobLog...
      D                                 n   inz(cFalse)
       *
+     D g_enforceJobLogOnError...
+     D                 s               n
+      *
      D g_execOpt...
      D                 ds                  likeds(execOpt_t)
       *
@@ -876,6 +879,8 @@
          g_srcFile.name = i_srcFile;
          g_srcFile.lib = i_srcLib;
          g_srcFile.mbr = i_srcMbr;
+
+         g_enforceJobLogOnError = *on;
 
          if (%parms() >= 36 and i_option.numE > 0);
             for i = 1 to i_option.numE;
@@ -1739,6 +1744,8 @@
             return;
          endif;
 
+         g_enforceJobLogOnError = *off;
+
          if (g_option.isEventf);
             monitor;
                prepareEventFile();
@@ -1772,6 +1779,8 @@
          if (i_cmdChgObjD <> '');
             performCmd(i_cmdChgObjD);
          endif;
+
+         g_enforceJobLogOnError = *on;
 
       /end-free
      p                 e
@@ -3465,7 +3474,8 @@
                openEventFile(g_eventf.mbr: g_eventf.lib: i_qEventf);
 
             if (g_eventf.isOpen);
-               if (isEmpty or g_option.doAppendJobLog);
+               if (isEmpty or g_option.doAppendJobLog or
+                   (i_isAbnEnd and g_enforceJobLogOnError));
                   writeEventFile(
                      g_srcFile.name: g_srcFile.lib: g_srcFile.mbr
                      : f1_line_number: i_isAbnEnd);
