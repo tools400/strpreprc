@@ -30,6 +30,9 @@
       *                            modus 'new', when the event file is      *
       *                            empty.                                   *
       *                                                                     *
+      *  22.12.2020  Th.Raddatz    Changed writing job log entries as ERROR *
+      *                            entries, in case of compilation errors.  *
+      *                                                                     *
       * =================================================================== *
       * >>PRE-COMPILER<<                                                    *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
@@ -337,13 +340,8 @@
      D  i_srcLib                     10a   const
      D  i_srcMbr                     10a   const
      D  i_lineNumber                 10i 0 const
-     D  i_threshold                  10i 0 const options(*nopass)
-     D  i_ovrMsgSev                  10i 0 const options(*nopass)
+     D  i_isAbnEnd                     n   const
 
-     D p_ovrMsgSev     c                   6
-
-     D threshold       s                   like(i_threshold)
-     D ovrMsgSev       s                   like(i_ovrMsgSev)
      D path            s                   like(evf_path_t)
 
      D hJobLog         s                   like(JobLog_handle_t) inz
@@ -367,14 +365,6 @@
 
         if (not g_status.haveJobLog);
            return;
-        endif;
-
-        if (%parms() >= p_ovrMsgSev);
-           ovrMsgSev = i_ovrMsgSev;
-           threshold = i_threshold;
-        else;
-           ovrMsgSev = -1;
-           threshold = -1;
         endif;
 
         if (not g_status.openForAppend);
@@ -419,8 +409,10 @@
               lineNumber = 0;
            endif;
 
-           if (ovrMsgSev <> -1 and jobLogEntry.msgSeverity >= threshold);
-              jobLogEntry.msgSeverity = ovrMsgSev;
+           if (not i_isAbnEnd);
+              if (jobLogEntry.msgSeverity >= EVF_MSG_SEVERITY_ERROR);
+                 jobLogEntry.msgSeverity = EVF_MSG_SEVERITY_WARNING;
+              endif;
            endif;
 
            if (sourceId = SOURCE_ID);
@@ -430,13 +422,21 @@
                                 : jobLogEntry.msgSeverity
                                 : jobLogEntry.msgText);
            else;
-              Eventf_writeError(sourceId
-                                : lineNumber
-                                : jobLogEntry.msgID
-                                : jobLogEntry.msgSeverity
-                                : jobLogEntry.msgText
-                                : EVF_SEVERITY_WARNING
-                                : EVF_ANNOTATION_BOTTOM);
+              if (i_isAbnEnd);
+                 Eventf_writeError(sourceId
+                                   : lineNumber
+                                   : jobLogEntry.msgID
+                                   : jobLogEntry.msgSeverity
+                                   : jobLogEntry.msgText);
+              else;
+                 Eventf_writeError(sourceId
+                                   : lineNumber
+                                   : jobLogEntry.msgID
+                                   : jobLogEntry.msgSeverity
+                                   : jobLogEntry.msgText
+                                   : EVF_SEVERITY_WARNING
+                                   : EVF_ANNOTATION_BOTTOM);
+              endif;
            endif;
         enddo;
 

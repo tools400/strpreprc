@@ -47,8 +47,7 @@
      D  i_srcLib                     10a   const
      D  i_srcMbr                     10a   const
      D  i_lineNumber                 10i 0 const
-     D  i_threshold                  10i 0 const options(*nopass)
-     D  i_ovrMsgSev                  10i 0 const options(*nopass)
+     D  i_isAbnEnd                     n   const
 
      D closeEventFile...
      D                 pr                  extproc('STRPREPRC4_+

@@ -705,7 +705,7 @@
      D                 PR
      D                                     extproc('writeJobLogToEventf')
      D  i_qEventf                          const  likeds(qObj_t)
-     D  i_chgMsgs                      n   const
+     D  i_isAbnEnd                     n   const
       *
      D replaceVar...
      D                 PR
@@ -3379,7 +3379,7 @@
          endif;
 
          if (g_option.isEventf);
-            writeJobLogToEventf(qEventf: cFalse);
+            writeJobLogToEventf(qEventf: cTrue);
          endif;
 
          if (%open(SRCFILE));
@@ -3426,7 +3426,7 @@
          endif;
 
          if (g_option.isEventf);
-            writeJobLogToEventf(qEventf: cTrue);
+            writeJobLogToEventf(qEventf: cFalse);
          endif;
 
       /end-free
@@ -3445,7 +3445,7 @@
      P                 b
      D                 pi
      D  i_qEventf                          const  likeds(qObj_t)
-     D  i_chgMsgs                      n   const
+     D  i_isAbnEnd                     n   const
       *
      D isEmpty         s               n
       *  ... EVFEVENT Datei in Bibliothek &1 oder das Job Protokoll konnte nicht geöffnet
@@ -3465,21 +3465,11 @@
                openEventFile(g_eventf.mbr: g_eventf.lib: i_qEventf);
 
             if (g_eventf.isOpen);
-
                if (isEmpty or g_option.doAppendJobLog);
-                  // Append job log messages to event file
-                  if (i_chgMsgs);
-                     writeEventFile(
-                        g_srcFile.name: g_srcFile.lib: g_srcFile.mbr
-                        : f1_line_number
-                        : EVF_MSG_SEVERITY_ERROR: EVF_MSG_SEVERITY_WARNING);
-                  else;
-                     writeEventFile(
-                        g_srcFile.name: g_srcFile.lib: g_srcFile.mbr
-                        : f1_line_number);
-                  endif;
+                  writeEventFile(
+                     g_srcFile.name: g_srcFile.lib: g_srcFile.mbr
+                     : f1_line_number: i_isAbnEnd);
                endif;
-
             endif;
 
          on-error;

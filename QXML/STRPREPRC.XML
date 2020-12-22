@@ -51,7 +51,7 @@
       appblddate CDATA #REQUIRED
      >
      ]>
-<upload  appname="STRPREPRC"  appauthor="Thomas Raddatz"  appblddate=" 4/26/2020">
+<upload  appname="STRPREPRC"  appauthor="Thomas Raddatz"  appblddate="12/22/2020">
 <install_instructions><![CDATA[
      *----------------------------------------------------------------      ------
      *  1. Upload entire XML to your AS/400 to a source file 112 long, into any mbr
@@ -3285,13 +3285,13 @@ srclen  =  "00112"
 srccssid=  "01141">
 <copysrc><![CDATA[
       /if not defined(COPYRIGHT_DSPEC)
-     h COPYRIGHT('V1.18.0 - 26.04.2020 - mailto: thomas.raddatz@tools400.de')
+     h COPYRIGHT('V1.18.1 - 22.12.2020 - mailto: thomas.raddatz@tools400.de')
       /eof
       /endif
      d STRPREPRC_VERSION...
-     d                 C                   '1.18.0'
+     d                 C                   '1.18.1'
      d STRPREPRC_DATE...
-     d                 C                   '26.04.2020'
+     d                 C                   '22.12.2020'
       *
 ]]>  </copysrc>
 </mbr>
@@ -3382,8 +3382,7 @@ srccssid=  "01141">
      D  i_srcLib                     10a   const
      D  i_srcMbr                     10a   const
      D  i_lineNumber                 10i 0 const
-     D  i_threshold                  10i 0 const options(*nopass)
-     D  i_ovrMsgSev                  10i 0 const options(*nopass)
+     D  i_isAbnEnd                     n   const
 
      D closeEventFile...
      D                 pr                  extproc('STRPREPRC4_+
@@ -4087,7 +4086,7 @@ Installing PRZ0029  type RPGLE - in progress.
 <mbr
 mbrname =  "PRZ0029   "
 mbrtype =  "RPGLE     "
-mbrtext =  "1                                                 "
+mbrtext =  "MSG:  1.                                          "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
@@ -4136,7 +4135,7 @@ Installing PRZ0031  type RPGLE - in progress.
 <mbr
 mbrname =  "PRZ0031   "
 mbrtype =  "RPGLE     "
-mbrtext =  "                                                  "
+mbrtext =  "MSG: Ungültige INCLUDE Marke in Zeile  1 gefunden."
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
@@ -4160,7 +4159,7 @@ Installing PRZ0032  type RPGLE - in progress.
 <mbr
 mbrname =  "PRZ0032   "
 mbrtype =  "RPGLE     "
-mbrtext =  "                                                  "
+mbrtext =  "MSG: Verschachtelte INCLUDE Marke in Zeile  4 der "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
@@ -4601,7 +4600,7 @@ Installing QMHRMVPM  type RPGLE - in progress.
 <mbr
 mbrname =  "QMHRMVPM  "
 mbrtype =  "RPGLE     "
-mbrtext =  "                                                  "
+mbrtext =  "Remove Program Message (QMHRMVPM) API             "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
@@ -4609,6 +4608,8 @@ srccssid=  "01141">
 <copysrc><![CDATA[
       /if not defined(QMHRMVPM)
       /define QMHRMVPM
+      *
+      *  Remove Program Message (QMHRMVPM) API
      d QMHRMVPM...
      d                 PR                         extpgm('QMHRMVPM')
      d  i_callStackE                 10a   const
@@ -5321,6 +5322,9 @@ srccssid=  "01141">
 .*                                                                     *
 .*  26.04.2020  Th.Raddatz    Added 'INCLUDE' tag.                     *
 .*                                                                     *
+.*  22.12.2020  Th.Raddatz    Fixed description of special value       *
+.*                            *ADDJOBLOG of command parameter OPTION.  *
+.*                                                                     *
 .*=====================================================================*
 .* >>PRE-COMPILER<<                                                    *
 .*   >>CRTCMD<< CRTPNLGRP    PNLGRP(&LI/STRPREPRCP) +                  *
@@ -5721,9 +5725,10 @@ wird.
 :PT.:PV.*EVENTF:EPV.
 :PD.Es wird eine Ereignisdatei zur Verwendung durch Client-Tools erstellt.
 :PT.:PK DEF.*NOJOBLOG:EPK.
-:PD.Es werden keine zusätzlichen Jobprotokolleinträge zur Ausgabe hinzugefügt.
-Das Jobprotokoll wird unabhängig von der Vorgabe *NOJOBLOG auch dann
-geschrieben, wenn der Erstellungsbefehl keine Ereignisdatei ausgegeben hat.
+:PD.Es werden keine zusätzlichen Jobprotokolleinträge zu einer von einem
+IBM Erstellungsbefehl erzeugten Ereignisdatei hinzugefügt. Kommt es jedoch
+zu einem Fehler und ist keine Ereignisdatei vorhanden, wird eine Ereignisdatei
+mit Joblogeinträgen erstellt.
 :PT.:PV.*ADDJOBLOG:EPV.
 :PD.Einer durch einen IBM Erstellungsbefehl erzeugten Ereignisdatei werden
 Jobprotokolleinträge hinzugefügt. Diese Auswahl ist nur in Verbindung mit
@@ -6742,6 +6747,9 @@ srccssid=  "01141">
 .*                                                                     *
 .*  26.04.2020  Th.Raddatz    Added 'INCLUDE' tag.                     *
 .*                                                                     *
+.*  22.12.2020  Th.Raddatz    Fixed description of special value       *
+.*                            *ADDJOBLOG of command parameter OPTION.  *
+.*                                                                     *
 .*=====================================================================*
 .* >>PRE-COMPILER<<                                                    *
 .*   >>CRTCMD<< CRTPNLGRP    PNLGRP(&LI/STRPREPRCP) +                  *
@@ -7122,9 +7130,9 @@ job log.
 :PT.:PV.*EVENTF:EPV.
 :PD.Create an Event File for use by client tooling.
 :PT.:PK DEF.*NOJOBLOG:EPK.
-:PD.Job log entries are not added to an IBM created event file. Job log
-entries also also added (regardless of *NOJOBLOG), when the IBM object
-creation command did not create an event file.
+:PD.Job log entries are not added to an IBM created event file. But in case
+there is an error and there is no event file, an event file is created and
+job log entries are added.
 :PT.:PV.*ADDJOBLOG:EPV.
 :PD.Job log entries are added to an event file that was created by an
 IBM object creation command. This option can only be specified in
@@ -8038,7 +8046,7 @@ Installing SDS  type RPGLE - in progress.
 <mbr
 mbrname =  "SDS       "
 mbrtype =  "RPGLE     "
-mbrtext =  "                                                  "
+mbrtext =  "Program Status Data Structure                     "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
@@ -9269,7 +9277,7 @@ srccssid=  "01141">
      D                 PR
      D                                     extproc('writeJobLogToEventf')
      D  i_qEventf                          const  likeds(qObj_t)
-     D  i_chgMsgs                      n   const
+     D  i_isAbnEnd                     n   const
       *
      D replaceVar...
      D                 PR
@@ -9805,7 +9813,7 @@ srccssid=  "01141">
                else;
                   cmdString = 'CHGLIBL LIBL(' + lineData.keyData + ')';
                   performSetLibraryList(
-                     replaceVars(cmdString: variables): variables); // TODO: test it
+                     replaceVars(cmdString: variables): variables);
                   resetLineData(lineData);
                   mode = popMode();
                   iter;
@@ -9826,7 +9834,7 @@ srccssid=  "01141">
                else;
                   cmdString = 'CHGLIBL CURLIB(' + lineData.keyData + ')';
                   performSetCurrentLibrary(
-                     replaceVars(cmdString: variables): variables); // TODO: test it
+                     replaceVars(cmdString: variables): variables);
                   resetLineData(lineData);
                   mode = popMode();
                   iter;
@@ -11943,7 +11951,7 @@ srccssid=  "01141">
          endif;
 
          if (g_option.isEventf);
-            writeJobLogToEventf(qEventf: cFalse);
+            writeJobLogToEventf(qEventf: cTrue);
          endif;
 
          if (%open(SRCFILE));
@@ -11990,7 +11998,7 @@ srccssid=  "01141">
          endif;
 
          if (g_option.isEventf);
-            writeJobLogToEventf(qEventf: cTrue);
+            writeJobLogToEventf(qEventf: cFalse);
          endif;
 
       /end-free
@@ -12009,7 +12017,7 @@ srccssid=  "01141">
      P                 b
      D                 pi
      D  i_qEventf                          const  likeds(qObj_t)
-     D  i_chgMsgs                      n   const
+     D  i_isAbnEnd                     n   const
       *
      D isEmpty         s               n
       *  ... EVFEVENT Datei in Bibliothek &1 oder das Job Protokoll konnte nicht geöffnet
@@ -12029,21 +12037,11 @@ srccssid=  "01141">
                openEventFile(g_eventf.mbr: g_eventf.lib: i_qEventf);
 
             if (g_eventf.isOpen);
-
                if (isEmpty or g_option.doAppendJobLog);
-                  // Append job log messages to event file
-                  if (i_chgMsgs);
-                     writeEventFile(
-                        g_srcFile.name: g_srcFile.lib: g_srcFile.mbr
-                        : f1_line_number
-                        : EVF_MSG_SEVERITY_ERROR: EVF_MSG_SEVERITY_WARNING);
-                  else;
-                     writeEventFile(
-                        g_srcFile.name: g_srcFile.lib: g_srcFile.mbr
-                        : f1_line_number);
-                  endif;
+                  writeEventFile(
+                     g_srcFile.name: g_srcFile.lib: g_srcFile.mbr
+                     : f1_line_number: i_isAbnEnd);
                endif;
-
             endif;
 
          on-error;
@@ -12483,6 +12481,9 @@ srccssid=  "01141">
       *                            modus 'new', when the event file is      *
       *                            empty.                                   *
       *                                                                     *
+      *  22.12.2020  Th.Raddatz    Changed writing job log entries as ERROR *
+      *                            entries, in case of compilation errors.  *
+      *                                                                     *
       * =================================================================== *
       * >>PRE-COMPILER<<                                                    *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
@@ -12790,13 +12791,8 @@ srccssid=  "01141">
      D  i_srcLib                     10a   const
      D  i_srcMbr                     10a   const
      D  i_lineNumber                 10i 0 const
-     D  i_threshold                  10i 0 const options(*nopass)
-     D  i_ovrMsgSev                  10i 0 const options(*nopass)
+     D  i_isAbnEnd                     n   const
 
-     D p_ovrMsgSev     c                   6
-
-     D threshold       s                   like(i_threshold)
-     D ovrMsgSev       s                   like(i_ovrMsgSev)
      D path            s                   like(evf_path_t)
 
      D hJobLog         s                   like(JobLog_handle_t) inz
@@ -12820,14 +12816,6 @@ srccssid=  "01141">
 
         if (not g_status.haveJobLog);
            return;
-        endif;
-
-        if (%parms() >= p_ovrMsgSev);
-           ovrMsgSev = i_ovrMsgSev;
-           threshold = i_threshold;
-        else;
-           ovrMsgSev = -1;
-           threshold = -1;
         endif;
 
         if (not g_status.openForAppend);
@@ -12872,8 +12860,10 @@ srccssid=  "01141">
               lineNumber = 0;
            endif;
 
-           if (ovrMsgSev <> -1 and jobLogEntry.msgSeverity >= threshold);
-              jobLogEntry.msgSeverity = ovrMsgSev;
+           if (not i_isAbnEnd);
+              if (jobLogEntry.msgSeverity >= EVF_MSG_SEVERITY_ERROR);
+                 jobLogEntry.msgSeverity = EVF_MSG_SEVERITY_WARNING;
+              endif;
            endif;
 
            if (sourceId = SOURCE_ID);
@@ -12883,13 +12873,21 @@ srccssid=  "01141">
                                 : jobLogEntry.msgSeverity
                                 : jobLogEntry.msgText);
            else;
-              Eventf_writeError(sourceId
-                                : lineNumber
-                                : jobLogEntry.msgID
-                                : jobLogEntry.msgSeverity
-                                : jobLogEntry.msgText
-                                : EVF_SEVERITY_WARNING
-                                : EVF_ANNOTATION_BOTTOM);
+              if (i_isAbnEnd);
+                 Eventf_writeError(sourceId
+                                   : lineNumber
+                                   : jobLogEntry.msgID
+                                   : jobLogEntry.msgSeverity
+                                   : jobLogEntry.msgText);
+              else;
+                 Eventf_writeError(sourceId
+                                   : lineNumber
+                                   : jobLogEntry.msgID
+                                   : jobLogEntry.msgSeverity
+                                   : jobLogEntry.msgText
+                                   : EVF_SEVERITY_WARNING
+                                   : EVF_ANNOTATION_BOTTOM);
+              endif;
            endif;
         enddo;
 
