@@ -282,6 +282,11 @@
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PNLGRP) +
                           XGENCRT(*NO) XPARAM(*BLANK)
 
+             XMLGENMBR  XMBR(STRPREPRCT) XMBRATR(SQLRPGLE) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XTOSRCF(QSTRPREPRC) XOBJTYPE(*PNLGRP) +
+                          XGENCRT(*NO) XPARAM(*BLANK)
+
              XMLGENMBR  XMBR(SDS       ) XMBRATR(RPGLE) +
                           XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +

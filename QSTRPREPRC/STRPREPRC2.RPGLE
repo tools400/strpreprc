@@ -114,6 +114,13 @@
       *                                                                     *
       *  26.04.2020  Th.Raddatz    Added 'INCLUDE' tag.                     *
       *                                                                     *
+      *  23.12.2020  Th.Raddatz    Fixed content auf g_srcFile.* variables. *
+      *                            Fixed error message when attempting to   *
+      *                            execute an empty command.                *
+      *                            Fixed decision when to append the job    *
+      *                            log messages to the EVFEVENT file.       *
+      *                            Added iRPGUnit test suite STRPREPRCT.    *
+      *                                                                     *
       * =================================================================== *
       * >>PRE-COMPILER<<                                                    *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
@@ -876,9 +883,9 @@
          g_pgmCmdExc = i_pgmCmdExc;
          g_libPgmCmdExc = i_libPgmCmdExc;
 
-         g_srcFile.name = i_srcFile;
-         g_srcFile.lib = i_srcLib;
-         g_srcFile.mbr = i_srcMbr;
+         g_srcFile.name = getSpcValDft(i_srcFile: i_useSrcFile);
+         g_srcFile.lib = getSpcValDft(i_srcLib: i_useSrcLib);
+         g_srcFile.mbr = getSpcValDft(i_srcMbr: i_useSrcMbr);
 
          g_enforceJobLogOnError = *on;
 
@@ -3073,7 +3080,11 @@
          on-error;
          endmon;
 
-         appendToJobLog(i_cmd);
+         if (%trim(i_cmd) = '');
+           appendToJobLog('Command validation error: Command is missing');
+         else;
+           appendToJobLog(i_cmd);
+         endif;
 
          return cFalse;
 
@@ -3470,12 +3481,12 @@
                isEmpty = cTrue;
             endif;
 
-            g_eventf.isOpen =
-               openEventFile(g_eventf.mbr: g_eventf.lib: i_qEventf);
-
-            if (g_eventf.isOpen);
-               if (isEmpty or g_option.doAppendJobLog or
-                   (i_isAbnEnd and g_enforceJobLogOnError));
+            if (g_option.doAppendJobLog or
+                (i_isAbnEnd and g_enforceJobLogOnError) or
+                (i_isAbnEnd and isEmpty));
+               g_eventf.isOpen =
+                  openEventFile(g_eventf.mbr: g_eventf.lib: i_qEventf);
+               if (g_eventf.isOpen);
                   writeEventFile(
                      g_srcFile.name: g_srcFile.lib: g_srcFile.mbr
                      : f1_line_number: i_isAbnEnd);
