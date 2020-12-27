@@ -3251,8 +3251,6 @@
      D stackQual       ds
      D  stackQualMod                 10a   inz('*NONE')
      D  stackQualPgm                 10a   inz('*NONE')
-     D stackDataType   s             10a   inz('*CHAR')
-     D ccsid           s             10i 0 inz(0)
       *
      D errCode         ds                  likeds(errCode_t) inz
       *
@@ -3500,6 +3498,8 @@
 
             if (doAppendJobLog);
                doAppend = not isEmpty;
+               // TODO: Copy compile listing from pre/post-command if available
+               //       instead of appending the job log???
                // g_eventf.isOpen = openEventFile(g_eventf.mbr: g_eventf.lib
                //                                 : doAppend: i_qEventf);
                g_eventf.isOpen = openEventFile(
