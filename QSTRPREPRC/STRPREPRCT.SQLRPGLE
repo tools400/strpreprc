@@ -34,6 +34,7 @@ exec sql
 
 dcl-ds g_status qualified;
   srcSeq int(10);
+  srcSeq2 int(10);
   sql likeds(sql_status_t) inz(*likeds);
 end-ds;
 
@@ -67,13 +68,36 @@ dcl-proc setUpSuite export;
               TEXT(''STRPREPRD - SelfTest'') SRCTYPE(CLLE)');
   endif;
 
+  if (not exist('QTEMP': 'RUNIT_TST': '*FILE': 'TESTCASE2'));
+    runCmd('ADDPFM FILE(QTEMP/RUNIT_TST) MBR(TESTCASE2) +
+              TEXT(''STRPREPRD - SelfTest'') SRCTYPE(CLLE)');
+  else;
+    runCmd('CLRPFM FILE(QTEMP/RUNIT_TST) MBR(TESTCASE2)');
+  endif;
+
+  if (not exist('QTEMP': 'EVFEVENT': '*FILE'));
+    runCmd('CRTPF FILE(QTEMP/EVFEVENT) RCDLEN(400) MAXMBRS(*NOMAX) CCSID(*HEX)');
+    runCmd('RMVM FILE(QTEMP/EVFEVENT) MBR(*ALL)');
+  endif;
+
   exec sql
     CREATE ALIAS qtemp.testmbr FOR qtemp.RUNIT_TST (TESTCASE);
   assert(not isSqlError(sqlState));
 
   exec sql
+    CREATE ALIAS qtemp.testmbr2 FOR qtemp.RUNIT_TST (TESTCASE2);
+  assert(not isSqlError(sqlState));
+
+  exec sql
     CREATE ALIAS qtemp.eventfile FOR qtemp.EVFEVENT (TESTCASE);
   assert(not isSqlError(sqlState));
+
+  append2('/* ---------------------------------------------------------------- */': 100);
+  append2('/*     Produces an compile error.                                   */');
+  append2('/* ---------------------------------------------------------------- */');
+  append2('PGM');
+  append2('  CHGVAR &LIB ''FOO''');
+  append2('ENDPGM');
 
 end-proc;
 
@@ -85,6 +109,9 @@ dcl-proc tearDownSuite export;
 
   exec sql
     DROP ALIAS qtemp.testmbr;
+
+  exec sql
+    DROP ALIAS qtemp.testmbr2;
 
   exec sql
     DROP ALIAS qtemp.eventfile;
@@ -103,7 +130,7 @@ dcl-proc setUp export;
   assert(not isSqlError(sqlState));
 
   if (exist('QTEMP': 'EVFEVENT': '*FILE'));
-    if (exist('QTEMP': 'RUNIT_TST': '*FILE': 'TESTCASE'));
+    if (exist('QTEMP': 'EVFEVENT': '*FILE': 'TESTCASE'));
       exec sql
         DELETE FROM eventfile;
       setIgnSQLWarn(*on);
@@ -121,12 +148,11 @@ dcl-proc setUp export;
 end-proc;
 
 // ------------------------------------------------------------
-//  *NOEVENTF does not add any job log messages at all.
+//  Expected:
+//    Empty EVFEVENT file, due to no errors.
 // ------------------------------------------------------------
 dcl-proc test_PreCommand_NOEVENTF_NOJOBLOG_OK export;
   dcl-pi *n extproc(*dclcase) end-pi;
-
-  dcl-s count int(10);
 
   append('/* ---------------------------------------------------------------- */': 100);
   append('/*     Succesfully executes the pre-compile command.                */');
@@ -139,28 +165,20 @@ dcl-proc test_PreCommand_NOEVENTF_NOJOBLOG_OK export;
   append('  CHKOBJ OBJ(QSYS) OBJTYPE(*LIB)');
   append('ENDPGM');
 
-  if (not hasEventFile());
-    return;
-  endif;
-
   runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE) +
-            OPTION(*NOEVENTF *NOJOBLOG)');
+            OPTION(*NOEVENTF *NOJOBLOG) +
+            SRCLIB(*DFT) SRCFILE(*DFT) SRCMBR(*DFT)');
 
-  exec sql
-    SELECT count(evfevent) INTO :count FROM eventfile;
-  assert(not isSqlError(sqlState));
-
-  assert(count = 0: 'The event file must not contain any entries at all');
+  assertEmpty();
 
 end-proc;
 
 // ------------------------------------------------------------
-//  *NOEVENTF does not add any job log messages at all.
+//  Expected:
+//    Empty EVFEVENT file, due to STRPREPRC OPTION(*NOEVENTF).
 // ------------------------------------------------------------
 dcl-proc test_PreCommand_NOEVENTF_NOJOBLOG_ERROR export;
   dcl-pi *n extproc(*dclcase) end-pi;
-
-  dcl-s count int(10);
 
   append('/* ---------------------------------------------------------------- */': 100);
   append('/*     Produces an error in the pre-compile command.                */');
@@ -174,33 +192,25 @@ dcl-proc test_PreCommand_NOEVENTF_NOJOBLOG_ERROR export;
   append('  CHKOBJ OBJ(QSYS) OBJTYPE(*LIB)');
   append('ENDPGM');
 
-  if (not hasEventFile());
-    return;
-  endif;
-
   monitor;
     runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE) +
-              OPTION(*NOEVENTF *NOJOBLOG)');
+              OPTION(*NOEVENTF *NOJOBLOG) +
+              SRCLIB(*DFT) SRCFILE(*DFT) SRCMBR(*DFT)');
     fail('STRPREPRC should have thown an error (001)');
   on-error;
   // Exception seen!
   endmon;
 
-  exec sql
-    SELECT count(evfevent) INTO :count FROM eventfile;
-  assert(not isSqlError(sqlState));
-
-  assert(count = 0: 'The event file must not contain any entries at all');
+  assertEmpty();
 
 end-proc;
 
 // ------------------------------------------------------------
-//
+//  Expected:
+//    Empty EVFEVENT file, due to no errors.
 // ------------------------------------------------------------
 dcl-proc test_PreCommand_EVENTF_NOJOBLOG_OK export;
   dcl-pi *n extproc(*dclcase) end-pi;
-
-  dcl-s count int(10);
 
   append('/* ---------------------------------------------------------------- */': 100);
   append('/*     Succesfully executes the pre-compile command.                */');
@@ -214,28 +224,21 @@ dcl-proc test_PreCommand_EVENTF_NOJOBLOG_OK export;
   append('  CHKOBJ OBJ(QSYS) OBJTYPE(*LIB)');
   append('ENDPGM');
 
-  if (not hasEventFile());
-    return;
-  endif;
-
   runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE) +
-            OPTION(*EVENTF *NOJOBLOG) LIB(QTEMP) OBJ(TESTCASE)');
+            OPTION(*EVENTF *NOJOBLOG) LIB(QTEMP) OBJ(TESTCASE) +
+            SRCLIB(*DFT) SRCFILE(*DFT) SRCMBR(*DFT)');
 
-  exec sql
-    SELECT count(evfevent) INTO :count FROM eventfile;
-  assert(not isSqlError(sqlState));
-
-  assert(count = 0: 'The event file must not contain any entries at all');
+  assertEmpty();
 
 end-proc;
 
 // ------------------------------------------------------------
-//
+//  Expected:
+//    FILEID 001 for member TESTCASE with job log
+//    error messages. (replacement for compile listing)
 // ------------------------------------------------------------
 dcl-proc test_PreCommand_EVENTF_NOJOBLOG_ERROR export;
   dcl-pi *n extproc(*dclcase) end-pi;
-
-  dcl-s count int(10);
 
   append('/* ---------------------------------------------------------------- */': 100);
   append('/*     Produces an error in the pre-compile command.                */');
@@ -249,40 +252,28 @@ dcl-proc test_PreCommand_EVENTF_NOJOBLOG_ERROR export;
   append('  CHKOBJ OBJ(QSYS) OBJTYPE(*LIB)');
   append('ENDPGM');
 
-  if (not hasEventFile());
-    return;
-  endif;
-
   monitor;
     runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE) +
-              OPTION(*EVENTF *NOJOBLOG) LIB(QTEMP) OBJ(TESTCASE)');
+              OPTION(*EVENTF *NOJOBLOG) LIB(QTEMP) OBJ(TESTCASE) +
+            SRCLIB(*DFT) SRCFILE(*DFT) SRCMBR(*DFT)');
     fail('STRPREPRC should have thown an error (002)');
   on-error;
   // Exception seen!
   endmon;
 
-  exec sql
-    SELECT count(evfevent) INTO :count FROM eventfile;
-  assert(not isSqlError(sqlState));
+  assertFileID_001('TESTCASE');
+  assertNoJobLog();
 
-  assert(count > 0: 'The event file should contain job log messages');
-
-  exec sql
-    SELECT count(evfevent) INTO :count FROM eventfile
-      WHERE evfevent like '%CPF7312 S 30%'    /* File not found */;
-  assert(not isSqlError(sqlState));
-
-  assert(count = 1: 'The event file must contain a CPF7312 message');
+  assertMsgID('CPF7312': 'S'); // File not found
 
 end-proc;
 
 // ------------------------------------------------------------
-//
+//  Expected:
+//    Empty EVFEVENT file, due to no errors.
 // ------------------------------------------------------------
 dcl-proc test_PreCommand_EVENTF_ADDJOBLOG_OK export;
   dcl-pi *n extproc(*dclcase) end-pi;
-
-  dcl-s count int(10);
 
   append('/* ---------------------------------------------------------------- */': 100);
   append('/*     Succesfully executes the pre-compile command.                */');
@@ -296,28 +287,21 @@ dcl-proc test_PreCommand_EVENTF_ADDJOBLOG_OK export;
   append('  CHKOBJ OBJ(QSYS) OBJTYPE(*LIB)');
   append('ENDPGM');
 
-  if (not hasEventFile());
-    return;
-  endif;
-
   runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE) +
-            OPTION(*EVENTF *ADDJOBLOG) LIB(QTEMP) OBJ(TESTCASE)');
+            OPTION(*EVENTF *ADDJOBLOG) LIB(QTEMP) OBJ(TESTCASE) +
+            SRCLIB(*DFT) SRCFILE(*DFT) SRCMBR(*DFT)');
 
-  exec sql
-    SELECT count(evfevent) INTO :count FROM eventfile;
-  assert(not isSqlError(sqlState));
-
-  assert(count = 0: 'The event file must not contain any entries at all');
+  assertEmpty();
 
 end-proc;
 
 // ------------------------------------------------------------
-//
+//  Expected:
+//    FILEID 001 for member TESTCASE with job log
+//    error messages. (replacement for compile listing)
 // ------------------------------------------------------------
 dcl-proc test_PreCommand_EVENTF_ADDJOBLOG_ERROR export;
   dcl-pi *n extproc(*dclcase) end-pi;
-
-  dcl-s count int(10);
 
   append('/* ---------------------------------------------------------------- */': 100);
   append('/*     Produces an error in the pre-compile command.                */');
@@ -330,10 +314,6 @@ dcl-proc test_PreCommand_EVENTF_ADDJOBLOG_ERROR export;
   append('  DCL &LIB *CHAR 10');
   append('  CHKOBJ OBJ(QSYS) OBJTYPE(*LIB)');
   append('ENDPGM');
-
-  if (not hasEventFile());
-    return;
-  endif;
 
   monitor;
     runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE) +
@@ -343,43 +323,29 @@ dcl-proc test_PreCommand_EVENTF_ADDJOBLOG_ERROR export;
   // Exception seen!
   endmon;
 
-  exec sql
-    SELECT count(evfevent) INTO :count FROM eventfile;
-  assert(not isSqlError(sqlState));
+  assertFileID_001('*NONE'); // *NONE, because parameters SRCLIB, SRCFILE and SRCMBR
+  // had not been specified.
+  assertNoJobLog();
 
-  assert(count > 0: 'The event file should contain job log messages');
-
-  exec sql
-    SELECT count(evfevent) INTO :count FROM eventfile
-      WHERE evfevent like '%CPF7312 S 30%'    /* File not found   */
-         OR evfevent like '%CPF7306 T 40%'    /* Member not added */;
-  assert(not isSqlError(sqlState));
-
-  assert(count = 2: 'The event file must contain CPF7312 and CPF7306 messages');
-
-  exec sql
-    SELECT count(evfevent) INTO :count FROM eventfile
-      WHERE evfevent like '%PRZ0029 S 30%'    /* STRPREPRC messages   */;
-  assert(not isSqlError(sqlState));
-
-  assert(count > 0: 'The event file must contain some PRZ0029 messages');
+  assertMsgId('CPF7312': 'S'); // File not found
+  assertMsgId('CPF7306': 'T'); // Member not added
 
 end-proc;
 
 // ------------------------------------------------------------
-//  *NOEVENTF does not add any job log messages at all.
+//  Expected:
+//    Empty EVFEVENT file, due to no errors.
 // ------------------------------------------------------------
 dcl-proc test_Execute_NOEVENTF_NOJOBLOG_OK export;
   dcl-pi *n extproc(*dclcase) end-pi;
-
-  dcl-s count int(10);
 
   append('/* ---------------------------------------------------------------- */': 100);
   append('/*     Succesfully executes the pre-compile and main commands.      */');
   append('/* ---------------------------------------------------------------- */');
   append('/* >>PRE-COMPILER<<                                                 */');
-  append('/*   >>CRTCMD<< CRTBNDCL  PGM(&LI/&OB) SRCFILE(&SL/&SF) +           */');
-  append('/*                        SRCMBR(&SM) OPTION(*NOEVENTF);            */');
+  append('/*   >>CRTCMD<< CRTCLMOD  MODULE(&LI/&OB) SRCFILE(&SL/&SF) +        */');
+  append('/*                        SRCMBR(&SM) OPTION(*GEN   *NOEVENTF) +    */');
+  append('/*                        OUTPUT(*NONE);                            */');
   append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
   append('/* >>EXECUTE<<                                                      */');
   append('/* >>END-PRE-COMPILER<<                                             */');
@@ -388,36 +354,28 @@ dcl-proc test_Execute_NOEVENTF_NOJOBLOG_OK export;
   append('  CHKOBJ OBJ(QSYS) OBJTYPE(*LIB)');
   append('ENDPGM');
 
-  if (not hasEventFile());
-    return;
-  endif;
-
   runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE) +
             OPTION(*NOEVENTF *NOJOBLOG) LIB(QTEMP) OBJ(TESTCASE) +
             SRCLIB(*DFT) SRCFILE(*DFT) SRCMBR(*DFT)');
 
-  exec sql
-    SELECT count(evfevent) INTO :count FROM eventfile;
-  assert(not isSqlError(sqlState));
-
-  assert(count = 0: 'The event file must not contain any entries at all');
+  assertEmpty();
 
 end-proc;
 
 // ------------------------------------------------------------
-//  *NOEVENTF does not add any job log messages at all.
+//  Expected:
+//    Empty EVFEVENT file, due to STRPREPRC OPTION(*NOEVENTF).
 // ------------------------------------------------------------
 dcl-proc test_Execute_NOEVENTF_NOJOBLOG_ERROR export;
   dcl-pi *n extproc(*dclcase) end-pi;
-
-  dcl-s count int(10);
 
   append('/* ---------------------------------------------------------------- */': 100);
   append('/*     Produces an error in the main command.                       */');
   append('/* ---------------------------------------------------------------- */');
   append('/* >>PRE-COMPILER<<                                                 */');
-  append('/*   >>CRTCMD<< CRTBNDCL  PGM(&LI/&OB) SRCFILE(&SL/&SF) +           */');
-  append('/*                        SRCMBR(&SM) OPTION(*NOEVENTF);            */');
+  append('/*   >>CRTCMD<< CRTCLMOD  MODULE(&LI/&OB) SRCFILE(&SL/&SF) +        */');
+  append('/*                        SRCMBR(&SM) OPTION(*GEN   *NOEVENTF) +    */');
+  append('/*                        OUTPUT(*NONE);                            */');
   append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
   append('/*   >>EXECUTE<<                                                    */');
   append('/* >>END-PRE-COMPILER<<                                             */');
@@ -425,10 +383,6 @@ dcl-proc test_Execute_NOEVENTF_NOJOBLOG_ERROR export;
   append('  DCL LIB *CHAR 10');
   append('  CHKOBJ OBJ(QSYS) OBJTYPE(*LIB)');
   append('ENDPGM');
-
-  if (not hasEventFile());
-    return;
-  endif;
 
   monitor;
     runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE) +
@@ -439,28 +393,24 @@ dcl-proc test_Execute_NOEVENTF_NOJOBLOG_ERROR export;
   // Exception seen!
   endmon;
 
-  exec sql
-    SELECT count(evfevent) INTO :count FROM eventfile;
-  assert(not isSqlError(sqlState));
-
-  assert(count = 0: 'The event file must not contain any entries at all');
+  assertEmpty();
 
 end-proc;
 
 // ------------------------------------------------------------
-//
+//  Expected:
+//    Empty EVFEVENT file, due to no errors.
 // ------------------------------------------------------------
 dcl-proc test_Execute_EVENTF_NOJOBLOG_OK export;
   dcl-pi *n extproc(*dclcase) end-pi;
-
-  dcl-s count int(10);
 
   append('/* ---------------------------------------------------------------- */': 100);
   append('/*     Succesfully executes the pre-compile and main commands.      */');
   append('/* ---------------------------------------------------------------- */');
   append('/* >>PRE-COMPILER<<                                                 */');
-  append('/*   >>CRTCMD<< CRTBNDCL  PGM(&LI/&OB) SRCFILE(&SL/&SF) +           */');
-  append('/*                        SRCMBR(&SM) OPTION(*NOEVENTF);            */');
+  append('/*   >>CRTCMD<< CRTCLMOD  MODULE(&LI/&OB) SRCFILE(&SL/&SF) +        */');
+  append('/*                        SRCMBR(&SM) OPTION(*GEN   *NOEVENTF) +    */');
+  append('/*                        OUTPUT(*NONE);                            */');
   append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
   append('/* >>EXECUTE<<                                                      */');
   append('/* >>END-PRE-COMPILER<<                                             */');
@@ -469,46 +419,35 @@ dcl-proc test_Execute_EVENTF_NOJOBLOG_OK export;
   append('  CHKOBJ OBJ(QSYS) OBJTYPE(*LIB)');
   append('ENDPGM');
 
-  if (not hasEventFile());
-    return;
-  endif;
-
   runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE) +
             OPTION(*EVENTF *NOJOBLOG) LIB(QTEMP) OBJ(TESTCASE) +
             SRCLIB(*DFT) SRCFILE(*DFT) SRCMBR(*DFT)');
 
-  exec sql
-    SELECT count(evfevent) INTO :count FROM eventfile;
-  assert(not isSqlError(sqlState));
-
-  assert(count = 0: 'The event file must not contain any entries at all');
+  assertEmpty();
 
 end-proc;
 
 // ------------------------------------------------------------
-//
+//  Expected:
+//    FILEID 001 for member TESTCASE with job log
+//    error messages. (replacement for compile listing)
 // ------------------------------------------------------------
 dcl-proc test_Execute_EVENTF_NOJOBLOG_ERROR export;
   dcl-pi *n extproc(*dclcase) end-pi;
-
-  dcl-s count int(10);
 
   append('/* ---------------------------------------------------------------- */': 100);
   append('/*     Produces an error in the main command.                       */');
   append('/* ---------------------------------------------------------------- */');
   append('/* >>PRE-COMPILER<<                                                 */');
-  append('/*   >>CRTCMD<< CRTBNDCL  PGM(&LI/&OB) SRCFILE(&SL/&SF) +           */');
-  append('/*                        SRCMBR(&SM) OPTION(*NOEVENTF);            */');
+  append('/*   >>CRTCMD<< CRTCLMOD  MODULE(&LI/&OB) SRCFILE(&SL/&SF) +        */');
+  append('/*                        SRCMBR(&SM) OPTION(*GEN   *NOEVENTF) +    */');
+  append('/*                        OUTPUT(*NONE);                            */');
   append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
   append('/*   >>EXECUTE<<                                                    */');
   append('/* >>END-PRE-COMPILER<<                                             */');
   append('PGM');
   append('  DCL LIB *CHAR 10');
   append('ENDPGM');
-
-  if (not hasEventFile());
-    return;
-  endif;
 
   monitor;
     runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE) +
@@ -519,123 +458,66 @@ dcl-proc test_Execute_EVENTF_NOJOBLOG_ERROR export;
   // Exception seen!
   endmon;
 
-  exec sql
-    SELECT count(evfevent) INTO :count FROM eventfile;
-  assert(not isSqlError(sqlState));
-
-  assert(count > 0: 'The event file should contain job log messages');
-
-  exec sql
-    SELECT count(evfevent) INTO :count FROM eventfile
-      WHERE evfevent like '%CPF0820 T 40%'    /* Program not created  */;
-  assert(not isSqlError(sqlState));
-
-  assert(count = 1: 'The event file must contain a CPF0820 message');
-
-  exec sql
-    SELECT count(evfevent) INTO :count FROM eventfile
-      WHERE evfevent like '%PRZ0029 S 30%'    /* STRPREPRC messages   */;
-  assert(not isSqlError(sqlState));
-
-  assert(count > 0: 'The event file must contain some PRZ0029 messages');
-
-  exec sql
-    SELECT count(evfevent) INTO :count FROM eventfile
-      WHERE evfevent like 'FILEID     0 001%';
-  assert(not isSqlError(sqlState));
-
-  assert(count = 1: 'Error messages must be related to file 001');
-
-  exec sql
-    SELECT count(evfevent) INTO :count FROM eventfile
-      WHERE evfevent like 'FILEID     0 999%';
-  assert(not isSqlError(sqlState));
-
-  assert(count = 0: 'Did not expect any error messages related to file 999');
+  assertFileID_001('TESTCASE');
+  assertNoJobLog();
+  assertMsgID('CPF0821': 'T'); // Module not created
+  assertMsgID('PRZ0029': 'S'); // STRPREPRZ messages
 
 end-proc;
 
 // ------------------------------------------------------------
-//
+//  Expected:
+//    FILEID 001 for member TESTCASE with job log
+//    warning messages. (additional job log messages)
 // ------------------------------------------------------------
 dcl-proc test_Execute_EVENTF_ADDJOBLOG_OK export;
   dcl-pi *n extproc(*dclcase) end-pi;
-
-  dcl-s count int(10);
 
   append('/* ---------------------------------------------------------------- */': 1);
   append('/*     Succesfully executes the pre-compile and main commands.      */');
   append('/* ---------------------------------------------------------------- */');
   append('/* >>PRE-COMPILER<<                                                 */');
-  append('/*   >>CRTCMD<< CRTBNDCL  PGM(&LI/&OB) SRCFILE(&SL/&SF) +           */');
-  append('/*                        SRCMBR(&SM) OPTION(*NOEVENTF);            */');
+  append('/*   >>CRTCMD<< CRTCLMOD  MODULE(&LI/&OB) SRCFILE(&SL/&SF) +        */');
+  append('/*                        SRCMBR(&SM) OPTION(*GEN   *NOEVENTF) +    */');
+  append('/*                        OUTPUT(*NONE);                            */');
   append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
   append('/*   >>EXECUTE<<                                                    */');
   append('/* >>END-PRE-COMPILER<<                                             */');
   append('PGM');
   append('ENDPGM');
 
-  if (not hasEventFile());
-    return;
-  endif;
-
   runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE) +
             OPTION(*EVENTF *ADDJOBLOG) LIB(QTEMP) OBJ(TESTCASE) +
             SRCLIB(*DFT) SRCFILE(*DFT) SRCMBR(*DFT)');
 
-  exec sql
-    SELECT count(evfevent) INTO :count FROM eventfile;
-  assert(not isSqlError(sqlState));
-
-  assert(count > 0: 'The event file should contain job log messages');
-
-  exec sql
-    SELECT count(evfevent) INTO :count FROM eventfile
-      WHERE evfevent like '%PRZ0029 W 10%'    /* STRPREPRC messages   */;
-  assert(not isSqlError(sqlState));
-
-  assert(count > 0: 'The event file must contain some PRZ0029 messages');
-
-  exec sql
-    SELECT count(evfevent) INTO :count FROM eventfile
-      WHERE evfevent like 'FILEID     0 001%';
-  assert(not isSqlError(sqlState));
-
-  assert(count = 1: 'Error messages must be related to file 001');
-
-  exec sql
-    SELECT count(evfevent) INTO :count FROM eventfile
-      WHERE evfevent like 'FILEID     0 999%';
-  assert(not isSqlError(sqlState));
-
-  assert(count = 0: 'Did not expect any error messages related to file 999');
+  assertFileID_001('TESTCASE');
+  assertNoJobLog();
+  assertMsgID('PRZ0029': 'W'); // STRPREPRZ warning messages,
+// due to OPTION(*ADDJOBLOG).
 
 end-proc;
 
 // ------------------------------------------------------------
-//
+//  Expected:
+//    FILEID 001 for member TESTCASE with job log
+//    error messages. (replacement for compile listing)
 // ------------------------------------------------------------
 dcl-proc test_Execute_EVENTF_ADDJOBLOG_ERROR export;
   dcl-pi *n extproc(*dclcase) end-pi;
-
-  dcl-s count int(10);
 
   append('/* ---------------------------------------------------------------- */': 1);
   append('/*     Produces an error in the main command.                       */');
   append('/* ---------------------------------------------------------------- */');
   append('/* >>PRE-COMPILER<<                                                 */');
-  append('/*   >>CRTCMD<< CRTBNDCL  PGM(&LI/&OB) SRCFILE(&SL/&SF) +           */');
-  append('/*                        SRCMBR(&SM) OPTION(*NOEVENTF);            */');
+  append('/*   >>CRTCMD<< CRTCLMOD  MODULE(&LI/&OB) SRCFILE(&SL/&SF) +        */');
+  append('/*                        SRCMBR(&SM) OPTION(*GEN   *NOEVENTF) +    */');
+  append('/*                        OUTPUT(*NONE );                           */');
   append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
   append('/*   >>EXECUTE<<                                                    */');
   append('/* >>END-PRE-COMPILER<<                                             */');
   append('PGM');
   append('  DCL LIB *CHAR 10');
   append('ENDPGM');
-
-  if (not hasEventFile());
-    return;
-  endif;
 
   monitor;
     runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE) +
@@ -646,39 +528,499 @@ dcl-proc test_Execute_EVENTF_ADDJOBLOG_ERROR export;
   // Exception seen!
   endmon;
 
+  assertFileID_001('TESTCASE');
+  assertNoJobLog();
+  assertMsgID('CPF0821': 'T'); // Module not created
+  assertMsgID('PRZ0029': 'S'); // STRPREPRZ error messages
+
+end-proc;
+
+// ------------------------------------------------------------
+//  Expected:
+//    FILEID 001 for member TESTCASE with compile messages.
+// ------------------------------------------------------------
+dcl-proc test_Execute_EVENTF_NOJOBLOG_EVENTF_OK export;
+  dcl-pi *n extproc(*dclcase) end-pi;
+
+  append('/* ---------------------------------------------------------------- */': 100);
+  append('/*     Succesfully executes the pre-compile and main commands.      */');
+  append('/* ---------------------------------------------------------------- */');
+  append('/* >>PRE-COMPILER<<                                                 */');
+  append('/*   >>CRTCMD<< CRTCLMOD  MODULE(&LI/&OB) SRCFILE(&SL/&SF) +        */');
+  append('/*                        SRCMBR(&SM) OPTION(*EVENTF) +             */');
+  append('/*                        OUTPUT(*NONE);                            */');
+  append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
+  append('/* >>EXECUTE<<                                                      */');
+  append('/* >>END-PRE-COMPILER<<                                             */');
+  append('PGM');
+  append('  DCL &LIB *CHAR 10');
+  append('  CHKOBJ OBJ(QSYS) OBJTYPE(*LIB)');
+  append('ENDPGM');
+
+  runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE) +
+            OPTION(*EVENTF *NOJOBLOG) LIB(QTEMP) OBJ(TESTCASE) +
+            SRCLIB(*DFT) SRCFILE(*DFT) SRCMBR(*DFT)');
+
+  assertFileID_001('TESTCASE');
+  assertNoJobLog();
+  assertMsgID('CPD0726': 'W'); // Variable &LIB declared but not referred to
+  assertMsgID('CPD0791': 'I'); // No labels used in program
+
+  assertNoMsgId('PRZ0029');
+
+end-proc;
+
+// ------------------------------------------------------------
+//  Expected:
+//    FILEID 001 for member TESTCASE with compile messages.
+// ------------------------------------------------------------
+dcl-proc test_Execute_EVENTF_NOJOBLOG_EVENTF_ERROR export;
+  dcl-pi *n extproc(*dclcase) end-pi;
+
+  append('/* ---------------------------------------------------------------- */': 100);
+  append('/*     Produces an error in the main command.                       */');
+  append('/* ---------------------------------------------------------------- */');
+  append('/* >>PRE-COMPILER<<                                                 */');
+  append('/*   >>CRTCMD<< CRTCLMOD  MODULE(&LI/&OB) SRCFILE(&SL/&SF) +        */');
+  append('/*                        SRCMBR(&SM) OPTION(*GEN   *EVENTF) +      */');
+  append('/*                        OUTPUT(*NONE);                            */');
+  append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
+  append('/*   >>EXECUTE<<                                                    */');
+  append('/* >>END-PRE-COMPILER<<                                             */');
+  append('PGM');
+  append('  DCL LIB *CHAR 10');
+  append('ENDPGM');
+
+  monitor;
+    runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE) +
+              OPTION(*EVENTF *NOJOBLOG) LIB(QTEMP) OBJ(TESTCASE) +
+              SRCLIB(*DFT) SRCFILE(*DFT) SRCMBR(*DFT)');
+    fail('STRPREPRC should have thown an error (004)');
+  on-error;
+  // Exception seen!
+  endmon;
+
+  assertFileID_001('TESTCASE');
+  assertNoJobLog();
+  assertMsgID('CPD0081': 'S'); // Variable name required for parameter VAR.
+
+  assertNoMsgId('PRZ0029');
+
+end-proc;
+
+// ------------------------------------------------------------
+//  Expected:
+//    FILEID 001 for member TESTCASE with compile messages.
+// ------------------------------------------------------------
+dcl-proc test_Execute_EVENTF_ADDJOBLOG_EVENTF_OK export;
+  dcl-pi *n extproc(*dclcase) end-pi;
+
+  append('/* ---------------------------------------------------------------- */': 1);
+  append('/*     Succesfully executes the pre-compile and main commands.      */');
+  append('/* ---------------------------------------------------------------- */');
+  append('/* >>PRE-COMPILER<<                                                 */');
+  append('/*   >>CRTCMD<< CRTCLMOD  MODULE(&LI/&OB) SRCFILE(&SL/&SF) +        */');
+  append('/*                        SRCMBR(&SM) OPTION(*GEN   *EVENTF) +      */');
+  append('/*                        OUTPUT(*NONE);                            */');
+  append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
+  append('/*   >>EXECUTE<<                                                    */');
+  append('/* >>END-PRE-COMPILER<<                                             */');
+  append('PGM');
+  append('ENDPGM');
+
+  runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE) +
+            OPTION(*EVENTF *ADDJOBLOG) LIB(QTEMP) OBJ(TESTCASE) +
+            SRCLIB(*DFT) SRCFILE(*DFT) SRCMBR(*DFT)');
+
+  assertFileID_001('TESTCASE');
+  assertNoJobLog();
+  assertMsgID('CPD0729': 'W'); // No executable commands found in source file.
+
+  assertNoMsgId('PRZ0029');
+
+end-proc;
+
+// ------------------------------------------------------------
+//    FILEID 001 for member TESTCASE with compile messages.
+// ------------------------------------------------------------
+dcl-proc test_Execute_EVENTF_ADDJOBLOG_EVENTF_ERROR export;
+  dcl-pi *n extproc(*dclcase) end-pi;
+
+  append('/* ---------------------------------------------------------------- */': 1);
+  append('/*     Produces an error in the main command.                       */');
+  append('/* ---------------------------------------------------------------- */');
+  append('/* >>PRE-COMPILER<<                                                 */');
+  append('/*   >>CRTCMD<< CRTCLMOD  MODULE(&LI/&OB) SRCFILE(&SL/&SF) +        */');
+  append('/*                        SRCMBR(&SM) OPTION(*GEN   *EVENTF) +      */');
+  append('/*                        OUTPUT(*NONE );                           */');
+  append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
+  append('/*   >>EXECUTE<<                                                    */');
+  append('/* >>END-PRE-COMPILER<<                                             */');
+  append('PGM');
+  append('  DCL LIB *CHAR 10');
+  append('ENDPGM');
+
+  monitor;
+    runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE) +
+              OPTION(*EVENTF *ADDJOBLOG) LIB(QTEMP) OBJ(TESTCASE) +
+              SRCLIB(*DFT) SRCFILE(*DFT) SRCMBR(*DFT)');
+    fail('STRPREPRC should have thown an error (004)');
+  on-error;
+  // Exception seen!
+  endmon;
+
+  assertFileID_001('TESTCASE');
+  assertNoJobLog();
+  assertMsgID('CPD0081': 'S'); // Variable name required for parameter VAR.
+
+  assertNoMsgId('PRZ0029');
+
+end-proc;
+
+// ------------------------------------------------------------
+//  Expected:
+//    Empty EVFEVENT file, due to no errors.
+// ------------------------------------------------------------
+dcl-proc test_Execute_EVENTF_NOJOBLOG_OK_OK export;
+  dcl-pi *n extproc(*dclcase) end-pi;
+
+  append('/* ---------------------------------------------------------------- */': 1);
+  append('/*     Succesfully executes the pre-compile and main commands.      */');
+  append('/* ---------------------------------------------------------------- */');
+  append('/* >>PRE-COMPILER<<                                                 */');
+  append('/*   >>CRTCMD<< CRTCLMOD  MODULE(&LI/&OB) SRCFILE(&SL/&SF) +        */');
+  append('/*                        SRCMBR(&SM) OPTION(*GEN   *NOEVENTF) +    */');
+  append('/*                        OUTPUT(*NONE);                            */');
+  append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
+  append('/*   >>EXECUTE<<                                                    */');
+  append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
+  append('/* >>END-PRE-COMPILER<<                                             */');
+  append('PGM');
+  append('ENDPGM');
+
+  runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE) +
+            OPTION(*EVENTF *NOJOBLOG) LIB(QTEMP) OBJ(TESTCASE) +
+            SRCLIB(*DFT) SRCFILE(*DFT) SRCMBR(*DFT)');
+
+  assertEmpty();
+
+end-proc;
+
+// ------------------------------------------------------------
+//  Expected:
+//    FILEID 001 for member TESTCASE with job log messages.
+// ------------------------------------------------------------
+dcl-proc test_Execute_EVENTF_ADDJOBLOG_OK_OK export;
+  dcl-pi *n extproc(*dclcase) end-pi;
+
+  append('/* ---------------------------------------------------------------- */': 1);
+  append('/*     Succesfully executes the pre-compile and main commands.      */');
+  append('/* ---------------------------------------------------------------- */');
+  append('/* >>PRE-COMPILER<<                                                 */');
+  append('/*   >>CRTCMD<< CRTCLMOD  MODULE(&LI/&OB) SRCFILE(&SL/&SF) +        */');
+  append('/*                        SRCMBR(&SM) OPTION(*GEN   *NOEVENTF) +    */');
+  append('/*                        OUTPUT(*NONE);                            */');
+  append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
+  append('/*   >>EXECUTE<<                                                    */');
+  append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
+  append('/* >>END-PRE-COMPILER<<                                             */');
+  append('PGM');
+  append('ENDPGM');
+
+  runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE) +
+            OPTION(*EVENTF *ADDJOBLOG) LIB(QTEMP) OBJ(TESTCASE) +
+            SRCLIB(*DFT) SRCFILE(*DFT) SRCMBR(*DFT)');
+
+  assertFileID_001('TESTCASE'); // Added due to *ADDJOBLOG and *NOEVENTF
+  assertNoJobLog();
+  assertMsgID('CPD0729': 'W'); // No executable commands found in source file.
+
+  assertMsgID('PRZ0029': 'W'); // STRPREPRZ messages
+
+end-proc;
+
+// ------------------------------------------------------------
+//  Expected:
+//    Empty EVFEVENT file, due to no errors.
+// ------------------------------------------------------------
+dcl-proc test_Execute_EVENTF_NOJOBLOG_OK_ERROR export;
+  dcl-pi *n extproc(*dclcase) end-pi;
+
+  append('/* ---------------------------------------------------------------- */': 1);
+  append('/*     Succesfully executes the pre-compile and main commands.      */');
+  append('/* ---------------------------------------------------------------- */');
+  append('/* >>PRE-COMPILER<<                                                 */');
+  append('/*   >>CRTCMD<< CRTCLMOD  MODULE(&LI/&OB) SRCFILE(&SL/&SF) +        */');
+  append('/*                        SRCMBR(&SM) OPTION(*GEN   *NOEVENTF) +    */');
+  append('/*                        OUTPUT(*NONE);                            */');
+  append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
+  append('/*   >>EXECUTE<<                                                    */');
+  append('/*   >>CMD<<   ADDPFM FILE(QTEMP/RUNIT_ERR) MBR(DUMMY);             */');
+  append('/*   >>CMD<<   RMVM   FILE(QTEMP/RUNIT_TST) MBR(DUMMY);             */');
+  append('/* >>END-PRE-COMPILER<<                                             */');
+  append('PGM');
+  append('ENDPGM');
+
+  monitor;
+    runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE) +
+              OPTION(*EVENTF *NOJOBLOG) LIB(QTEMP) OBJ(TESTCASE) +
+              SRCLIB(*DFT) SRCFILE(*DFT) SRCMBR(*DFT)');
+  on-error;
+  // Exception seen!
+  endmon;
+
+  assertFileID_001('TESTCASE'); // Added due to *ERROR in *POSTCMD
+  assertNoJobLog();
+
+  assertMsgID('CPF7312': 'S'); // File not found
+  assertMsgId('CPF7306': 'T'); // Member not added
+
+end-proc;
+
+// ------------------------------------------------------------
+//  Expected:
+//    FILEID 001 for member TESTCASE with compile messages.
+//    FILEID 999 for *JOBLOG with *POSTCMD error messages.
+// ------------------------------------------------------------
+dcl-proc test_Execute_EVENTF_ADDJOBLOG_EVENTF_OK_ERROR export;
+  dcl-pi *n extproc(*dclcase) end-pi;
+
+  append('/* ---------------------------------------------------------------- */': 1);
+  append('/*     Succesfully executes the pre-compile and main commands.      */');
+  append('/* ---------------------------------------------------------------- */');
+  append('/* >>PRE-COMPILER<<                                                 */');
+  append('/*   >>CRTCMD<< CRTCLMOD  MODULE(&LI/&OB) SRCFILE(&SL/&SF) +        */');
+  append('/*                        SRCMBR(&SM) OPTION(*GEN   *EVENTF) +      */');
+  append('/*                        OUTPUT(*NONE);                            */');
+  append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
+  append('/*   >>EXECUTE<<                                                    */');
+  append('/*   >>CMD<<   ADDPFM FILE(QTEMP/RUNIT_ERR) MBR(DUMMY);             */');
+  append('/*   >>CMD<<   RMVM   FILE(QTEMP/RUNIT_TST) MBR(DUMMY);             */');
+  append('/* >>END-PRE-COMPILER<<                                             */');
+  append('PGM');
+  append('ENDPGM');
+
+  monitor;
+    runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE) +
+              OPTION(*EVENTF *ADDJOBLOG) LIB(QTEMP) OBJ(TESTCASE) +
+              SRCLIB(*DFT) SRCFILE(*DFT) SRCMBR(*DFT)');
+  on-error;
+  // Exception seen!
+  endmon;
+
+  assertFileID_001('TESTCASE'); // Added due to *ERROR in *POSTCMD
+  assertMsgID('CPD0729': 'W'); // No executable commands found in source file.
+
+  assertFileID_999('*JOBLOG'); // Job log of *POSTCMD
+  assertMsgID('CPF7312': 'S'); // File not found
+  assertMsgId('CPF7306': 'T'); // Member not added
+
+end-proc;
+
+// ------------------------------------------------------------
+//  Expected:
+//    FILEID 001 for member TESTCASE with compile messages.
+// ------------------------------------------------------------
+dcl-proc test_Execute_EVENTF_ADDJOBLOG_EVENTF_OK_OK export;
+  dcl-pi *n extproc(*dclcase) end-pi;
+
+  append('/* ---------------------------------------------------------------- */': 1);
+  append('/*     Succesfully executes the pre-compile and main commands.      */');
+  append('/* ---------------------------------------------------------------- */');
+  append('/* >>PRE-COMPILER<<                                                 */');
+  append('/*   >>CRTCMD<< CRTCLMOD  MODULE(&LI/&OB) SRCFILE(&SL/&SF) +        */');
+  append('/*                        SRCMBR(&SM) OPTION(*GEN   *EVENTF) +      */');
+  append('/*                        OUTPUT(*NONE);                            */');
+  append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
+  append('/*   >>EXECUTE<<                                                    */');
+  append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
+  append('/* >>END-PRE-COMPILER<<                                             */');
+  append('PGM');
+  append('ENDPGM');
+
+  runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE) +
+            OPTION(*EVENTF *ADDJOBLOG) LIB(QTEMP) OBJ(TESTCASE) +
+            SRCLIB(*DFT) SRCFILE(*DFT) SRCMBR(*DFT)');
+
+  assertFileID_001('TESTCASE'); // Added due to *ERROR in *POSTCMD
+  assertMsgID('CPD0729': 'W'); // No executable commands found in source file.
+  assertNoJobLog();
+
+end-proc;
+
+// ------------------------------------------------------------
+//  Expected:
+//    FILEID 001 for member TESTCASE with compile messages.
+//    FILEID 999 for *JOBLOG with *POSTCMD compile messages.
+// ------------------------------------------------------------
+dcl-proc test_Execute_EVENTF_ADDJOBLOG_EVENTF_OK_ERROR_COPY export;
+  dcl-pi *n extproc(*dclcase) end-pi;
+
+  append('/* ---------------------------------------------------------------- */': 1);
+  append('/*     Succesfully executes the pre-compile and main commands.      */');
+  append('/* ---------------------------------------------------------------- */');
+  append('/* >>PRE-COMPILER<<                                                 */');
+  append('/*   >>CRTCMD<< CRTCLMOD  MODULE(&LI/&OB) SRCFILE(&SL/&SF) +        */');
+  append('/*                        SRCMBR(&SM) OPTION(*GEN   *EVENTF) +      */');
+  append('/*                        OUTPUT(*NONE);                            */');
+  append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
+  append('/*   >>EXECUTE<<                                                    */');
+  append('/*   >>CMD<<   CRTCLMOD   MODULE(&LI/TESTCASE2) SRCFILE(&SL/&SF) +  */');
+  append('/*                        SRCMBR(TESTCASE2) OPTION(*EVENTF) +       */');
+  append('/*                        OUTPUT(*NONE);                            */');
+  append('/* >>END-PRE-COMPILER<<                                             */');
+  append('PGM');
+  append('ENDPGM');
+
+  monitor;
+    runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE) +
+              OPTION(*EVENTF *ADDJOBLOG) LIB(QTEMP) OBJ(TESTCASE) +
+              SRCLIB(*DFT) SRCFILE(*DFT) SRCMBR(*DFT)');
+  on-error;
+  // Exception seen!
+  endmon;
+
+  assertFileID_001('TESTCASE'); // Added due to *ERROR in *POSTCMD
+  assertMsgID('CPD0729': 'W'); // No executable commands found in source file.
+
+  assertFileID_999('*JOBLOG'); // Job log of *POSTCMD
+  assertMsgID('CPF0821': 'T'); // Module TESTCASE2 not created.
+
+end-proc;
+
+// ------------------------------------------------------------
+//  Assert that the event file is empty.
+// ------------------------------------------------------------
+dcl-proc assertEmpty;
+  dcl-pi *n extproc(*dclcase) end-pi;
+
+  dcl-s count int(10);
+
   exec sql
     SELECT count(evfevent) INTO :count FROM eventfile;
   assert(not isSqlError(sqlState));
 
-  assert(count > 0: 'The event file should contain job log messages');
+  assert(count = 0: 'The event file must not contain any entries at all');
+
+end-proc;
+
+// ------------------------------------------------------------
+//  Assert that the event file does not contain any *JOBLOG
+//  entries.
+// ------------------------------------------------------------
+dcl-proc assertNoJobLog;
+  dcl-pi *n extproc(*dclcase) end-pi;
+
+  dcl-s count int(10);
 
   exec sql
     SELECT count(evfevent) INTO :count FROM eventfile
-      WHERE evfevent like '%CPF0820 T 40%'    /* Program not created  */;
+      WHERE evfevent like 'FILEID % *JOBLOG %';
   assert(not isSqlError(sqlState));
 
-  assert(count = 1: 'The event file must contain a CPF0820 message');
+  assert(count = 0: 'The event file must not contain a FILEID for *JOBLOG');
+
+end-proc;
+
+// ------------------------------------------------------------
+//  Asserts that the event file contains a file ID 001 section.
+// ------------------------------------------------------------
+dcl-proc assertFileID_001;
+  dcl-pi *n extproc(*dclcase);
+    i_section  varchar(10) const;
+  end-pi;
+
+  dcl-s argument varchar(100);
+  dcl-s count int(10);
+
+  argument = 'FILEID     0 001 %(' + i_section + ')%';
 
   exec sql
     SELECT count(evfevent) INTO :count FROM eventfile
-      WHERE evfevent like '%PRZ0029 S 30%'    /* STRPREPRC messages   */;
+      WHERE evfevent like :argument;
   assert(not isSqlError(sqlState));
 
-  assert(count > 0: 'The event file must contain some PRZ0029 messages');
+  assert(count = 1: 'Error messages must be related to file ID 001');
+
+end-proc;
+
+// ------------------------------------------------------------
+//  Asserts that the event file contains a file ID 999 section.
+// ------------------------------------------------------------
+dcl-proc assertFileID_999;
+  dcl-pi *n extproc(*dclcase);
+    i_section  varchar(10) const;
+  end-pi;
+
+  dcl-s argument varchar(100);
+  dcl-s count int(10);
+
+  argument = 'FILEID     0 999 % ' + i_section + ' %';
 
   exec sql
     SELECT count(evfevent) INTO :count FROM eventfile
-      WHERE evfevent like 'FILEID     0 001%';
+      WHERE evfevent like :argument;
   assert(not isSqlError(sqlState));
 
-  assert(count = 1: 'Error messages must be related to file 001');
+  assert(count = 1: 'Error messages must be related to file ID 999 (job log)');
+
+end-proc;
+
+// ------------------------------------------------------------
+//  Asserts that the event file contains a message
+//  with the specified message id.
+// ------------------------------------------------------------
+dcl-proc assertMsgID;
+  dcl-pi *n extproc(*dclcase);
+    i_msgID  varchar(7) const;
+    i_severity char(1) options(*nopass) const;
+  end-pi;
+
+  dcl-s argument varchar(100);
+  dcl-s count int(10);
+
+  if (%parms() >= %parmnum(i_severity));
+    argument = 'ERROR % ' + i_msgID + ' ' + i_severity + ' %';
+  else;
+    argument = 'ERROR % ' + i_msgID + ' %';
+  endif;
 
   exec sql
     SELECT count(evfevent) INTO :count FROM eventfile
-      WHERE evfevent like 'FILEID     0 999%';
+      WHERE evfevent like :argument;
+
   assert(not isSqlError(sqlState));
 
-  assert(count = 0: 'Did not expect any error messages related to file 999');
+  assert(count >= 1: 'Event file must contain a message with ID: ' + i_msgID);
+
+end-proc;
+
+// ------------------------------------------------------------
+//  Asserts that the event file does not contains a message
+//  with the specified message id.
+// ------------------------------------------------------------
+dcl-proc assertNoMsgID;
+  dcl-pi *n extproc(*dclcase);
+    i_msgID  varchar(7) const;
+    i_severity char(1) options(*nopass) const;
+  end-pi;
+
+  dcl-s argument varchar(100);
+  dcl-s count int(10);
+
+  if (%parms() >= %parmnum(i_severity));
+    argument = 'ERROR % ' + i_msgID + ' ' + i_severity + ' %';
+  else;
+    argument = 'ERROR % ' + i_msgID + ' %';
+  endif;
+
+  exec sql
+    SELECT count(evfevent) INTO :count FROM eventfile
+      WHERE evfevent like :argument;
+
+  assert(not isSqlError(sqlState));
+
+  assert(count = 0: 'Event file must not contain a message with ID: ' + i_msgID);
 
 end-proc;
 
@@ -720,10 +1062,47 @@ dcl-proc append export;
 end-proc;
 
 // ------------------------------------------------------------
+//  Appends a row to member 'testcase2' of file.
+// ------------------------------------------------------------
+dcl-proc append2 export;
+  dcl-pi *n extproc(*dclcase);
+    i_data varchar(100) const;
+    i_srcSeq int(10) options(*nopass) const;
+  end-pi;
+
+  dcl-s isPrepared ind inz(*off) static;
+
+  dcl-s srcSeq zoned(6:2);
+  dcl-s data like(i_data);
+
+  if (%parms() >= %parmnum(i_srcSeq));
+    g_status.srcSeq2 = i_srcSeq;
+  endif;
+
+  if (not isPrepared);
+    exec sql
+      prepare append_row from
+        'INSERT INTO testmbr2 (SRCSEQ, SRCDTA, SRCDAT) VALUES(?, ?, 0)';
+    assert(not isSqlError(sqlState));
+    isPrepared = *on;
+  endif;
+
+  srcSeq = g_status.srcSeq2;
+  data = i_data;
+
+  exec sql
+    EXECUTE append_row USING :srcSeq, :data;
+  assert(not isSqlError(sqlState));
+
+  g_status.srcSeq2 += 100;
+
+end-proc;
+
+// ------------------------------------------------------------
 //  Returns *on, when the last SQL statement ended with an
 //  error, else *off;
 // ------------------------------------------------------------
-dcl-proc setIgnSQLWarn export;
+dcl-proc setIgnSQLWarn;
   dcl-pi *n extproc(*dclcase);
     i_ignore ind const;
   end-pi;
@@ -736,7 +1115,7 @@ end-proc;
 //  Returns *on, when the last SQL statement ended with an
 //  error, else *off;
 // ------------------------------------------------------------
-dcl-proc isSQLError export;
+dcl-proc isSQLError;
   dcl-pi *n ind extproc(*dclcase);
     i_state   char(5) const;
   end-pi;
@@ -824,28 +1203,9 @@ dcl-proc getLastSqlStmt;
 end-proc;
 
 // ------------------------------------------------------------
-//  Returns *on, when the EVFEVENT file with member TESTCASE
-//  exists in QTEMP, else *off.
-// ------------------------------------------------------------
-dcl-proc hasEventFile export;
-  dcl-pi *n ind extproc(*dclcase) end-pi;
-
-  if (not exist('QTEMP': 'RUNIT_TST': '*FILE'));
-    return *off;
-  endif;
-
-  if (not exist('QTEMP': 'RUNIT_TST': '*FILE': 'TESTCASE'));
-    return *off;
-  endif;
-
-  return *on;
-
-end-proc;
-
-// ------------------------------------------------------------
 //  Returns *ON, when the specified object exists, eöse *OFF.
 // ------------------------------------------------------------
-dcl-proc exist export;
+dcl-proc exist;
   dcl-pi *n ind extproc(*dclcase);
     i_lib varchar(10) const;
     i_obj varchar(10) const;
@@ -913,12 +1273,8 @@ dcl-proc exist export;
   qObj.name = i_obj;
   qObj.lib = i_lib;
 
-  if (i_type = '*FILE');
-    if (%parms() >= %parmnum(i_mbr));
-      QUSRMBRD(mbrd0100: %size(mbrd0100): 'MBRD0100': qObj: i_mbr: '0': errCode);
-    else;
-      QUSRMBRD(mbrd0100: %size(mbrd0100): 'MBRD0100': qObj: '*FIRST': '0': errCode);
-    endif;
+  if (i_type = '*FILE' and %parms() >= %parmnum(i_mbr));
+    QUSRMBRD(mbrd0100: %size(mbrd0100): 'MBRD0100': qObj: i_mbr: '0': errCode);
   else;
     QUSROBJD(objd0100: %size(objd0100): 'OBJD0100': qObj: i_type: errCode);
   endif;

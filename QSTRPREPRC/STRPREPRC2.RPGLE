@@ -455,7 +455,8 @@
      D                 s             10i 0
       *
      D MODE_PRECMDS    c                   1
-     D MODE_POSTCMDS   c                   2
+     D MODE_EXECUTE    c                   2
+     D MODE_POSTCMDS   c                   3
       *
       /copy QSTRPREPRC,SDS
       *
@@ -1745,11 +1746,12 @@
       /COPY QSTRPREPRC,PRZ0026
       /free
 
-         g_prePostCmdsMode = MODE_POSTCMDS;
-
          if (not isExecOpt(EXEC_CRTCMD));
+            g_prePostCmdsMode = MODE_POSTCMDS;
             return;
          endif;
+
+         g_prePostCmdsMode = MODE_EXECUTE;
 
          g_enforceJobLogOnError = *off;
 
@@ -1788,6 +1790,7 @@
          endif;
 
          g_enforceJobLogOnError = *on;
+         g_prePostCmdsMode = MODE_POSTCMDS;
 
       /end-free
      p                 e
@@ -3468,6 +3471,8 @@
      D  i_isAbnEnd                     n   const
       *
      D isEmpty         s               n
+     D doAppend        s               n
+     D doAppendJobLog  s               n
       *  ... EVFEVENT Datei in Bibliothek &1 oder das Job Protokoll konnte nicht geöffnet
       /COPY QSTRPREPRC,PRZ0025
       /free
@@ -3475,17 +3480,30 @@
          monitor;
 
             // Event file of IBM object creation command
-            if (i_qEventf.lib <> '' and i_qEventf.name <> '');
-               isEmpty = isEmptyEventFile(i_qEventf.lib: i_qEventf.name);
+            if (g_eventf.lib <> '' and g_eventf.mbr <> '');
+               isEmpty = isEmptyEventFile(g_eventf.lib: g_eventf.mbr);
             else;
                isEmpty = cTrue;
             endif;
 
-            if (g_option.doAppendJobLog or
-                (i_isAbnEnd and g_enforceJobLogOnError) or
-                (i_isAbnEnd and isEmpty));
-               g_eventf.isOpen =
-                  openEventFile(g_eventf.mbr: g_eventf.lib: i_qEventf);
+            select; // g_prePostCmdsMode
+            when (g_prePostCmdsMode = MODE_PRECMDS);
+               doAppendJobLog = i_isAbnEnd;
+            when (g_prePostCmdsMode = MODE_EXECUTE);
+               doAppendJobLog = isEmpty and
+                                (i_isAbnEnd or g_option.doAppendJobLog);
+            when (g_prePostCmdsMode = MODE_POSTCMDS);
+               doAppendJobLog = i_isAbnEnd;
+            other;
+               doAppendJobLog = cFalse;
+            endsl;
+
+            if (doAppendJobLog);
+               doAppend = not isEmpty;
+               // g_eventf.isOpen = openEventFile(g_eventf.mbr: g_eventf.lib
+               //                                 : doAppend: i_qEventf);
+               g_eventf.isOpen = openEventFile(
+                                    g_eventf.mbr: g_eventf.lib: doAppend);
                if (g_eventf.isOpen);
                   writeEventFile(
                      g_srcFile.name: g_srcFile.lib: g_srcFile.mbr

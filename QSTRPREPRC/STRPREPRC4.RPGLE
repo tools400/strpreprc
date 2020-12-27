@@ -248,13 +248,13 @@
      D                 pi              n
      D  i_obj                        10a   const
      D  i_lib                        10a   const
+     D  i_append                       n   const
      D  i_qEventf                          const  likeds(qObj_t)
      D                                            options(*nopass)
 
-     D p_qEventf       c                   3
+     D p_qEventf       c                   4
 
      D qEventf         ds                  likeds(i_qEventf)
-     D msg             ds                  likeds(msg_t)
      D rtnLib          s                   like(i_lib)
       /free
 
@@ -268,16 +268,13 @@
             clear qEventf;
          endif;
 
+         g_status.openForAppend = i_append;
          g_status.copyEvents = cFalse;
-         g_status.openForAppend = cFalse;
 
          if (qEventf.name <> '' and qEventf.lib <> '');
-            if (qEventf.name = i_obj and qEventf.lib = i_lib);
-               g_status.openForAppend =
-                  not isEmptyEventFile(qEventf.lib: qEventf.name);
-            else;
-               g_status.copyEvents = cTrue;
-            endif;
+           if (qEventf.name <> i_obj or qEventf.lib <> i_lib);
+             g_status.copyEvents = cTrue;
+           endif;
          endif;
 
          if (g_status.openForAppend);

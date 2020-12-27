@@ -36,6 +36,7 @@
      D                                     ')
      D  i_obj                        10a   const
      D  i_lib                        10a   const
+     D  i_append                       n   const
      D  i_qEventf                          const  likeds(qObj_t)
      D                                            options(*nopass)
 
