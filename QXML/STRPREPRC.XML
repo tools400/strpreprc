@@ -8906,7 +8906,7 @@ end-proc;
 // ------------------------------------------------------------
 //  Expected:
 //    FILEID 001 for member TESTCASE with compile messages.
-//    FILEID 999 for *JOBLOG with *POSTCMD compile messages.
+//    FILEID 999 for *JOBLOG with *POSTCMD joblog  messages.
 // ------------------------------------------------------------
 dcl-proc test_Execute_EVENTF_ADDJOBLOG_EVENTF_OK_ERROR_COPY export;
   dcl-pi *n extproc(*dclcase) end-pi;
