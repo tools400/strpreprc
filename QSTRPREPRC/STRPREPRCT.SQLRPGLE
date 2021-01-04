@@ -494,7 +494,8 @@ dcl-proc test_Execute_EVENTF_ADDJOBLOG_OK export;
   assertFileID_001('TESTCASE');
   assertNoJobLog();
   assertMsgID('PRZ0029': 'W'); // STRPREPRZ warning messages,
-// due to OPTION(*ADDJOBLOG).
+                               // due to OPTION(*ADDJOBLOG).
+  assertMsgID('PRZ0033': 'W'); // Object created.
 
 end-proc;
 
