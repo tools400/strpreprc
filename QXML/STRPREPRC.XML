@@ -3369,13 +3369,13 @@ srclen  =  "00112"
 srccssid=  "01141">
 <copysrc><![CDATA[
       /if not defined(COPYRIGHT_DSPEC)
-     h COPYRIGHT('V1.18.1 - 22.12.2020 - mailto: thomas.raddatz@tools400.de')
+     h COPYRIGHT('V1.18.1 - 04.01.2021 - mailto: thomas.raddatz@tools400.de')
       /eof
       /endif
      d STRPREPRC_VERSION...
      d                 C                   '1.18.1'
      d STRPREPRC_DATE...
-     d                 C                   '22.12.2020'
+     d                 C                   '04.01.2021'
       *
 ]]>  </copysrc>
 </mbr>
@@ -8681,7 +8681,8 @@ dcl-proc test_Execute_EVENTF_ADDJOBLOG_OK export;
   assertFileID_001('TESTCASE');
   assertNoJobLog();
   assertMsgID('PRZ0029': 'W'); // STRPREPRZ warning messages,
-// due to OPTION(*ADDJOBLOG).
+                               // due to OPTION(*ADDJOBLOG).
+  assertMsgID('PRZ0033': 'W'); // Object created.
 
 end-proc;
 
