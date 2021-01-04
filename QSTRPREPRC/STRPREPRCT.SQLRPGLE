@@ -13,7 +13,8 @@
 //     >>COMPILE<<
 //       >>PARM<< RPGPPOPT(*LVL2);
 //       >>PARM<< DBGVIEW(*NONE);
-//       >>PARM<< COMPILEOPT('OPTION(*EVENTF) DBGVIEW(*LIST)');
+//       >>PARM<< POPTION(*EVENTF);
+//       >>PARM<< COMPILEOPT('DBGVIEW(*LIST)');
 //       >>PARM<< BNDDIR(*N);
 //     >>END-COMPILE<<
 //     >>EXECUTE<<
