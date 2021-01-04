@@ -227,6 +227,16 @@
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
+             XMLGENMBR  XMBR(PRZ0033   ) XMBRATR(RPGLE) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
+                          XGENCRT(*NO ) XPARAM(*BLANK)
+
+             XMLGENMBR  XMBR(PRZ0034   ) XMBRATR(RPGLE) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
+                          XGENCRT(*NO ) XPARAM(*BLANK)
+
              XMLGENMBR  XMBR(PRZ0035   ) XMBRATR(RPGLE) +
                           XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +

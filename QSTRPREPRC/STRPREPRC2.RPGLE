@@ -121,6 +121,10 @@
       *                            log messages to the EVFEVENT file.       *
       *                            Added iRPGUnit test suite STRPREPRCT.    *
       *                                                                     *
+      *  04.01.2021  Th.Raddatz    Added messages:                          *
+      *                              PRZ0033 - Objekt created               *
+      *                              PRZ0034 - Error message ignored ...    *
+      *                                                                     *
       * =================================================================== *
       * >>PRE-COMPILER<<                                                    *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
@@ -920,7 +924,7 @@
                prepareEventFile();
             on-error;
                clear PRZ0026;
-               sendMsg(f_newMsg('PRZ0026': PRZ0026: cTYPE_ESCAPE));
+               sendMsg(f_newMsg('PRZ0026': PRZ0026: cTYPE_DIAG));
                endAbnormal();
             endmon;
          endif;
@@ -1742,8 +1746,12 @@
      D  i_cmd                              value  like(cmdLong_t)
      D  i_cmdChgObjD                       value  like(cmdLong_t)
       *
+     D msg             ds                  likeds(msg_t)
+      *
       *  ... EVFEVENT Datei konnte nicht zur Ausgabe vorbereitet werden.
       /COPY QSTRPREPRC,PRZ0026
+      *  ... Objekt erstellt.
+      /COPY QSTRPREPRC,PRZ0033
       /free
 
          if (not isExecOpt(EXEC_CRTCMD));
@@ -1760,7 +1768,7 @@
                prepareEventFile();
             on-error;
                clear PRZ0026;
-               sendMsg(f_newMsg('PRZ0026': PRZ0026: cTYPE_ESCAPE));
+               sendMsg(f_newMsg('PRZ0026': PRZ0026: cTYPE_DIAG));
                endAbnormal();
             endmon;
          endif;
@@ -1776,6 +1784,10 @@
                endAbnormal();
             endif;
          else;
+            clear PRZ0033;
+            msg = f_newMsg('PRZ0033': PRZ0033: cMsg_Info);
+            f_sndPgmMsg(msg: cMsg_Same: cMsg_ToMyself);
+
             // Write event file, but change messages greater or
             // equal to "error" to "warning".
             if (%scan(cEVENTF_YES: i_cmd) > 0);
@@ -1805,9 +1817,12 @@
       *
      D errMsgId        s                   like(msgId_t)
      D monMsgIds       ds                  likeds(monMsgIds_t)
+     D msg             ds                  likeds(msg_t)
       *
       *  ... EVFEVENT Datei konnte nicht zur Ausgabe vorbereitet werden.
       /COPY QSTRPREPRC,PRZ0026
+      *  ... Fehlernachricht &1 wurde aufgrund von MONMSG ignoriert.
+      /COPY QSTRPREPRC,PRZ0034
       /free
 
          if (g_prePostCmdsMode = MODE_PRECMDS and
@@ -1825,7 +1840,7 @@
                prepareEventFile();
             on-error;
                clear PRZ0026;
-               sendMsg(f_newMsg('PRZ0026': PRZ0026: cTYPE_ESCAPE));
+               sendMsg(f_newMsg('PRZ0026': PRZ0026: cTYPE_DIAG));
                endAbnormal();
             endmon;
          endif;
@@ -1837,7 +1852,10 @@
          if (not executeCmd(cTrue: i_cmd: errMsgId));
             monMsgIds = loadMonitoredMessageIDs();
             if (isMonitoredMessageId(errMsgId: monMsgIds));
-               // TODO: remove job log entries
+               clear PRZ0034;
+               PRZ00341 = errMsgId;
+               msg = f_newMsg('PRZ0034': PRZ0034: cMsg_Info);
+               f_sndPgmMsg(msg: cMsg_Same: cMsg_ToMyself);
             else;
                if (%scan(cEVENTF_YES: i_cmd) > 0);
                   endAbnormal(retrieveEventFile(i_cmd)); // EVENT file created by command
@@ -2117,7 +2135,7 @@
                prepareEventFile();
             on-error;
                clear PRZ0026;
-               sendMsg(f_newMsg('PRZ0026': PRZ0026: cTYPE_ESCAPE));
+               sendMsg(f_newMsg('PRZ0026': PRZ0026: cTYPE_DIAG));
                endAbnormal();
             endmon;
          endif;
@@ -2161,7 +2179,7 @@
                prepareEventFile();
             on-error;
                clear PRZ0026;
-               sendMsg(f_newMsg('PRZ0026': PRZ0026: cTYPE_ESCAPE));
+               sendMsg(f_newMsg('PRZ0026': PRZ0026: cTYPE_DIAG));
                endAbnormal();
             endmon;
          endif;

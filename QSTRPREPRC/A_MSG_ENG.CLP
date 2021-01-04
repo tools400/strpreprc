@@ -764,6 +764,48 @@ e expected format is: &P >>INCLUDE<< [Library]/File Member;'          +
                 CCSID( 65535) +
                 /*  -EOF-  */
 
+     /* ----------------------------------------------------------- */
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0033                    */
+     /* Objekt erstellt.                                            */
+     /* ----------------------------------------------------------- */
+
+             RMVMSGD MSGID(PRZ0033) MSGF(&LI/STRPREPRC)
+             MONMSG  MSGID(CPF2419)     /* MsgID nicht gefunden */
+
+             ADDMSGD +
+                MSGID(PRZ0033) +
+                MSGF(&LI/STRPREPRC) +
+                MSG(+
+'Object created.'                                                     +
+                ) +
+                SEV(10) +
+     /*   Keine Ersatzvariablen definiert!                          */ +
+                ALROPT(*NO) +
+                CCSID( 65535) +
+                /*  -EOF-  */
+
+     /*-------------------------------------------------------------*/
+     /*   Cmd-ADDMSGD für Message-ID :   PRZ0034                    */
+     /* Fehlernachricht &1 wurde aufgrund von MONMSG ignoriert.     */
+     /*-------------------------------------------------------------*/
+
+             RMVMSGD MSGID(PRZ0034) MSGF(&LI/STRPREPRC)
+             MONMSG  MSGID(CPF2419)     /* MsgID nicht gefunden */
+
+             ADDMSGD +
+                MSGID(PRZ0034) +
+                MSGF(&LI/STRPREPRC) +
+                MSG(+
+'Error message &1 ignored due to MONMSG.'                             +
+                ) +
+                SEV(10) +
+                FMT( +
+                    (*CHAR 0010) +
+                ) +
+                ALROPT(*NO) +
+                CCSID( 65535) +
+                /*  -EOF-  */
+
      /*-------------------------------------------------------------*/
      /*   Cmd-ADDMSGD für Message-ID :   PRZ0035                    */
      /* Library &1 not found.                                       */
