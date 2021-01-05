@@ -430,15 +430,10 @@ Reihenfolge durchgeführt, bis eine benannte Bibliothek gefunden wurde:
  - Bibliothek der gelesenen Quellendatei (USESRCFILE)
 :ELINES.
 :P.
-Mit der Auswahl *EVENTF werden grundsätzlich Einträge in die Ereignisdatei
-gestellt. Erzeugt der IBM Objekterstellungsbefehl Einträge, so werden diese
-verwendet. Ansonsten werden die während der Ausführung des Befehls im Jobprotokoll
-erstellen Einträge in die Ereignisdatei übernommen.
-:P.
-In einigen Fällen kann es vorkommen, dass ein Problem durch die von der IBM in die
-Ereignisdatei gestellten Eintrage nicht ausreichend beschrieben wird. Für einenn
-solchen Fall lassen sich die Einträge des Jobprotokolls mit den Auswahl *ADDJOBLOG
-den IBM Ereignissen hinzufügen.
+Mit der Auswahl *EVENTF wird sichergestellt, dass Fehlerinformationen grundsätzlich
+zur Verfügung stehen. Entweder sind es die durch den Objekterstellungsbefehl
+protokollierten Umwandlungsfehler oder die bei einem Fehler aufgelaufenen Nachrichten
+aus dem Jobprotokoll.
 :P.
 In der Datei STRPRE2 können Paarungen Nachrichten-ID/Ersatzvariable
 hinterlegt werden, anhand derer STRPREPRC Informationen aus dem
@@ -455,18 +450,20 @@ wird.
 
 :PARML.
 :PT.:PK DEF.*NOEVENTF:EPK.
-:PD.Es wird keine Ereignisdatei zur Verwendung durch Client-Tools erstellt.
+:PD.Es werden keine zusätzlichen Einträge in eine Ereignisdatei zur Verwendung
+durch Client-Tools geschrieben.
 :PT.:PV.*EVENTF:EPV.
-:PD.Es wird eine Ereignisdatei zur Verwendung durch Client-Tools erstellt.
+:PD.Kommt es bei der Objekterstellung ohne Ereignisdatei oder bei einem Vor-
+oder Nachlaufbefehl zu einem Fehler, so werden die im Jobprotokoll aufgelaufenen
+Nachrichten in eine Ereignisdatei zur Verwendung durch Client-Tools geschrieben.
 :PT.:PK DEF.*NOJOBLOG:EPK.
-:PD.Es werden keine zusätzlichen Jobprotokolleinträge zu einer von einem
-IBM Erstellungsbefehl erzeugten Ereignisdatei hinzugefügt. Kommt es jedoch
-zu einem Fehler und ist keine Ereignisdatei vorhanden, wird eine Ereignisdatei
-mit Joblogeinträgen erstellt.
+:PD.Es werden keine Jobprotokolleinträge ausgegeben, wenn es keinen Fehler
+gegeben hat.
 :PT.:PV.*ADDJOBLOG:EPV.
-:PD.Einer durch einen IBM Erstellungsbefehl erzeugten Ereignisdatei werden
-Jobprotokolleinträge hinzugefügt. Diese Auswahl ist nur in Verbindung mit
-*EVENTF zulässig.
+:PD.Auch wenn es bei der Objekterstellung nicht zu einem Fehler gekommen ist,
+werden die aufgelaufenen Nachrichten aus dem Job Protokoll in eine
+Ereignisdatei zur Verwendung durch Client-Tools geschrieben. Nachrichten von
+Vor- oder Nachlaufbefehlen werden nicht protokolliert.
 :EPARML.
 
 :EHELP.

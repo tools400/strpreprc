@@ -415,12 +415,9 @@ library is found:
  - Library of the input source file (USESRCFILE)
 :ELINES.
 :P.
-Event file entries are always created, when *EVENTF is specified. Either
-you get the entries created by the IBM object creation command or the job
-log entries that have been produced by the command.
-:P.
-Sometimes a problem is not completely described by the events created by IBM. In
-that case you can add the job log entries with option *ADDJOBLOG.
+Option *EVENTF ensures that error information are always there. Either there are
+the compile errors logged by the object creation command or the job log messages
+produced by it.
 :P.
 File STRPRE2 contains key value pairs message-id/field format
 for retrieving den statement in error from the job log.
@@ -435,17 +432,16 @@ job log.
 
 :PARML.
 :PT.:PK DEF.*NOEVENTF:EPK.
-:PD.Do not create an Event File for use by client tooling.
+:PD.No entries are added to an event file for use by client tooling.
 :PT.:PV.*EVENTF:EPV.
-:PD.Create an Event File for use by client tooling.
+:PD.Job log messages are added to an event file for use by client tooling if
+an error occured during the object creation command (without an event file) or
+a pre- or post-command.
 :PT.:PK DEF.*NOJOBLOG:EPK.
-:PD.Job log entries are not added to an IBM created event file. But in case
-there is an error and there is no event file, an event file is created and
-job log entries are added.
+:PD.No job log entries are added to an event file in case there are no errors.
 :PT.:PV.*ADDJOBLOG:EPV.
-:PD.Job log entries are added to an event file that was created by an
-IBM object creation command. This option can only be specified in
-conjunction with *EVENTF.
+:PD.Job log messages of the object creation command are added to an event file
+even there was no error. Job log entries of pre- and post-commands are not added.
 :EPARML.
 
 :EHELP.
