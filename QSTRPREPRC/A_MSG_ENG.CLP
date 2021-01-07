@@ -766,7 +766,7 @@ e expected format is: &P >>INCLUDE<< [Library]/File Member;'          +
 
      /* ----------------------------------------------------------- */
      /*   Cmd-ADDMSGD für Message-ID :   PRZ0033                    */
-     /* Objekt erstellt.                                            */
+     /* STRPREPRC: Object created.                                  */
      /* ----------------------------------------------------------- */
 
              RMVMSGD MSGID(PRZ0033) MSGF(&LI/STRPREPRC)
@@ -776,7 +776,7 @@ e expected format is: &P >>INCLUDE<< [Library]/File Member;'          +
                 MSGID(PRZ0033) +
                 MSGF(&LI/STRPREPRC) +
                 MSG(+
-'Object created.'                                                     +
+'STRPREPRC: Object created.'                                          +
                 ) +
                 SEV(10) +
      /*   Keine Ersatzvariablen definiert!                          */ +
@@ -786,7 +786,7 @@ e expected format is: &P >>INCLUDE<< [Library]/File Member;'          +
 
      /*-------------------------------------------------------------*/
      /*   Cmd-ADDMSGD für Message-ID :   PRZ0034                    */
-     /* Fehlernachricht &1 wurde aufgrund von MONMSG ignoriert.     */
+     /* STRPREPRC: Error message &1 ignored due to MONMSG.          */
      /*-------------------------------------------------------------*/
 
              RMVMSGD MSGID(PRZ0034) MSGF(&LI/STRPREPRC)
@@ -796,7 +796,7 @@ e expected format is: &P >>INCLUDE<< [Library]/File Member;'          +
                 MSGID(PRZ0034) +
                 MSGF(&LI/STRPREPRC) +
                 MSG(+
-'Error message &1 ignored due to MONMSG.'                             +
+'STRPREPRC: Error message &1 ignored due to MONMSG.'                  +
                 ) +
                 SEV(10) +
                 FMT( +

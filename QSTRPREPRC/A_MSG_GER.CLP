@@ -769,7 +769,7 @@ as richtige Format ist:&P >>INCLUDE<< [Bibliothek]/Datei Teildatei;'  +
 
      /* ----------------------------------------------------------- */
      /*   Cmd-ADDMSGD für Message-ID :   PRZ0033                    */
-     /* Objekt erstellt.                                            */
+     /* STRPREPRC: Objekt erstellt.                                 */
      /* ----------------------------------------------------------- */
 
              RMVMSGD MSGID(PRZ0033) MSGF(&LI/STRPREPRC)
@@ -779,7 +779,7 @@ as richtige Format ist:&P >>INCLUDE<< [Bibliothek]/Datei Teildatei;'  +
                 MSGID(PRZ0033) +
                 MSGF(&LI/STRPREPRC) +
                 MSG(+
-'Objekt erstellt.'                                                    +
+'STRPREPRC: Objekt erstellt.'                                         +
                 ) +
                 SEV(10) +
      /*   Keine Ersatzvariablen definiert!                          */ +
@@ -789,7 +789,7 @@ as richtige Format ist:&P >>INCLUDE<< [Bibliothek]/Datei Teildatei;'  +
 
      /*-------------------------------------------------------------*/
      /*   Cmd-ADDMSGD für Message-ID :   PRZ0034                    */
-     /* Fehlernachricht &1 wurde aufgrund von MONMSG ignoriert.     */
+     /* STRPREPRC: ehlernachricht &1 wurde aufgrund von MONMSG      */
      /*-------------------------------------------------------------*/
 
              RMVMSGD MSGID(PRZ0034) MSGF(&LI/STRPREPRC)
@@ -799,7 +799,7 @@ as richtige Format ist:&P >>INCLUDE<< [Bibliothek]/Datei Teildatei;'  +
                 MSGID(PRZ0034) +
                 MSGF(&LI/STRPREPRC) +
                 MSG(+
-'Fehlernachricht &1 wurde aufgrund von MONMSG ignoriert.'             +
+'STRPREPRC: Fehlernachricht &1 wurde aufgrund von MONMSG ignoriert.'  +
                 ) +
                 SEV(10) +
                 FMT( +

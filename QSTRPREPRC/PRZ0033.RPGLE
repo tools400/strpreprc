@@ -1,7 +1,7 @@
       *---------------------------------------------------------------
       * Datenstruktur für Message-ID : PRZ0033
       *
-      * Objekt erstellt.
+      * STRPREPRC: Objekt erstellt.
       *
      D PRZ0033         DS
       *   Keine Ersatzvariablen definiert!

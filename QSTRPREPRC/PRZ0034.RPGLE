@@ -1,7 +1,7 @@
       // ---------------------------------------------------------------
       //  Data structure for message ID: PRZ0034
 
-      //  Fehlernachricht &1 wurde aufgrund von MONMSG ignoriert.
+      //  STRPREPRC: Fehlernachricht &1 wurde aufgrund von MONMSG ignoriert.
 
      d PRZ0034         ds
      d  PRZ00341                     10A   inz(*BLANKS)
