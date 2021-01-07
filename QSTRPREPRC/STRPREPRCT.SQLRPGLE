@@ -153,6 +153,40 @@ end-proc;
 
 // ------------------------------------------------------------
 //  STRPREPRC options:
+//    *EVENTF
+//  Pre-command:
+//    error + monmsg
+//  Compile command:
+//    *NONE
+//  Post-command:
+//    *NONE
+//  Expected:
+//    Empty EVFEVENT file, due to no errors (error ignored).
+// ------------------------------------------------------------
+dcl-proc test_MONMSG export;
+  dcl-pi *n extproc(*dclcase) end-pi;
+
+  append('/* ---------------------------------------------------------------- */': 100);
+  append('/* >>PRE-COMPILER<<                                                 */');
+  append('/*   >>CMD<<     ADDPFM FILE(QTEMP/RUNIT_ERR) MBR(DUMMY);           */');
+  append('/*   >>MONMSG<<                                                     */');
+  append('/*     >>MSGID<<   CPF7306;    /* Member not added */               */');
+  append('/*   >>END-MONMSG<<                                                 */');
+  append('/*   >>CMD<<   ADDPFM FILE(QTEMP/RUNIT_TST) MBR(DUMMY);             */');
+  append('/*   >>CMD<<   RMVM   FILE(QTEMP/RUNIT_TST) MBR(DUMMY);             */');
+  append('/* >>END-PRE-COMPILER<<                                             */');
+  append('/* ---------------------------------------------------------------- */');
+
+  runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE) +
+            OPTION(*EVENTF *ADDJOBLOG) LIB(QTEMP) OBJ(TESTCASE) +
+            SRCLIB(*DFT) SRCFILE(*DFT) SRCMBR(*DFT)');
+
+  assertEmpty();
+
+end-proc;
+
+// ------------------------------------------------------------
+//  STRPREPRC options:
 //    *NOEVENTF, *NOJOBLOG
 //  Pre-command:
 //    no error
