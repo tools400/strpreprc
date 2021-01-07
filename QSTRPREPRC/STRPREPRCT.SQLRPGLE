@@ -76,6 +76,10 @@ dcl-proc setUpSuite export;
     runCmd('CLRPFM FILE(QTEMP/RUNIT_TST) MBR(TESTCASE2)');
   endif;
 
+  if (exist('QTEMP': 'RUNIT_ERR': '*FILE'));
+    runCmd('DLTF FILE(QTEMP/RUNIT_ERR)');
+  endif;
+
   if (not exist('QTEMP': 'EVFEVENT': '*FILE'));
     runCmd('CRTPF FILE(QTEMP/EVFEVENT) RCDLEN(400) MAXMBRS(*NOMAX) CCSID(*HEX)');
     runCmd('RMVM FILE(QTEMP/EVFEVENT) MBR(*ALL)');
@@ -145,26 +149,29 @@ dcl-proc setUp export;
     endif;
   endif;
 
-
 end-proc;
 
 // ------------------------------------------------------------
+//  STRPREPRC options:
+//    *NOEVENTF, *NOJOBLOG
+//  Pre-command:
+//    no error
+//  Compile command:
+//    *NONE
+//  Post-command:
+//    *NONE
 //  Expected:
 //    Empty EVFEVENT file, due to no errors.
 // ------------------------------------------------------------
-dcl-proc test_PreCommand_NOEVENTF_NOJOBLOG_OK export;
+dcl-proc test_PreCmd_NOEVENTF_NOJOBLOG_OK export;
   dcl-pi *n extproc(*dclcase) end-pi;
 
   append('/* ---------------------------------------------------------------- */': 100);
-  append('/*     Succesfully executes the pre-compile command.                */');
-  append('/* ---------------------------------------------------------------- */');
   append('/* >>PRE-COMPILER<<                                                 */');
-  append('/*   >>CMD<<   CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);          */');
+  append('/*   >>CMD<<   ADDPFM FILE(QTEMP/RUNIT_TST) MBR(DUMMY);             */');
+  append('/*   >>CMD<<   RMVM   FILE(QTEMP/RUNIT_TST) MBR(DUMMY);             */');
   append('/* >>END-PRE-COMPILER<<                                             */');
-  append('PGM');
-  append('  DCL &LIB *CHAR 10');
-  append('  CHKOBJ OBJ(QSYS) OBJTYPE(*LIB)');
-  append('ENDPGM');
+  append('/* ---------------------------------------------------------------- */');
 
   runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE) +
             OPTION(*NOEVENTF *NOJOBLOG) +
@@ -175,23 +182,26 @@ dcl-proc test_PreCommand_NOEVENTF_NOJOBLOG_OK export;
 end-proc;
 
 // ------------------------------------------------------------
+//  STRPREPRC options:
+//    *NOEVENTF, *NOJOBLOG
+//  Pre-command:
+//    error
+//  Compile command:
+//    *NONE
+//  Post-command:
+//    *NONE
 //  Expected:
 //    Empty EVFEVENT file, due to STRPREPRC OPTION(*NOEVENTF).
 // ------------------------------------------------------------
-dcl-proc test_PreCommand_NOEVENTF_NOJOBLOG_ERROR export;
+dcl-proc test_PreCmd_NOEVENTF_NOJOBLOG_ERROR export;
   dcl-pi *n extproc(*dclcase) end-pi;
 
   append('/* ---------------------------------------------------------------- */': 100);
-  append('/*     Produces an error in the pre-compile command.                */');
-  append('/* ---------------------------------------------------------------- */');
   append('/* >>PRE-COMPILER<<                                                 */');
   append('/*   >>CMD<<   ADDPFM FILE(QTEMP/RUNIT_ERR) MBR(DUMMY);             */');
-  append('/*   >>CMD<<   RMVM   FILE(QTEMP/RUNIT_TST) MBR(DUMMY);             */');
+  append('/*   >>CMD<<   RMVM   FILE(QTEMP/RUNIT_ERR) MBR(DUMMY);             */');
   append('/* >>END-PRE-COMPILER<<                                             */');
-  append('PGM');
-  append('  DCL &LIB *CHAR 10');
-  append('  CHKOBJ OBJ(QSYS) OBJTYPE(*LIB)');
-  append('ENDPGM');
+  append('/* ---------------------------------------------------------------- */');
 
   monitor;
     runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE) +
@@ -207,23 +217,26 @@ dcl-proc test_PreCommand_NOEVENTF_NOJOBLOG_ERROR export;
 end-proc;
 
 // ------------------------------------------------------------
+//  STRPREPRC options:
+//    *EVENTF, *NOJOBLOG
+//  Pre-command:
+//    no error
+//  Compile command:
+//    *NONE
+//  Post-command:
+//    *NONE
 //  Expected:
 //    Empty EVFEVENT file, due to no errors.
 // ------------------------------------------------------------
-dcl-proc test_PreCommand_EVENTF_NOJOBLOG_OK export;
+dcl-proc test_PreCmd_EVENTF_NOJOBLOG_OK export;
   dcl-pi *n extproc(*dclcase) end-pi;
 
   append('/* ---------------------------------------------------------------- */': 100);
-  append('/*     Succesfully executes the pre-compile command.                */');
-  append('/* ---------------------------------------------------------------- */');
   append('/* >>PRE-COMPILER<<                                                 */');
   append('/*   >>CMD<<   ADDPFM FILE(QTEMP/RUNIT_TST) MBR(DUMMY);             */');
   append('/*   >>CMD<<   RMVM   FILE(QTEMP/RUNIT_TST) MBR(DUMMY);             */');
   append('/* >>END-PRE-COMPILER<<                                             */');
-  append('PGM');
-  append('  DCL &LIB *CHAR 10');
-  append('  CHKOBJ OBJ(QSYS) OBJTYPE(*LIB)');
-  append('ENDPGM');
+  append('/* ---------------------------------------------------------------- */');
 
   runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE) +
             OPTION(*EVENTF *NOJOBLOG) LIB(QTEMP) OBJ(TESTCASE) +
@@ -234,24 +247,26 @@ dcl-proc test_PreCommand_EVENTF_NOJOBLOG_OK export;
 end-proc;
 
 // ------------------------------------------------------------
+//  STRPREPRC options:
+//    *EVENTF, *NOJOBLOG
+//  Pre-command:
+//    error
+//  Compile command:
+//    *NONE
+//  Post-command:
+//    *NONE
 //  Expected:
-//    FILEID 001 for member TESTCASE with job log
-//    error messages. (replacement for compile listing)
+//    FILEID 001 (TESTCASE) with job log of pre-command.
 // ------------------------------------------------------------
-dcl-proc test_PreCommand_EVENTF_NOJOBLOG_ERROR export;
+dcl-proc test_PreCmd_EVENTF_NOJOBLOG_ERROR export;
   dcl-pi *n extproc(*dclcase) end-pi;
 
   append('/* ---------------------------------------------------------------- */': 100);
-  append('/*     Produces an error in the pre-compile command.                */');
-  append('/* ---------------------------------------------------------------- */');
   append('/* >>PRE-COMPILER<<                                                 */');
   append('/*   >>CMD<<   ADDPFM FILE(QTEMP/RUNIT_ERR) MBR(DUMMY);             */');
   append('/*   >>CMD<<   RMVM   FILE(QTEMP/RUNIT_TST) MBR(DUMMY);             */');
   append('/* >>END-PRE-COMPILER<<                                             */');
-  append('PGM');
-  append('  DCL &LIB *CHAR 10');
-  append('  CHKOBJ OBJ(QSYS) OBJTYPE(*LIB)');
-  append('ENDPGM');
+  append('/* ---------------------------------------------------------------- */');
 
   monitor;
     runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE) +
@@ -263,30 +278,33 @@ dcl-proc test_PreCommand_EVENTF_NOJOBLOG_ERROR export;
   endmon;
 
   assertFileID_001('TESTCASE');
-  assertNoJobLog();
-
   assertMsgID('CPF7312': 'S'); // File not found
+
+  assertNoJobLog();
 
 end-proc;
 
 // ------------------------------------------------------------
+//  STRPREPRC options:
+//    *EVENTF, *ADDJOBLOG
+//  Pre-command:
+//    mo error
+//  Compile command:
+//    *NONE
+//  Post-command:
+//    *NONE
 //  Expected:
 //    Empty EVFEVENT file, due to no errors.
 // ------------------------------------------------------------
-dcl-proc test_PreCommand_EVENTF_ADDJOBLOG_OK export;
+dcl-proc test_PreCmd_EVENTF_ADDJOBLOG_OK export;
   dcl-pi *n extproc(*dclcase) end-pi;
 
   append('/* ---------------------------------------------------------------- */': 100);
-  append('/*     Succesfully executes the pre-compile command.                */');
-  append('/* ---------------------------------------------------------------- */');
   append('/* >>PRE-COMPILER<<                                                 */');
   append('/*   >>CMD<<   ADDPFM FILE(QTEMP/RUNIT_TST) MBR(DUMMY);             */');
   append('/*   >>CMD<<   RMVM   FILE(QTEMP/RUNIT_TST) MBR(DUMMY);             */');
   append('/* >>END-PRE-COMPILER<<                                             */');
-  append('PGM');
-  append('  DCL &LIB *CHAR 10');
-  append('  CHKOBJ OBJ(QSYS) OBJTYPE(*LIB)');
-  append('ENDPGM');
+  append('/* ---------------------------------------------------------------- */');
 
   runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE) +
             OPTION(*EVENTF *ADDJOBLOG) LIB(QTEMP) OBJ(TESTCASE) +
@@ -297,24 +315,26 @@ dcl-proc test_PreCommand_EVENTF_ADDJOBLOG_OK export;
 end-proc;
 
 // ------------------------------------------------------------
+//  STRPREPRC options:
+//    *EVENTF, *ADDJOBLOG
+//  Pre-command:
+//    error
+//  Compile command:
+//    *NONE
+//  Post-command:
+//    *NONE
 //  Expected:
-//    FILEID 001 for member TESTCASE with job log
-//    error messages. (replacement for compile listing)
+//    FILEID 001 (TESTCASE) with job log of pre-command.
 // ------------------------------------------------------------
-dcl-proc test_PreCommand_EVENTF_ADDJOBLOG_ERROR export;
+dcl-proc test_PreCmd_EVENTF_ADDJOBLOG_ERROR export;
   dcl-pi *n extproc(*dclcase) end-pi;
 
   append('/* ---------------------------------------------------------------- */': 100);
-  append('/*     Produces an error in the pre-compile command.                */');
-  append('/* ---------------------------------------------------------------- */');
   append('/* >>PRE-COMPILER<<                                                 */');
   append('/*   >>CMD<<   ADDPFM FILE(QTEMP/RUNIT_ERR) MBR(DUMMY);             */');
   append('/*   >>CMD<<   RMVM   FILE(QTEMP/RUNIT_TST) MBR(DUMMY);             */');
   append('/* >>END-PRE-COMPILER<<                                             */');
-  append('PGM');
-  append('  DCL &LIB *CHAR 10');
-  append('  CHKOBJ OBJ(QSYS) OBJTYPE(*LIB)');
-  append('ENDPGM');
+  append('/* ---------------------------------------------------------------- */');
 
   monitor;
     runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE) +
@@ -324,20 +344,27 @@ dcl-proc test_PreCommand_EVENTF_ADDJOBLOG_ERROR export;
   // Exception seen!
   endmon;
 
-  assertFileID_001('*NONE'); // *NONE, because parameters SRCLIB, SRCFILE and SRCMBR
-  // had not been specified.
-  assertNoJobLog();
-
+  assertFileID_001('*NONE'); // *NONE, because of missing parameters SRCLIB, SRCFILE and SRCMBR
   assertMsgId('CPF7312': 'S'); // File not found
   assertMsgId('CPF7306': 'T'); // Member not added
+
+  assertNoJobLog();
 
 end-proc;
 
 // ------------------------------------------------------------
+//  STRPREPRC options:
+//    *NOEVENTF, *NOJOBLOG
+//  Pre-command:
+//    no error, no event file
+//  Compile command:
+//    error, no event file
+//  Post-command:
+//    *NONE
 //  Expected:
 //    Empty EVFEVENT file, due to no errors.
 // ------------------------------------------------------------
-dcl-proc test_Execute_NOEVENTF_NOJOBLOG_OK export;
+dcl-proc test_Execute_NOEVENTF_NOJOBLOG_NOEVENTF_OK export;
   dcl-pi *n extproc(*dclcase) end-pi;
 
   append('/* ---------------------------------------------------------------- */': 100);
@@ -345,7 +372,7 @@ dcl-proc test_Execute_NOEVENTF_NOJOBLOG_OK export;
   append('/* ---------------------------------------------------------------- */');
   append('/* >>PRE-COMPILER<<                                                 */');
   append('/*   >>CRTCMD<< CRTCLMOD  MODULE(&LI/&OB) SRCFILE(&SL/&SF) +        */');
-  append('/*                        SRCMBR(&SM) OPTION(*GEN   *NOEVENTF) +    */');
+  append('/*                        SRCMBR(&SM) OPTION(*NOEVENTF) +           */');
   append('/*                        OUTPUT(*NONE);                            */');
   append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
   append('/* >>EXECUTE<<                                                      */');
@@ -364,22 +391,29 @@ dcl-proc test_Execute_NOEVENTF_NOJOBLOG_OK export;
 end-proc;
 
 // ------------------------------------------------------------
+//  STRPREPRC options:
+//    *NOEVENTF, *NOJOBLOG
+//  Pre-command:
+//    no error, no event file
+//  Compile command:
+//    error, no event file
+//  Post-command:
+//    *NONE
 //  Expected:
 //    Empty EVFEVENT file, due to STRPREPRC OPTION(*NOEVENTF).
 // ------------------------------------------------------------
-dcl-proc test_Execute_NOEVENTF_NOJOBLOG_ERROR export;
+dcl-proc test_Execute_NOEVENTF_NOJOBLOG_NOEVENTF_ERROR export;
   dcl-pi *n extproc(*dclcase) end-pi;
 
   append('/* ---------------------------------------------------------------- */': 100);
-  append('/*     Produces an error in the main command.                       */');
-  append('/* ---------------------------------------------------------------- */');
   append('/* >>PRE-COMPILER<<                                                 */');
   append('/*   >>CRTCMD<< CRTCLMOD  MODULE(&LI/&OB) SRCFILE(&SL/&SF) +        */');
-  append('/*                        SRCMBR(&SM) OPTION(*GEN   *NOEVENTF) +    */');
+  append('/*                        SRCMBR(&SM) OPTION(*NOEVENTF) +           */');
   append('/*                        OUTPUT(*NONE);                            */');
   append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
   append('/*   >>EXECUTE<<                                                    */');
   append('/* >>END-PRE-COMPILER<<                                             */');
+  append('/* ---------------------------------------------------------------- */');
   append('PGM');
   append('  DCL LIB *CHAR 10');
   append('  CHKOBJ OBJ(QSYS) OBJTYPE(*LIB)');
@@ -399,10 +433,18 @@ dcl-proc test_Execute_NOEVENTF_NOJOBLOG_ERROR export;
 end-proc;
 
 // ------------------------------------------------------------
+//  STRPREPRC options:
+//    *EVENTF, *NOJOBLOG
+//  Pre-command:
+//    no error
+//  Compile command:
+//    no error, no event file
+//  Post-command:
+//    *NONE
 //  Expected:
 //    Empty EVFEVENT file, due to no errors.
 // ------------------------------------------------------------
-dcl-proc test_Execute_EVENTF_NOJOBLOG_OK export;
+dcl-proc test_Execute_EVENTF_NOJOBLOG_NOEVENTF_OK export;
   dcl-pi *n extproc(*dclcase) end-pi;
 
   append('/* ---------------------------------------------------------------- */': 100);
@@ -410,7 +452,7 @@ dcl-proc test_Execute_EVENTF_NOJOBLOG_OK export;
   append('/* ---------------------------------------------------------------- */');
   append('/* >>PRE-COMPILER<<                                                 */');
   append('/*   >>CRTCMD<< CRTCLMOD  MODULE(&LI/&OB) SRCFILE(&SL/&SF) +        */');
-  append('/*                        SRCMBR(&SM) OPTION(*GEN   *NOEVENTF) +    */');
+  append('/*                        SRCMBR(&SM) OPTION(*NOEVENTF) +           */');
   append('/*                        OUTPUT(*NONE);                            */');
   append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
   append('/* >>EXECUTE<<                                                      */');
@@ -429,11 +471,19 @@ dcl-proc test_Execute_EVENTF_NOJOBLOG_OK export;
 end-proc;
 
 // ------------------------------------------------------------
+//  STRPREPRC options:
+//    *EVENTF, *NOJOBLOG
+//  Pre-command:
+//    no error
+//  Compile command:
+//    error, no event file
+//  Post-command:
+//    *NONE
 //  Expected:
-//    FILEID 001 for member TESTCASE with job log
-//    error messages. (replacement for compile listing)
+//    FILEID 001 (TESTCASE) with job log of compile command.
+//    (replacement for compile listing)
 // ------------------------------------------------------------
-dcl-proc test_Execute_EVENTF_NOJOBLOG_ERROR export;
+dcl-proc test_Execute_EVENTF_NOJOBLOG_NOEVENTF_ERROR export;
   dcl-pi *n extproc(*dclcase) end-pi;
 
   append('/* ---------------------------------------------------------------- */': 100);
@@ -441,13 +491,14 @@ dcl-proc test_Execute_EVENTF_NOJOBLOG_ERROR export;
   append('/* ---------------------------------------------------------------- */');
   append('/* >>PRE-COMPILER<<                                                 */');
   append('/*   >>CRTCMD<< CRTCLMOD  MODULE(&LI/&OB) SRCFILE(&SL/&SF) +        */');
-  append('/*                        SRCMBR(&SM) OPTION(*GEN   *NOEVENTF) +    */');
+  append('/*                        SRCMBR(&SM) OPTION(*NOEVENTF) +           */');
   append('/*                        OUTPUT(*NONE);                            */');
   append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
   append('/*   >>EXECUTE<<                                                    */');
   append('/* >>END-PRE-COMPILER<<                                             */');
   append('PGM');
   append('  DCL LIB *CHAR 10');
+  append('  CHKOBJ OBJ(QSYS) OBJTYPE(*LIB)');
   append('ENDPGM');
 
   monitor;
@@ -460,9 +511,10 @@ dcl-proc test_Execute_EVENTF_NOJOBLOG_ERROR export;
   endmon;
 
   assertFileID_001('TESTCASE');
-  assertNoJobLog();
   assertMsgID('CPF0821': 'T'); // Module not created
   assertMsgID('PRZ0029': 'S'); // STRPREPRZ messages
+
+  assertNoJobLog();
 
 end-proc;
 
@@ -476,21 +528,24 @@ end-proc;
 //  Post-command:
 //    *NONE
 //  Expected:
-//    FILEID 001 for member TESTCASE with *COMPILE job log messages.
+//    FILEID 001 (TESTCASE) with job log of compile command.
+//    (replacement for compile listing)
 // -----------------------------------------------------------------------
-dcl-proc test_Execute_EVENTF_ADDJOBLOG_OK export;
+dcl-proc test_Execute_EVENTF_ADDJOBLOG_NOEVENTF_OK export;
   dcl-pi *n extproc(*dclcase) end-pi;
 
   append('/* ---------------------------------------------------------------- */': 1);
   append('/* >>PRE-COMPILER<<                                                 */');
   append('/*   >>CRTCMD<< CRTCLMOD  MODULE(&LI/&OB) SRCFILE(&SL/&SF) +        */');
-  append('/*                        SRCMBR(&SM) OPTION(*GEN   *NOEVENTF) +    */');
+  append('/*                        SRCMBR(&SM) OPTION(*NOEVENTF) +           */');
   append('/*                        OUTPUT(*NONE);                            */');
   append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
   append('/*   >>EXECUTE<<                                                    */');
   append('/* >>END-PRE-COMPILER<<                                             */');
   append('/* ---------------------------------------------------------------- */');
   append('PGM');
+  append('  DCL &LIB *CHAR 10');
+  append('  CHKOBJ OBJ(QSYS) OBJTYPE(*LIB)');
   append('ENDPGM');
 
   runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE) +
@@ -498,18 +553,27 @@ dcl-proc test_Execute_EVENTF_ADDJOBLOG_OK export;
             SRCLIB(*DFT) SRCFILE(*DFT) SRCMBR(*DFT)');
 
   assertFileID_001('TESTCASE');
-  assertNoJobLog();
   assertMsgID('PRZ0029': 'W'); // STRPREPRZ warning messages, due to OPTION(*ADDJOBLOG).
   assertMsgID('PRZ0033': 'W'); // Object created.
+
+  assertNoJobLog();
 
 end-proc;
 
 // ------------------------------------------------------------
+//  STRPREPRC options:
+//    *EVENTF, *ADDJOBLOG
+//  Pre-command:
+//    no error
+//  Compile command:
+//    error, no event file
+//  Post-command:
+//    *NONE
 //  Expected:
-//    FILEID 001 for member TESTCASE with job log
-//    error messages. (replacement for compile listing)
+//    FILEID 001 (TESTCASE) with job log of compile command.
+//    (replacement for compile listing)
 // ------------------------------------------------------------
-dcl-proc test_Execute_EVENTF_ADDJOBLOG_ERROR export;
+dcl-proc test_Execute_EVENTF_ADDJOBLOG_NOEVENTF_ERROR export;
   dcl-pi *n extproc(*dclcase) end-pi;
 
   append('/* ---------------------------------------------------------------- */': 1);
@@ -517,13 +581,14 @@ dcl-proc test_Execute_EVENTF_ADDJOBLOG_ERROR export;
   append('/* ---------------------------------------------------------------- */');
   append('/* >>PRE-COMPILER<<                                                 */');
   append('/*   >>CRTCMD<< CRTCLMOD  MODULE(&LI/&OB) SRCFILE(&SL/&SF) +        */');
-  append('/*                        SRCMBR(&SM) OPTION(*GEN   *NOEVENTF) +    */');
+  append('/*                        SRCMBR(&SM) OPTION(*NOEVENTF) +           */');
   append('/*                        OUTPUT(*NONE );                           */');
   append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
   append('/*   >>EXECUTE<<                                                    */');
   append('/* >>END-PRE-COMPILER<<                                             */');
   append('PGM');
   append('  DCL LIB *CHAR 10');
+  append('  CHKOBJ OBJ(QSYS) OBJTYPE(*LIB)');
   append('ENDPGM');
 
   monitor;
@@ -536,15 +601,24 @@ dcl-proc test_Execute_EVENTF_ADDJOBLOG_ERROR export;
   endmon;
 
   assertFileID_001('TESTCASE');
-  assertNoJobLog();
   assertMsgID('CPF0821': 'T'); // Module not created
   assertMsgID('PRZ0029': 'S'); // STRPREPRZ error messages
+
+  assertNoJobLog();
 
 end-proc;
 
 // ------------------------------------------------------------
+//  STRPREPRC options:
+//    *EVENTF, *NOJOBLOG
+//  Pre-command:
+//    no error
+//  Compile command:
+//    no error, event file
+//  Post-command:
+//    *NONE
 //  Expected:
-//    FILEID 001 for member TESTCASE with compile messages.
+//    FILEID 001 (TESTCASE) with compile messages.
 // ------------------------------------------------------------
 dcl-proc test_Execute_EVENTF_NOJOBLOG_EVENTF_OK export;
   dcl-pi *n extproc(*dclcase) end-pi;
@@ -557,7 +631,7 @@ dcl-proc test_Execute_EVENTF_NOJOBLOG_EVENTF_OK export;
   append('/*                        SRCMBR(&SM) OPTION(*EVENTF) +             */');
   append('/*                        OUTPUT(*NONE);                            */');
   append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
-  append('/* >>EXECUTE<<                                                      */');
+  append('/*   >>EXECUTE<<                                                    */');
   append('/* >>END-PRE-COMPILER<<                                             */');
   append('PGM');
   append('  DCL &LIB *CHAR 10');
@@ -569,33 +643,42 @@ dcl-proc test_Execute_EVENTF_NOJOBLOG_EVENTF_OK export;
             SRCLIB(*DFT) SRCFILE(*DFT) SRCMBR(*DFT)');
 
   assertFileID_001('TESTCASE');
-  assertNoJobLog();
   assertMsgID('CPD0726': 'W'); // Variable &LIB declared but not referred to
   assertMsgID('CPD0791': 'I'); // No labels used in program
+
+  assertNoJobLog();
 
   assertNoMsgId('PRZ0029');
 
 end-proc;
 
 // ------------------------------------------------------------
+//  STRPREPRC options:
+//    *EVENTF, *NOJOBLOG
+//  Pre-command:
+//    no error
+//  Compile command:
+//    error, event file
+//  Post-command:
+//    *NONE
 //  Expected:
-//    FILEID 001 for member TESTCASE with compile messages.
+//    FILEID 001 (TESTCASE) with compile messages.
 // ------------------------------------------------------------
 dcl-proc test_Execute_EVENTF_NOJOBLOG_EVENTF_ERROR export;
   dcl-pi *n extproc(*dclcase) end-pi;
 
   append('/* ---------------------------------------------------------------- */': 100);
-  append('/*     Produces an error in the main command.                       */');
-  append('/* ---------------------------------------------------------------- */');
   append('/* >>PRE-COMPILER<<                                                 */');
   append('/*   >>CRTCMD<< CRTCLMOD  MODULE(&LI/&OB) SRCFILE(&SL/&SF) +        */');
-  append('/*                        SRCMBR(&SM) OPTION(*GEN   *EVENTF) +      */');
+  append('/*                        SRCMBR(&SM) OPTION(*EVENTF) +             */');
   append('/*                        OUTPUT(*NONE);                            */');
   append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
   append('/*   >>EXECUTE<<                                                    */');
   append('/* >>END-PRE-COMPILER<<                                             */');
+  append('/* ---------------------------------------------------------------- */');
   append('PGM');
   append('  DCL LIB *CHAR 10');
+  append('  CHKOBJ OBJ(QSYS) OBJTYPE(*LIB)');
   append('ENDPGM');
 
   monitor;
@@ -608,16 +691,25 @@ dcl-proc test_Execute_EVENTF_NOJOBLOG_EVENTF_ERROR export;
   endmon;
 
   assertFileID_001('TESTCASE');
-  assertNoJobLog();
   assertMsgID('CPD0081': 'S'); // Variable name required for parameter VAR.
+
+  assertNoJobLog();
 
   assertNoMsgId('PRZ0029');
 
 end-proc;
 
 // ------------------------------------------------------------
+//  STRPREPRC options:
+//    *EVENTF, *ADDJOBLOG
+//  Pre-command:
+//    no error
+//  Compile command:
+//    no error, event file
+//  Post-command:
+//    *NONE
 //  Expected:
-//    FILEID 001 for member TESTCASE with compile messages.
+//    FILEID 001 (TESTCASE) with compile messages.
 // ------------------------------------------------------------
 dcl-proc test_Execute_EVENTF_ADDJOBLOG_EVENTF_OK export;
   dcl-pi *n extproc(*dclcase) end-pi;
@@ -627,12 +719,13 @@ dcl-proc test_Execute_EVENTF_ADDJOBLOG_EVENTF_OK export;
   append('/* ---------------------------------------------------------------- */');
   append('/* >>PRE-COMPILER<<                                                 */');
   append('/*   >>CRTCMD<< CRTCLMOD  MODULE(&LI/&OB) SRCFILE(&SL/&SF) +        */');
-  append('/*                        SRCMBR(&SM) OPTION(*GEN   *EVENTF) +      */');
+  append('/*                        SRCMBR(&SM) OPTION(*EVENTF) +             */');
   append('/*                        OUTPUT(*NONE);                            */');
   append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
   append('/*   >>EXECUTE<<                                                    */');
   append('/* >>END-PRE-COMPILER<<                                             */');
   append('PGM');
+  append('  /* No executable commands found in source file. */');
   append('ENDPGM');
 
   runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE) +
@@ -640,31 +733,41 @@ dcl-proc test_Execute_EVENTF_ADDJOBLOG_EVENTF_OK export;
             SRCLIB(*DFT) SRCFILE(*DFT) SRCMBR(*DFT)');
 
   assertFileID_001('TESTCASE');
-  assertNoJobLog();
   assertMsgID('CPD0729': 'W'); // No executable commands found in source file.
+
+  assertNoJobLog();
 
   assertNoMsgId('PRZ0029');
 
 end-proc;
 
 // ------------------------------------------------------------
-//    FILEID 001 for member TESTCASE with compile messages.
+//  STRPREPRC options:
+//    *EVENTF, *ADDJOBLOG
+//  Pre-command:
+//    no error
+//  Compile command:
+//    error, event file
+//  Post-command:
+//    no error
+//  Expected:
+//    FILEID 001 (TESTCASE) with compile messages.
 // ------------------------------------------------------------
 dcl-proc test_Execute_EVENTF_ADDJOBLOG_EVENTF_ERROR export;
   dcl-pi *n extproc(*dclcase) end-pi;
 
   append('/* ---------------------------------------------------------------- */': 1);
-  append('/*     Produces an error in the main command.                       */');
-  append('/* ---------------------------------------------------------------- */');
   append('/* >>PRE-COMPILER<<                                                 */');
   append('/*   >>CRTCMD<< CRTCLMOD  MODULE(&LI/&OB) SRCFILE(&SL/&SF) +        */');
-  append('/*                        SRCMBR(&SM) OPTION(*GEN   *EVENTF) +      */');
+  append('/*                        SRCMBR(&SM) OPTION(*EVENTF) +             */');
   append('/*                        OUTPUT(*NONE );                           */');
   append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
   append('/*   >>EXECUTE<<                                                    */');
   append('/* >>END-PRE-COMPILER<<                                             */');
+  append('/* ---------------------------------------------------------------- */');
   append('PGM');
   append('  DCL LIB *CHAR 10');
+  append('  CHKOBJ OBJ(QSYS) OBJTYPE(*LIB)');
   append('ENDPGM');
 
   monitor;
@@ -677,32 +780,42 @@ dcl-proc test_Execute_EVENTF_ADDJOBLOG_EVENTF_ERROR export;
   endmon;
 
   assertFileID_001('TESTCASE');
-  assertNoJobLog();
   assertMsgID('CPD0081': 'S'); // Variable name required for parameter VAR.
+
+  assertNoJobLog();
 
   assertNoMsgId('PRZ0029');
 
 end-proc;
 
 // ------------------------------------------------------------
+//  STRPREPRC options:
+//    *EVENTF, *NOJOBLOG
+//  Pre-command:
+//    no error
+//  Compile command:
+//    no error, no event file
+//  Post-command:
+//    no error
 //  Expected:
 //    Empty EVFEVENT file, due to no errors.
 // ------------------------------------------------------------
-dcl-proc test_Execute_EVENTF_NOJOBLOG_OK_OK export;
+dcl-proc test_PostCmd_EVENTF_NOJOBLOG_NOEVENTF_OK_OK export;
   dcl-pi *n extproc(*dclcase) end-pi;
 
   append('/* ---------------------------------------------------------------- */': 1);
-  append('/*     Succesfully executes the pre-compile and main commands.      */');
-  append('/* ---------------------------------------------------------------- */');
   append('/* >>PRE-COMPILER<<                                                 */');
   append('/*   >>CRTCMD<< CRTCLMOD  MODULE(&LI/&OB) SRCFILE(&SL/&SF) +        */');
-  append('/*                        SRCMBR(&SM) OPTION(*GEN   *NOEVENTF) +    */');
+  append('/*                        SRCMBR(&SM) OPTION(*NOEVENTF) +           */');
   append('/*                        OUTPUT(*NONE);                            */');
   append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
   append('/*   >>EXECUTE<<                                                    */');
   append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
   append('/* >>END-PRE-COMPILER<<                                             */');
+  append('/* ---------------------------------------------------------------- */');
   append('PGM');
+  append('  DCL &LIB *CHAR 10');
+  append('  CHKOBJ OBJ(QSYS) OBJTYPE(*LIB)');
   append('ENDPGM');
 
   runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE) +
@@ -723,15 +836,15 @@ end-proc;
 //  Post-command:
 //    no error
 //  Expected:
-//    FILEID 001 for member TESTCASE with *COMPILE job log messages.
+//    FILEID 001 (TESTCASE) with job log of compile command.
 // -----------------------------------------------------------------------
-dcl-proc test_Execute_EVENTF_ADDJOBLOG_OK_OK export;
+dcl-proc test_PostCmd_EVENTF_ADDJOBLOG_NOEVENTF_OK_OK export;
   dcl-pi *n extproc(*dclcase) end-pi;
 
   append('/* ---------------------------------------------------------------- */': 1);
   append('/* >>PRE-COMPILER<<                                                 */');
   append('/*   >>CRTCMD<< CRTCLMOD  MODULE(&LI/&OB) SRCFILE(&SL/&SF) +        */');
-  append('/*                        SRCMBR(&SM) OPTION(*GEN   *NOEVENTF) +    */');
+  append('/*                        SRCMBR(&SM) OPTION(*NOEVENTF) +           */');
   append('/*                        OUTPUT(*NONE);                            */');
   append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
   append('/*   >>EXECUTE<<                                                    */');
@@ -739,15 +852,17 @@ dcl-proc test_Execute_EVENTF_ADDJOBLOG_OK_OK export;
   append('/* >>END-PRE-COMPILER<<                                             */');
   append('/* ---------------------------------------------------------------- */');
   append('PGM');
+  append('  /* No executable commands found in source file. */');
   append('ENDPGM');
 
   runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE) +
             OPTION(*EVENTF *ADDJOBLOG) LIB(QTEMP) OBJ(TESTCASE) +
             SRCLIB(*DFT) SRCFILE(*DFT) SRCMBR(*DFT)');
 
-  assertFileID_001('TESTCASE'); // Added due to *ADDJOBLOG and *NOEVENTF.
-  assertNoJobLog();
+  assertFileID_001('TESTCASE');
   assertMsgID('CPD0729': 'W'); // No executable commands found in source file.
+
+  assertNoJobLog();
 
   assertMsgID('PRZ0029': 'W'); // STRPREPRZ messages
 
@@ -763,15 +878,15 @@ end-proc;
 //  Post-command:
 //    error
 //  Expected:
-//    FILEID 001 with job log of post-command.
+//    FILEID 001 (TESTCASE) with job log of post-command.
 // -----------------------------------------------------------------------
-dcl-proc test_Execute_EVENTF_NOJOBLOG_OK_ERROR export;
+dcl-proc test_PostCmd_EVENTF_NOJOBLOG_NOEVENTF_OK_ERROR export;
   dcl-pi *n extproc(*dclcase) end-pi;
 
   append('/* ---------------------------------------------------------------- */': 1);
   append('/* >>PRE-COMPILER<<                                                 */');
   append('/*   >>CRTCMD<< CRTCLMOD  MODULE(&LI/&OB) SRCFILE(&SL/&SF) +        */');
-  append('/*                        SRCMBR(&SM) OPTION(*GEN   *NOEVENTF) +    */');
+  append('/*                        SRCMBR(&SM) OPTION(*NOEVENTF) +           */');
   append('/*                        OUTPUT(*NONE);                            */');
   append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
   append('/*   >>EXECUTE<<                                                    */');
@@ -780,6 +895,8 @@ dcl-proc test_Execute_EVENTF_NOJOBLOG_OK_ERROR export;
   append('/* >>END-PRE-COMPILER<<                                             */');
   append('/* ---------------------------------------------------------------- */');
   append('PGM');
+  append('  DCL &LIB *CHAR 10');
+  append('  CHKOBJ OBJ(QSYS) OBJTYPE(*LIB)');
   append('ENDPGM');
 
   monitor;
@@ -790,11 +907,11 @@ dcl-proc test_Execute_EVENTF_NOJOBLOG_OK_ERROR export;
   // Exception seen!
   endmon;
 
-  assertFileID_001('TESTCASE'); // Added due to *ERROR in *POSTCMD
-  assertNoJobLog();
-
+  assertFileID_001('TESTCASE');
   assertMsgID('CPF7312': 'S'); // File not found
   assertMsgId('CPF7306': 'T'); // Member not added
+
+  assertNoJobLog();
 
 end-proc;
 
@@ -808,16 +925,16 @@ end-proc;
 //  Post-command:
 //    error
 //  Expected:
-//    FILEID 001 with job log of compile-command.
-//    FILEID 999 with job log of post-command.
+//    FILEID 001 (TESTCASE) with job log of compile command.
+//    FILEID 999 (*JOBLOG) with job log of post-command.
 // -----------------------------------------------------------------------
-dcl-proc test_Execute_EVENTF_ADDJOBLOG_OK_ERROR export;
+dcl-proc test_PostCmd_EVENTF_ADDJOBLOG_NOEVENTF_OK_ERROR export;
   dcl-pi *n extproc(*dclcase) end-pi;
 
   append('/* ---------------------------------------------------------------- */': 1);
   append('/* >>PRE-COMPILER<<                                                 */');
   append('/*   >>CRTCMD<< CRTCLMOD  MODULE(&LI/&OB) SRCFILE(&SL/&SF) +        */');
-  append('/*                        SRCMBR(&SM) OPTION(*GEN   *NOEVENTF) +    */');
+  append('/*                        SRCMBR(&SM) OPTION(*NOEVENTF) +           */');
   append('/*                        OUTPUT(*NONE);                            */');
   append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
   append('/*   >>EXECUTE<<                                                    */');
@@ -826,6 +943,8 @@ dcl-proc test_Execute_EVENTF_ADDJOBLOG_OK_ERROR export;
   append('/* >>END-PRE-COMPILER<<                                             */');
   append('/* ---------------------------------------------------------------- */');
   append('PGM');
+  append('  DCL &LIB *CHAR 10');
+  append('  CHKOBJ OBJ(QSYS) OBJTYPE(*LIB)');
   append('ENDPGM');
 
   monitor;
@@ -836,7 +955,9 @@ dcl-proc test_Execute_EVENTF_ADDJOBLOG_OK_ERROR export;
   // Exception seen!
   endmon;
 
-  assertFileID_001('TESTCASE'); // STRPREPRZ warning messages, due to OPTION(*ADDJOBLOG).
+  assertFileID_001('TESTCASE');
+  assertMsgID('CPC0816': 'I'); // Module TESTCASE created in library QTEMP.
+  assertMsgID('PRZ0033': 'W'); // Objekt erstellt.
 
   assertFileID_999('*JOBLOG'); // Job log of *POSTCMD, due to error in post-command.
   assertMsgID('CPF7312': 'S'); // File not found
@@ -854,16 +975,16 @@ end-proc;
 //  Post-command:
 //    error
 //  Expected:
-//    FILEID 001 for member TESTCASE with compile messages.
-//    FILEID 999 for *JOBLOG with *POSTCMD error messages.
+//    FILEID 001 (TESTCASE) with compile messages.
+//    FILEID 999 (*JOBLOG) with job log of post-command.
 // -----------------------------------------------------------------------
-dcl-proc test_Execute_EVENTF_ADDJOBLOG_EVENTF_OK_ERROR export;
+dcl-proc test_PostCmd_EVENTF_ADDJOBLOG_EVENTF_OK_ERROR export;
   dcl-pi *n extproc(*dclcase) end-pi;
 
   append('/* ---------------------------------------------------------------- */': 1);
   append('/* >>PRE-COMPILER<<                                                 */');
   append('/*   >>CRTCMD<< CRTCLMOD  MODULE(&LI/&OB) SRCFILE(&SL/&SF) +        */');
-  append('/*                        SRCMBR(&SM) OPTION(*GEN   *EVENTF) +      */');
+  append('/*                        SRCMBR(&SM) OPTION(*EVENTF) +             */');
   append('/*                        OUTPUT(*NONE);                            */');
   append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
   append('/*   >>EXECUTE<<                                                    */');
@@ -872,6 +993,7 @@ dcl-proc test_Execute_EVENTF_ADDJOBLOG_EVENTF_OK_ERROR export;
   append('/* >>END-PRE-COMPILER<<                                             */');
   append('/* ---------------------------------------------------------------- */');
   append('PGM');
+  append('  /* No executable commands found in source file. */');
   append('ENDPGM');
 
   monitor;
@@ -901,15 +1023,15 @@ end-proc;
 //  Post-command:
 //    no error
 //  Expected:
-//    FILEID 001 for member TESTCASE with compile messages.
+//    FILEID 001 (TESTCASE) with compile messages.
 // -----------------------------------------------------------------------
-dcl-proc test_Execute_EVENTF_ADDJOBLOG_EVENTF_OK_OK export;
+dcl-proc test_PostCmd_EVENTF_ADDJOBLOG_EVENTF_OK_OK export;
   dcl-pi *n extproc(*dclcase) end-pi;
 
   append('/* ---------------------------------------------------------------- */': 1);
   append('/* >>PRE-COMPILER<<                                                 */');
   append('/*   >>CRTCMD<< CRTCLMOD  MODULE(&LI/&OB) SRCFILE(&SL/&SF) +        */');
-  append('/*                        SRCMBR(&SM) OPTION(*GEN   *EVENTF) +      */');
+  append('/*                        SRCMBR(&SM) OPTION(*EVENTF) +             */');
   append('/*                        OUTPUT(*NONE);                            */');
   append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
   append('/*   >>EXECUTE<<                                                    */');
@@ -917,6 +1039,7 @@ dcl-proc test_Execute_EVENTF_ADDJOBLOG_EVENTF_OK_OK export;
   append('/* >>END-PRE-COMPILER<<                                             */');
   append('/* ---------------------------------------------------------------- */');
   append('PGM');
+  append('  /* No executable commands found in source file. */');
   append('ENDPGM');
 
   runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE) +
@@ -925,6 +1048,7 @@ dcl-proc test_Execute_EVENTF_ADDJOBLOG_EVENTF_OK_OK export;
 
   assertFileID_001('TESTCASE');
   assertMsgID('CPD0729': 'W'); // No executable commands found in source file.
+
   assertNoJobLog();
 
 end-proc;
@@ -939,16 +1063,16 @@ end-proc;
 //  Post-command:
 //    error, produces event file
 //  Expected:
-//    FILEID 001 for member TESTCASE with *COMPILE messages.
-//    FILEID 999 for *JOBLOG with *POSTCMD joblog  messages.
+//    FILEID 001 (TESTCASE) with compile messages.
+//    FILEID 999 (*JOBLOG) with job log of post-command.
 // -----------------------------------------------------------------------
-dcl-proc test_Execute_EVENTF_ADDJOBLOG_EVENTF_OK_ERROR_COPY export;
+dcl-proc test_PostCmd_EVENTF_ADDJOBLOG_EVENTF_OK_ERROR_COPY export;
   dcl-pi *n extproc(*dclcase) end-pi;
 
   append('/* ---------------------------------------------------------------- */': 1);
   append('/* >>PRE-COMPILER<<                                                 */');
   append('/*   >>CRTCMD<< CRTCLMOD  MODULE(&LI/&OB) SRCFILE(&SL/&SF) +        */');
-  append('/*                        SRCMBR(&SM) OPTION(*GEN   *EVENTF) +      */');
+  append('/*                        SRCMBR(&SM) OPTION(*EVENTF) +             */');
   append('/*                        OUTPUT(*NONE);                            */');
   append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
   append('/*   >>EXECUTE<<                                                    */');
@@ -958,6 +1082,7 @@ dcl-proc test_Execute_EVENTF_ADDJOBLOG_EVENTF_OK_ERROR_COPY export;
   append('/* >>END-PRE-COMPILER<<                                             */');
   append('/* ---------------------------------------------------------------- */');
   append('PGM');
+  append('  /* No executable commands found in source file. */');
   append('ENDPGM');
 
   monitor;
