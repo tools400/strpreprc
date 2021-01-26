@@ -125,6 +125,10 @@
       *                              PRZ0033 - Objekt created               *
       *                              PRZ0034 - Error message ignored ...    *
       *                                                                     *
+      *  26.01.2021  Th.Raddatz    Fixed problem that parameter &LX was     *
+      *                            not replaced when the library list was   *
+      *                            empty.                                   *
+      *                                                                     *
       * =================================================================== *
       * >>PRE-COMPILER<<                                                    *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
@@ -1674,6 +1678,9 @@
          if (i_variables.prvLibl.usrLibl.numE >= 1);
             replaceVar(
                '&LX': libListToStr(i_variables.prvLibl.usrLibl): cmdString);
+         else;
+            replaceVar(
+               '&LX': '*NONE': cmdString);
          endif;
 
          // Ersetzen Parameter Sonderwert  (*LX)
@@ -1705,6 +1712,7 @@
             PRZ00231 = posOfVar;
             PRZ00232 = cmdString;
             sendMsg(f_newMsg('PRZ0023': PRZ0023: cTYPE_DIAG));
+            appendToJobLog(i_cmd);
             endAbnormal();
          endif;
 
