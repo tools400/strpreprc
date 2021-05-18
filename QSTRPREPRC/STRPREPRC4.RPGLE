@@ -468,6 +468,21 @@
       /end-free
      P                 e
       *
+      *===============================================================*
+      *  Copy event file.
+      *===============================================================*
+     P copyEventFile...
+     P                 b                   export
+     D                 pi
+     D  i_fromLib                    10a   const
+     D  i_fromMbr                    10a   const
+      /free
+
+        Eventf_copyFrom(i_fromLib: i_fromMbr);
+
+      /end-free
+     P                 e
+      *
       * =============================================================
       *  Returns cTrue for an ignored message ID, else cFalse.
       * =============================================================

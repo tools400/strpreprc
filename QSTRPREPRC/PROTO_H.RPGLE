@@ -55,4 +55,11 @@
      D                                     closeEventFile+
      D                                     ')
 
+     D copyEventFile...
+     D                 pr                  extproc('STRPREPRC4_+
+     D                                     copyEventFile+
+     D                                     ')
+     D  i_fromLib                    10a   const
+     D  i_fromMbr                    10a   const
+
       /endif

@@ -129,6 +129,16 @@
       *                            not replaced when the library list was   *
       *                            empty.                                   *
       *                                                                     *
+      *  18.05.2021  Th.Raddatz    Changed performSetLibraryList(),         *
+      *                            performSetCurrentLibrary() and           *
+      *                            peformCmd() to call endAbnormal()        *
+      *                            without 'event file' parameter.          *
+      *                                                                     *
+      *  18.05.2021  Th.Raddatz    Changed writeJobLogToEventf() to copy    *
+      *                            the event file data from the actual      *
+      *                            event file used by the IBM object        *
+      *                            creation command.                        *
+      *                                                                     *
       * =================================================================== *
       * >>PRE-COMPILER<<                                                    *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
@@ -1865,11 +1875,7 @@
                msg = f_newMsg('PRZ0034': PRZ0034: cMsg_Info);
                f_sndPgmMsg(msg: cMsg_Same: cMsg_ToMyself);
             else;
-               if (%scan(cEVENTF_YES: i_cmd) > 0);
-                  endAbnormal(retrieveEventFile(i_cmd)); // EVENT file created by command
-               else;
-                  endAbnormal();
-               endif;
+               endAbnormal();
             endif;
          endif;
 
@@ -2157,11 +2163,7 @@
          endif;
 
          if (not executeCmd(cTrue: i_cmd));
-            if (%scan(cEVENTF_YES: i_cmd) > 0);
-               endAbnormal(retrieveEventFile(i_cmd)); // EVENT file created by command
-            else;
-               endAbnormal();
-            endif;
+            endAbnormal();
          endif;
 
       /end-free
@@ -2201,11 +2203,7 @@
          endif;
 
          if (not executeCmd(cTrue: i_cmd));
-            if (%scan(cEVENTF_YES: i_cmd) > 0);
-               endAbnormal(retrieveEventFile(i_cmd)); // EVENT file created by command
-            else;
-               endAbnormal();
-            endif;
+            endAbnormal();
          endif;
 
       /end-free
@@ -3503,12 +3501,22 @@
 
          monitor;
 
-            // Event file of IBM object creation command
-            if (g_eventf.lib <> '' and g_eventf.mbr <> '');
-               isEmpty = isEmptyEventFile(g_eventf.lib: g_eventf.mbr);
-            else;
-               isEmpty = cTrue;
+            if (i_qEventf.name <> '' and i_qEventf.lib <> '');
+               if (i_qEventf.name <> g_eventf.mbr or
+                   i_qEventf.lib <> g_eventf.lib);
+                  if (not isEmptyEventFile(i_qEventf.lib: i_qEventf.name));
+                     g_eventf.isOpen = openEventFile(
+                                          g_eventf.mbr: g_eventf.lib: doAppend);
+                     if (g_eventf.isOpen);
+                        copyEventFile(i_qEventf.lib: i_qEventf.name);
+                        closeEventFile();
+                        g_eventf.isOpen = cFalse;
+                     endif;
+                  endif;
+               endif;
             endif;
+
+            isEmpty = isEmptyEventFile(g_eventf.lib: g_eventf.mbr);
 
             select; // g_prePostCmdsMode
             when (g_prePostCmdsMode = MODE_PRECMDS);
@@ -3526,8 +3534,6 @@
                doAppend = not isEmpty;
                // TODO: Copy compile listing from pre/post-command if available
                //       instead of appending the job log???
-               // g_eventf.isOpen = openEventFile(g_eventf.mbr: g_eventf.lib
-               //                                 : doAppend: i_qEventf);
                g_eventf.isOpen = openEventFile(
                                     g_eventf.mbr: g_eventf.lib: doAppend);
                if (g_eventf.isOpen);
