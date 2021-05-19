@@ -139,6 +139,9 @@
       *                            event file used by the IBM object        *
       *                            creation command.                        *
       *                                                                     *
+      *  19.05.2021  Th.Raddatz    Fixed duplicate TIMESTAMP and PROCESSOR  *
+      *                            entries after copying an EVENTF member.  *
+      *                                                                     *
       * =================================================================== *
       * >>PRE-COMPILER<<                                                    *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
@@ -3505,13 +3508,8 @@
                if (i_qEventf.name <> g_eventf.mbr or
                    i_qEventf.lib <> g_eventf.lib);
                   if (not isEmptyEventFile(i_qEventf.lib: i_qEventf.name));
-                     g_eventf.isOpen = openEventFile(
-                                          g_eventf.mbr: g_eventf.lib: doAppend);
-                     if (g_eventf.isOpen);
-                        copyEventFile(i_qEventf.lib: i_qEventf.name);
-                        closeEventFile();
-                        g_eventf.isOpen = cFalse;
-                     endif;
+                        copyEventFile(i_qEventf.lib: i_qEventf.name
+                                      : g_eventf.lib: g_eventf.mbr);
                   endif;
                endif;
             endif;

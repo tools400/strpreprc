@@ -37,8 +37,6 @@
      D  i_obj                        10a   const
      D  i_lib                        10a   const
      D  i_append                       n   const
-     D  i_qEventf                          const  likeds(qObj_t)
-     D                                            options(*nopass)
 
      D writeEventFile...
      D                 pr                  extproc('STRPREPRC4_+
@@ -61,5 +59,7 @@
      D                                     ')
      D  i_fromLib                    10a   const
      D  i_fromMbr                    10a   const
+     D  i_toLib                      10a   const
+     D  i_toMbr                      10a   const
 
       /endif

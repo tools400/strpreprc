@@ -249,12 +249,7 @@
      D  i_obj                        10a   const
      D  i_lib                        10a   const
      D  i_append                       n   const
-     D  i_qEventf                          const  likeds(qObj_t)
-     D                                            options(*nopass)
 
-     D p_qEventf       c                   4
-
-     D qEventf         ds                  likeds(i_qEventf)
      D rtnLib          s                   like(i_lib)
       /free
 
@@ -262,30 +257,13 @@
             return cFalse;
          endif;
 
-         if (%parms() >= p_qEventf and %addr(i_qEventf) <> *null);
-            qEventf = i_qEventf;
-         else;
-            clear qEventf;
-         endif;
-
          g_status.openForAppend = i_append;
-         g_status.copyEvents = cFalse;
-
-         if (qEventf.name <> '' and qEventf.lib <> '');
-           if (qEventf.name <> i_obj or qEventf.lib <> i_lib);
-             g_status.copyEvents = cTrue;
-           endif;
-         endif;
 
          if (g_status.openForAppend);
             Eventf_openAppend(i_lib: i_obj: rtnLib);
          else;
             Eventf_open(i_lib: i_obj: rtnLib);
-            if (g_status.copyEvents);
-               Eventf_copyFrom(qEventf.lib: qEventf.name);
-            else;
-               Eventf_writeProcessor();
-            endif;
+            Eventf_writeProcessor();
          endif;
 
          g_status.haveEventFile = cTrue;
@@ -476,9 +454,13 @@
      D                 pi
      D  i_fromLib                    10a   const
      D  i_fromMbr                    10a   const
+     D  i_toLib                      10a   const
+     D  i_toMbr                      10a   const
       /free
 
+        Eventf_open(i_toLib: i_toMbr);
         Eventf_copyFrom(i_fromLib: i_fromMbr);
+        Eventf_close();
 
       /end-free
      P                 e

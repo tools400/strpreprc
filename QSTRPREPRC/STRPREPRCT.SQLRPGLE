@@ -735,6 +735,60 @@ end-proc;
 
 // ------------------------------------------------------------
 //  STRPREPRC options:
+//    *EVENTF, *NOJOBLOG
+//  Pre-command:
+//    no error
+//  Compile command:
+//    error, no event file
+//  Post-command:
+//    *NONE
+//  Specials:
+//    Module name has been overridden in STRPREPRC header.
+//  Expected:
+//    FILEID 001 (TESTCASE) with job log of compile command.
+//    (replacement for compile listing)
+// ------------------------------------------------------------
+dcl-proc test_Execute_EVENTF_NOJOBLOG_EVENTF_ERROR_2 export;
+  dcl-pi *n extproc(*dclcase) end-pi;
+
+  append('/* ---------------------------------------------------------------- */': 100);
+  append('/*     Produces an error in the main command.                       */');
+  append('/* ---------------------------------------------------------------- */');
+  append('/* >>PRE-COMPILER<<                                                 */');
+  append('/*   >>CRTCMD<< CRTCLMOD  MODULE(&LI/&OB) SRCFILE(&SL/&SF) +        */');
+  append('/*                        SRCMBR(&SM) OPTION(*EVENTF) +             */');
+  append('/*                        OUTPUT(*NONE);                            */');
+  append('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
+  append('/*   >>IMPORTANT<<                                                  */');
+  append('/*     >>PARM<<  MODULE(&LI/TEST);                                  */');
+  append('/*   >>END-IMPORTANT<<                                              */');
+  append('/*   >>EXECUTE<<                                                    */');
+  append('/* >>END-PRE-COMPILER<<                                             */');
+  append('PGM');
+  append('  DCL LIB *CHAR 10');
+  append('  CHKOBJ OBJ(QSYS) OBJTYPE(*LIB)');
+  append('ENDPGM');
+
+  monitor;
+    runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE) +
+              OPTION(*EVENTF *NOJOBLOG) LIB(QTEMP) OBJ(TESTCASE) +
+              SRCLIB(*DFT) SRCFILE(*DFT) SRCMBR(*DFT)');
+    fail('STRPREPRC should have thown an error (004)');
+  on-error;
+  // Exception seen!
+  endmon;
+
+  assertFileID_001('TESTCASE');
+  assertMsgID('CPD0081': 'S'); // Variable name required for parameter VAR.
+
+  assertNoJobLog();
+
+  assertNoMsgId('PRZ0029');
+
+end-proc;
+
+// ------------------------------------------------------------
+//  STRPREPRC options:
 //    *EVENTF, *ADDJOBLOG
 //  Pre-command:
 //    no error
