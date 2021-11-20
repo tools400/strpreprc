@@ -255,12 +255,12 @@
 
          if (g_status.openForAppend);
             Eventf_openAppend(i_lib: i_obj: rtnLib);
-            if (rtnLib <> '');
+            if (rtnLib = '');
                return cFalse;
             endif;
          else;
             Eventf_open(i_lib: i_obj: rtnLib);
-            if (rtnLib <> '');
+            if (rtnLib = '');
                return cFalse;
             endif;
             Eventf_writeProcessor();
