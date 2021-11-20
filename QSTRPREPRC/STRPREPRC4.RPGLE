@@ -33,6 +33,9 @@
       *  22.12.2020  Th.Raddatz    Changed writing job log entries as ERROR *
       *                            entries, in case of compilation errors.  *
       *                                                                     *
+      *  19.11.2021  Th.Raddatz    Moved prototype of updateLDA() to member *
+      *                            PROTO_H.                                 *
+      *                                                                     *
       * =================================================================== *
       * >>PRE-COMPILER<<                                                    *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
@@ -140,12 +143,6 @@
       /copy QEVENTF,PEVENTF                        EVFEVENT API - Public Interface
       /copy QJOBLOG,PJOBLOG                        EVFEVENT API - Job Log
       *
-      *  Updated the *LDA with the name of the event file.
-     D updateLDA...
-     D                 pr                  extproc('updateLDA')
-     D  i_lib                        10a   const
-     D  i_obj                        10a   const
-      *
       * =============================================================
       *  Enables this module.
       * =============================================================
@@ -234,9 +231,6 @@
             g_status.msgKey = *ALLx'FF';
          endif;
 
-         // Initialize *LDA. Reset event file name.
-         // updateLDA('': '');
-
       /end-free
      P                 e
       *
@@ -261,20 +255,20 @@
 
          if (g_status.openForAppend);
             Eventf_openAppend(i_lib: i_obj: rtnLib);
+            if (rtnLib <> '');
+               return cFalse;
+            endif;
          else;
             Eventf_open(i_lib: i_obj: rtnLib);
+            if (rtnLib <> '');
+               return cFalse;
+            endif;
             Eventf_writeProcessor();
          endif;
 
          g_status.haveEventFile = cTrue;
 
-         updateLDA(rtnLib: i_obj);
-
-         if (rtnLib <> '');
-            return cTrue;
-         endif;
-
-         return cFalse;
+         return cTrue;
 
       /end-free
      P                 e

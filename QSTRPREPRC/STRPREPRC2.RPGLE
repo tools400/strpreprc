@@ -142,6 +142,9 @@
       *  19.05.2021  Th.Raddatz    Fixed duplicate TIMESTAMP and PROCESSOR  *
       *                            entries after copying an EVENTF member.  *
       *                                                                     *
+      *  19.11.2021  Th.Raddatz    Fixed problem that the *LDA was not      *
+      *                            properly set. (==> updateLDA())          *
+      *                                                                     *
       * =================================================================== *
       * >>PRE-COMPILER<<                                                    *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
@@ -3530,8 +3533,6 @@
 
             if (doAppendJobLog);
                doAppend = not isEmpty;
-               // TODO: Copy compile listing from pre/post-command if available
-               //       instead of appending the job log???
                g_eventf.isOpen = openEventFile(
                                     g_eventf.mbr: g_eventf.lib: doAppend);
                if (g_eventf.isOpen);
@@ -3540,6 +3541,9 @@
                      : f1_line_number: i_isAbnEnd);
                endif;
             endif;
+
+            // Update *LDA with event file name.
+            updateLDA(g_eventf.lib: g_eventf.mbr);
 
          on-error;
             g_eventf.isOpen = cFalse;

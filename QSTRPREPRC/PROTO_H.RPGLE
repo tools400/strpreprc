@@ -62,4 +62,10 @@
      D  i_toLib                      10a   const
      D  i_toMbr                      10a   const
 
+     D updateLDA...
+     D                 pr                  extproc('STRPREPRC4_+
+     D                                     updateLDA')
+     D  i_lib                        10a   const
+     D  i_obj                        10a   const
+
       /endif

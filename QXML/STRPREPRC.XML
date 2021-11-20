@@ -51,7 +51,7 @@
       appblddate CDATA #REQUIRED
      >
      ]>
-<upload  appname="STRPREPRC"  appauthor="Thomas Raddatz"  appblddate=" 5/19/2021">
+<upload  appname="STRPREPRC"  appauthor="Thomas Raddatz"  appblddate="11/20/2021">
 <install_instructions><![CDATA[
      *----------------------------------------------------------------      ------
      *  1. Upload entire XML to your AS/400 to a source file 112 long, into any mbr
@@ -3369,13 +3369,13 @@ srclen  =  "00112"
 srccssid=  "01141">
 <copysrc><![CDATA[
       /if not defined(COPYRIGHT_DSPEC)
-     h COPYRIGHT('V1.20.1 - 19.05.2021 - mailto: thomas.raddatz@tools400.de')
+     h COPYRIGHT('V1.20.2 - 20.11.2021 - mailto: thomas.raddatz@tools400.de')
       /eof
       /endif
      d STRPREPRC_VERSION...
-     d                 C                   '1.20.1'
+     d                 C                   '1.20.2'
      d STRPREPRC_DATE...
-     d                 C                   '19.05.2021'
+     d                 C                   '20.11.2021'
       *
 ]]>  </copysrc>
 </mbr>
@@ -3480,6 +3480,12 @@ srccssid=  "01141">
      D  i_fromMbr                    10a   const
      D  i_toLib                      10a   const
      D  i_toMbr                      10a   const
+
+     D updateLDA...
+     D                 pr                  extproc('STRPREPRC4_+
+     D                                     updateLDA')
+     D  i_lib                        10a   const
+     D  i_obj                        10a   const
 
       /endif
 ]]>  </copysrc>
@@ -10448,6 +10454,9 @@ srccssid=  "01141">
       *  19.05.2021  Th.Raddatz    Fixed duplicate TIMESTAMP and PROCESSOR  *
       *                            entries after copying an EVENTF member.  *
       *                                                                     *
+      *  19.11.2021  Th.Raddatz    Fixed problem that the *LDA was not      *
+      *                            properly set. (==> updateLDA())          *
+      *                                                                     *
       * =================================================================== *
       * >>PRE-COMPILER<<                                                    *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
@@ -13836,8 +13845,6 @@ srccssid=  "01141">
 
             if (doAppendJobLog);
                doAppend = not isEmpty;
-               // TODO: Copy compile listing from pre/post-command if available
-               //       instead of appending the job log???
                g_eventf.isOpen = openEventFile(
                                     g_eventf.mbr: g_eventf.lib: doAppend);
                if (g_eventf.isOpen);
@@ -13846,6 +13853,9 @@ srccssid=  "01141">
                      : f1_line_number: i_isAbnEnd);
                endif;
             endif;
+
+            // Update *LDA with event file name.
+            updateLDA(g_eventf.lib: g_eventf.mbr);
 
          on-error;
             g_eventf.isOpen = cFalse;
@@ -14287,6 +14297,9 @@ srccssid=  "01141">
       *  22.12.2020  Th.Raddatz    Changed writing job log entries as ERROR *
       *                            entries, in case of compilation errors.  *
       *                                                                     *
+      *  19.11.2021  Th.Raddatz    Moved prototype of updateLDA() to member *
+      *                            PROTO_H.                                 *
+      *                                                                     *
       * =================================================================== *
       * >>PRE-COMPILER<<                                                    *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
@@ -14394,12 +14407,6 @@ srccssid=  "01141">
       /copy QEVENTF,PEVENTF                        EVFEVENT API - Public Interface
       /copy QJOBLOG,PJOBLOG                        EVFEVENT API - Job Log
       *
-      *  Updated the *LDA with the name of the event file.
-     D updateLDA...
-     D                 pr                  extproc('updateLDA')
-     D  i_lib                        10a   const
-     D  i_obj                        10a   const
-      *
       * =============================================================
       *  Enables this module.
       * =============================================================
@@ -14488,9 +14495,6 @@ srccssid=  "01141">
             g_status.msgKey = *ALLx'FF';
          endif;
 
-         // Initialize *LDA. Reset event file name.
-         // updateLDA('': '');
-
       /end-free
      P                 e
       *
@@ -14515,20 +14519,20 @@ srccssid=  "01141">
 
          if (g_status.openForAppend);
             Eventf_openAppend(i_lib: i_obj: rtnLib);
+            if (rtnLib <> '');
+               return cFalse;
+            endif;
          else;
             Eventf_open(i_lib: i_obj: rtnLib);
+            if (rtnLib <> '');
+               return cFalse;
+            endif;
             Eventf_writeProcessor();
          endif;
 
          g_status.haveEventFile = cTrue;
 
-         updateLDA(rtnLib: i_obj);
-
-         if (rtnLib <> '');
-            return cTrue;
-         endif;
-
-         return cFalse;
+         return cTrue;
 
       /end-free
      P                 e
