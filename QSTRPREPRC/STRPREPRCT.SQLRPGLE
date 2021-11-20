@@ -53,6 +53,13 @@ dcl-ds errCode_t qualified template;
   reserved_1   char(1) inz;
   excDta       char(100) inz;
 end-ds;
+// ------------------------------------------------------------
+//  Local data area (*LDA).
+// ------------------------------------------------------------
+dcl-ds g_LDA qualified dtaara(*LDA);
+  library      char(10);
+  object       char(10);
+end-ds;
 
 // ------------------------------------------------------------
 //  Set up test suite.
@@ -149,6 +156,8 @@ dcl-proc setUp export;
     endif;
   endif;
 
+  clearLDA();
+
 end-proc;
 
 // ------------------------------------------------------------
@@ -183,6 +192,10 @@ dcl-proc test_MONMSG export;
 
   assertEmpty();
 
+  assertLDA('': ''); // Job log entries are not added to the event file
+                     // for pre- and post commands. Therefore no event file
+                     // is created.
+
 end-proc;
 
 // ------------------------------------------------------------
@@ -212,6 +225,8 @@ dcl-proc test_PreCmd_NOEVENTF_NOJOBLOG_OK export;
             SRCLIB(*DFT) SRCFILE(*DFT) SRCMBR(*DFT)');
 
   assertEmpty();
+
+  assertLDA('': '');
 
 end-proc;
 
@@ -248,6 +263,8 @@ dcl-proc test_PreCmd_NOEVENTF_NOJOBLOG_ERROR export;
 
   assertEmpty();
 
+  assertLDA('': '');
+
 end-proc;
 
 // ------------------------------------------------------------
@@ -277,6 +294,10 @@ dcl-proc test_PreCmd_EVENTF_NOJOBLOG_OK export;
             SRCLIB(*DFT) SRCFILE(*DFT) SRCMBR(*DFT)');
 
   assertEmpty();
+
+  assertLDA('': ''); // Job log entries are not added to the event file
+                     // for pre- and post commands. Therefore no event file
+                     // is created.
 
 end-proc;
 
@@ -316,6 +337,8 @@ dcl-proc test_PreCmd_EVENTF_NOJOBLOG_ERROR export;
 
   assertNoJobLog();
 
+  assertLDA('QTEMP': 'TESTCASE');
+
 end-proc;
 
 // ------------------------------------------------------------
@@ -345,6 +368,10 @@ dcl-proc test_PreCmd_EVENTF_ADDJOBLOG_OK export;
             SRCLIB(*DFT) SRCFILE(*DFT) SRCMBR(*DFT)');
 
   assertEmpty();
+
+  assertLDA('': ''); // Job log entries are not added to the event file
+                     // for pre- and post commands. Therefore no event file
+                     // is created.
 
 end-proc;
 
@@ -384,6 +411,8 @@ dcl-proc test_PreCmd_EVENTF_ADDJOBLOG_ERROR export;
 
   assertNoJobLog();
 
+  assertLDA('QTEMP': 'TESTCASE');
+
 end-proc;
 
 // ------------------------------------------------------------
@@ -421,6 +450,8 @@ dcl-proc test_Execute_NOEVENTF_NOJOBLOG_NOEVENTF_OK export;
             SRCLIB(*DFT) SRCFILE(*DFT) SRCMBR(*DFT)');
 
   assertEmpty();
+
+  assertLDA('': '');
 
 end-proc;
 
@@ -464,6 +495,8 @@ dcl-proc test_Execute_NOEVENTF_NOJOBLOG_NOEVENTF_ERROR export;
 
   assertEmpty();
 
+  assertLDA('': '');
+
 end-proc;
 
 // ------------------------------------------------------------
@@ -501,6 +534,8 @@ dcl-proc test_Execute_EVENTF_NOJOBLOG_NOEVENTF_OK export;
             SRCLIB(*DFT) SRCFILE(*DFT) SRCMBR(*DFT)');
 
   assertEmpty();
+
+  assertLDA('QTEMP': 'TESTCASE');
 
 end-proc;
 
@@ -550,6 +585,8 @@ dcl-proc test_Execute_EVENTF_NOJOBLOG_NOEVENTF_ERROR export;
 
   assertNoJobLog();
 
+  assertLDA('QTEMP': 'TESTCASE');
+
 end-proc;
 
 // -----------------------------------------------------------------------
@@ -591,6 +628,8 @@ dcl-proc test_Execute_EVENTF_ADDJOBLOG_NOEVENTF_OK export;
   assertMsgID('PRZ0033': 'W'); // Object created.
 
   assertNoJobLog();
+
+  assertLDA('QTEMP': 'TESTCASE');
 
 end-proc;
 
@@ -640,6 +679,8 @@ dcl-proc test_Execute_EVENTF_ADDJOBLOG_NOEVENTF_ERROR export;
 
   assertNoJobLog();
 
+  assertLDA('QTEMP': 'TESTCASE');
+
 end-proc;
 
 // ------------------------------------------------------------
@@ -683,6 +724,8 @@ dcl-proc test_Execute_EVENTF_NOJOBLOG_EVENTF_OK export;
   assertNoJobLog();
 
   assertNoMsgId('PRZ0029');
+
+  assertLDA('QTEMP': 'TESTCASE');
 
 end-proc;
 
@@ -730,6 +773,8 @@ dcl-proc test_Execute_EVENTF_NOJOBLOG_EVENTF_ERROR export;
   assertNoJobLog();
 
   assertNoMsgId('PRZ0029');
+
+  assertLDA('QTEMP': 'TESTCASE');
 
 end-proc;
 
@@ -785,6 +830,8 @@ dcl-proc test_Execute_EVENTF_NOJOBLOG_EVENTF_ERROR_2 export;
 
   assertNoMsgId('PRZ0029');
 
+  assertLDA('QTEMP': 'TESTCASE');
+
 end-proc;
 
 // ------------------------------------------------------------
@@ -826,6 +873,8 @@ dcl-proc test_Execute_EVENTF_ADDJOBLOG_EVENTF_OK export;
   assertNoJobLog();
 
   assertNoMsgId('PRZ0029');
+
+  assertLDA('QTEMP': 'TESTCASE');
 
 end-proc;
 
@@ -874,6 +923,8 @@ dcl-proc test_Execute_EVENTF_ADDJOBLOG_EVENTF_ERROR export;
 
   assertNoMsgId('PRZ0029');
 
+  assertLDA('QTEMP': 'TESTCASE');
+
 end-proc;
 
 // ------------------------------------------------------------
@@ -911,6 +962,8 @@ dcl-proc test_PostCmd_EVENTF_NOJOBLOG_NOEVENTF_OK_OK export;
             SRCLIB(*DFT) SRCFILE(*DFT) SRCMBR(*DFT)');
 
   assertEmpty();
+
+  assertLDA('QTEMP': 'TESTCASE');
 
 end-proc;
 
@@ -953,6 +1006,8 @@ dcl-proc test_PostCmd_EVENTF_ADDJOBLOG_NOEVENTF_OK_OK export;
   assertNoJobLog();
 
   assertMsgID('PRZ0029': 'W'); // STRPREPRZ messages
+
+  assertLDA('QTEMP': 'TESTCASE');
 
 end-proc;
 
@@ -1000,6 +1055,8 @@ dcl-proc test_PostCmd_EVENTF_NOJOBLOG_NOEVENTF_OK_ERROR export;
   assertMsgId('CPF7306': 'T'); // Member not added
 
   assertNoJobLog();
+
+  assertLDA('QTEMP': 'TESTCASE');
 
 end-proc;
 
@@ -1051,6 +1108,8 @@ dcl-proc test_PostCmd_EVENTF_ADDJOBLOG_NOEVENTF_OK_ERROR export;
   assertMsgID('CPF7312': 'S'); // File not found
   assertMsgId('CPF7306': 'T'); // Member not added
 
+  assertLDA('QTEMP': 'TESTCASE');
+
 end-proc;
 
 // -----------------------------------------------------------------------
@@ -1099,6 +1158,8 @@ dcl-proc test_PostCmd_EVENTF_ADDJOBLOG_EVENTF_OK_ERROR export;
   assertMsgID('CPF7312': 'S'); // File not found
   assertMsgId('CPF7306': 'T'); // Member not added
 
+  assertLDA('QTEMP': 'TESTCASE');
+
 end-proc;
 
 // -----------------------------------------------------------------------
@@ -1138,6 +1199,8 @@ dcl-proc test_PostCmd_EVENTF_ADDJOBLOG_EVENTF_OK_OK export;
   assertMsgID('CPD0729': 'W'); // No executable commands found in source file.
 
   assertNoJobLog();
+
+  assertLDA('QTEMP': 'TESTCASE');
 
 end-proc;
 
@@ -1186,6 +1249,8 @@ dcl-proc test_PostCmd_EVENTF_ADDJOBLOG_EVENTF_OK_ERROR_COPY export;
 
   assertFileID_999('*JOBLOG'); // Job log of *POSTCMD, due to error in post-command.
   assertMsgID('CPF0821': 'T'); // Module TESTCASE2 not created.
+
+  assertLDA('QTEMP': 'TESTCASE');
 
 end-proc;
 
@@ -1293,6 +1358,27 @@ dcl-proc assertMsgID;
   assert(not isSqlError(sqlState));
 
   assert(count >= 1: 'Event file must contain a message with ID: ' + i_msgID);
+
+end-proc;
+
+// ------------------------------------------------------------
+//  Asserts that the local data area (*LDA) was updated.
+// ------------------------------------------------------------
+dcl-proc assertLDA;
+  dcl-pi *n extproc(*dclcase);
+    i_lib  char(10) const;
+    i_obj  char(10) const;
+  end-pi;
+
+  dcl-ds lda likeds(g_LDA);
+
+  lda = retrieveLDA();
+
+  assert(lda.library = i_lib: 'Library name [' + %trim(lda.library) +
+                              '] in *LDA does not match: ' + %trim(i_lib));
+
+  assert(lda.object = i_obj: 'Object name [' + %trim(lda.object) +
+                             '] in *LDA does not match: ' + %trim(i_obj));
 
 end-proc;
 
@@ -1581,6 +1667,38 @@ dcl-proc exist;
   endif;
 
   return errCode.bytAvl = 0;
+
+end-proc;
+
+// ------------------------------------------------------------
+//  Clear local data area (*LDA).
+// ------------------------------------------------------------
+dcl-proc clearLDA;
+  dcl-pi *n extproc(*dclcase) end-pi;
+
+  monitor;
+    in g_LDA;
+    g_LDA.library = '';
+    g_LDA.object = '';
+    out g_LDA;
+  on-error;
+  endmon;
+end-proc;
+
+// ------------------------------------------------------------
+//  Retrieve local data area (*LDA).
+// ------------------------------------------------------------
+dcl-proc retrieveLDA;
+  dcl-pi *n likeds(g_lda) extproc(*dclcase) end-pi;
+
+  clear g_LDA;
+
+  monitor;
+    in g_LDA;
+  on-error;
+  endmon;
+
+  return g_LDA;
 
 end-proc;
 
