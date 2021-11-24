@@ -71,11 +71,15 @@ dcl-proc setUpSuite export;
     runCmd('CRTSRCPF FILE(QTEMP/RUNIT_TST) RCDLEN(112) MBR(*NONE)');
   endif;
 
+  // Compilable source member
   if (not exist('QTEMP': 'RUNIT_TST': '*FILE': 'TESTCASE'));
     runCmd('ADDPFM FILE(QTEMP/RUNIT_TST) MBR(TESTCASE) +
               TEXT(''STRPREPRD - SelfTest'') SRCTYPE(CLLE)');
+  else;
+    runCmd('CLRPFM FILE(QTEMP/RUNIT_TST) MBR(TESTCASE)');
   endif;
 
+  // Helper source member
   if (not exist('QTEMP': 'RUNIT_TST': '*FILE': 'TESTCASE2'));
     runCmd('ADDPFM FILE(QTEMP/RUNIT_TST) MBR(TESTCASE2) +
               TEXT(''STRPREPRD - SelfTest'') SRCTYPE(CLLE)');
@@ -104,13 +108,6 @@ dcl-proc setUpSuite export;
     CREATE ALIAS qtemp.eventfile FOR qtemp.EVFEVENT (TESTCASE);
   assert(not isSqlError(sqlState));
 
-  append2('/* ---------------------------------------------------------------- */': 100);
-  append2('/*     Produces an compile error.                                   */');
-  append2('/* ---------------------------------------------------------------- */');
-  append2('PGM');
-  append2('  CHGVAR &LIB ''FOO''');
-  append2('ENDPGM');
-
 end-proc;
 
 // ------------------------------------------------------------
@@ -138,6 +135,11 @@ dcl-proc setUp export;
 
   exec sql
     DELETE FROM testmbr;
+  setIgnSQLWarn(*on);
+  assert(not isSqlError(sqlState));
+
+  exec sql
+    DELETE FROM testmbr2;
   setIgnSQLWarn(*on);
   assert(not isSqlError(sqlState));
 
@@ -789,11 +791,12 @@ end-proc;
 //    *NONE
 //  Specials:
 //    Module name has been overridden in STRPREPRC header.
+//    Event file must be copied from TEST to TESTCASE.
 //  Expected:
 //    FILEID 001 (TESTCASE) with job log of compile command.
 //    (replacement for compile listing)
 // ------------------------------------------------------------
-dcl-proc test_Execute_EVENTF_NOJOBLOG_EVENTF_ERROR_2 export;
+dcl-proc test_Execute_EVENTF_NOJOBLOG_EVENTF_ERROR_COPY export;
   dcl-pi *n extproc(*dclcase) end-pi;
 
   append('/* ---------------------------------------------------------------- */': 100);
@@ -825,6 +828,61 @@ dcl-proc test_Execute_EVENTF_NOJOBLOG_EVENTF_ERROR_2 export;
 
   assertFileID_001('TESTCASE');
   assertMsgID('CPD0081': 'S'); // Variable name required for parameter VAR.
+
+  assertNoJobLog();
+
+  assertNoMsgId('PRZ0029');
+
+  assertLDA('QTEMP': 'TESTCASE');
+
+end-proc;
+
+// ------------------------------------------------------------
+//  STRPREPRC options:
+//    *EVENTF, *NOJOBLOG
+//  Pre-command:
+//    no error
+//  Compile command:
+//    error, no event file
+//  Post-command:
+//    *NONE
+//  Specials:
+//    Uses a different member for retrieving the STRPREPRC header and
+//    module name has been overridden in STRPREPRC header.
+//    Event file must be copied from TEST to TESTCASE.
+//  Expected:
+//    FILEID 001 (TESTCASE) with job log of compile command.
+//    (replacement for compile listing)
+// ------------------------------------------------------------
+dcl-proc test_Execute_EVENTF_ADDJOBLOG_EVENTF_OK_COPY export;
+  dcl-pi *n extproc(*dclcase) end-pi;
+
+  append2('/* ---------------------------------------------------------------- */': 100);
+  append2('/*     STRPREPRC header with compile instructions.                  */');
+  append2('/* ---------------------------------------------------------------- */');
+  append2('/* >>PRE-COMPILER<<                                                 */');
+  append2('/*   >>CRTCMD<< CRTCLMOD  MODULE(&LI/&OB) SRCFILE(&SL/&SF) +        */');
+  append2('/*                        SRCMBR(&SM) OPTION(*EVENTF) +             */');
+  append2('/*                        OUTPUT(*NONE);                            */');
+  append2('/*   >>CMD<<    CHKOBJ OBJ(QTEMP/RUNIT_TST) OBJTYPE(*FILE);         */');
+  append2('/*   >>IMPORTANT<<                                                  */');
+  append2('/*     >>PARM<<  MODULE(&LI/TEST);                                  */');
+  append2('/*   >>END-IMPORTANT<<                                              */');
+  append2('/*   >>EXECUTE<<                                                    */');
+  append2('/* >>END-PRE-COMPILER<<                                             */');
+
+  append('PGM': 100);
+  append('  DCL &LIB *CHAR 10');
+  append('  CHKOBJ OBJ(QSYS) OBJTYPE(*LIB)');
+  append('ENDPGM');
+
+
+  runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE2) +
+            OPTION(*EVENTF *ADDJOBLOG) LIB(QTEMP) OBJ(TESTCASE) +
+            SRCLIB(*DFT) SRCFILE(*DFT) SRCMBR(TESTCASE)');
+
+  assertFileID_001('TESTCASE');
+  assertMsgID('CPD0726': 'W'); // Variable &LIB declared but not referred to
 
   assertNoJobLog();
 
@@ -1213,11 +1271,14 @@ end-proc;
 //    no error, produces event file
 //  Post-command:
 //    error, produces event file
+//  Specials:
+//    Uses a different member for retrieving the STRPREPRC header and
+//    module name has been overridden in STRPREPRC header.
 //  Expected:
 //    FILEID 001 (TESTCASE) with compile messages.
 //    FILEID 999 (*JOBLOG) with job log of post-command.
 // -----------------------------------------------------------------------
-dcl-proc test_PostCmd_EVENTF_ADDJOBLOG_EVENTF_OK_ERROR_COPY export;
+dcl-proc test_PostCmd_EVENTF_ADDJOBLOG_EVENTF_OK_ERROR_2 export;
   dcl-pi *n extproc(*dclcase) end-pi;
 
   append('/* ---------------------------------------------------------------- */': 1);
@@ -1232,9 +1293,13 @@ dcl-proc test_PostCmd_EVENTF_ADDJOBLOG_EVENTF_OK_ERROR_COPY export;
   append('/*                        OUTPUT(*NONE);                            */');
   append('/* >>END-PRE-COMPILER<<                                             */');
   append('/* ---------------------------------------------------------------- */');
-  append('PGM');
-  append('  /* No executable commands found in source file. */');
-  append('ENDPGM');
+
+  append2('/* ---------------------------------------------------------------- */': 100);
+  append2('/*     Produces an compile error.                                   */');
+  append2('/* ---------------------------------------------------------------- */');
+  append2('PGM');
+  append2('  CHGVAR &LIB ''FOO''');
+  append2('ENDPGM');
 
   monitor;
     runCmd('STRPREPRC USESRCFILE(QTEMP/RUNIT_TST) USESRCMBR(TESTCASE) +
@@ -1420,7 +1485,7 @@ dcl-proc append export;
     i_srcSeq int(10) options(*nopass) const;
   end-pi;
 
-  dcl-s isPrepared ind inz(*off) static;
+  dcl-s isPrepared1 ind inz(*off) static;
 
   dcl-s srcSeq zoned(6:2);
   dcl-s data like(i_data);
@@ -1429,19 +1494,19 @@ dcl-proc append export;
     g_status.srcSeq = i_srcSeq;
   endif;
 
-  if (not isPrepared);
+  if (not isPrepared1);
     exec sql
-      prepare append_row from
+      prepare append_row1 from
         'INSERT INTO testmbr (SRCSEQ, SRCDTA, SRCDAT) VALUES(?, ?, 0)';
     assert(not isSqlError(sqlState));
-    isPrepared = *on;
+    isPrepared1 = *on;
   endif;
 
   srcSeq = g_status.srcSeq;
   data = i_data;
 
   exec sql
-    EXECUTE append_row USING :srcSeq, :data;
+    EXECUTE append_row1 USING :srcSeq, :data;
   assert(not isSqlError(sqlState));
 
   g_status.srcSeq += 100;
@@ -1457,7 +1522,7 @@ dcl-proc append2 export;
     i_srcSeq int(10) options(*nopass) const;
   end-pi;
 
-  dcl-s isPrepared ind inz(*off) static;
+  dcl-s isPrepared2 ind inz(*off) static;
 
   dcl-s srcSeq zoned(6:2);
   dcl-s data like(i_data);
@@ -1466,19 +1531,19 @@ dcl-proc append2 export;
     g_status.srcSeq2 = i_srcSeq;
   endif;
 
-  if (not isPrepared);
+  if (not isPrepared2);
     exec sql
-      prepare append_row from
+      prepare append_row2 from
         'INSERT INTO testmbr2 (SRCSEQ, SRCDTA, SRCDAT) VALUES(?, ?, 0)';
     assert(not isSqlError(sqlState));
-    isPrepared = *on;
+    isPrepared2 = *on;
   endif;
 
   srcSeq = g_status.srcSeq2;
   data = i_data;
 
   exec sql
-    EXECUTE append_row USING :srcSeq, :data;
+    EXECUTE append_row2 USING :srcSeq, :data;
   assert(not isSqlError(sqlState));
 
   g_status.srcSeq2 += 100;
