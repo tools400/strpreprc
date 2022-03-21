@@ -36,6 +36,8 @@
       *  19.11.2021  Th.Raddatz    Moved prototype of updateLDA() to member *
       *                            PROTO_H.                                 *
       *                                                                     *
+      *  16.03.2022  Th.Raddatz    Renamed PROTO_H to TYPES_H.              *
+      *                                                                     *
       * =================================================================== *
       * >>PRE-COMPILER<<                                                    *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
@@ -59,6 +61,11 @@
      D g_strpre2       ds                  qualified inz
      D  name                         21a   varying
      D  member                       10a   varying
+      *
+      * -------------------------------------------------------------
+      *  Exportierte Prototypen
+      * -------------------------------------------------------------
+      /copy QSTRPREPRC,PSTRPREPR4
       *
       /copy QSTRPREPRC,SDS
       *
@@ -138,7 +145,7 @@
       * -------------------------------------------------------------
       *  Prototypen
       * -------------------------------------------------------------
-      /copy QSTRPREPRC,PROTO_H                     Tool: STRPREPRC - Prototypes
+      /copy QSTRPREPRC,TYPES_H                     Tool: STRPREPRC - Global Types and Constants
       /copy QSTRPREPRC,QMHRTVM                     Retrieve Message (QMHRTVM) API
       /copy QEVENTF,PEVENTF                        EVFEVENT API - Public Interface
       /copy QJOBLOG,PJOBLOG                        EVFEVENT API - Job Log

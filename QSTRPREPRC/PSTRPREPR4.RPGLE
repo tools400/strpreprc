@@ -1,5 +1,7 @@
-      /if not defined(proto_h)
-      /define proto_h
+      /if defined(PSTRPREPR4)
+      /eof
+      /endif
+      /define PSTRPREPR4
 
      D enableEventFile...
      D                 pr
@@ -38,6 +40,12 @@
      D  i_lib                        10a   const
      D  i_append                       n   const
 
+     D updateLDA...
+     D                 pr                  extproc('STRPREPRC4_+
+     D                                     updateLDA')
+     D  i_lib                        10a   const
+     D  i_obj                        10a   const
+
      D writeEventFile...
      D                 pr                  extproc('STRPREPRC4_+
      D                                     writeEventFile+
@@ -62,10 +70,3 @@
      D  i_toLib                      10a   const
      D  i_toMbr                      10a   const
 
-     D updateLDA...
-     D                 pr                  extproc('STRPREPRC4_+
-     D                                     updateLDA')
-     D  i_lib                        10a   const
-     D  i_obj                        10a   const
-
-      /endif

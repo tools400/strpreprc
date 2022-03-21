@@ -80,6 +80,9 @@
              DLTMOD    MODULE(&TOLIB/STRPREPRC4)
              MONMSG     MSGID(CPF2105)
 
+             DLTMOD    MODULE(&TOLIB/STRPREPRC5)
+             MONMSG     MSGID(CPF2105)
+
              DLTPNLGRP PNLGRP(&TOLIB/STRPREPRCP)
              MONMSG     MSGID(CPF2105)
 
@@ -171,6 +174,14 @@
              DLTSPLF    FILE(STRPREPRC4) JOB(*) SPLNBR(*LAST)
              MONMSG     MSGID(CPF0000)
 
+             CRTRPGMOD MODULE(&TOLIB/STRPREPRC5) +
+                          SRCFILE(&SRCLIB/&SRCFILE) +
+                          SRCMBR(*MODULE) TEXT(*SRCMBRTXT) +
+                          DBGVIEW(*LIST) TRUNCNBR(*NO) +
+                          TGTRLS(&TGTRLS)
+             DLTSPLF    FILE(STRPREPRC5) JOB(*) SPLNBR(*LAST)
+             MONMSG     MSGID(CPF0000)
+
      /* -------------------------------- */
      /*  Create programs                 */
      /* -------------------------------- */
@@ -178,7 +189,8 @@
                           MODULE(&TOLIB/STRPREPRC1  +
                                  &TOLIB/STRPREPRC2  +
                                  &TOLIB/STRPREPRC3  +
-                                 &TOLIB/STRPREPRC4) +
+                                 &TOLIB/STRPREPRC4  +
+                                 &TOLIB/STRPREPRC5) +
                           ENTMOD(&TOLIB/STRPREPRC1) +
                           BNDSRVPGM(&TOLIB/BASICS1  +
                                     &TOLIB/EVENTF   +
@@ -229,5 +241,6 @@
              DLTMOD    MODULE(&TOLIB/STRPREPRC2)
              DLTMOD    MODULE(&TOLIB/STRPREPRC3)
              DLTMOD    MODULE(&TOLIB/STRPREPRC4)
+             DLTMOD    MODULE(&TOLIB/STRPREPRC5)
 
              ENDPGM

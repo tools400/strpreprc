@@ -145,6 +145,16 @@
       *  19.11.2021  Th.Raddatz    Fixed problem that the *LDA was not      *
       *                            properly set. (==> updateLDA())          *
       *                                                                     *
+      *  15.03.2022  Th.Raddatz    Added module STRPREPRC5 to prepare the   *
+      *                            utility to support stream files.         *
+      *                                                                     *
+      *  16.03.2022  Th.Raddatz    Renamed PROTO_H to TYPES_H.              *
+      *                                                                     *
+      *  15.03.2022  Th.Raddatz    Moved files SRCFILE and INCLUDE to       *
+      *                            member STRPREPRC5.                       *
+      *                            Created prototypes and moved global      *
+      *                            fields and constants to TYPES_H.         *
+      *                                                                     *
       * =================================================================== *
       * >>PRE-COMPILER<<                                                    *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
@@ -165,14 +175,6 @@
       * -------------------------------------------------------------
       *  Verwendete Dateien
       * -------------------------------------------------------------
-     FSRCFILE   IF   F  256        DISK    usropn
-     F                                     extfile(g_useSrcFile.name)
-     F                                     extmbr(g_useSrcFile.member)
-     F                                     infds(f1)
-     FINCLUDE   IF   F  256        DISK    usropn
-     F                                     extfile(g_include.name)
-     F                                     extmbr(g_include.member)
-     F                                     infds(f3)
       *
      FSTRPRE1   IF   E           K DISK    usropn
      F                                     prefix(P1)
@@ -180,26 +182,11 @@
      F                                     extmbr(g_strpre1.member)
      F                                     infds(f2)
       *
-     D g_useSrcFile    ds                  qualified inz
-     D  name                         21a   varying
-     D  member                       10a   varying
-      *
      D g_strpre1       ds                  qualified inz
      D  name                         21a   varying
      D  member                       10a   varying
       *
-     D g_include       ds                  qualified inz
-     D  name                         21a   varying
-     D  member                       10a   varying
-      *
-     D cMaxRcdLen      c                   256
-      *
-     D ds_srcFile_t    ds                  qualified based(pDummy)
-     D  srcSeq                             like(srcSeq_t)
-     D  srcDat                             like(srcDat_t)
-     D  srcDta                             like(srcDta_t)
-      *
-     D f1              ds                  qualified
+     D f2              ds                  qualified
      D  status                11     15S 0
      D  file                  83     92A
      D  lib                   93    102A
@@ -207,148 +194,11 @@
      D  mbr                  129    138A
      D  nbrOfKey             387    388B 0
      D  rcdNbr               397    400B 0
-      *
-     D f1_line_number  s             10i 0 inz(-1)
-      *
-     D f2              ds                  likeds(f1)
-      *
-     D f3              ds                  qualified
-     D  status                11     15S 0
-     D  file                  83     92A
-     D  lib                   93    102A
-     D  rcdLen               125    126B 0
-     D  mbr                  129    138A
-     D  nbrOfKey             387    388B 0
-     D  rcdNbr               397    400B 0
-      *
-     D f3_line_number  s             10i 0 inz(-1)
-      *
-      * -------------------------------------------------------------
-      *  Globale Referenzfelder
-      * -------------------------------------------------------------
-     D int4_t          s             10i 0 based(pDummy)
-     D srcSeq_t        s              6s 2 based(pDummy)
-     D srcDat_t        s              6s 0 based(pDummy)
-     D srcDta_t        s            244a   based(pDummy)
-     D srcFile_t       s             10a   based(pDummy)
-     D srcLib_t        s             10a   based(pDummy)
-     D srcMbr_t        s             10a   based(pDummy)
-     D cmd_t           s           8192a   based(pDummy)
-     D cmdLong_t       s          32702a   based(pDummy) varying
-     D cmdLongFixLen_t...
-     D                 s          32702a   based(pDummy)
-     D bool_t          s               n   based(pDummy)
-     D mode_t          s             30a   based(pDummy)
-     D module_t        s             10a   based(pDummy)
-     D pgm_t           s             10a   based(pDummy)
-     D proc_t          s             64a   based(pDummy)
-     D tag_t           s             30a   based(pDummy)
-     D continue_t      s              1a   based(pDummy)
-     D keyData_t       s           4096a   based(pDummy) varying
-     D file_t          s             10a   based(pDummy)
-     D lib_t           s             10a   based(pDummy)
-     D mbr_t           s             10a   based(pDummy)
-     D obj_t           s             10a   based(pDummy)
-     D tgtRls_t        s             10a   based(pDummy)
-     D typeCode_t      s              6a   based(pDummy)
-     D userParm_t      s             50a   based(pDummy)
-     D chgObjD_t       s              4a   based(pDummy)
-     D objType_t       s             10a   based(pDummy)
-      *
-     D DIM_OPTIONS     c                   5
-      *
-     D option_t        ds                  based(pDummy) qualified
-     D  numE                          5i 0
-     D  option                       10a   dim(DIM_OPTIONS)
-      *
-     D DIM_USRDEFVARS  c                   20
-      *
-     D inpUsrDefVars_t...
-     D                 ds          2282    qualified based(pDummy)
-     D  numElem                       5i 0
-     D  offsItems                     5i 0 dim(DIM_USRDEFVARS)
-      *
-     D inpUsrDefVar_t...
-     D                 ds                  qualified based(pDummy)
-     D  numE                          5i 0
-     D  name                         10a
-     D  value                       100a
-      *
-     D DIM_EXECOPTS    c                   3
-      *
-     D execOpt_t       ds                  qualified based(pDummy)
-     D  numElem                       5i 0
-     D  execOpt                      10a   dim(DIM_EXECOPTS)
-      *
-     D DIM_LIBLIST     c                   250
-      *
-     D inpLibList_t    ds                  qualified based(pDummy)
-     D  numElem                       5i 0
-     D  curLib                       10a
-     D  offsUsrLibl                   5i 0
-     D  numUsrLiblE                   5i 0
-     D  lib                          10a   dim(DIM_LIBLIST)
-      *
-     D libl_t          ds                  qualified based(pDummy)
-     D  numE                          5i 0
-     D  name                               like(lib_t) dim(DIM_LIBLIST)
-      *
-     D liblList_t      ds                  qualified based(pDummy)
-     D  curLib                             like(lib_t)
-     D  usrLibl                            likeds(libl_t)
-      *
-     D usrDefVars_t    ds                  qualified based(pDummy)
-     D  numE                          5i 0
-     D  var                                likeds(usrDefVar_t)
-     D                                     dim(DIM_USRDEFVARS)
-      *
-     D usrDefVar_t     ds                  qualified based(pDummy)
-     D  name                         10a
-     D  value                       100a
-      *
-     D lineData_t      ds                  qualified based(pDummy)
-     D  continue                           like(continue_t)
-     D  keyData                            like(keyData_t)
-      *
-     D monMsgIds_t     ds                  qualified based(pDummy)
-     D  item                               like(msgId_t) dim(50)
-      *
-     D variables_t     ds                  qualified based(pDummy)
-     D  lib                                like(lib_t)
-     D  obj                                like(obj_t)
-     D  typeCode                           like(typeCode_t)
-     D  srcLib                             like(srcLib_t)
-     D  srcFile                            like(srcFile_t)
-     D  srcMbr                             like(srcMbr_t)
-     D  testLib                            like(lib_t)
-     D  testObj                            like(obj_t)
-     D  tgtRls                             like(tgtRls_t)
-     D  frmSrcLib                          like(srcLib_t)
-     D  frmSrcFile                         like(srcFile_t)
-     D  frmSrcMbr                          like(srcMbr_t)
-     D  user0                              like(userParm_t)
-     D  user1                              like(userParm_t)
-     D  user2                              like(userParm_t)
-     D  user3                              like(userParm_t)
-     D  user4                              like(userParm_t)
-     D  user5                              like(userParm_t)
-     D  user6                              like(userParm_t)
-     D  user7                              like(userParm_t)
-     D  user8                              like(userParm_t)
-     D  user9                              like(userParm_t)
-     D  libl                               likeds(liblList_t)
-     D  usrDefVars                         likeds(usrDefVars_t)
-     D  useLibl                            like(bool_t)
-     D  prvLibl                            likeds(liblList_t)
       *
       * -------------------------------------------------------------
       *  Globale Konstanten
       * -------------------------------------------------------------
      D cNone           c                   '*NONE'
-      *
-      *  Nachrichtenkonstanten
-     D cTYPE_DIAG      c                   '*DIAG'
-     D cTYPE_ESCAPE    c                   '*ESCAPE'
       *
       *  Pre-Prozessor Tags
      D cTAG_PREPRZ     c                   '>>PRE-COMPILER<<'
@@ -432,7 +282,6 @@
       * -------------------------------------------------------------
       *  Globale Variablen
       * -------------------------------------------------------------
-     D g_msgFile       s                   like(msg_t.file) inz
      D g_mode          s                   like(mode_t) dim(10) inz
      D g_modeCnt       s                   like(int4_t) inz
      D g_pgmCmdExc...
@@ -485,12 +334,18 @@
       /copy QSTRPREPRC,SDS
       *
       * -------------------------------------------------------------
+      *  Exportierte Prototypen
+      * -------------------------------------------------------------
+      /copy QSTRPREPRC,PSTRPREPR2
+      *
+      * -------------------------------------------------------------
       *  Importierte Prototypen
       * -------------------------------------------------------------
+      /copy QSTRPREPRC,PSTRPREPR4
+      /copy QSTRPREPRC,PSTRPREPR5
       /copy QSTRPREPRC,QMHRCVPM
-      /copy QSTRPREPRC,QMHRMVPM
       /copy QBASICS1,PBASICS1
-      /copy QSTRPREPRC,PROTO_H
+      /copy QSTRPREPRC,TYPES_H
       /copy QSTRPREPRC,QCAPCMD
       /copy QSTRPREPRC,QWCRTVCA
       /copy QEVENTF,PEVENTF
@@ -498,51 +353,6 @@
       * -------------------------------------------------------------
       *  Prototypen
       * -------------------------------------------------------------
-     D STRPREPRC...
-     D                 pr
-     D  i_useSrcFile                              like(srcFile_t)
-     D  i_useSrcLib                               like(srcLib_t)
-     D  i_useSrcMbr                               like(srcMbr_t)
-     D  i_cmd                                     like(cmd_t)
-     D  i_chgObjD                                 like(chgObjD_t)
-     D  i_objType                                 like(objType_t)
-     D  i_objSrcFile                              like(file_t)
-     D  i_objSrcLib                               like(lib_t)
-     D  i_objSrcMbr                               like(mbr_t)
-     D  i_lib                                     like(lib_t)
-     D  i_obj                                     like(obj_t)
-     D  i_typeCode                                like(typeCode_t)
-     D  i_srcLib                                  like(lib_t)
-     D  i_srcFile                                 like(file_t)
-     D  i_srcMbr                                  like(mbr_t)
-     D  i_testLib                                 like(lib_t)
-     D  i_testObj                                 like(obj_t)
-     D  i_tgtRls                                  like(tgtRls_t)
-     D  i_frmSrcLib                               like(lib_t)
-     D  i_frmSrcFile                              like(file_t)
-     D  i_frmSrcMbr                               like(mbr_t)
-     D  i_user0                                   like(userParm_t)
-     D  i_user1                                   like(userParm_t)
-     D  i_user2                                   like(userParm_t)
-     D  i_user3                                   like(userParm_t)
-     D  i_user4                                   like(userParm_t)
-     D  i_user5                                   like(userParm_t)
-     D  i_user6                                   like(userParm_t)
-     D  i_user7                                   like(userParm_t)
-     D  i_user8                                   like(userParm_t)
-     D  i_user9                                   like(userParm_t)
-     D  i_tagsReq                                 like(bool_t)
-     D  i_msgFile                                 like(msg_t.file)
-     D  i_msgFileLib                              like(msg_t.lib)
-     D  i_pgmCmdExc...
-     D                                            like(pgm_t)
-     D  i_libPgmCmdExc...
-     D                                            like(lib_t)
-     D  i_option                                  likeds(option_t)
-     D  i_libl                                    likeds(inpLibList_t)
-     D  i_useLibl                                 like(bool_t)
-     D  i_usrDefVars                              likeds(inpUsrDefVars_t)
-     D  i_execOpt                                 likeds(execOpt_t)
       *
      D readLine...
      D                 pr              n
@@ -697,11 +507,6 @@
      D                 PR                         like(mode_t)
      D                                     extproc('popMode')
       *
-     D sendMsg...
-     D                 PR
-     D                                     extproc('sendMsg')
-     D  i_msg                              value  likeds(msg_t)
-      *
      D validateCmd...
      D                 PR                         like(bool_t)
      D                                     extproc('validateCmd')
@@ -723,12 +528,6 @@
      D                 PR                         like(cmdLong_t)
      D                                     extproc('formatCmd')
      D  i_cmd                              value  like(cmdLong_t)
-      *
-     D endAbnormal...
-     D                 PR
-     D                                     extproc('endAbnormal')
-     D  i_qEventf                          const  likeds(qObj_t)
-     D                                     options(*nopass)
       *
      D endOK...
      D                 PR
@@ -791,12 +590,12 @@
       * =============================================================
       *  Ausführen Pre-Prozessor
       * =============================================================
-     P STRPREPRC...
+     P run...
      P                 B                   export
      D                 PI
-     D  i_useSrcFile                              like(srcFile_t)
-     D  i_useSrcLib                               like(srcLib_t)
-     D  i_useSrcMbr                               like(srcMbr_t)
+     D  i_useSrcFile                              like(file_t)
+     D  i_useSrcLib                               like(lib_t)
+     D  i_useSrcMbr                               like(mbr_t)
      D  i_cmd                                     like(cmd_t)
      D  i_chgObjD                                 like(chgObjD_t)
      D  i_objType                                 like(objType_t)
@@ -841,10 +640,6 @@
       *  Nachrichten
       *  ... Falsche Reihenfolge im Betriebsmodus.
       /COPY QSTRPREPRC,PRZ0001
-      *  ... Die Datensatzlänge der Eingabedatei ist zu lang.
-      /COPY QSTRPREPRC,PRZ0011
-      *  ... Fehler beim Öffnen der Quellendatei &2/&1, Teildatei &3.
-      /COPY QSTRPREPRC,PRZ0012
       *  ... Fehler beim Öffnen der Steuerdatei &2/&1, Teildatei &3.
       /COPY QSTRPREPRC,PRZ0013
       *  ... Auszuführender Befehl fehlt. Weitere Verarbeitung nich . . .
@@ -896,7 +691,6 @@
          g_prePostCmdsMode = MODE_PRECMDS;
 
          // Initialisieren globaler Variablen
-         reset g_msgFile;
          reset g_mode;
          reset g_modeCnt;
          reset g_pgmCmdExc;
@@ -904,7 +698,6 @@
          reset g_eventf;
          reset g_option;
          reset g_execOpt;
-         g_msgFile = i_msgFile;
          g_pgmCmdExc = i_pgmCmdExc;
          g_libPgmCmdExc = i_libPgmCmdExc;
 
@@ -1019,19 +812,10 @@
 
          chkMbr(i_useSrcFile: i_useSrcLib: i_useSrcMbr);
 
-         g_useSrcFile.name = %trim(i_useSrcLib) + '/' + %trim(i_useSrcFile);
-         g_useSrcFile.member = %trim(i_useSrcMbr);
+         // Open source file
+         SourceFile_open(i_useSrcLib: i_useSrcFile: i_useSrcMbr);
 
-         open(E) SRCFILE;
-         if (%error());
-            clear PRZ0012;
-            PRZ00121 = i_useSrcFile;
-            PRZ00122 = i_useSrcLib;
-            PRZ00123 = i_useSrcMbr;
-            sendMsg(f_newMsg('PRZ0012': PRZ0012: cTYPE_DIAG));
-            endAbnormal();
-         endif;
-
+         // Open Pre-Compiler tags file
          g_strpre1.name = %trim(sds.pgmLib) + '/' + 'STRPRE1';
          g_strpre1.member = '*FIRST';
 
@@ -1047,17 +831,6 @@
 
          // Entfernen der "Öffnen" Nachrichten
          p_rmvPgmMsg(cMsg_Rmv_All);
-
-         // Prüfen der Datensatzlänge
-         if (f1.rcdLen > cMaxRcdLen);
-            clear PRZ0011;
-            PRZ00111 = f1.rcdLen;
-            PRZ00112 = cMaxRcdLen;
-            PRZ00113 = f1.lib;
-            PRZ00114 = f1.file;
-            sendMsg(f_newMsg('PRZ0011': PRZ0011: cTYPE_DIAG));
-            endAbnormal();
-         endif;
 
          // Formatieren Befehl
          cmd = formatCmd(%trim(i_cmd));
@@ -1078,7 +851,7 @@
          resetLineData(lineData);
 
          // Lesen der Quellenteildatei
-         f1_line_number = 0;
+         // f1_line_number = 0; TODO: remove line
 
          dow readLine(srcDta);
 
@@ -1308,17 +1081,13 @@
 
          enddo;
 
-         if (%open(SRCFILE));
-            close SRCFILE;
-         endif;
+         SourceFile_close();
 
          if (%open(STRPRE1));
             close STRPRE1;
          endif;
 
-         if (%open(INCLUDE));
-            close INCLUDE;
-         endif;
+         IncludeFile_close();
 
          // Ausführen >>EXECUTE<< implizit, weil
          // kein Pre-Prozessor Abschnitt gefunden werden konnte
@@ -1365,17 +1134,23 @@
          // gefunden worden sind
          if (not foundPrePrcTags and i_tagsReq);
             clear PRZ0024;
-            PRZ00241 = f1.file;
-            PRZ00242 = f1.lib;
-            PRZ00243 = f1.mbr;
+            // PRZ00241 = f1.file;
+            // PRZ00242 = f1.lib;
+            // PRZ00243 = f1.mbr;
+            PRZ00241 = SourceFile_getFile();
+            PRZ00242 = SourceFile_getLibrary();
+            PRZ00243 = SourceFile_getMember();
             sendMsg(f_newMsg('PRZ0024': PRZ0024: cTYPE_ESCAPE));
          endif;
 
          if (isCmdMissingError);
             clear PRZ0028;
-            PRZ00281 = f1.file;
-            PRZ00282 = f1.lib;
-            PRZ00283 = f1.mbr;
+            // PRZ00281 = f1.file;
+            // PRZ00282 = f1.lib;
+            // PRZ00283 = f1.mbr;
+            PRZ00281 = SourceFile_getFile();
+            PRZ00282 = SourceFile_getLibrary();
+            PRZ00283 = SourceFile_getMember();
             sendMsg(f_newMsg('PRZ0028': PRZ0028: cTYPE_ESCAPE));
          endif;
 
@@ -1390,33 +1165,22 @@
      D                 pi              n
      D  io_srcDta                                 like(ds_srcFile_t.srcDta)
       *
-     D ds_srcFile      ds                  likeds(ds_srcFile_t) inz
+     D*ds_srcFile      ds                  likeds(ds_srcFile_t) inz
       /free
 
-         if (%open(INCLUDE));
+         if (IncludeFile_isOpen());
+            if (not IncludeFile_readLine(io_srcDta));
+               IncludeFile_close();
 
-            read INCLUDE ds_srcFile;
-            if (%eof());
-               close INCLUDE;
-               clear g_include;
+               // Read next line of source file
                return readLine(io_srcDta);
             endif;
-
-            f3_line_number = f3_line_number + 1;
-
          else;
-
-            read SRCFILE ds_srcFile;
-            if (%eof());
+            if (not SourceFile_readLine(io_srcDta));
                io_srcDta = '';
                return cFalse;
             endif;
-
-            f1_line_number = f1_line_number + 1;
-
          endif;
-
-         io_srcDta = %subst(ds_srcFile.srcDta: 1: getSrcDataLength());
 
          return cTrue;
 
@@ -1430,34 +1194,21 @@
      P                 b
      D                 pi              n
      D  io_srcDta                                 like(ds_srcFile_t.srcDta)
-      *
-     D ds_srcFile      ds                  likeds(ds_srcFile_t) inz
       /free
 
-         if (%open(INCLUDE));
+         if (IncludeFile_isOpen());
+            if (not IncludeFile_readPrvLine(io_srcDta));
+               IncludeFile_close();
 
-            read INCLUDE ds_srcFile;
-            if (%eof());
-               close INCLUDE;
-               clear g_include;
+               // Read previous line of source file
                return readPrvLine(io_srcDta);
             endif;
-
-            f3_line_number = f3_line_number - 1;
-
          else;
-
-            readp SRCFILE ds_srcFile;
-            if (%eof());
+            if (not SourceFile_readLine(io_srcDta));
                io_srcDta = '';
                return cFalse;
             endif;
-
-            f1_line_number = f1_line_number - 1;
-
          endif;
-
-         io_srcDta = %subst(ds_srcFile.srcDta: 1: getSrcDataLength());
 
          return cTrue;
 
@@ -1902,10 +1653,6 @@
      D file            s             10a   varying
      D member          s             10a   varying
       *
-      *  ... Die Datensatzlänge der Eingabedatei ist zu lang.
-      /COPY QSTRPREPRC,PRZ0011
-      *  ... Fehler beim Öffnen der Quellendatei &2/&1, Teildatei &3.
-      /COPY QSTRPREPRC,PRZ0012
       *  ... Ungültige INCLUDE Marke in Zeile &1 gefunden.
       /COPY QSTRPREPRC,PRZ0031
       /free
@@ -1930,7 +1677,7 @@
 
          if (file = '');
             clear PRZ0031;
-            PRZ00311 = f1_line_number;
+            PRZ00311 = SourceFile_getLineNbr();
             sendMsg(f_newMsg('PRZ0031': PRZ0031: cTYPE_DIAG));
             endAbnormal();
          endif;
@@ -1945,38 +1692,12 @@
 
          if (member = '');
             clear PRZ0031;
-            PRZ00311 = f1_line_number;
+            PRZ00311 = SourceFile_getLineNbr();
             sendMsg(f_newMsg('PRZ0031': PRZ0031: cTYPE_DIAG));
             endAbnormal();
          endif;
 
-         g_include.name = library + '/' + file;
-         g_include.member = member;
-
-         open(E) INCLUDE;
-         if (%error());
-            clear PRZ0012;
-            PRZ00121 = file;
-            PRZ00122 = library;
-            PRZ00123 = member;
-            sendMsg(f_newMsg('PRZ0012': PRZ0012: cTYPE_DIAG));
-            endAbnormal();
-         endif;
-
-         removeFileOpenMessage();
-
-         // Prüfen der Datensatzlänge
-         if (f3.rcdLen > cMaxRcdLen);
-            clear PRZ0011;
-            PRZ00111 = f3.rcdLen;
-            PRZ00112 = cMaxRcdLen;
-            PRZ00113 = f3.lib;
-            PRZ00114 = f3.file;
-            sendMsg(f_newMsg('PRZ0011': PRZ0011: cTYPE_DIAG));
-            endAbnormal();
-         endif;
-
-         f3_line_number = 0;
+         IncludeFile_open(library: file: member);
 
       /end-free
      P                 e
@@ -2249,12 +1970,10 @@
          pOffs = %addr(rtvc0200) + %size(rtvc0200);
 
          if (rtvc0200.numSysLiblE >= 1);
-            // pSysLibl = pOffs;
             pOffs = pOffs + (rtvc0200.numSysLiblE * %size(QWCRTVCA_libName_t));
          endif;
 
          if (rtvc0200.numPrdLiblE >= 1);
-            // pPrdLibl = pOffs;
             pOffs = pOffs + (rtvc0200.numPrdLiblE * %size(QWCRTVCA_libName_t));
          endif;
 
@@ -2427,7 +2146,8 @@
          // prüfen Datenlänge
          if (dataLen < 0);
             clear PRZ0008;
-            PRZ00081 = f1_line_number;
+            // PRZ00081 = f1_line_number;
+            PRZ00081 = SourceFile_getLineNbr();
             sendMsg(f_newMsg('PRZ0008': PRZ0008: cTYPE_DIAG));
             endAbnormal();
          endif;
@@ -2472,7 +2192,7 @@
             (io_continue <> cCONT);
             clear PRZ0005;
             PRZ00051 = io_continue;
-            PRZ00052 = f1_line_number;
+            PRZ00052 = SourceFile_getLineNbr();
             sendMsg(f_newMsg('PRZ0005': PRZ0005: cTYPE_DIAG));
             endAbnormal();
          endif;
@@ -2646,14 +2366,17 @@
      D srcDtaLen       s                   like(int4_t) inz
       /free
 
-         if (%open(INCLUDE));
-            srcDtaLen =
-               f3.rcdLen -
-               (%size(ds_srcFile_t.srcSeq) + %size(ds_srcFile_t.srcDat));
+         // if (%open(INCLUDE));
+         if (IncludeFile_isOpen());
+            // srcDtaLen =
+            //    f3.rcdLen -
+            //    (%size(ds_srcFile_t.srcSeq) + %size(ds_srcFile_t.srcDat));
+            srcDtaLen = IncludeFile_getDtaLength();
          else;
-            srcDtaLen =
-               f1.rcdLen -
-               (%size(ds_srcFile_t.srcSeq) + %size(ds_srcFile_t.srcDat));
+            // srcDtaLen =
+            //    f1.rcdLen -
+            //    (%size(ds_srcFile_t.srcSeq) + %size(ds_srcFile_t.srcDat));
+            srcDtaLen = SourceFile_getDtaLength();
          endif;
 
          if (g_width <> -1 and g_width < srcDtaLen);
@@ -3005,12 +2728,13 @@
             endif;
          enddo;
 
-         if (i_newMode = cMODE_INCLUDE and %open(INCLUDE));
+         // if (i_newMode = cMODE_INCLUDE and %open(INCLUDE));
+         if (i_newMode = cMODE_INCLUDE and IncludeFile_isOpen());
             clear PRZ0032;
-            PRZ00321 = f3.file;
-            PRZ00322 = f3.lib;
-            PRZ00323 = f3.mbr;
-            PRZ00324 = f3_line_number;
+            PRZ00321 = IncludeFile_getFile();
+            PRZ00322 = IncludeFile_getLibrary();
+            PRZ00323 = IncludeFile_getMember();
+            PRZ00324 = IncludeFile_getLineNbr();
             sendMsg(f_newMsg('PRZ0032': PRZ0032: cTYPE_DIAG));
             return cFalse;
          endif;
@@ -3024,7 +2748,7 @@
       *  Senden Escape Nachricht
       * =============================================================
      P sendMsg...
-     P                 b
+     P                 b                   export
      D                 pi
      D  i_msg                              value  likeds(msg_t)
       /free
@@ -3409,7 +3133,7 @@
       *  Beenden Programm abnormal
       * =============================================================
      P endAbnormal...
-     P                 b
+     P                 b                   export
      D                 pi
      D  i_qEventf                          const  likeds(qObj_t)
      D                                     options(*nopass)
@@ -3417,6 +3141,7 @@
      D p_qEventf       c                   1
       *
      D qEventf         ds                  likeds(i_qEventf)
+     D lineNumber      s             10i 0
       *
       *  Nachrichten
       *  ... Verarbeitung in Zeile &1 abgebrochen.
@@ -3433,20 +3158,18 @@
             writeJobLogToEventf(qEventf: cTrue);
          endif;
 
-         if (%open(SRCFILE));
-            close SRCFILE;
-         endif;
+         lineNumber = SourceFile_getLineNbr();
+         SourceFIle_close();
 
          if (%open(STRPRE1));
             close STRPRE1;
          endif;
 
-         if (%open(INCLUDE));
-            close INCLUDE;
-         endif;
+         IncludeFile_close();
 
          clear PRZ0002;
-         PRZ00021 = f1_line_number;
+         // PRZ00021 = f1_line_number;
+         PRZ00021 = lineNumber;
          sendMsg(f_newMsg('PRZ0002': PRZ0002: cTYPE_ESCAPE));
 
       /end-free
@@ -3538,7 +3261,8 @@
                if (g_eventf.isOpen);
                   writeEventFile(
                      g_srcFile.name: g_srcFile.lib: g_srcFile.mbr
-                     : f1_line_number: i_isAbnEnd);
+                     // : f1_line_number: i_isAbnEnd);
+                     : SourceFile_getLineNbr(): i_isAbnEnd);
                endif;
             endif;
 
@@ -3652,31 +3376,6 @@
             PRZ00373 = i_mbr;
             sendMsg(f_newMsg('PRZ0037': PRZ0037: cTYPE_ESCAPE));
          endif;
-
-      /end-free
-     P                 E
-      *
-      *===============================================================*
-      *  Remove file open message:
-      *  CPF4011 - Buffer length longer than record for member
-      *===============================================================*
-     P removeFileOpenMessage...
-     P                 b
-     D                 pi
-      *
-     D rcvm0100        ds                  likeds(rcvm0100_t)
-     D errCode         ds                  likeds(errCode_t)
-      /free
-
-       errCode = f_newApiErrCode(cTrue); // ignore errors
-
-       QMHRCVPM(rcvm0100: %size(rcvm0100): 'RCVM0100': '*': 1
-                : '*ANY': '': 0: '*SAME': errCode);
-
-       if (not f_isApiError(errCode) and rcvm0100.msgID = 'CPF4011');
-          QMHRMVPM('*' : 1: rcvm0100.msgKey: '*BYKEY': errCode);
-       endif;
-
 
       /end-free
      P                 E

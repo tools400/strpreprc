@@ -197,7 +197,7 @@
              CHKOBJ     OBJ(*LIBL/STRPRE1) OBJTYPE(*FILE)
              CHKOBJ     OBJ(*LIBL/STRPRE1) OBJTYPE(*FILE) +
                           MBR(*FIRST)
-             CALLPRC    PRC(P_INITPREPRZ)
+             CALLPRC    PRC('STRPREPRC3_initialize')
 
  /* - - - - - - - - - - - - - - - - - - */
  /*  Ermitteln Bibliothek der MsgF      */
@@ -225,47 +225,48 @@
              CHGVAR     VAR(&PGMCMDEXC) VALUE(%SST(&EXICMDEXC 1 10))
              CHGVAR     VAR(&LPGMCMDEXC) VALUE(%SST(&EXICMDEXC 11 10))
 
-             CALLPRC    PRC(STRPREPRC) PARM(&USESRCFILE +
-                                            &USESRCLIB  +
-                                            &USESRCMBR  +
-                                            &CMD        +
-                                            &CHGOBJD    +
-                                            &OBJTYPE    +
-                                            &OBJSRCFILE +
-                                            &OBJSRCLIB  +
-                                            &OBJSRCMBR  +
-                                            &XLIB       +
-                                            &XOBJ       +
-                                            &XTYPECODE  +
-                                            &XSRCLIB    +
-                                            &XSRCFILE   +
-                                            &XSRCMBR    +
-                                            &XTESTLIB   +
-                                            &XTESTOBJ   +
-                                            &XTGTRLS    +
-                                            &XFRMSRCLIB +
-                                            &XFRMSRCFIL +
-                                            &XFRMSRCMBR +
-                                            &XUSER0     +
-                                            &XUSER1     +
-                                            &XUSER2     +
-                                            &XUSER3     +
-                                            &XUSER4     +
-                                            &XUSER5     +
-                                            &XUSER6     +
-                                            &XUSER7     +
-                                            &XUSER8     +
-                                            &XUSER9     +
-                                            &XTAGSREQ   +
-                                            &XMSGF      +
-                                            &XMSGFLIB   +
-                                            &PGMCMDEXC  +
-                                            &LPGMCMDEXC +
-                                            &OPTION     +
-                                            &LIBL       +
-                                            &USELIBL    +
-                                            &USRDEFVAR  +
-                                            &EXECOPT    )
+             CALLPRC    PRC('STRPREPRC2_run') +
+                        PARM(&USESRCFILE +
+                        &USESRCLIB  +
+                        &USESRCMBR  +
+                        &CMD        +
+                        &CHGOBJD    +
+                        &OBJTYPE    +
+                        &OBJSRCFILE +
+                        &OBJSRCLIB  +
+                        &OBJSRCMBR  +
+                        &XLIB       +
+                        &XOBJ       +
+                        &XTYPECODE  +
+                        &XSRCLIB    +
+                        &XSRCFILE   +
+                        &XSRCMBR    +
+                        &XTESTLIB   +
+                        &XTESTOBJ   +
+                        &XTGTRLS    +
+                        &XFRMSRCLIB +
+                        &XFRMSRCFIL +
+                        &XFRMSRCMBR +
+                        &XUSER0     +
+                        &XUSER1     +
+                        &XUSER2     +
+                        &XUSER3     +
+                        &XUSER4     +
+                        &XUSER5     +
+                        &XUSER6     +
+                        &XUSER7     +
+                        &XUSER8     +
+                        &XUSER9     +
+                        &XTAGSREQ   +
+                        &XMSGF      +
+                        &XMSGFLIB   +
+                        &PGMCMDEXC  +
+                        &LPGMCMDEXC +
+                        &OPTION     +
+                        &LIBL       +
+                        &USELIBL    +
+                        &USRDEFVAR  +
+                        &EXECOPT    )
 
  /* -------------------------------------------------------------- */
  /*  Programm beenden                                              */
