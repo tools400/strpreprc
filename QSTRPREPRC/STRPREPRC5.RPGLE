@@ -23,6 +23,9 @@
       *                                                                     *
       *  Datum       Name          Änderung                                 *
       *  ----------  ------------  ---------------------------------------  *
+      *  21.03.2022  Th.Raddatz    Added Member_exists().                   *
+      *                                                                     *
+      *  26.03.2022  Th.Raddatz    Added stream file support.               *
       *                                                                     *
       * =================================================================== *
       * >>PRE-COMPILER<<                                                    *
@@ -455,6 +458,8 @@
       /COPY QSTRPREPRC,PRZ0012
       /free
 
+         Member_exists(i_file: i_lib: i_mbr);
+
          g_useSrcFile.name = %trim(i_lib) + '/' + %trim(i_file);
          g_useSrcFile.member = %trim(i_mbr);
 
@@ -651,6 +656,68 @@
           QMHRMVPM('*' : 1: rcvm0100.msgKey: '*BYKEY': errCode);
        endif;
 
+
+      /end-free
+     P                 E
+
+      *===============================================================*
+      *  Check existence of a source member.
+      *===============================================================*
+     P Member_exists...
+     P                 b
+     D                 pi
+     D  i_file                       10a   const
+     D  i_lib                        10a   const
+     D  i_mbr                        10a   const
+      *
+     D rc              s             10i 0
+      *
+      *  system -- Execute a Command
+      *     Return value       Meaning
+      *     ----------------   --------------------------------------
+      *     0                  the command is successful
+      *     -1                 for a NULL pointer
+      *     1                  the command fails
+     d system          pr            10i 0 extproc('system')
+     d  i_clCommand                    *   value options(*string)
+      *
+      *  Nachrichten
+      *  ... Bibliothek &1 nicht gefunden.
+      /COPY QSTRPREPRC,PRZ0035
+      *  ... Datei &1 in Bibliothek &2 nicht gefunden.
+      /COPY QSTRPREPRC,PRZ0036
+      *  ... Teildatei &3 von Datei &1 in Bibliothek &2 nicht gefunden.
+      /COPY QSTRPREPRC,PRZ0037
+      /free
+
+         if (%subst(i_lib: 1: 1) <> '*');
+            rc = system('CHKOBJ OBJ(' + %trim(i_lib) + ') OBJTYPE(*LIB)');
+            if (rc <> 0);
+               clear PRZ0035;
+               PRZ00351 = i_lib;
+               sendMsg(f_newMsg('PRZ0035': PRZ0035: cTYPE_ESCAPE));
+            endif;
+         endif;
+
+         rc = system('CHKOBJ OBJ(' + %trim(i_lib) + '/' +
+                                     %trim(i_file) + ') OBJTYPE(*FILE)');
+         if (rc <> 0);
+            clear PRZ0036;
+            PRZ00361 = i_file;
+            PRZ00362 = i_lib;
+            sendMsg(f_newMsg('PRZ0036': PRZ0036: cTYPE_ESCAPE));
+         endif;
+
+         rc = system('CHKOBJ OBJ(' + %trim(i_lib) + '/' +
+                                     %trim(i_file) + ') OBJTYPE(*FILE) ' +
+                                     'MBR(' + %trim(i_mbr) + ')');
+         if (rc <> 0);
+            clear PRZ0037;
+            PRZ00371 = i_file;
+            PRZ00372 = i_lib;
+            PRZ00373 = i_mbr;
+            sendMsg(f_newMsg('PRZ0037': PRZ0037: cTYPE_ESCAPE));
+         endif;
 
       /end-free
      P                 E

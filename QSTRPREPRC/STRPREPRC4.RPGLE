@@ -38,6 +38,11 @@
       *                                                                     *
       *  16.03.2022  Th.Raddatz    Renamed PROTO_H to TYPES_H.              *
       *                                                                     *
+      *  23.03.2022  Th.Raddatz    Changed writeEventFile() to accept an    *
+      *                            IFS stream file at parameter i_srcFile.  *
+      *                                                                     *
+      *  26.03.2022  Th.Raddatz    Added stream file support.               *
+      *                                                                     *
       * =================================================================== *
       * >>PRE-COMPILER<<                                                    *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
@@ -312,7 +317,7 @@
      P writeEventFile...
      P                 b                   export
      D                 pi
-     D  i_srcFile                    10a   const
+     D  i_srcFile                          const  like(path_t)
      D  i_srcLib                     10a   const
      D  i_srcMbr                     10a   const
      D  i_lineNumber                 10i 0 const
@@ -344,7 +349,12 @@
         endif;
 
         if (not g_status.openForAppend);
-           path = f_cvtQSYSObjNameToPath(i_srcFile: i_srcLib: i_srcMbr:'*FILE');
+           if (i_srcLib <> '' and i_srcMbr <> '');
+              path = f_cvtQSYSObjNameToPath(
+                        i_srcFile: i_srcLib: i_srcMbr:'*FILE');
+           else;
+              path = i_srcFile; // i_srcFile is an IFS stream file
+           endif;
            sourceId = SOURCE_ID;
            Eventf_writeFileID(
               sourceId: path: EVF_NAME_TYPE_PATH);

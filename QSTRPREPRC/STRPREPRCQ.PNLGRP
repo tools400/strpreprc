@@ -59,6 +59,12 @@
 .*  22.12.2020  Th.Raddatz    Fixed description of special value       *
 .*                            *ADDJOBLOG of command parameter OPTION.  *
 .*                                                                     *
+.*  21.03.2022  Th.Raddatz    Added include file syntax:               *
+.*                              library/file,member                    *
+.*                                                                     *
+.*  21.03.2022  Th.Raddatz    Added parameters USESRCSTMF and STMF     *
+.*                            to support IFS stream files.             *
+.*                                                                     *
 .*=====================================================================*
 .* >>PRE-COMPILER<<                                                    *
 .*   >>CRTCMD<< CRTPNLGRP    PNLGRP(&LI/STRPREPRCP) +                  *
@@ -80,6 +86,7 @@
 :IMHELP name=STRPREPRC.
 :IMHELP name='STRPREPRC/USESRCFILE'.
 :IMHELP name='STRPREPRC/USESRCMBR'.
+:IMHELP name='STRPREPRC/USESRCSTMF'.
 :IMHELP name='STRPREPRC/CMD'.
 :IMHELP name='STRPREPRC/OPTION'.
 :IMHELP name='STRPREPRC/CHGOBJD'.
@@ -109,6 +116,7 @@
 :IMHELP name='STRPREPRC/USER7'.
 :IMHELP name='STRPREPRC/USER8'.
 :IMHELP name='STRPREPRC/USER9'.
+:IMHELP name='STRPREPRC/STMF'.
 :IMHELP name='STRPREPRC/USRDEFVAR'.
 :IMHELP name='STRPREPRC/LIBL'.
 :IMHELP name='STRPREPRC/USELIBL'.
@@ -225,7 +233,25 @@ and link sub-sections.
 :PT.>>INCLUDE<<
 :PD.This tag is used for including a member with pre-compiler
 statements. It is used like the RPG /copy statement. Nested includes
-are not allowed.
+are not allowed. Syntax:
+:p.
+QSYS file system:
+:p.
+:LINES.
+   file,member
+   library/file,member
+:ELINES.
+:p.
+IFS file system:
+:p.
+:LINES.
+   /Streamfile
+   ./Streamfile
+   /Folder/Streamfile
+   .Folder/Streamfile
+   'ifs file containing blanks'
+   "ifs file containing blanks"
+:ELINES.
 
 :PT.>>IMPORTANT<<
 :PD.This tag is used to mark the 'important' sub-section. The 'important'
@@ -338,6 +364,9 @@ Use Source file (USESRCFILE) - Help
 :P.
 Specifies the qualified name of the source file that contains the
 pre-compiler tags.
+:P.
+:IMHELP name='COM/SRC'.
+:P.
 :IMHELP name='COM/REQPARM'.
 :P.
 :IMHELP name='COM/VALUES'.
@@ -358,12 +387,38 @@ Use Source member (USESRCMBR) - Help
 :P.
 Specifies the name of the source file member that contains
 the pre-compiler tags.
+:P.
+:IMHELP name='COM/SRC'.
+:P.
 :IMHELP name='COM/REQPARM'.
 :P.
 :IMHELP name='COM/VALUES'.
 :PARML.
 :PT.:PV.source-file-member-name:EPV.
 :PD.Enter the name of the source physical file member that
+contains the pre-compiler tags.
+:EPARML.
+:EHELP.
+
+.********************************************
+.*  Keyword:  USESRCSTMF
+.********************************************
+:HELP NAME='STRPREPRC/USESRCSTMF'.
+Source stream file (USESRCSTMF) - Help
+:XH3.Source stream file (USESRCSTMF)
+:P.
+Specifies the name of the IFS source stream file that contains
+the pre-compiler tags. Usually that is the same file that is
+used for compiling the object.
+:P.
+:IMHELP name='COM/SRC'.
+:P.
+:IMHELP name='COM/REQPARM'.
+:P.
+:IMHELP name='COM/VALUES'.
+:PARML.
+:PT.:PV.ifs-source-stream-file-name:EPV.
+:PD.Enter the name of the IFS source stream file that
 contains the pre-compiler tags.
 :EPARML.
 :EHELP.
@@ -593,6 +648,9 @@ Value for object (&OB) (OBJ) - Help
 :XH3.Value for object (&OB) (OBJ)
 :P.
 Value for the replacement variable 'Object' (&OB).
+:IMHELP name='COM/OPTPARM'.
+:P.
+:IMHELP name='COM/VALUES'.
 
 :PARML.
 :PT.:PK DEF.*NONE:EPK.
@@ -1054,6 +1112,32 @@ Specifies the value for the replacement variable
 :EHELP.
 
 .********************************************
+.*  Keyword:  STMF (optional)
+.********************************************
+:HELP NAME='STRPREPRC/STMF'.
+Value for stream file  (&STMF) (STMF) - Help
+:XH3.Value for stream file  (&STMF) (STMF)
+:P.
+Value for the replacement variable 'stream file' (&STMF).
+:P.
+Variable :HP2.&FOLDER:EHP2. contains the directory portion of the stream file and
+variable :HP2.&FILE:EHP2. contains the name of the stream file.
+:IMHELP name='COM/OPTPARM'.
+:P.
+:IMHELP name='COM/VALUES'.
+
+:PARML.
+:PT.:PK DEF.*NONE:EPK.
+:PD.Not specified.
+:PT.:PV.*DFT:EPV.
+:PD.Name of the stream file as specified at parameter :HP2.USESRCSTMF:EHP2..
+:PT.:PV.object-name:EPV.
+:PD.Enter the name of a stream file.
+:EPARML.
+
+:EHELP.
+
+.********************************************
 .*  Keyword:  USRDEFVAR (optional)
 .********************************************
 :HELP NAME='STRPREPRC/USRDEFVAR'.
@@ -1273,6 +1357,16 @@ The available command groups are:
 .*****************************************************************
 .*  Common help text that is imbedded into one or more places.
 .*****************************************************************
+
+.********************************************
+.*  Source parameter
+.********************************************
+
+:HELP NAME='COM/SRC'.
+:P.
+Either specify a source physical file and member or an IFS source
+stream file.
+:EHELP.
 
 .********************************************
 .*  Required Parameter

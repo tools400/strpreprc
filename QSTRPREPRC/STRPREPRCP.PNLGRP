@@ -59,6 +59,12 @@
 .*  22.12.2020  Th.Raddatz    Fixed description of special value       *
 .*                            *ADDJOBLOG of command parameter OPTION.  *
 .*                                                                     *
+.*  21.03.2022  Th.Raddatz    Added include file syntax:               *
+.*                              library/file,member                    *
+.*                                                                     *
+.*  21.03.2022  Th.Raddatz    Added parameters USESRCSTMF and STMF     *
+.*                            to support IFS stream files.             *
+.*                                                                     *
 .*=====================================================================*
 .* >>PRE-COMPILER<<                                                    *
 .*   >>CRTCMD<< CRTPNLGRP    PNLGRP(&LI/STRPREPRCP) +                  *
@@ -80,6 +86,7 @@
 :IMHELP name=STRPREPRC.
 :IMHELP name='STRPREPRC/USESRCFILE'.
 :IMHELP name='STRPREPRC/USESRCMBR'.
+:IMHELP name='STRPREPRC/USESRCSTMF'.
 :IMHELP name='STRPREPRC/CMD'.
 :IMHELP name='STRPREPRC/OPTION'.
 :IMHELP name='STRPREPRC/CHGOBJD'.
@@ -109,6 +116,7 @@
 :IMHELP name='STRPREPRC/USER7'.
 :IMHELP name='STRPREPRC/USER8'.
 :IMHELP name='STRPREPRC/USER9'.
+:IMHELP name='STRPREPRC/STMF'.
 :IMHELP name='STRPREPRC/USRDEFVAR'.
 :IMHELP name='STRPREPRC/LIBL'.
 :IMHELP name='STRPREPRC/USELIBL'.
@@ -224,7 +232,25 @@ am Anfang der Pre-Prozessor-Anweisungen definiert werden.
 :PT.>>INCLUDE<<
 :PD.Diese Marke bindet eine Teildatei mit Pre-Prozessor-Anweisungen ein.
 Die Syntax folgt hierbei der RPG /copy Anweisung. Ein verschachteltes
-Einbinden von Teildateien ist nicht erlaubt.
+Einbinden von Teildateien ist nicht erlaubt. Syntax:
+:p.
+QSYS Dateisystem:
+:p.
+:LINES.
+   Datei,Teildatei
+   Bibliothek/Datei,Teildatei
+:ELINES.
+:p.
+IFS Dateisystem:
+:p.
+:LINES.
+   /IFSDatei
+   ./IFSDatei
+   /Verzeichnis/IFSDatei
+   .Verzeichnis/IFSDatei
+   'IFS Datei mit Leerzeichen'
+   "IFS Datei mit Leerzeichen"
+:ELINES.
 
 :PT.>>IMPORTANT<<
 :PD.Diese Marke leitet den Abschnitt für die Compiler-Schlüsselworte ein.
@@ -350,6 +376,9 @@ Quellendatei (USESRCFILE) - Hilfe
 :P.
 Name der Quellendatei, welche die Quellenteildatei mit den
 Pre-Prozessor-Anweisungen für die Objekterstellung enthält.
+:P.
+:IMHELP name='COM/SRC'.
+:P.
 :IMHELP name='COM/REQPARM'.
 :P.
 :IMHELP name='COM/VALUES'.
@@ -371,12 +400,38 @@ Teildatei (USESRCMBR) - Hilfe
 Name der Quellenteildatei, welche die Pre-Prozessor-Anweisungen enthält. In
 der Regel ist dies die gleiche Quellenteildatei, die auch für die
 Objekterstellung verwendet wird.
+:P.
+:IMHELP name='COM/SRC'.
+:P.
 :IMHELP name='COM/REQPARM'.
 :P.
 :IMHELP name='COM/VALUES'.
 :PARML.
 :PT.:PV.Name der Quellenteildatei:EPV.
 :PD.Geben sie den Namen der Quellenteildatei ein, welche die
+Pre-Prozessor-Anweisungen enthält.
+:EPARML.
+:EHELP.
+
+.********************************************
+.*  Keyword:  USESRCSTMF
+.********************************************
+:HELP NAME='STRPREPRC/USESRCSTMF'.
+Quellendatenstromdatei (USESRCSTMF) - Hilfe
+:XH3.Quellendatenstromdatei (USESRCSTMF)
+:P.
+Name der IFS Quellendatenstromdatei, welche die Pre-Prozessor-Anweisungen enthält. In
+der Regel ist dies die gleiche IFS Quellendatenstromdatei, die auch für die
+Objekterstellung verwendet wird.
+:P.
+:IMHELP name='COM/SRC'.
+:P.
+:IMHELP name='COM/REQPARM'.
+:P.
+:IMHELP name='COM/VALUES'.
+:PARML.
+:PT.:PV.Name der IFS Quellendatenstromdatei:EPV.
+:PD.Geben sie den Namen der IFS Quellendatenstromdatei ein, welche die
 Pre-Prozessor-Anweisungen enthält.
 :EPARML.
 :EHELP.
@@ -1087,6 +1142,33 @@ eingetragen werden soll.
 :EHELP.
 
 .********************************************
+.*  Keyword:  STMF (optional)
+.********************************************
+:HELP NAME='STRPREPRC/STMF'.
+Wert für Datenstromd.  (&STMF) (STMF) - Hilfe
+:XH3.Wert für Datenstromd.  (&STMF) (STMF)
+:P.
+Wert, der für die Ersatzvariable 'Datenstromdatei' (&STMF) eingetragen
+werden soll.
+:P.
+Die Variable :HP2.&FOLDER:EHP2. enthält das Verzeichnis der Datenstromdatei und
+in der Variablen :HP2.&FILE:EHP2. steht der Name der Datenstromdatei.
+:IMHELP name='COM/OPTPARM'.
+:P.
+:IMHELP name='COM/VALUES'.
+
+:PARML.
+:PT.:PK DEF.*NONE:EPK.
+:PD.Es ist kein Wert angegeben.
+:PT.:PV.*DFT:EPV.
+:PD.Name der Quellendatenstromdatei, wie am Parameter :HP2.USESRCSTMF:EHP2. angegeben.
+:PT.:PV.Datenstromdatei:EPV.
+:PD.Geben sie den Namen einer Datenstromdatei an.
+:EPARML.
+
+:EHELP.
+
+.********************************************
 .*  Keyword:  USRDEFVAR (optional)
 .********************************************
 :HELP NAME='STRPREPRC/USRDEFVAR'.
@@ -1336,6 +1418,15 @@ Verfügung stehenden Befehlsgruppen sind:
 .*****************************************************************
 .*  Common help text that is imbedded into one or more places.
 .*****************************************************************
+
+.********************************************
+.*  Quellenangaben
+.********************************************
+:HELP NAME='COM/SRC'.
+:P.
+Es müssen entweder die Werte für eine Quelledatei und -teildatei
+oder eine Quellendatenstromdatei angegeben werden.
+:EHELP.
 
 .********************************************
 .*  Required Parameter

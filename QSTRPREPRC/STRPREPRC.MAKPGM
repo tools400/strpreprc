@@ -35,7 +35,8 @@
      /*                     &LI/STRPREPRC2 +                                */
      /*                     &LI/STRPREPRC3 +                                */
      /*                     &LI/STRPREPRC4 +                                */
-     /*                     &LI/STRPREPRC5 );                               */
+     /*                     &LI/STRPREPRC5 +                                */
+     /*                     &LI/STRPREPRC6 );                               */
      /*     >>PARM<< ENTMOD(&LI/STRPREPRC1);                                */
      /*     >>PARM<< BNDSRVPGM(&LI/BASICS1 +                                */
      /*                        &LI/EVENTF  +                                */

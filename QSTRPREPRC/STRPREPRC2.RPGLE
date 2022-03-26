@@ -155,6 +155,16 @@
       *                            Created prototypes and moved global      *
       *                            fields and constants to TYPES_H.         *
       *                                                                     *
+      *  21.03.2022  Th.Raddatz    Added parameters USESRCSTMF and STMF     *
+      *                            to support IFS stream files.             *
+      *                                                                     *
+      *  21.03.2022  Th.Raddatz    Added include file syntax:               *
+      *                              library/file,member                    *
+      *                                                                     *
+      *  26.03.2022  Th.Raddatz    Added variables &STMF, &FOLDER and &FILE.*
+      *                                                                     *
+      *  26.03.2022  Th.Raddatz    Added stream file support.               *
+      *                                                                     *
       * =================================================================== *
       * >>PRE-COMPILER<<                                                    *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
@@ -279,6 +289,9 @@
      D EXEC_POSTCMDS   c                   '*POSTCMDS'
       *
      D CURLIB_CRTDFT   c                   '*CRTDFT'
+      *
+     D SINGLE_QUOTE    c                   ''''
+     D DOUBLE_QUOTE    c                   '"'
       * -------------------------------------------------------------
       *  Globale Variablen
       * -------------------------------------------------------------
@@ -343,6 +356,7 @@
       * -------------------------------------------------------------
       /copy QSTRPREPRC,PSTRPREPR4
       /copy QSTRPREPRC,PSTRPREPR5
+      /copy QSTRPREPRC,PSTRPREPR6
       /copy QSTRPREPRC,QMHRCVPM
       /copy QBASICS1,PBASICS1
       /copy QSTRPREPRC,TYPES_H
@@ -365,11 +379,11 @@
      D  io_srcDta                                 like(ds_srcFile_t.srcDta)
       *
      D getSpcValDft...
-     D                 pr                  like(keyData_t)
+     D                 pr                  like(path_t)
      D                                     extproc('getValue')
-     D  i_actual                           const like(keyData_t)
+     D  i_actual                           const like(path_t)
      D                                     options(*varsize)
-     D  i_default                          const like(keyData_t)
+     D  i_default                          const like(path_t)
      D                                     options(*varsize)
       *
      D restoreLibraryList...
@@ -406,6 +420,16 @@
      D performInclude...
      D                 PR
      D                                     extproc('performInclude')
+     D  i_include                          value  like(cmdLong_t)
+      *
+     D performIncludeStmf...
+     D                 PR
+     D                                     extproc('performIncludeStmf')
+     D  i_include                          value  like(cmdLong_t)
+      *
+     D performIncludeMember...
+     D                 PR
+     D                                     extproc('performIncludeMember')
      D  i_include                          value  like(cmdLong_t)
       *
      D performSetLibraryList...
@@ -548,27 +572,6 @@
      D  i_value                            value  like(cmdLong_t)
      D  io_string                                 like(cmdLong_t)
       *
-     D chkMbr...
-     D                 PR                  extproc('chkMbr')
-     D  i_file                       10a   const
-     D  i_lib                        10a   const
-     D  i_mbr                        10a   const
-      *
-     D removeFileOpenmessage...
-     D                 pr                  extproc('removeFileOpenmessage')
-      *
-     D getMsgInf...
-     D                 PR
-     D                                     extproc('getMsgInf')
-     D  i_pgm                              value  like(pgm_t)
-     D  i_module                           value  like(module_t)
-     D  i_proc                             value  like(proc_t)
-     D  i_msgId                            value  like(msgID_t)
-     D  o_msgID                                   like(msgID_t)
-     D  o_msgDta                                  like(msg_t.data)
-     D  o_msgFile                                 like(msg_t.file)
-     D  o_msgLib                                  like(msg_t.lib)
-      *
       *
       *  Register Call Stack Entry Termination User Exit Procedure (CEERTX)
      d CEERTX...
@@ -596,6 +599,7 @@
      D  i_useSrcFile                              like(file_t)
      D  i_useSrcLib                               like(lib_t)
      D  i_useSrcMbr                               like(mbr_t)
+     D  i_useSrcStmf                              like(path_t)
      D  i_cmd                                     like(cmd_t)
      D  i_chgObjD                                 like(chgObjD_t)
      D  i_objType                                 like(objType_t)
@@ -624,6 +628,7 @@
      D  i_user7                                   like(userParm_t)
      D  i_user8                                   like(userParm_t)
      D  i_user9                                   like(userParm_t)
+     D  i_stmf                                    like(path_t)
      D  i_tagsReq                                 like(bool_t)
      D  i_msgFile                                 like(msg_t.file)
      D  i_msgFileLib                              like(msg_t.lib)
@@ -654,6 +659,10 @@
       /COPY QSTRPREPRC,PRZ0028
       *  ... Die Option *ADDJOBLOG ist nur in Verbindung mit *EVENTF zulässig.
       /COPY QSTRPREPRC,PRZ0030
+      *  ... Erstellungsbefehl nicht gefunden in Quellendatei &1
+      /COPY QSTRPREPRC,PRZ0044
+      *  ... Erstellungsbefehl nicht gefunden in Quellendatei &2
+      /COPY QSTRPREPRC,PRZ0045
       *
       *  Arbeitsfelder
      D i               S             10i 0 inz
@@ -768,6 +777,9 @@
          variables.user7 = i_user7;
          variables.user8 = i_user8;
          variables.user9 = i_user9;
+         variables.stmf = getSpcValDft(i_stmf: i_useSrcStmf);
+         variables.folder = Path_getFolder(variables.stmf);
+         variables.file = Path_getFile(variables.stmf);
          variables.libl = i_libl;
          variables.useLibl = i_useLibl;
 
@@ -810,10 +822,13 @@
             cmdChgObjD = '';
          endif;
 
-         chkMbr(i_useSrcFile: i_useSrcLib: i_useSrcMbr);
-
-         // Open source file
-         SourceFile_open(i_useSrcLib: i_useSrcFile: i_useSrcMbr);
+         if (i_useSrcStmf <> '');
+           // Open IFS source file
+           SourceStreamFile_open(i_useSrcStmf);
+         else;
+           // Open QSYS source file
+           SourceFile_open(i_useSrcLib: i_useSrcFile: i_useSrcMbr);
+         endif;
 
          // Open Pre-Compiler tags file
          g_strpre1.name = %trim(sds.pgmLib) + '/' + 'STRPRE1';
@@ -849,9 +864,6 @@
 
          // Initialisieren Fortsetzungszeile
          resetLineData(lineData);
-
-         // Lesen der Quellenteildatei
-         // f1_line_number = 0; TODO: remove line
 
          dow readLine(srcDta);
 
@@ -1081,13 +1093,25 @@
 
          enddo;
 
-         SourceFile_close();
-
-         if (%open(STRPRE1));
-            close STRPRE1;
+         if (SourceStreamFile_isOpen());
+           SourceStreamFile_close();
          endif;
 
-         IncludeFile_close();
+         if (SourceFile_isOpen());
+           SourceFile_close();
+         endif;
+
+         if (%open(STRPRE1));
+           close STRPRE1;
+         endif;
+
+         if (IncludeStreamFile_isOpen);
+           IncludeStreamFile_close();
+         endif;
+
+         if (IncludeFile_isOpen);
+           IncludeFile_close();
+         endif;
 
          // Ausführen >>EXECUTE<< implizit, weil
          // kein Pre-Prozessor Abschnitt gefunden werden konnte
@@ -1133,25 +1157,33 @@
          // Senden Abbruchnachricht, weil keine STRPREPRC Anweisungen
          // gefunden worden sind
          if (not foundPrePrcTags and i_tagsReq);
-            clear PRZ0024;
-            // PRZ00241 = f1.file;
-            // PRZ00242 = f1.lib;
-            // PRZ00243 = f1.mbr;
-            PRZ00241 = SourceFile_getFile();
-            PRZ00242 = SourceFile_getLibrary();
-            PRZ00243 = SourceFile_getMember();
-            sendMsg(f_newMsg('PRZ0024': PRZ0024: cTYPE_ESCAPE));
+           if (SourceStreamFile_isOpen());
+             clear PRZ0045;
+             PRZ00451 = SourceStreamFile_getFolder();
+             PRZ00452 = SourceStreamFile_getFile();
+             sendMsg(f_newMsg('PRZ0045': PRZ0045: cTYPE_ESCAPE));
+           else;
+             clear PRZ0024;
+             PRZ00241 = SourceFile_getFile();
+             PRZ00242 = SourceFile_getLibrary();
+             PRZ00243 = SourceFile_getMember();
+             sendMsg(f_newMsg('PRZ0024': PRZ0024: cTYPE_ESCAPE));
+           endif;
          endif;
 
          if (isCmdMissingError);
-            clear PRZ0028;
-            // PRZ00281 = f1.file;
-            // PRZ00282 = f1.lib;
-            // PRZ00283 = f1.mbr;
-            PRZ00281 = SourceFile_getFile();
-            PRZ00282 = SourceFile_getLibrary();
-            PRZ00283 = SourceFile_getMember();
-            sendMsg(f_newMsg('PRZ0028': PRZ0028: cTYPE_ESCAPE));
+           if (SourceStreamFile_isOpen());
+             clear PRZ0044;
+             PRZ00441 = SourceStreamFile_getFolder();
+             PRZ00442 = SourceStreamFile_getFile();
+             sendMsg(f_newMsg('PRZ0044': PRZ0044: cTYPE_ESCAPE));
+           else;
+             clear PRZ0028;
+             PRZ00281 = SourceFile_getFile();
+             PRZ00282 = SourceFile_getLibrary();
+             PRZ00283 = SourceFile_getMember();
+             sendMsg(f_newMsg('PRZ0028': PRZ0028: cTYPE_ESCAPE));
+           endif;
          endif;
 
       /end-free
@@ -1168,19 +1200,35 @@
      D*ds_srcFile      ds                  likeds(ds_srcFile_t) inz
       /free
 
-         if (IncludeFile_isOpen());
-            if (not IncludeFile_readLine(io_srcDta));
-               IncludeFile_close();
-
+         select;
+         when (IncludeStreamFile_isOpen());
+            if (not IncludeStreamFile_readLine(io_srcDta));
+               IncludeStreamFile_close();
                // Read next line of source file
                return readLine(io_srcDta);
             endif;
-         else;
+         when (IncludeFile_isOpen());
+            if (not IncludeFile_readLine(io_srcDta));
+               IncludeFile_close();
+               // Read next line of source file
+               return readLine(io_srcDta);
+            endif;
+         when (SourceStreamFile_isOpen());
+            if (not SourceStreamFile_readLine(io_srcDta));
+               io_srcDta = '';
+               return cFalse;
+            endif;
+         when (SourceFile_isOpen());
             if (not SourceFile_readLine(io_srcDta));
                io_srcDta = '';
                return cFalse;
             endif;
-         endif;
+         other;
+            // TODO: send escape message
+            return cFalse;
+         endsl;
+
+         io_srcDta = %subst(io_srcDta: 1: getSrcDataLength());
 
          return cTrue;
 
@@ -1196,19 +1244,35 @@
      D  io_srcDta                                 like(ds_srcFile_t.srcDta)
       /free
 
-         if (IncludeFile_isOpen());
-            if (not IncludeFile_readPrvLine(io_srcDta));
-               IncludeFile_close();
-
+         select;
+         when (IncludeStreamFile_isOpen());
+            if (not IncludeStreamFile_readPrvLine(io_srcDta));
+               IncludeStreamFile_close();
                // Read previous line of source file
                return readPrvLine(io_srcDta);
             endif;
-         else;
+         when (IncludeFile_isOpen());
+            if (not IncludeFile_readPrvLine(io_srcDta));
+               IncludeFile_close();
+               // Read previous line of source file
+               return readPrvLine(io_srcDta);
+            endif;
+         when (SourceStreamFile_isOpen());
+            if (not SourceStreamFile_readLine(io_srcDta));
+               io_srcDta = '';
+               return cFalse;
+            endif;
+         when (SourceFile_isOpen());
             if (not SourceFile_readLine(io_srcDta));
                io_srcDta = '';
                return cFalse;
             endif;
-         endif;
+         other;
+            // TODO: send escape message
+            return cFalse;
+         endsl;
+
+         io_srcDta = %subst(io_srcDta: 1: getSrcDataLength());
 
          return cTrue;
 
@@ -1236,10 +1300,10 @@
       * =============================================================
      P getSpcValDft...
      P                 b
-     D                 pi                  like(keyData_t)
-     D  i_actual                           const like(keyData_t)
+     D                 pi                  like(path_t)
+     D  i_actual                           const like(path_t)
      D                                     options(*varsize)
-     D  i_default                          const like(keyData_t)
+     D  i_default                          const like(path_t)
      D                                     options(*varsize)
       /free
 
@@ -1471,6 +1535,21 @@
        //     replaceVar('*CX': i_variables.prvLibl.curLib: cmdString);
        //  endif;
 
+         // Ersetzen Parameter  (&STMF)
+         if (i_variables.stmf <> '');
+            replaceVar('&STMF': i_variables.stmf: cmdString);
+         endif;
+
+         // Ersetzen Parameter  (&FOLDER)
+         if (i_variables.folder <> '');
+            replaceVar('&FOLDER': i_variables.folder: cmdString);
+         endif;
+
+         // Ersetzen Parameter  (&FILE)
+         if (i_variables.file <> '');
+            replaceVar('&FILE': i_variables.file: cmdString);
+         endif;
+
          // Prüfen, ob alle Variablen ersetzt worden sind
          posOfVar = %scan('&': cmdString);
 
@@ -1647,6 +1726,67 @@
      D                 pi
      D  i_include                          value  like(cmdLong_t)
       *
+     D include         s                   like(cmdLong_t)
+     D stmf            s                   like(path_t)
+     D st_stat         ds                  likeds(st_stat_t)
+     D rc              s             10i 0
+     D isStmf          s               n
+      /free
+
+         include = %trim(i_include);
+
+         isStmf = cFalse;
+
+         select;
+         when (f_startsWith(SINGLE_QUOTE: include));
+           stmf = f_rmvQuotes(include: SINGLE_QUOTE);
+           isStmf = cTrue;
+         when (f_startsWith(DOUBLE_QUOTE: include));
+           stmf = f_rmvQuotes(include: DOUBLE_QUOTE);
+           isStmf = cTrue;
+         other;
+           rc = stat(include: %addr(st_stat));
+           if (rc = 0);
+             stmf = include;
+             isStmf = cTrue;
+           endif;
+         endsl;
+
+         if (isStmf);
+           performIncludeStmf(stmf);
+         else;
+           performIncludeMember(include);
+         endif;
+
+      /end-free
+     P                 e
+
+      * =============================================================
+      *  Perform iclude for a given source stream file.
+      * =============================================================
+     P performIncludeStmf...
+     P                 b
+     D                 pi
+     D  i_include                          value  like(cmdLong_t)
+      *
+     D stmf            s                   like(path_t)
+      /free
+
+         stmf = f_rmvQuotes(i_include: SINGLE_QUOTE);
+
+         IncludeStreamFile_open(stmf);
+
+      /end-free
+     P                 e
+
+      * =============================================================
+      *  Perform iclude for a given source member.
+      * =============================================================
+     P performIncludeMember...
+     P                 b
+     D                 pi
+     D  i_include                          value  like(cmdLong_t)
+      *
      D s               s             10i 0
      D e               s             10i 0
      D library         s             10a   varying
@@ -1669,6 +1809,9 @@
 
          if (s < %len(i_include));
             e = %scan(' ': i_include: s);
+            if (e = 0);
+               e = %scan(',': i_include: s);
+            endif;
             if (e - s > 0);
                file = %subst(i_include: s: e - s);
                s = e + 1;
@@ -2146,8 +2289,13 @@
          // prüfen Datenlänge
          if (dataLen < 0);
             clear PRZ0008;
-            // PRZ00081 = f1_line_number;
-            PRZ00081 = SourceFile_getLineNbr();
+
+            if (SourceStreamFile_isOpen());
+               PRZ00081 = SourceStreamFile_getLineNbr();
+            else;
+               PRZ00081 = SourceFile_getLineNbr();
+            endif;
+
             sendMsg(f_newMsg('PRZ0008': PRZ0008: cTYPE_DIAG));
             endAbnormal();
          endif;
@@ -2190,9 +2338,16 @@
          if (io_continue <> cEND_OF_LINE) and
             (io_continue <> cTRUNC_CONT) and
             (io_continue <> cCONT);
+
             clear PRZ0005;
             PRZ00051 = io_continue;
-            PRZ00052 = SourceFile_getLineNbr();
+
+            if (SourceStreamFile_isOpen());
+               PRZ00052 = SourceStreamFile_getLineNbr();
+            else;
+               PRZ00052 = SourceFile_getLineNbr();
+            endif;
+
             sendMsg(f_newMsg('PRZ0005': PRZ0005: cTYPE_DIAG));
             endAbnormal();
          endif;
@@ -2368,15 +2523,17 @@
 
          // if (%open(INCLUDE));
          if (IncludeFile_isOpen());
-            // srcDtaLen =
-            //    f3.rcdLen -
-            //    (%size(ds_srcFile_t.srcSeq) + %size(ds_srcFile_t.srcDat));
-            srcDtaLen = IncludeFile_getDtaLength();
+            if (IncludeStreamFile_isOpen());
+               srcDtaLen = IncludeStreamFile_getDtaLength();
+            else;
+               srcDtaLen = IncludeFile_getDtaLength();
+            endif;
          else;
-            // srcDtaLen =
-            //    f1.rcdLen -
-            //    (%size(ds_srcFile_t.srcSeq) + %size(ds_srcFile_t.srcDat));
-            srcDtaLen = SourceFile_getDtaLength();
+            if (SourceStreamFile_isOpen());
+               srcDtaLen = SourceStreamFile_getDtaLength();
+            else;
+               srcDtaLen = SourceFile_getDtaLength();
+            endif;
          endif;
 
          if (g_width <> -1 and g_width < srcDtaLen);
@@ -3158,8 +3315,13 @@
             writeJobLogToEventf(qEventf: cTrue);
          endif;
 
-         lineNumber = SourceFile_getLineNbr();
-         SourceFIle_close();
+         if (SourceStreamFile_isOpen());
+            lineNumber = SourceStreamFile_getLineNbr();
+            SourceStreamFile_close();
+         else;
+            lineNumber = SourceFile_getLineNbr();
+            SourceFile_close();
+         endif;
 
          if (%open(STRPRE1));
             close STRPRE1;
@@ -3259,10 +3421,16 @@
                g_eventf.isOpen = openEventFile(
                                     g_eventf.mbr: g_eventf.lib: doAppend);
                if (g_eventf.isOpen);
-                  writeEventFile(
-                     g_srcFile.name: g_srcFile.lib: g_srcFile.mbr
-                     // : f1_line_number: i_isAbnEnd);
-                     : SourceFile_getLineNbr(): i_isAbnEnd);
+                  if (SourceStreamFile_isOpen());
+                     writeEventFile(
+                        SourceStreamFile_getPath()
+                        : '': ''
+                        : SourceStreamFile_getLineNbr(): i_isAbnEnd);
+                  else;
+                     writeEventFile(
+                        g_srcFile.name: g_srcFile.lib: g_srcFile.mbr
+                        : SourceFile_getLineNbr(): i_isAbnEnd);
+                  endif;
                endif;
             endif;
 
@@ -3314,68 +3482,6 @@
             endif;
             x = %scan(%trim(i_var): io_string);
          enddo;
-
-      /end-free
-     P                 E
-      *
-      *===============================================================*
-      *  Check existence of a stream file
-      *===============================================================*
-     P chkMbr...
-     P                 b                   export
-     D                 pi
-     D  i_file                       10a   const
-     D  i_lib                        10a   const
-     D  i_mbr                        10a   const
-      *
-     D rc              s             10i 0
-      *
-      *  system -- Execute a Command
-      *     Return value       Meaning
-      *     ----------------   --------------------------------------
-      *     0                  the command is successful
-      *     -1                 for a NULL pointer
-      *     1                  the command fails
-     d system          pr            10i 0 extproc('system')
-     d  i_clCommand                    *   value options(*string)
-      *
-      *  Nachrichten
-      *  ... Bibliothek &1 nicht gefunden.
-      /COPY QSTRPREPRC,PRZ0035
-      *  ... Datei &1 in Bibliothek &2 nicht gefunden.
-      /COPY QSTRPREPRC,PRZ0036
-      *  ... Teildatei &3 von Datei &1 in Bibliothek &2 nicht gefunden.
-      /COPY QSTRPREPRC,PRZ0037
-      /free
-
-         if (%subst(i_lib: 1: 1) <> '*');
-            rc = system('CHKOBJ OBJ(' + %trim(i_lib) + ') OBJTYPE(*LIB)');
-            if (rc <> 0);
-               clear PRZ0035;
-               PRZ00351 = i_lib;
-               sendMsg(f_newMsg('PRZ0035': PRZ0035: cTYPE_ESCAPE));
-            endif;
-         endif;
-
-         rc = system('CHKOBJ OBJ(' + %trim(i_lib) + '/' +
-                                     %trim(i_file) + ') OBJTYPE(*FILE)');
-         if (rc <> 0);
-            clear PRZ0036;
-            PRZ00361 = i_file;
-            PRZ00362 = i_lib;
-            sendMsg(f_newMsg('PRZ0036': PRZ0036: cTYPE_ESCAPE));
-         endif;
-
-         rc = system('CHKOBJ OBJ(' + %trim(i_lib) + '/' +
-                                     %trim(i_file) + ') OBJTYPE(*FILE) ' +
-                                     'MBR(' + %trim(i_mbr) + ')');
-         if (rc <> 0);
-            clear PRZ0037;
-            PRZ00371 = i_file;
-            PRZ00372 = i_lib;
-            PRZ00373 = i_mbr;
-            sendMsg(f_newMsg('PRZ0037': PRZ0037: cTYPE_ESCAPE));
-         endif;
 
       /end-free
      P                 E

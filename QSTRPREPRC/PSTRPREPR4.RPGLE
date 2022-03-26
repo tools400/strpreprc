@@ -50,7 +50,7 @@
      D                 pr                  extproc('STRPREPRC4_+
      D                                     writeEventFile+
      D                                     ')
-     D  i_srcFile                    10a   const
+     D  i_srcFile                          const  like(path_t)
      D  i_srcLib                     10a   const
      D  i_srcMbr                     10a   const
      D  i_lineNumber                 10i 0 const

@@ -36,8 +36,9 @@
      /*                            header.                                  */
      /*  22.09.2017  Th.Raddatz    Added parameter USRDEFVAR to STRPREPRC   */
      /*                            command.                                 */
-     /*  11.02.2019  Th.Raddatz    Added parameters USESRCSTMF and STMF.    */
      /*  07.08.2019  Th.Raddatz    Added parameter EXECOPT.                 */
+     /*  21.03.2022  Th.Raddatz    Added parameters USESRCSTMF and STMF     */
+     /*                            to support IFS stream files.             */
      /*                                                                     */
      /* =================================================================== */
      /* >>PRE-COMPILER<<                                                    */
@@ -57,13 +58,19 @@
              CMD        PROMPT('Pre-Prozessor starten')
 
              PARM       KWD(USESRCFILE) TYPE(QUAL1)        +
-                        MIN(1)                             +
+                        MIN(0)                             +
                         PROMPT('Quellendatei')
 
              PARM       KWD(USESRCMBR ) TYPE(*CHAR)        +
                           LEN(10)                          +
                           MIN(0)                           +
                           PROMPT('Teildatei')
+
+             PARM       KWD(USESRCSTMF) TYPE(*CHAR)        +
+                          LEN(4096)                        +
+                          VARY(*YES *INT2)                 +
+                          MIN(0)                           +
+                          PROMPT('Quellendatenstromdatei')
 
              PARM       KWD(CMD       ) TYPE(*CMDSTR)      +
                           LEN(8192)                        +
@@ -321,6 +328,15 @@
                           PMTCTL(*PMTRQS)                  +
                           PROMPT('Wert für Parameter       (&U9)')
 
+             PARM       KWD(STMF      ) TYPE(*CHAR)        +
+                          LEN(4096)                        +
+                          VARY(*YES *INT2)                 +
+                          MIN(0)                           +
+                          DFT(*NONE)                       +
+                          SPCVAL((*NONE) (*DFT))           +
+                          PMTCTL(*PMTRQS)                  +
+                          PROMPT('Wert für Datenstromd.  (&STMF)')
+
              PARM       KWD(USRDEFVAR ) TYPE(USRDEFVAR)    +
                           MIN(0)                           +
                           MAX(20)                          +
@@ -421,6 +437,39 @@
  /* Prüfen der Abhängigkeiten */
  /* ------------------------- */
 
+ /* ... Angeben Quellendatenstromdatei  */
+ /*     oder Quelledatei und -teildatei */
+             DEP        CTL(&USESRCFILE *NE ' ') +
+                          PARM((&USESRCSTMF *EQ ' ')) +
+                          NBRTRUE(*ALL) MSGID(PRZ0038)
+
+             DEP        CTL(&USESRCMBR *NE ' ') +
+                          PARM((&USESRCSTMF *EQ ' ')) +
+                          NBRTRUE(*ALL) MSGID(PRZ0038)
+
+             DEP        CTL(&USESRCSTMF *NE ' ') +
+                          PARM((&USESRCFILE *EQ ' ')  +
+                               (&USESRCMBR  *EQ ' ')) +
+                          NBRTRUE(*ALL) MSGID(PRZ0038)
+
+             DEP        CTL(&USESRCFILE *EQ ' ') +
+                          PARM((&USESRCSTMF *NE ' ')) +
+                          NBRTRUE(*ALL) MSGID(PRZ0039)
+
+             DEP        CTL(&USESRCSTMF *EQ ' ') +
+                          PARM((&USESRCFILE *NE ' ')  +
+                               (&USESRCMBR  *NE ' ')) +
+                          NBRTRUE(*ALL) MSGID(PRZ0039)
+
+ /* ... *DFT nicht zulässig für         */
+ /*     SRCLIB, SRCFILE und SRCMBR,     */
+ /*     wenn USESRCSTMF angegeben ist   */
+             DEP        CTL(&USESRCSTMF *NE ' ') +
+                          PARM((&SRCLIB     *NE '*DFT')  +
+                               (&SRCFILE    *NE '*DFT')  +
+                               (&SRCMBR     *NE '*DFT')) +
+                          NBRTRUE(*ALL) MSGID(PRZ0040)
+
  /* ... Ausgeben Ereignisdatei          */
  /*     ... Option = *EVENTF            */
              DEP        CTL(&OPTION *EQ '*EVENTF') +
@@ -462,4 +511,5 @@
                               *EQ '*SAME'))     +
                         NBRTRUE(*ALL)           +
                         MSGID(PRZ0018)
+
 

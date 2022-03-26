@@ -16,6 +16,13 @@
 //       >>PARM<< POPTION(*EVENTF);
 //       >>PARM<< COMPILEOPT('DBGVIEW(*LIST)');
 //       >>PARM<< BNDDIR(*N);
+//       >>PARM<< MODULE(&LI/STRPREPRC2 +
+//                       &LI/STRPREPRC4 +
+//                       &LI/STRPREPRC5 +
+//                       &LI/STRPREPRC6) +
+//                BNDSRVPGM(&LI/BASICS1 +
+//                          &LI/JOBLOG +
+//                          &LI/EVENTF);
 //     >>END-COMPILE<<
 //     >>EXECUTE<<
 //   >>END-PRE-COMPILER<<
@@ -23,11 +30,20 @@
 ctl-opt NoMain Option(*SrcStmt : *NoDebugIO);
 
 /include qinclude,TESTCASE                  iRPGUnit Test Suite
+/include qbasics1,clib                      C Runtime Library
 
 exec sql
   SET OPTION
     NAMING =*SQL, COMMIT = *NONE, CLOSQLCSR = *ENDACTGRP, DATFMT = *ISO, TIMFMT = *ISO,
     DFTRDBCOL = QTEMP, DYNDFTCOL = *YES;
+
+// ------------------------------------------------------------
+//  Imported Prototypes
+// ------------------------------------------------------------
+/include qstrpreprc,pstrprepr6
+/include qbasics1,pbasics1
+
+dcl-s BUFFER_SIZE int(10) import;
 
 // ------------------------------------------------------------
 //  Global Program Status.
@@ -46,13 +62,27 @@ end-ds;
 // ------------------------------------------------------------
 //  Global type templates.
 // ------------------------------------------------------------
-dcl-ds errCode_t qualified template;
-  bytPrv       int(10) inz(%size(errCode_t));
+dcl-ds local_errCode_t qualified template;
+  bytPrv       int(10) inz(%size(local_errCode_t));
   bytAvl       int(10) inz;
   excId        char(7) inz;
   reserved_1   char(1) inz;
   excDta       char(100) inz;
 end-ds;
+
+dcl-c STMF_UTF8 '/home/raddatz/temp/strpreprct.utf8';
+
+dcl-c LINE_BEGIN '--- begin of data (LF) ---';
+dcl-c LINE_1 '1. line צהü CR (short line)';
+dcl-c LINE_2 '2. line צהü LF (longer line)';
+dcl-c LINE_3 '3. line צהü CRLF (even longer line)';
+dcl-c LINE_4 '4. line צהü LFCR (longest line ever)';
+dcl-c LINE_END '---- end of data (./.) ----';
+
+dcl-ds LINES qualified;
+  data varchar(244) dim(6);
+end-ds;
+
 // ------------------------------------------------------------
 //  Local data area (*LDA).
 // ------------------------------------------------------------
@@ -66,6 +96,16 @@ end-ds;
 // ------------------------------------------------------------
 dcl-proc setUpSuite export;
   dcl-pi *n extproc(*dclcase) end-pi;
+
+  clear LINES;
+  LINES.data(1) = LINE_BEGIN;
+  LINES.data(2) = LINE_1;
+  LINES.data(3) = LINE_2;
+  LINES.data(4) = LINE_3;
+  LINES.data(5) = LINE_4;
+  LINES.data(6) = LINE_END;
+
+  p_setAppMsgFile('STRPREPRC': '*LIBL');
 
   if (not exist('QTEMP': 'RUNIT_TST': '*FILE'));
     runCmd('CRTSRCPF FILE(QTEMP/RUNIT_TST) RCDLEN(112) MBR(*NONE)');
@@ -1319,6 +1359,377 @@ dcl-proc test_PostCmd_EVENTF_ADDJOBLOG_EVENTF_OK_ERROR_2 export;
 
 end-proc;
 
+// -----------------------------------------------------------------------
+//    Test: stream file never opened.
+// -----------------------------------------------------------------------
+dcl-proc test_Source_StreamFile_not_open export;
+  dcl-pi *n extproc(*dclcase) end-pi;
+
+  dcl-s isOpen ind;
+  dcl-s lineNbr int(10);
+  dcl-s length int(10);
+
+  isOpen = SourceStreamFile_isOpen();
+  assert(not isOpen: 'Stream file never opened. Should return isOpen as cFalse');
+
+  lineNbr = SourceStreamFile_getLineNbr();
+  assert(lineNbr = -1: 'Stream file never opened. Should return line number -1');
+
+  length = SourceStreamFile_getDtaLength();
+  assert(length = 0: 'Stream file never opened. Should return line length 0');
+
+end-proc;
+
+// -----------------------------------------------------------------------
+//    Test: open/close stream file.
+// -----------------------------------------------------------------------
+dcl-proc test_open_close_Source_StreamFile export;
+  dcl-pi *n extproc(*dclcase) end-pi;
+
+  dcl-s isOpen ind;
+  dcl-s srcDta like(srcDta_t);
+  dcl-s isEOF ind;
+  dcl-s lineNbr int(10);
+  dcl-s length int(10);
+
+  createStreamFile(STMF_UTF8: 1208);
+
+  SourceStreamFile_open(STMF_UTF8);
+
+  isOpen = SourceStreamFile_isOpen();
+  assert(isOpen: 'Stream file is open. Should return isOpen as cTrue');
+
+  lineNbr = SourceStreamFile_getLineNbr();
+  assert(lineNbr = 0: 'Stream file is open. Should return line number 0');
+
+  isEOF = not SourceStreamFile_readLine(srcDta);
+  assert(not isEOF: 'SourceStreamFile_readLine() must return cFalse (begin)');
+  lineNbr = SourceStreamFile_getLineNbr();
+  assert(lineNbr = 1: 'First line has been red. Should return line number 1');
+
+on-exit;
+  SourceStreamFile_close();
+
+  isOpen = SourceStreamFile_isOpen();
+  assert(not isOpen: 'Stream file closed. Should return isOpen as cFalse');
+
+  lineNbr = SourceStreamFile_getLineNbr();
+  assert(lineNbr = -1: 'Stream file closed. Should return line number -1');
+
+  length = SourceStreamFile_getDtaLength();
+  assert(length = 0: 'Stream file closed. Should return line length 0');
+
+  deleteStreamFile(STMF_UTF8);
+
+end-proc;
+
+// -----------------------------------------------------------------------
+//    Test: reading stream file.
+// -----------------------------------------------------------------------
+dcl-proc test_Read_Source_StreamFile export;
+  dcl-pi *n extproc(*dclcase) end-pi;
+
+  dcl-s srcDta like(srcDta_t);
+  dcl-s isEOF ind;
+  dcl-s lineNbr int(10);
+  dcl-s length int(10);
+  dcl-s i int(10);
+
+  BUFFER_SIZE = 10;
+
+  createStreamFile(STMF_UTF8: 1208);
+
+  SourceStreamFile_open(STMF_UTF8);
+
+  for i = 1 to 5;
+
+    // test
+    isEOF = not SourceStreamFile_readLine(srcDta);
+    lineNbr = SourceStreamFile_getLineNbr();
+    length = SourceStreamFile_getDtaLength();
+
+    // assertions
+    assert(not isEOF: 'SourceStreamFile_readLine() must return cFalse for line #' + %char(i));
+    assert(lineNbr = i: 'Line number ' + %char(lineNbr)
+           + ' does not match expected value ' + %char(i));
+    assert(length = %len(LINES.data(i)): 'Length ' + %char(length) + ' of line #' + %char(i)
+           + ' does not match expected value ' + %char(%len(LINES.data(i))));
+
+  endfor;
+
+  // next line is empty, because of the CR after the LF of line #4
+  // that is the same LFCR interpreting as of Notepad++
+
+  // test
+  isEOF = not SourceStreamFile_readLine(srcDta);
+  lineNbr = SourceStreamFile_getLineNbr();
+  length = SourceStreamFile_getDtaLength();
+
+  // assertions
+  assert(not isEOF: 'SourceStreamFile_readLine() must return cFalse for line #6' + %char(i));
+  assert(lineNbr = 6: 'Line number ' + %char(lineNbr)
+         + ' does not match expected value 6');
+  assert(length = 0: 'Length ' + %char(length) + ' of line #6'
+         + ' does not match expected value 0');
+
+  // read last line.
+
+  // test
+  isEOF = not SourceStreamFile_readLine(srcDta);
+  lineNbr = SourceStreamFile_getLineNbr();
+  length = SourceStreamFile_getDtaLength();
+
+  // assertions
+  assert(not isEOF: 'SourceStreamFile_readLine() must return cFalse for line #7' + %char(i));
+  assert(lineNbr = 7: 'Line number ' + %char(lineNbr)
+         + ' does not match expected value 7');
+  assert(length = %len(LINES.data(6)): 'Length ' + %char(length) + ' of line #7'
+         + ' does not match expected value ' + %char(%len(LINES.data(6))));
+
+on-exit;
+  SourceStreamFile_close();
+
+  deleteStreamFile(STMF_UTF8);
+
+end-proc;
+
+// -----------------------------------------------------------------------
+//    Test: reading stream file forth and back.
+// -----------------------------------------------------------------------
+dcl-proc test_ReadPrv_Source_StreamFile export;
+  dcl-pi *n extproc(*dclcase) end-pi;
+
+  dcl-s srcDta like(srcDta_t);
+  dcl-s isOpen ind;
+  dcl-s isEOF ind;
+  dcl-s lineNbr int(10);
+  dcl-s length int(10);
+
+  createStreamFile(STMF_UTF8: 1208);
+
+  BUFFER_SIZE = 10;
+
+  SourceStreamFile_open(STMF_UTF8);
+
+  isOpen = SourceStreamFile_isOpen();
+  assert(isOpen: 'Stream file is open. Must return cTrue');
+
+  isEOF = not SourceStreamFile_readLine(srcDta); // begin
+
+  isEOF = not SourceStreamFile_readLine(srcDta); // Line 1
+
+  isEOF = not SourceStreamFile_readLine(srcDta); // Line 2
+
+  isEOF = not SourceStreamFile_readLine(srcDta); // Line 3
+
+  isEOF = not SourceStreamFile_readLine(srcDta); // Line 4
+
+  isEOF = not SourceStreamFile_readPrvLine(srcDta); // Line 3
+  assert(not isEOF: 'SourceStreamFile_readLine() must return cFalse (line 3)'); // CRLF
+  length = SourceStreamFile_getDtaLength();
+  lineNbr = SourceStreamFile_getLineNbr();
+  assert(%trimr(srcDta) = LINE_3 : 'Unexpected content in ine 3');
+  assert(length = %len(LINE_3): 'Invalid line length of (line 3)');
+  assert(lineNbr = 4: 'Read previous line. Should return line number 4');
+
+  isEOF = not SourceStreamFile_readPrvLine(srcDta); // Line 2
+  assert(not isEOF: 'SourceStreamFile_readLine() must return cFalse (line 2)'); // CRLF
+  length = SourceStreamFile_getDtaLength();
+  lineNbr = SourceStreamFile_getLineNbr();
+  assert(%trimr(srcDta) = LINE_2 : 'Unexpected content in ine 2');
+  assert(length = %len(LINE_2): 'Invalid line length of (line 2)');
+  assert(lineNbr = 3: 'Read previous line. Should return line number 3');
+
+  isEOF = not SourceStreamFile_readLine(srcDta); // Line 3
+  assert(not isEOF: 'SourceStreamFile_readLine() must return cFalse (line 3)'); // CRLF
+  assert(%trimr(srcDta) = LINE_3 : 'Unexpected content in ine 3');
+
+  isEOF = not SourceStreamFile_readLine(srcDta); // Line 4
+  assert(not isEOF: 'SourceStreamFile_readLine() must return cFalse (line 4)'); // CRLF
+  assert(%trimr(srcDta) = LINE_4 : 'Unexpected content in ine 4');
+
+  isEOF = not SourceStreamFile_readLine(srcDta); // empty
+  assert(not isEOF: 'SourceStreamFile_readLine() must return cFalse (empty line)');
+  assert(%trimr(srcDta) = '' : 'Unexpected content in ine 5');
+
+  isEOF = not SourceStreamFile_readLine(srcDta); // end
+  lineNbr = SourceStreamFile_getLineNbr();
+  assert(lineNbr = 7: 'Read previous line. Should return line number 7');
+
+on-exit;
+  SourceStreamFile_close();
+
+  deleteStreamFile(STMF_UTF8);
+
+end-proc;
+
+// -----------------------------------------------------------------------
+//    Test: reding stream file past the last line.
+// -----------------------------------------------------------------------
+dcl-proc test_Read_EOF_Source_StreamFile export;
+  dcl-pi *n extproc(*dclcase) end-pi;
+
+  dcl-s srcDta like(srcDta_t);
+  dcl-s isEOF ind;
+  dcl-s lineNbr int(10);
+  dcl-s length int(10);
+  dcl-s count int(10);
+
+  createStreamFile(STMF_UTF8: 1208);
+
+  BUFFER_SIZE = 10;
+
+  SourceStreamFile_open(STMF_UTF8);
+
+  count = 0;
+
+  dou (isEOF);
+    isEOF = not SourceStreamFile_readLine(srcDta);
+    lineNbr = SourceStreamFile_getLineNbr();
+    length = SourceStreamFile_getDtaLength();
+    if (not isEOF);
+      count += 1;
+    endif;
+  enddo;
+
+  assert(count = 7: 'Expected to have seen 7 lines.');
+
+  // test EOF values
+
+  assert(lineNbr = 0: 'Line number must be -1');
+  assert(length = 0: 'Length must be 0');
+  assert(srcDta = '': 'srcDta must be empty');
+  assert(isEOF: 'isEOF must be cTrue');
+
+  // read past the last line a second time;
+
+  isEOF = not SourceStreamFile_readLine(srcDta);
+  lineNbr = SourceStreamFile_getLineNbr();
+  length = SourceStreamFile_getDtaLength();
+
+  assert(lineNbr = 0: 'Line number must be -1');
+  assert(length = 0: 'Length must be 0');
+  assert(srcDta = '': 'srcDta must be empty');
+  assert(isEOF: 'isEOF must be cTrue');
+
+on-exit;
+  SourceStreamFile_close();
+
+  deleteStreamFile(STMF_UTF8);
+
+end-proc;
+
+// -----------------------------------------------------------------------
+//    Test: reding stream file before first line.
+// -----------------------------------------------------------------------
+dcl-proc test_ReadPrv_EOF_Source_StreamFile export;
+  dcl-pi *n extproc(*dclcase) end-pi;
+
+  dcl-s srcDta like(srcDta_t);
+  dcl-s isEOF ind;
+  dcl-s lineNbr int(10);
+
+  createStreamFile(STMF_UTF8: 1208);
+
+  BUFFER_SIZE = 10;
+
+  SourceStreamFile_open(STMF_UTF8);
+
+  isEOF = not SourceStreamFile_readLine(srcDta); // begin
+  assert(not isEOF: 'SourceStreamFile_readLine() must return cFalse (begin)');
+
+  isEOF = not SourceStreamFile_readLine(srcDta); // 1. line
+  assert(not isEOF: 'SourceStreamFile_readLine() must return cFalse (line 1)');
+
+  isEOF = not SourceStreamFile_readPrvLine(srcDta); // begin
+  assert(not isEOF: 'SourceStreamFile_readLine() must return cFalse (begin)');
+
+  isEOF = not SourceStreamFile_readPrvLine(srcDta); // EOF
+  lineNbr = SourceStreamFile_getLineNbr();
+  assert(isEOF: 'SourceStreamFile_readLine() must return cTrue (EOF #1)');
+  assert(lineNbr = 0: 'Stream is at EOF #1. Should return line number 0');
+  assert(%trimr(srcDta) = '' : 'EOF #1. Line data mut be empty');
+
+  isEOF = not SourceStreamFile_readPrvLine(srcDta); // EOF
+  lineNbr = SourceStreamFile_getLineNbr();
+  assert(isEOF: 'SourceStreamFile_readLine() must return cTrue (EOF #2)');
+  assert(lineNbr = 0: 'Stream is at EOF #2. Should return line number 0');
+  assert(%trimr(srcDta) = '' : 'EOF #2. Line data mut be empty');
+
+  isEOF = not SourceStreamFile_readLine(srcDta); // begin
+  assert(not isEOF: 'SourceStreamFile_readLine() must return cFalse (begin)');
+  assert(%trimr(srcDta) = LINE_BEGIN : 'Unexpected content in ine 1');
+
+on-exit;
+  SourceStreamFile_close();
+
+  deleteStreamFile(STMF_UTF8);
+
+end-proc;
+
+// ------------------------------------------------------------
+//  Creates a stream file with test data.
+// ------------------------------------------------------------
+dcl-proc createStreamFile;
+  dcl-pi *n extproc(*dclcase);
+    i_stmf   varchar(200) options(*trim) const;
+    i_ccsid  int(10) const;
+  end-pi;
+
+  dcl-s fd int(10);
+  dcl-s text varchar(200);
+
+  dcl-c CR x'0D';
+  dcl-c CRLF x'0D25';
+  dcl-c LF x'25';
+  dcl-c LFCR x'250D';
+
+  fd = open(i_stmf
+            : O_CREAT + O_WRONLY + O_SHARE_RDONLY +
+              O_TEXTDATA + O_CCSID + O_TRUNC + O_TEXT_CREAT
+            : S_IRUSR + S_IWUSR +       // Owner:     read/write
+              S_IRGRP + S_IWGRP +       // Group:     read/write
+              S_IROTH + S_IWOTH         // Public:    read/write
+            : i_ccsid: 0);              // create CCSID / write data CCSID (= job)
+
+  text = lines.data(1) + LF;
+  callp write(fd: %addr(text: *data): %len(text));
+
+  text = lines.data(2) + CR;
+  callp write(fd: %addr(text: *data): %len(text));
+
+  text = lines.data(3) + LF;
+  callp write(fd: %addr(text: *data): %len(text));
+
+  text = lines.data(4) + CRLF;
+  callp write(fd: %addr(text: *data): %len(text));
+
+  text = lines.data(5) + LFCR;
+  callp write(fd: %addr(text: *data): %len(text));
+
+  text = lines.data(6);
+  callp write(fd: %addr(text: *data): %len(text));
+
+  callp close(fd);
+
+end-proc;
+
+// ------------------------------------------------------------
+//  Deletes the stream file identified by a given path.
+// ------------------------------------------------------------
+dcl-proc deleteStreamFile;
+  dcl-pi *n extproc(*dclcase);
+    i_stmf varchar(200) options(*trim) const;
+  end-pi;
+
+  dcl-ds st_stat likeds(st_stat_t);
+
+  if (stat(i_stmf: %addr(st_stat)) <> -1);
+    unlink(i_stmf);
+  endif;
+
+end-proc;
+
 // ------------------------------------------------------------
 //  Assert that the event file is empty.
 // ------------------------------------------------------------
@@ -1641,7 +2052,7 @@ dcl-proc getLastSqlStmt;
     value char(1024);
   end-ds;
 
-  dcl-ds errCode likeds(errCode_t) inz(*likeds);
+  dcl-ds errCode likeds(local_errCode_t) inz(*likeds);
 
   QUSRJOBI(jobi0900: %size(jobi0900): 'JOBI0900': '*': '': errCode);
 
@@ -1714,7 +2125,7 @@ dcl-proc exist;
     isSrcFile    char(1);
   end-ds;
 
-  dcl-ds errCode likeds(errCode_t) inz(*likeds);
+  dcl-ds errCode likeds(local_errCode_t) inz(*likeds);
 
   dcl-ds qObj qualified;
     name         char(10);
