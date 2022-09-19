@@ -458,7 +458,9 @@
       /COPY QSTRPREPRC,PRZ0012
       /free
 
-         Member_exists(i_file: i_lib: i_mbr);
+         // Does not work, because CHKOBJ does not resolve members
+         // as 'open' does.
+         // Member_exists(i_file: i_lib: i_mbr);
 
          g_useSrcFile.name = %trim(i_lib) + '/' + %trim(i_file);
          g_useSrcFile.member = %trim(i_mbr);
