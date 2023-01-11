@@ -112,7 +112,7 @@
              DCL        VAR(&CMD       ) TYPE(*CHAR) LEN(8192)
              DCL        VAR(&OPTION    ) TYPE(*CHAR) LEN(  52)
              DCL        VAR(&CHGOBJD   ) TYPE(*CHAR) LEN(   4)
-             DCL        VAR(&OBJTYPE   ) TYPE(*CHAR) LEN(   4)
+             DCL        VAR(&OBJTYPE   ) TYPE(*CHAR) LEN(  10)
              DCL        VAR(&OBJSRCFILE) TYPE(*CHAR) LEN(  10)
              DCL        VAR(&OBJSRCLIB ) TYPE(*CHAR) LEN(  10)
              DCL        VAR(&OBJSRCMBR ) TYPE(*CHAR) LEN(  10)
