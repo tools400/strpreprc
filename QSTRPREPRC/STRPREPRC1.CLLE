@@ -54,6 +54,9 @@
      /*  21.03.2022  Th.Raddatz    Added parameters USESRCSTMF and STMF     */
      /*                            to support IFS stream files.             */
      /*                                                                     */
+     /*  05.01.2023  Th.Raddatz    Fixed incorrect length of parameter      */
+     /*                            &OBJTYPE.                                */
+     /*                                                                     */
      /* =================================================================== */
      /* >>PRE-COMPILER<<                                                    */
      /*   >>CRTCMD<< CRTCLMOD     MODULE(&LI/&OB) +                         */
