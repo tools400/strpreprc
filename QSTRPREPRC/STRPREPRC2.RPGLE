@@ -165,6 +165,8 @@
       *                                                                     *
       *  26.03.2022  Th.Raddatz    Added stream file support.               *
       *                                                                     *
+      *  12.01.2023  Th.Raddatz    Changed all parameters of run() to const.*
+      *                                                                     *
       * =================================================================== *
       * >>PRE-COMPILER<<                                                    *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
@@ -596,51 +598,51 @@
      P run...
      P                 B                   export
      D                 PI
-     D  i_useSrcFile                              like(file_t)
-     D  i_useSrcLib                               like(lib_t)
-     D  i_useSrcMbr                               like(mbr_t)
-     D  i_useSrcStmf                              like(path_t)
-     D  i_cmd                                     like(cmd_t)
-     D  i_chgObjD                                 like(chgObjD_t)
-     D  i_objType                                 like(objType_t)
-     D  i_objSrcFile                              like(file_t)
-     D  i_objSrcLib                               like(lib_t)
-     D  i_objSrcMbr                               like(mbr_t)
-     D  i_lib                                     like(lib_t)
-     D  i_obj                                     like(obj_t)
-     D  i_typeCode                                like(typeCode_t)
-     D  i_srcLib                                  like(lib_t)
-     D  i_srcFile                                 like(file_t)
-     D  i_srcMbr                                  like(mbr_t)
-     D  i_testLib                                 like(lib_t)
-     D  i_testObj                                 like(obj_t)
-     D  i_tgtRls                                  like(tgtRls_t)
-     D  i_frmSrcLib                               like(lib_t)
-     D  i_frmSrcFile                              like(file_t)
-     D  i_frmSrcMbr                               like(mbr_t)
-     D  i_user0                                   like(userParm_t)
-     D  i_user1                                   like(userParm_t)
-     D  i_user2                                   like(userParm_t)
-     D  i_user3                                   like(userParm_t)
-     D  i_user4                                   like(userParm_t)
-     D  i_user5                                   like(userParm_t)
-     D  i_user6                                   like(userParm_t)
-     D  i_user7                                   like(userParm_t)
-     D  i_user8                                   like(userParm_t)
-     D  i_user9                                   like(userParm_t)
-     D  i_stmf                                    like(path_t)
-     D  i_tagsReq                                 like(bool_t)
-     D  i_msgFile                                 like(msg_t.file)
-     D  i_msgFileLib                              like(msg_t.lib)
+     D  i_useSrcFile                       const  like(file_t)
+     D  i_useSrcLib                        const  like(lib_t)
+     D  i_useSrcMbr                        const  like(mbr_t)
+     D  i_useSrcStmf                       const  like(path_t)
+     D  i_cmd                              const  like(cmd_t)
+     D  i_chgObjD                          const  like(chgObjD_t)
+     D  i_objType                          const  like(objType_t)
+     D  i_objSrcFile                       const  like(file_t)
+     D  i_objSrcLib                        const  like(lib_t)
+     D  i_objSrcMbr                        const  like(mbr_t)
+     D  i_lib                              const  like(lib_t)
+     D  i_obj                              const  like(obj_t)
+     D  i_typeCode                         const  like(typeCode_t)
+     D  i_srcLib                           const  like(lib_t)
+     D  i_srcFile                          const  like(file_t)
+     D  i_srcMbr                           const  like(mbr_t)
+     D  i_testLib                          const  like(lib_t)
+     D  i_testObj                          const  like(obj_t)
+     D  i_tgtRls                           const  like(tgtRls_t)
+     D  i_frmSrcLib                        const  like(lib_t)
+     D  i_frmSrcFile                       const  like(file_t)
+     D  i_frmSrcMbr                        const  like(mbr_t)
+     D  i_user0                            const  like(userParm_t)
+     D  i_user1                            const  like(userParm_t)
+     D  i_user2                            const  like(userParm_t)
+     D  i_user3                            const  like(userParm_t)
+     D  i_user4                            const  like(userParm_t)
+     D  i_user5                            const  like(userParm_t)
+     D  i_user6                            const  like(userParm_t)
+     D  i_user7                            const  like(userParm_t)
+     D  i_user8                            const  like(userParm_t)
+     D  i_user9                            const  like(userParm_t)
+     D  i_stmf                             const  like(path_t)
+     D  i_tagsReq                          const  like(bool_t)
+     D  i_msgFile                          const  like(msg_t.file)
+     D  i_msgFileLib                       const  like(msg_t.lib)
      D  i_pgmCmdExc...
-     D                                            like(pgm_t)
+     D                                     const  like(pgm_t)
      D  i_libPgmCmdExc...
-     D                                            like(lib_t)
-     D  i_option                                  likeds(option_t)
-     D  i_libl                                    likeds(inpLibList_t)
-     D  i_useLibl                                 like(bool_t)
-     D  i_usrDefVars                              likeds(inpUsrDefVars_t)
-     D  i_execOpt                                 likeds(execOpt_t)
+     D                                     const  like(lib_t)
+     D  i_option                           const  likeds(option_t)
+     D  i_libl                             const  likeds(inpLibList_t)
+     D  i_useLibl                          const  like(bool_t)
+     D  i_usrDefVars                       const  likeds(inpUsrDefVars_t)
+     D  i_execOpt                          const  likeds(execOpt_t)
       *
       *  Nachrichten
       *  ... Falsche Reihenfolge im Betriebsmodus.
@@ -685,7 +687,6 @@
      D lineData        ds                  likeds(lineData_t) inz
      D variables       ds                  likeds(variables_t) inz
      D inpUsrDefVar    ds                  likeds(inpUsrDefVar_t)
-     D                                     based(pInpUsrDefVar)
      D objSrcFile      s                   like(i_objSrcFile)
      D objSrcLib       s                   like(i_objSrcLib)
      D objSrcMbr       s                   like(i_objSrcMbr)
@@ -795,7 +796,10 @@
          variables.prvLibl.usrLibl.numE = 0;
 
          for i = 1 to i_usrDefVars.numElem;
-            pInpUsrDefVar = %addr(i_usrDefVars) + i_usrDefVars.offsItems(i);
+            // pInpUsrDefVar = %addr(i_usrDefVars) + i_usrDefVars.offsItems(i);
+            inpUsrDefVar = %subst(i_usrDefVars
+                                  : i_usrDefVars.offsItems(i) + 1
+                                  : %len(inpUsrDefVar));
             variables.usrDefVars.numE += 1;
             variables.usrDefVars.var(variables.usrDefVars.numE).name =
                inpUsrDefVar.name;
