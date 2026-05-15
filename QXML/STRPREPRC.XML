@@ -51,7 +51,7 @@
       appblddate CDATA #REQUIRED
      >
      ]>
-<upload  appname="STRPREPRC"  appauthor="Thomas Raddatz"  appblddate=" 1/05/2024">
+<upload  appname="STRPREPRC"  appauthor="Thomas Raddatz"  appblddate=" 5/15/2026">
 <install_instructions><![CDATA[
      *----------------------------------------------------------------      ------
      *  1. Upload entire XML to your AS/400 to a source file 112 long, into any mbr
@@ -1295,7 +1295,7 @@ mbrtext =  "STRPREPRC - Installer                             "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
      /* =================================================================== */
      /*                                                                     */
@@ -1569,7 +1569,7 @@ mbrtext =  "MSG: PRZ0001 - PRZ0027                            "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
      /*-----------------------------------------------------------------------*/
      /* STRPREPRC Compile Options:                                            */
@@ -2677,7 +2677,7 @@ mbrtext =  "MSG: PRZ0001 - PRZ0027                            "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
      /*-----------------------------------------------------------------------*/
      /* STRPREPRC Compile Options:                                            */
@@ -3790,7 +3790,7 @@ mbrtext =  "Readme of STRPREPRC                               "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
 STRPREPRC - A Tools/400 Utility
 -------------------------------
@@ -3824,16 +3824,16 @@ mbrtext =  "Tool: STRPREPRC  (Starten Pre-Proz.  ) Srv-Modul  "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       /if not defined(COPYRIGHT_DSPEC)
-     h COPYRIGHT('V2.2 - 12.01.2023 - mailto: thomas.raddatz@tools400.de')
+     h COPYRIGHT('V2.3 - 15.05.2026 - mailto: thomas.raddatz@tools400.de')
       /eof
       /endif
      d STRPREPRC_VERSION...
-     d                 C                   '2.2'
+     d                 C                   '2.3'
      d STRPREPRC_DATE...
-     d                 C                   '12.01.2023'
+     d                 C                   '15.05.2026'
       *
 ]]>  </copysrc>
 </mbr>
@@ -3848,7 +3848,7 @@ mbrtext =  "H-Specifications                                  "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
      H DEBUG
      H OPTION(*SRCSTMT : *NODEBUGIO)
@@ -3873,7 +3873,7 @@ mbrtext =  "Tool: STRPREPRC - Global Types and Constants      "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       /if not defined(types_h)
       /define types_h
@@ -4017,7 +4017,8 @@ srccssid=  "00273">
      D  usrDefVars                         likeds(usrDefVars_t)
      D  useLibl                            like(bool_t)
      D  prvLibl                            likeds(liblList_t)
-
+      *
+     D rnf7031_t       s             10a   varying template
       /endif
 ]]>  </copysrc>
 </mbr>
@@ -4032,7 +4033,7 @@ mbrtext =  "MSG: Falsche Reihenfolge im Betriebsmodus.        "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
       * Datenstruktur für Message-ID : PRZ0001
@@ -4057,7 +4058,7 @@ mbrtext =  "MSG: Verarbeitung in Zeile  1 abgebrochen.        "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
       * Datenstruktur für Message-ID : PRZ0002
@@ -4081,7 +4082,7 @@ mbrtext =  "MSG: Parameteranweisung in der Betriebsart  1 unzu"
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
       * Datenstruktur für Message-ID : PRZ0003
@@ -4105,7 +4106,7 @@ mbrtext =  "MSG: Die Marke  1 ist außerhalb der Betriebsart  2"
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
       * Datenstruktur für Message-ID : PRZ0004
@@ -4130,7 +4131,7 @@ mbrtext =  "MSG: Ungültiges Fortsetzungszeichen  1 in Zeile  2"
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
       * Datenstruktur für Message-ID : PRZ0005
@@ -4155,7 +4156,7 @@ mbrtext =  "MSG: Das Ende des Schlüsselwortes  1 konnte nicht "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
       * Datenstruktur für Message-ID : PRZ0006
@@ -4179,7 +4180,7 @@ mbrtext =  "MSG: Befehlszeichenfolge ist zu lang.             "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
       * Datenstruktur für Message-ID : PRZ0007
@@ -4203,7 +4204,7 @@ mbrtext =  "MSG: Das Zeilenendekennzeichen konnte nicht gefund"
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
       * Datenstruktur für Message-ID : PRZ0008
@@ -4227,7 +4228,7 @@ mbrtext =  "MSG: Unbekannter Wert   1  für Fortsetzungszeichen"
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
       * Datenstruktur für Message-ID : PRZ0009
@@ -4251,7 +4252,7 @@ mbrtext =  "MSG: Modus für Marke  1 nicht definiert.          "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
       * Datenstruktur für Message-ID : PRZ0010
@@ -4275,7 +4276,7 @@ mbrtext =  "MSG: Die Datensatzlänge der Eingabedatei ist zu la"
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
       * Datenstruktur für Message-ID : PRZ0011
@@ -4302,7 +4303,7 @@ mbrtext =  "MSG: Fehler beim Öffnen der Quellendatei  2/ 1, Te"
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
       * Datenstruktur für Message-ID : PRZ0012
@@ -4328,7 +4329,7 @@ mbrtext =  "MSG: Fehler beim Öffnen der Steuerdatei  2/ 1, Tei"
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
       * Datenstruktur für Message-ID : PRZ0013
@@ -4354,7 +4355,7 @@ mbrtext =  "MSG: Auszuführender Befehl fehlt. Weitere Verarbei"
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
       * Datenstruktur für Message-ID : PRZ0014
@@ -4378,7 +4379,7 @@ mbrtext =  "MSG: Fehler im Erstellungsbefehl gefunden.        "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
       * Datenstruktur für Message-ID : PRZ0015
@@ -4402,7 +4403,7 @@ mbrtext =  "MSG: Der Parameter  OBJSRCFILE  ist nicht zuläss  "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
       * Datenstruktur für Message-ID : PRZ0016
@@ -4426,7 +4427,7 @@ mbrtext =  "MSG: Der Parameter  OBJSRCLIB  ist nicht zulässi  "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
       * Datenstruktur für Message-ID : PRZ0017
@@ -4450,7 +4451,7 @@ mbrtext =  "MSG: Der Parameter  OBJSRCMBR  ist nicht zulässi  "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
       * Datenstruktur für Message-ID : PRZ0018
@@ -4474,7 +4475,7 @@ mbrtext =  "MSG: Der Parameter  OBJTYPE  ist nicht zulässig,  "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
       * Datenstruktur für Message-ID : PRZ0019
@@ -4498,7 +4499,7 @@ mbrtext =  "MSG: Der Parameter  OBJTYPE  muss angegeben werd  "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
       * Datenstruktur für Message-ID : PRZ0020
@@ -4522,7 +4523,7 @@ mbrtext =  "MSG: Befehl CHGOBJDA nicht gefunden oder unvollstä"
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
       * Datenstruktur für Message-ID : PRZ0021
@@ -4546,7 +4547,7 @@ mbrtext =  "MSG: Verarbeitung abgebrochen.                    "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
       * Datenstruktur für Message-ID : PRZ0022
@@ -4570,7 +4571,7 @@ mbrtext =  "MSG: Fehlender Wert für Variable an Position  1 de"
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
       * Datenstruktur für Message-ID : PRZ0023
@@ -4595,7 +4596,7 @@ mbrtext =  "MSG: Keine Pre-Compiler Anweisungen in Quellendate"
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
       * Datenstruktur für Message-ID : PRZ0024
@@ -4621,7 +4622,7 @@ mbrtext =  "MSG: EVFEVENT Datei in Bibliothek  1 oder das Job "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
       * Datenstruktur für Message-ID : PRZ0025
@@ -4645,7 +4646,7 @@ mbrtext =  "MSG: EVFEVENT Datei konnte nicht zur Ausgabe vorbe"
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
       * Datenstruktur für Message-ID : PRZ0026
@@ -4669,7 +4670,7 @@ mbrtext =  "MSG: Wenn die Option  *EVENTF  angegeben ist, müss"
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
       * Datenstruktur für Message-ID : PRZ0027
@@ -4693,7 +4694,7 @@ mbrtext =  "MSG: Erstellungsbefehl nicht gefunden in Quellenda"
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
       * Datenstruktur für Message-ID : PRZ0028
@@ -4719,7 +4720,7 @@ mbrtext =  "MSG:  1.                                          "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
       * Datenstruktur für Message-ID : PRZ0029
@@ -4743,7 +4744,7 @@ mbrtext =  "MSG: Die Option *JOBLOG ist nur in Verbindung mit "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
       * Datenstruktur für Message-ID : PRZ0030
@@ -4768,7 +4769,7 @@ mbrtext =  "MSG: Ungültige INCLUDE Marke in Zeile  1 gefunden."
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: PRZ0031
@@ -4792,7 +4793,7 @@ mbrtext =  "MSG: Verschachtelte INCLUDE Marke in Zeile  4 der "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: PRZ0031
@@ -4819,7 +4820,7 @@ mbrtext =  "MSG: STRPREPRC: Objekt erstellt.                  "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *---------------------------------------------------------------
       * Datenstruktur für Message-ID : PRZ0033
@@ -4843,7 +4844,7 @@ mbrtext =  "MSG: STRPREPRC: Fehlernachricht  1 wurde aufgrund "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: PRZ0034
@@ -4867,7 +4868,7 @@ mbrtext =  "MSG: Bibliothek  1 nicht gefunden.                "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: PRZ0035
@@ -4891,7 +4892,7 @@ mbrtext =  "MSG: Datei  1 in Bibliothek  2 nicht gefunden.    "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: PRZ0036
@@ -4916,7 +4917,7 @@ mbrtext =  "MSG: Teildatei  3 von Datei  1 in Bibliothek  2 ni"
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: PRZ0037
@@ -4942,7 +4943,7 @@ mbrtext =  "MSG: Die Parameter USESRCFILE und USESRCMBR können"
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: PRZ0038
@@ -4963,7 +4964,7 @@ mbrtext =  "MSG: Entweder USESRCFILE und USESRCMBR oder USESRC"
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: PRZ0039
@@ -4984,7 +4985,7 @@ mbrtext =  "MSG: Wert *DFT ist unzulässig für SRCFILE, SRCLIB "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: PRZ0040
@@ -5005,7 +5006,7 @@ mbrtext =  "MSG: Datei  1 kann nicht geöffnet werden.         "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: PRZ0041
@@ -5028,7 +5029,7 @@ mbrtext =  "MSG: Die Datensatzlänge der IFS Datei ist zu lang."
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: PRZ0042
@@ -5052,7 +5053,7 @@ mbrtext =  "MSG: Datei nicht gefunden:  1                     "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: PRZ0043
@@ -5073,7 +5074,7 @@ mbrtext =  "Erstellungsbefehl nicht gefunden in Quellendatei  "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: PRZ0044
@@ -5095,7 +5096,7 @@ mbrtext =  "Erstellungsbefehl nicht gefunden in Quellendatei  "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: PRZ0045
@@ -5117,7 +5118,7 @@ mbrtext =  "Start Pre-Processor - Services Prototypes         "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       /if defined(PSTRPREPR2)
       /eof
@@ -5178,6 +5179,7 @@ srccssid=  "00273">
      D  i_useLibl                          const  like(bool_t)
      D  i_usrDefVars                       const  likeds(inpUsrDefVars_t)
      D  i_execOpt                          const  likeds(execOpt_t)
+     D  i_rnf7031                          const  like(rnf7031_t)
 
      D sendMsg...
      D                 PR
@@ -5207,7 +5209,7 @@ mbrtext =  "Start Pre-Processor - Init Prototypes             "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       /if defined(PSTRPREPR3)
       /eof
@@ -5234,7 +5236,7 @@ mbrtext =  "Start Pre-Processor - Event File Properties       "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       /if defined(PSTRPREPR4)
       /eof
@@ -5321,7 +5323,7 @@ mbrtext =  "Start Pre-Processor - QSYS Files Prototypes       "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       /if defined(PSTRPREPR5)
       /eof
@@ -5493,7 +5495,7 @@ mbrtext =  "Start Pre-Processor - QSYS Files Prototypes       "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       /if defined(PSTRPREPR6)
       /eof
@@ -5687,7 +5689,7 @@ mbrtext =  "Process Commands (QCAPCMD) API                    "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       /IF NOT DEFINED(QCAPCMD)
       /DEFINE QCAPCMD
@@ -5787,7 +5789,7 @@ mbrtext =  "Receive Program Message (QMHRCVPM) API            "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       /IF NOT DEFINED(QMHRCVPM)
       /DEFINE QMHRCVPM
@@ -6026,7 +6028,7 @@ mbrtext =  "Remove Program Message (QMHRMVPM) API             "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       /if not defined(QMHRMVPM)
       /define QMHRMVPM
@@ -6057,7 +6059,7 @@ mbrtext =  "Retrieve Message (QMHRTVM) API                    "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       /IF NOT DEFINED(QMHRTVM)
       /DEFINE QMHRTVM
@@ -6357,7 +6359,7 @@ mbrtext =  "Retrieve Member Description (QUSRMBRD) API        "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       /if not defined(QUSRMBRD)
       /define QUSRMBRD
@@ -6449,7 +6451,7 @@ mbrtext =  "Retrieve Current Attributes (QWCRTVCA) API        "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       /if not defined(QWCRTVCA)
       /define QWCRTVCA
@@ -6684,7 +6686,7 @@ mbrtext =  "Start Pre-Processor - Ger                         "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
 .*=====================================================================*
 .*                                                                     *
@@ -6753,6 +6755,8 @@ srccssid=  "00273">
 .*  21.03.2022  Th.Raddatz    Added parameters USESRCSTMF and STMF     *
 .*                            to support IFS stream files.             *
 .*                                                                     *
+.*  15.05.2026  Th.Raddatz    Added parameters RNF7031.                *
+.*                                                                     *
 .*=====================================================================*
 .* >>PRE-COMPILER<<                                                    *
 .*   >>CRTCMD<< CRTPNLGRP    PNLGRP(&LI/STRPREPRCP) +                  *
@@ -6811,6 +6815,7 @@ srccssid=  "00273">
 :IMHELP name='STRPREPRC/TAGSREQ'.
 :IMHELP name='STRPREPRC/EXICMDEXC'.
 :IMHELP name='STRPREPRC/EXECOPT'.
+:IMHELP name='STRPREPRC/RNF7031'.
 :EHELP.
 
 .*****************************************************************
@@ -8103,6 +8108,34 @@ Verfügung stehenden Befehlsgruppen sind:
 
 :EHELP.
 
+.********************************************
+.*  Keyword:  RNF7031  (optional)
+.********************************************
+:HELP NAME='STRPREPRC/RNF7031'.
+Unterdrücken RNF7031 Nachr. - Hilfe
+:XH3.Unterdrücken RNF7031 Nachr. (RNF7031)
+:P.
+Gibt an, ob die Compiler Nachricht RNF7031 in die Ereignisdatei
+(EVFEVENT) ausgegeben wird.
+:P.
+:IMHELP name='COM/OPTPARM'.
+:P.
+:IMHELP name='COM/VALUES'.
+
+:PARML.
+:PT.:PK DEF.*SYSTEM:EPK.
+:PD.Es gilt die Systemeinstellung (Wert der Umgebungsvariablen
+QIBM_RPG_RNF7031_EVENTS).
+:PT.:PV.*YES:EPV.
+:PD.Die Ausgabe der Nachricht RNF7031 wird nicht unterdrückt. Dazu wird
+die Umgebungsvariable 'QIBM_RPG_RNF7031_EVENTS=Y' gesetzt.
+:PT.:PV.*NO:EPV.
+:PD.Die Ausgabe der Nachricht RNF7031 wird unterdrückt. Dazu wird
+die Umgebungsvariable 'QIBM_RPG_RNF7031_EVENTS=N' gesetzt.
+:EPARML.
+
+:EHELP.
+
 .*****************************************************************
 .*  Common help text that is imbedded into one or more places.
 .*****************************************************************
@@ -8197,7 +8230,7 @@ mbrtext =  "Start Pre-Processor - Eng                         "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
 .*=====================================================================*
 .*                                                                     *
@@ -8265,6 +8298,8 @@ srccssid=  "00273">
 .*                                                                     *
 .*  21.03.2022  Th.Raddatz    Added parameters USESRCSTMF and STMF     *
 .*                            to support IFS stream files.             *
+.*                                                                     *
+.*  15.05.2026  Th.Raddatz    Added parameters RNF7031.                *
 .*                                                                     *
 .*=====================================================================*
 .* >>PRE-COMPILER<<                                                    *
@@ -9555,6 +9590,34 @@ The available command groups are:
 
 :EHELP.
 
+.********************************************
+.*  Keyword:  RNF7031  (optional)
+.********************************************
+:HELP NAME='STRPREPRC/RNF7031'.
+Suspress RNF7031 messages - Help
+:XH3.Suspress RNF7031 messages (RNF7031)
+:P.
+Specifies, whether compiler message RNF7031 is added to the event file
+(EVFEVENT).
+:P.
+:IMHELP name='COM/OPTPARM'.
+:P.
+:IMHELP name='COM/VALUES'.
+
+:PARML.
+:PT.:PK DEF.*SYSTEM:EPK.
+:PD.The system setting applies (value of the environment variable
+QIBM_RPG_RNF7031_EVENTS).
+:PT.:PV.*YES:EPV.
+:PD.The output of message RNF7031 is not suppressed. To achieve this, the
+environment variable 'QIBM_RPG_RNF7031_EVENTS=Y' is set.
+:PT.:PV.*NO:EPV.
+:PD.The output of message RNF7031 is suppressed. To achieve this, the
+environment variable 'QIBM_RPG_RNF7031_EVENTS=N' is set.
+:EPARML.
+
+:EHELP.
+
 .*****************************************************************
 .*  Common help text that is imbedded into one or more places.
 .*****************************************************************
@@ -9650,7 +9713,7 @@ mbrtext =  "STRPREPRC Self-Test                               "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
 **free
 //=====================================================================
@@ -9667,8 +9730,7 @@ srccssid=  "00273">
 //     >>COMPILE<<
 //       >>PARM<< RPGPPOPT(*LVL2);
 //       >>PARM<< DBGVIEW(*NONE);
-//       >>PARM<< POPTION(*EVENTF);
-//       >>PARM<< COMPILEOPT('DBGVIEW(*LIST)');
+//       >>PARM<< COMPILEOPT('DBGVIEW(*LIST) OPTION(*EVENTF)');
 //       >>PARM<< BNDDIR(*N);
 //       >>PARM<< MODULE(&LI/STRPREPRC2 +
 //                       &LI/STRPREPRC4 +
@@ -9727,10 +9789,10 @@ end-ds;
 dcl-c STMF_UTF8 '/home/raddatz/temp/strpreprct.utf8';
 
 dcl-c LINE_BEGIN '--- begin of data (LF) ---';
-dcl-c LINE_1 '1. line öäü CR (short line)';
-dcl-c LINE_2 '2. line öäü LF (longer line)';
-dcl-c LINE_3 '3. line öäü CRLF (even longer line)';
-dcl-c LINE_4 '4. line öäü LFCR (longest line ever)';
+dcl-c LINE_1 '1. line ï¿½ï¿½ï¿½ CR (short line)';
+dcl-c LINE_2 '2. line ï¿½ï¿½ï¿½ LF (longer line)';
+dcl-c LINE_3 '3. line ï¿½ï¿½ï¿½ CRLF (even longer line)';
+dcl-c LINE_4 '4. line ï¿½ï¿½ï¿½ LFCR (longest line ever)';
 dcl-c LINE_END '---- end of data (./.) ----';
 
 dcl-ds LINES qualified;
@@ -11720,7 +11782,7 @@ dcl-proc getLastSqlStmt;
 end-proc;
 
 // ------------------------------------------------------------
-//  Returns *ON, when the specified object exists, eöse *OFF.
+//  Returns *ON, when the specified object exists, else *OFF.
 // ------------------------------------------------------------
 dcl-proc exist;
   dcl-pi *n ind extproc(*dclcase);
@@ -11845,7 +11907,7 @@ mbrtext =  "Program Status Data Structure                     "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       /if not defined(SDS)
       /define SDS
@@ -11875,7 +11937,7 @@ mbrtext =  "Tool: STRPREPRC  (Starten Pre-Proz.  ) Ctrl File  "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *=====================================================================*
       *                                                                     *
@@ -11925,7 +11987,7 @@ mbrtext =  "Tool: STRPREPRC  (Starten Pre-Proz.  ) MsgID File "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *=====================================================================*
       *                                                                     *
@@ -11981,7 +12043,7 @@ mbrtext =  "Command: Start Pre-Processor (CPP Module)         "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
      /* =================================================================== */
      /*                                                                     */
@@ -12046,7 +12108,7 @@ mbrtext =  "Start Pre-Processor - CPP                         "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
      /* =================================================================== */
      /*                                                                     */
@@ -12107,6 +12169,8 @@ srccssid=  "00273">
      /*  05.01.2023  Th.Raddatz    Fixed incorrect length of parameter      */
      /*                            &OBJTYPE.                                */
      /*                                                                     */
+     /*  15.05.2026  Th.Raddatz    Added parameters RNF7031.                */
+     /*                                                                     */
      /* =================================================================== */
      /* >>PRE-COMPILER<<                                                    */
      /*   >>CRTCMD<< CRTCLMOD     MODULE(&LI/&OB) +                         */
@@ -12157,7 +12221,8 @@ srccssid=  "00273">
                              &XTAGSREQ   +
                              &XMSGF      +
                              &EXICMDEXC  +
-                             &EXECOPT    )
+                             &EXECOPT    +
+                             &RNF7031    )
 
              DCL        VAR(&QUSESRCF  ) TYPE(*CHAR) LEN(  20)
              DCL        VAR(&USESRCMBR ) TYPE(*CHAR) LEN(  10)
@@ -12199,6 +12264,7 @@ srccssid=  "00273">
              DCL        VAR(&PGMCMDEXC ) TYPE(*CHAR) LEN(  10)
              DCL        VAR(&LPGMCMDEXC) TYPE(*CHAR) LEN(  10)
              DCL        VAR(&EXECOPT   ) TYPE(*CHAR) LEN(  32)
+             DCL        VAR(&RNF7031   ) TYPE(*LGL ) LEN(   1)
 
              DCL        VAR(&USRDEFVAR ) TYPE(*CHAR) LEN(2282)
                 /* number of items:            BINARY(2)               */
@@ -12328,7 +12394,8 @@ srccssid=  "00273">
                         &LIBL       +
                         &USELIBL    +
                         &USRDEFVAR  +
-                        &EXECOPT    )
+                        &EXECOPT    +
+                        &RNF7031    )
 
  /* -------------------------------------------------------------- */
  /*  Programm beenden                                              */
@@ -12337,7 +12404,7 @@ srccssid=  "00273">
 ENDE:
 
 /* -------------------------------------------------------------- */
-/*    Fehler aufgetreten ?                                        */
+/*    Fehler aufgetreten                                          */
 /* -------------------------------------------------------------- */
 
              IF         COND(&ERROR) THEN(DO)
@@ -12378,7 +12445,7 @@ mbrtext =  "Start Pre-Processor - Services                    "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       * =================================================================== *
       *                                                                     *
@@ -12548,6 +12615,8 @@ srccssid=  "00273">
       *  26.03.2022  Th.Raddatz    Added stream file support.               *
       *                                                                     *
       *  12.01.2023  Th.Raddatz    Changed all parameters of run() to const.*
+      *                                                                     *
+      *  15.05.2026  Th.Raddatz    Added parameters RNF7031.                *
       *                                                                     *
       * =================================================================== *
       * >>PRE-COMPILER<<                                                    *
@@ -13025,6 +13094,7 @@ srccssid=  "00273">
      D  i_useLibl                          const  like(bool_t)
      D  i_usrDefVars                       const  likeds(inpUsrDefVars_t)
      D  i_execOpt                          const  likeds(execOpt_t)
+     D  i_rnf7031                          const  like(rnf7031_t)
       *
       *  Nachrichten
       *  ... Falsche Reihenfolge im Betriebsmodus.
@@ -13072,6 +13142,8 @@ srccssid=  "00273">
      D objSrcFile      s                   like(i_objSrcFile)
      D objSrcLib       s                   like(i_objSrcLib)
      D objSrcMbr       s                   like(i_objSrcMbr)
+      *
+     D rnf7031Value    s                   like(i_rnf7031)
       /free
 
          ceertx(%paddr('abnormalEndHandler'): *omit: *omit);
@@ -13188,6 +13260,8 @@ srccssid=  "00273">
             variables.usrDefVars.var(variables.usrDefVars.numE).value =
                inpUsrDefVar.value;
          endfor;
+
+         rnf7031Value = setReturnRNF7031Messages(i_rnf7031);
 
          if (i_chgObjD = '*YES');
 
@@ -13571,6 +13645,9 @@ srccssid=  "00273">
              sendMsg(f_newMsg('PRZ0028': PRZ0028: cTYPE_ESCAPE));
            endif;
          endif;
+
+         on-exit;
+             setReturnRNF7031Messages(rnf7031Value);
 
       /end-free
      P                 E
@@ -15872,6 +15949,48 @@ srccssid=  "00273">
       /end-free
      P                 E
       *
+      *===============================================================*
+      *  Set whether to return RNF7031 messages
+      *===============================================================*
+     P setReturnRNF7031Messages...
+     P                 B
+     D                 pi                  like(rnf7031_t)
+     D  i_rnf7031                    10a   const varying
+      *
+     D QIBM_RPG_RNF7031_EVENTS...
+     D                 c                   'QIBM_RPG_RNF7031_EVENTS'
+      *
+     D currentValue    s                   like(rnf7031_t)
+      /free
+
+         if (i_rnf7031 = '*SYSTEM');
+           return i_rnf7031;
+         endif;
+
+         currentValue = f_getEnvVar(QIBM_RPG_RNF7031_EVENTS);
+         select;
+         when (currentValue = 'N');
+           currentValue = '*NO';
+         when (currentValue = 'Y');
+           currentValue = '*YES';
+         other;
+           currentValue = '';
+         endsl;
+
+         select;
+         when (i_rnf7031 = '*YES');
+           f_setEnvVar(QIBM_RPG_RNF7031_EVENTS: 'Y');
+         when (i_rnf7031 = '*NO');
+           f_setEnvVar(QIBM_RPG_RNF7031_EVENTS: 'N');
+         when (i_rnf7031 = '');
+           f_delEnvVar(QIBM_RPG_RNF7031_EVENTS);
+         endsl;
+
+         return currentValue;
+
+      /end-free
+     P                 E
+      *
 ** CTDATA g_crtCmdsDta
 CRTBNDCL    PGM         Create Bound CL Program
 CRTBNDRPG   PGM         Create Bound RPG Program
@@ -15908,7 +16027,7 @@ mbrtext =  "Start Pre-Processor - Init                        "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       * =================================================================== *
       *                                                                     *
@@ -16130,7 +16249,7 @@ mbrtext =  "Start Pre-Processor - Event File                  "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       * =================================================================== *
       *                                                                     *
@@ -16805,7 +16924,7 @@ mbrtext =  "Start Pre-Processor - QSYS Files                  "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       * =================================================================== *
       *                                                                     *
@@ -17546,7 +17665,7 @@ mbrtext =  "Start Pre-Processor - QSYS Files                  "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       * =================================================================== *
       *                                                                     *
@@ -18287,7 +18406,7 @@ mbrtext =  "Start Pre-Processor - IFS Files                   "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       * =================================================================== *
       *                                                                     *
@@ -19254,7 +19373,7 @@ mbrtext =  "Start Pre-Processor - Ger                         "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
      /* =================================================================== */
      /*                                                                     */
@@ -19297,6 +19416,7 @@ srccssid=  "00273">
      /*  07.08.2019  Th.Raddatz    Added parameter EXECOPT.                 */
      /*  21.03.2022  Th.Raddatz    Added parameters USESRCSTMF and STMF     */
      /*                            to support IFS stream files.             */
+     /*  15.05.2026  Th.Raddatz    Added parameters RNF7031.                */
      /*                                                                     */
      /* =================================================================== */
      /* >>PRE-COMPILER<<                                                    */
@@ -19308,6 +19428,7 @@ srccssid=  "00273">
      /*     >>PARM<< HLPID(STRPREPRC);                                      */
      /*     >>PARM<< MSGF(*LIBL/STRPREPRC);                                 */
      /*     >>PARM<< PRDLIB(&LI);                                           */
+     /*     >>PARM<< OPTION(*EVENTF);                                       */
      /*   >>END-IMPORTANT<<                                                 */
      /*   >>EXECUTE<<                                                       */
      /* >>END-PRE-COMPILER<<                                                */
@@ -19647,6 +19768,18 @@ srccssid=  "00273">
                           PMTCTL(*PMTRQS)                  +
                           PROMPT('Befehlsausführungsoptionen')
 
+             PARM       KWD(RNF7031   ) TYPE(*CHAR)        +
+                          LEN(10)                          +
+                          VARY(*YES)                       +
+                          MIN(0)                           +
+                          DFT(*SYSTEM)                     +
+                          RSTD(*YES)                       +
+                          VALUES(*SYSTEM                   +
+                                 *YES                      +
+                                 *NO    )                  +
+                          PMTCTL(*PMTRQS)                  +
+                          PROMPT('Unterdrücken RNF7031 Nachr.')
+
  USRDEFVAR:  ELEM         TYPE(*CHAR)                      +
                           MIN(1)                           +
                           LEN(10)                          +
@@ -19784,7 +19917,7 @@ mbrtext =  "Start Pre-Processor - Eng                         "
 srcfile =  "QSTRPREPRC"
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
      /* =================================================================== */
      /*                                                                     */
@@ -19827,6 +19960,7 @@ srccssid=  "00273">
      /*  07.08.2019  Th.Raddatz    Added parameter EXECOPT.                 */
      /*  21.03.2022  Th.Raddatz    Added parameters USESRCSTMF and STMF     */
      /*                            to support IFS stream files.             */
+     /*  15.05.2026  Th.Raddatz    Added parameters RNF7031.                */
      /*                                                                     */
      /* =================================================================== */
      /* >>PRE-COMPILER<<                                                    */
@@ -19838,6 +19972,7 @@ srccssid=  "00273">
      /*     >>PARM<< HLPID(STRPREPRC);                                      */
      /*     >>PARM<< MSGF(*LIBL/STRPREPRC);                                 */
      /*     >>PARM<< PRDLIB(&LI);                                           */
+     /*     >>PARM<< OPTION(*EVENTF);                                       */
      /*   >>END-IMPORTANT<<                                                 */
      /*   >>EXECUTE<<                                                       */
      /* >>END-PRE-COMPILER<<                                                */
@@ -20176,6 +20311,18 @@ srccssid=  "00273">
                                  *POSTCMDS)                +
                           PMTCTL(*PMTRQS)                  +
                           PROMPT('Execute commands options')
+
+             PARM       KWD(RNF7031   ) TYPE(*CHAR)        +
+                          LEN(10)                          +
+                          VARY(*YES)                       +
+                          MIN(0)                           +
+                          DFT(*SYSTEM)                     +
+                          RSTD(*YES)                       +
+                          VALUES(*SYSTEM                   +
+                                 *YES                      +
+                                 *NO    )                  +
+                          PMTCTL(*PMTRQS)                  +
+                          PROMPT('Suspress RNF7031 messages')
 
  USRDEFVAR:  ELEM         TYPE(*CHAR)                      +
                           MIN(1)                           +

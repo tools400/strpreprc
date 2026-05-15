@@ -39,6 +39,7 @@
      /*  07.08.2019  Th.Raddatz    Added parameter EXECOPT.                 */
      /*  21.03.2022  Th.Raddatz    Added parameters USESRCSTMF and STMF     */
      /*                            to support IFS stream files.             */
+     /*  15.05.2026  Th.Raddatz    Added parameters RNF7031.                */
      /*                                                                     */
      /* =================================================================== */
      /* >>PRE-COMPILER<<                                                    */
@@ -50,6 +51,7 @@
      /*     >>PARM<< HLPID(STRPREPRC);                                      */
      /*     >>PARM<< MSGF(*LIBL/STRPREPRC);                                 */
      /*     >>PARM<< PRDLIB(&LI);                                           */
+     /*     >>PARM<< OPTION(*EVENTF);                                       */
      /*   >>END-IMPORTANT<<                                                 */
      /*   >>EXECUTE<<                                                       */
      /* >>END-PRE-COMPILER<<                                                */
@@ -388,6 +390,18 @@
                                  *POSTCMDS)                +
                           PMTCTL(*PMTRQS)                  +
                           PROMPT('Befehlsausführungsoptionen')
+
+             PARM       KWD(RNF7031   ) TYPE(*CHAR)        +
+                          LEN(10)                          +
+                          VARY(*YES)                       +
+                          MIN(0)                           +
+                          DFT(*SYSTEM)                     +
+                          RSTD(*YES)                       +
+                          VALUES(*SYSTEM                   +
+                                 *YES                      +
+                                 *NO    )                  +
+                          PMTCTL(*PMTRQS)                  +
+                          PROMPT('Unterdrücken RNF7031 Nachr.')
 
  USRDEFVAR:  ELEM         TYPE(*CHAR)                      +
                           MIN(1)                           +

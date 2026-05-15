@@ -65,6 +65,8 @@
 .*  21.03.2022  Th.Raddatz    Added parameters USESRCSTMF and STMF     *
 .*                            to support IFS stream files.             *
 .*                                                                     *
+.*  15.05.2026  Th.Raddatz    Added parameters RNF7031.                *
+.*                                                                     *
 .*=====================================================================*
 .* >>PRE-COMPILER<<                                                    *
 .*   >>CRTCMD<< CRTPNLGRP    PNLGRP(&LI/STRPREPRCP) +                  *
@@ -1350,6 +1352,34 @@ The available command groups are:
 :PD.Only the object creation command is executed.
 :PT.:PV.*POSTCMDS:EPV.
 :PD.Only post-commands are executed.
+:EPARML.
+
+:EHELP.
+
+.********************************************
+.*  Keyword:  RNF7031  (optional)
+.********************************************
+:HELP NAME='STRPREPRC/RNF7031'.
+Suspress RNF7031 messages - Help
+:XH3.Suspress RNF7031 messages (RNF7031)
+:P.
+Specifies, whether compiler message RNF7031 is added to the event file
+(EVFEVENT).
+:P.
+:IMHELP name='COM/OPTPARM'.
+:P.
+:IMHELP name='COM/VALUES'.
+
+:PARML.
+:PT.:PK DEF.*SYSTEM:EPK.
+:PD.The system setting applies (value of the environment variable
+QIBM_RPG_RNF7031_EVENTS).
+:PT.:PV.*YES:EPV.
+:PD.The output of message RNF7031 is not suppressed. To achieve this, the
+environment variable 'QIBM_RPG_RNF7031_EVENTS=Y' is set.
+:PT.:PV.*NO:EPV.
+:PD.The output of message RNF7031 is suppressed. To achieve this, the
+environment variable 'QIBM_RPG_RNF7031_EVENTS=N' is set.
 :EPARML.
 
 :EHELP.

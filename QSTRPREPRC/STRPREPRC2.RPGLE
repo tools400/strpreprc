@@ -167,6 +167,8 @@
       *                                                                     *
       *  12.01.2023  Th.Raddatz    Changed all parameters of run() to const.*
       *                                                                     *
+      *  15.05.2026  Th.Raddatz    Added parameters RNF7031.                *
+      *                                                                     *
       * =================================================================== *
       * >>PRE-COMPILER<<                                                    *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
@@ -643,6 +645,7 @@
      D  i_useLibl                          const  like(bool_t)
      D  i_usrDefVars                       const  likeds(inpUsrDefVars_t)
      D  i_execOpt                          const  likeds(execOpt_t)
+     D  i_rnf7031                          const  like(rnf7031_t)
       *
       *  Nachrichten
       *  ... Falsche Reihenfolge im Betriebsmodus.
@@ -690,6 +693,8 @@
      D objSrcFile      s                   like(i_objSrcFile)
      D objSrcLib       s                   like(i_objSrcLib)
      D objSrcMbr       s                   like(i_objSrcMbr)
+      *
+     D rnf7031Value    s                   like(i_rnf7031)
       /free
 
          ceertx(%paddr('abnormalEndHandler'): *omit: *omit);
@@ -806,6 +811,8 @@
             variables.usrDefVars.var(variables.usrDefVars.numE).value =
                inpUsrDefVar.value;
          endfor;
+
+         rnf7031Value = setReturnRNF7031Messages(i_rnf7031);
 
          if (i_chgObjD = '*YES');
 
@@ -1189,6 +1196,9 @@
              sendMsg(f_newMsg('PRZ0028': PRZ0028: cTYPE_ESCAPE));
            endif;
          endif;
+
+         on-exit;
+             setReturnRNF7031Messages(rnf7031Value);
 
       /end-free
      P                 E
@@ -3486,6 +3496,48 @@
             endif;
             x = %scan(%trim(i_var): io_string);
          enddo;
+
+      /end-free
+     P                 E
+      *
+      *===============================================================*
+      *  Set whether to return RNF7031 messages
+      *===============================================================*
+     P setReturnRNF7031Messages...
+     P                 B
+     D                 pi                  like(rnf7031_t)
+     D  i_rnf7031                    10a   const varying
+      *
+     D QIBM_RPG_RNF7031_EVENTS...
+     D                 c                   'QIBM_RPG_RNF7031_EVENTS'
+      *
+     D currentValue    s                   like(rnf7031_t)
+      /free
+
+         if (i_rnf7031 = '*SYSTEM');
+           return i_rnf7031;
+         endif;
+
+         currentValue = f_getEnvVar(QIBM_RPG_RNF7031_EVENTS);
+         select;
+         when (currentValue = 'N');
+           currentValue = '*NO';
+         when (currentValue = 'Y');
+           currentValue = '*YES';
+         other;
+           currentValue = '';
+         endsl;
+
+         select;
+         when (i_rnf7031 = '*YES');
+           f_setEnvVar(QIBM_RPG_RNF7031_EVENTS: 'Y');
+         when (i_rnf7031 = '*NO');
+           f_setEnvVar(QIBM_RPG_RNF7031_EVENTS: 'N');
+         when (i_rnf7031 = '');
+           f_delEnvVar(QIBM_RPG_RNF7031_EVENTS);
+         endsl;
+
+         return currentValue;
 
       /end-free
      P                 E

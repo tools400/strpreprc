@@ -140,5 +140,6 @@
      D  usrDefVars                         likeds(usrDefVars_t)
      D  useLibl                            like(bool_t)
      D  prvLibl                            likeds(liblList_t)
-
+      *
+     D rnf7031_t       s             10a   varying template
       /endif

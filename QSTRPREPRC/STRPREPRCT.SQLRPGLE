@@ -13,8 +13,7 @@
 //     >>COMPILE<<
 //       >>PARM<< RPGPPOPT(*LVL2);
 //       >>PARM<< DBGVIEW(*NONE);
-//       >>PARM<< POPTION(*EVENTF);
-//       >>PARM<< COMPILEOPT('DBGVIEW(*LIST)');
+//       >>PARM<< COMPILEOPT('DBGVIEW(*LIST) OPTION(*EVENTF)');
 //       >>PARM<< BNDDIR(*N);
 //       >>PARM<< MODULE(&LI/STRPREPRC2 +
 //                       &LI/STRPREPRC4 +
@@ -73,10 +72,10 @@ end-ds;
 dcl-c STMF_UTF8 '/home/raddatz/temp/strpreprct.utf8';
 
 dcl-c LINE_BEGIN '--- begin of data (LF) ---';
-dcl-c LINE_1 '1. line öäü CR (short line)';
-dcl-c LINE_2 '2. line öäü LF (longer line)';
-dcl-c LINE_3 '3. line öäü CRLF (even longer line)';
-dcl-c LINE_4 '4. line öäü LFCR (longest line ever)';
+dcl-c LINE_1 '1. line ï¿½ï¿½ï¿½ CR (short line)';
+dcl-c LINE_2 '2. line ï¿½ï¿½ï¿½ LF (longer line)';
+dcl-c LINE_3 '3. line ï¿½ï¿½ï¿½ CRLF (even longer line)';
+dcl-c LINE_4 '4. line ï¿½ï¿½ï¿½ LFCR (longest line ever)';
 dcl-c LINE_END '---- end of data (./.) ----';
 
 dcl-ds LINES qualified;
@@ -2066,7 +2065,7 @@ dcl-proc getLastSqlStmt;
 end-proc;
 
 // ------------------------------------------------------------
-//  Returns *ON, when the specified object exists, eöse *OFF.
+//  Returns *ON, when the specified object exists, else *OFF.
 // ------------------------------------------------------------
 dcl-proc exist;
   dcl-pi *n ind extproc(*dclcase);

@@ -57,6 +57,7 @@
      D  i_useLibl                          const  like(bool_t)
      D  i_usrDefVars                       const  likeds(inpUsrDefVars_t)
      D  i_execOpt                          const  likeds(execOpt_t)
+     D  i_rnf7031                          const  like(rnf7031_t)
 
      D sendMsg...
      D                 PR

@@ -57,6 +57,8 @@
      /*  05.01.2023  Th.Raddatz    Fixed incorrect length of parameter      */
      /*                            &OBJTYPE.                                */
      /*                                                                     */
+     /*  15.05.2026  Th.Raddatz    Added parameters RNF7031.                */
+     /*                                                                     */
      /* =================================================================== */
      /* >>PRE-COMPILER<<                                                    */
      /*   >>CRTCMD<< CRTCLMOD     MODULE(&LI/&OB) +                         */
@@ -107,7 +109,8 @@
                              &XTAGSREQ   +
                              &XMSGF      +
                              &EXICMDEXC  +
-                             &EXECOPT    )
+                             &EXECOPT    +
+                             &RNF7031    )
 
              DCL        VAR(&QUSESRCF  ) TYPE(*CHAR) LEN(  20)
              DCL        VAR(&USESRCMBR ) TYPE(*CHAR) LEN(  10)
@@ -149,6 +152,7 @@
              DCL        VAR(&PGMCMDEXC ) TYPE(*CHAR) LEN(  10)
              DCL        VAR(&LPGMCMDEXC) TYPE(*CHAR) LEN(  10)
              DCL        VAR(&EXECOPT   ) TYPE(*CHAR) LEN(  32)
+             DCL        VAR(&RNF7031   ) TYPE(*LGL ) LEN(   1)
 
              DCL        VAR(&USRDEFVAR ) TYPE(*CHAR) LEN(2282)
                 /* number of items:            BINARY(2)               */
@@ -278,7 +282,8 @@
                         &LIBL       +
                         &USELIBL    +
                         &USRDEFVAR  +
-                        &EXECOPT    )
+                        &EXECOPT    +
+                        &RNF7031    )
 
  /* -------------------------------------------------------------- */
  /*  Programm beenden                                              */
@@ -287,7 +292,7 @@
 ENDE:
 
 /* -------------------------------------------------------------- */
-/*    Fehler aufgetreten ?                                        */
+/*    Fehler aufgetreten                                          */
 /* -------------------------------------------------------------- */
 
              IF         COND(&ERROR) THEN(DO)

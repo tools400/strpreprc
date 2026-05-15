@@ -65,6 +65,8 @@
 .*  21.03.2022  Th.Raddatz    Added parameters USESRCSTMF and STMF     *
 .*                            to support IFS stream files.             *
 .*                                                                     *
+.*  15.05.2026  Th.Raddatz    Added parameters RNF7031.                *
+.*                                                                     *
 .*=====================================================================*
 .* >>PRE-COMPILER<<                                                    *
 .*   >>CRTCMD<< CRTPNLGRP    PNLGRP(&LI/STRPREPRCP) +                  *
@@ -123,6 +125,7 @@
 :IMHELP name='STRPREPRC/TAGSREQ'.
 :IMHELP name='STRPREPRC/EXICMDEXC'.
 :IMHELP name='STRPREPRC/EXECOPT'.
+:IMHELP name='STRPREPRC/RNF7031'.
 :EHELP.
 
 .*****************************************************************
@@ -1411,6 +1414,34 @@ Verfügung stehenden Befehlsgruppen sind:
 :PD.Es wird nur der Objekterstellungsbefehl ausgeführt.
 :PT.:PV.*POSTCMDS:EPV.
 :PD.Es werden nur die Nachlaufbefehle ausgeführt.
+:EPARML.
+
+:EHELP.
+
+.********************************************
+.*  Keyword:  RNF7031  (optional)
+.********************************************
+:HELP NAME='STRPREPRC/RNF7031'.
+Unterdrücken RNF7031 Nachr. - Hilfe
+:XH3.Unterdrücken RNF7031 Nachr. (RNF7031)
+:P.
+Gibt an, ob die Compiler Nachricht RNF7031 in die Ereignisdatei
+(EVFEVENT) ausgegeben wird.
+:P.
+:IMHELP name='COM/OPTPARM'.
+:P.
+:IMHELP name='COM/VALUES'.
+
+:PARML.
+:PT.:PK DEF.*SYSTEM:EPK.
+:PD.Es gilt die Systemeinstellung (Wert der Umgebungsvariablen
+QIBM_RPG_RNF7031_EVENTS).
+:PT.:PV.*YES:EPV.
+:PD.Die Ausgabe der Nachricht RNF7031 wird nicht unterdrückt. Dazu wird
+die Umgebungsvariable 'QIBM_RPG_RNF7031_EVENTS=Y' gesetzt.
+:PT.:PV.*NO:EPV.
+:PD.Die Ausgabe der Nachricht RNF7031 wird unterdrückt. Dazu wird
+die Umgebungsvariable 'QIBM_RPG_RNF7031_EVENTS=N' gesetzt.
 :EPARML.
 
 :EHELP.
