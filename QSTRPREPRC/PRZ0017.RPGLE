@@ -1,9 +1,11 @@
-      *---------------------------------------------------------------
-      * Datenstruktur für Message-ID : PRZ0017
-      *
-      * Der Parameter 'OBJSRCLIB' ist nicht zulässig, wenn CHGOBJD(
-      *
-     D PRZ0017         DS
-      *   Keine Ersatzvariablen definiert!
-     D PRZ0017_LEN     S              8B 0 INZ(0512)
-      *
+**free
+//---------------------------------------------------------------
+// Datenstruktur für Message-ID : PRZ0017
+
+// Der Parameter 'OBJSRCLIB' ist nicht zulässig, wenn CHGOBJD(
+
+dcl-ds PRZ0017;
+end-ds;
+//   Keine Ersatzvariablen definiert!
+dcl-s PRZ0017_LEN bindec(8) inz(0512);
+

@@ -1,11 +1,13 @@
-      *---------------------------------------------------------------
-      * Datenstruktur für Message-ID : PRZ0012
-      *
-      * Fehler beim Öffnen der Quellendatei &2/&1, Teildatei &3.
-      *
-     D PRZ0012         DS
-     D  PRZ00121                    010A   INZ(*BLANKS)
-     D  PRZ00122                    010A   INZ(*BLANKS)
-     D  PRZ00123                    010A   INZ(*BLANKS)
-     D PRZ0012_LEN     S              8B 0 INZ(0030)
-      *
+**free
+//---------------------------------------------------------------
+// Datenstruktur für Message-ID : PRZ0012
+
+// Fehler beim Öffnen der Quellendatei &2/&1, Teildatei &3.
+
+dcl-ds PRZ0012;
+  PRZ00121 char(010) inz(*blanks);
+  PRZ00122 char(010) inz(*blanks);
+  PRZ00123 char(010) inz(*blanks);
+end-ds;
+dcl-s PRZ0012_LEN bindec(8) inz(0030);
+

@@ -1,9 +1,11 @@
-      *---------------------------------------------------------------
-      * Datenstruktur für Message-ID : PRZ0015
-      *
-      * Fehler im Erstellungsbefehl gefunden.
-      *
-     D PRZ0015         DS
-     D  PRZ00151                    512A   INZ(*BLANKS)
-     D PRZ0015_LEN     S              8B 0 INZ(0512)
-      *
+**free
+//---------------------------------------------------------------
+// Datenstruktur für Message-ID : PRZ0015
+
+// Fehler im Erstellungsbefehl gefunden.
+
+dcl-ds PRZ0015;
+  PRZ00151 char(512) inz(*blanks);
+end-ds;
+dcl-s PRZ0015_LEN bindec(8) inz(0512);
+

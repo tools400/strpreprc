@@ -1,179 +1,111 @@
-      /if defined(PSTRPREPR6)
-      /eof
-      /endif
-      /define PSTRPREPR6
+**free
+/if defined(PSTRPREPR6)
+/eof
+/endif
+/define PSTRPREPR6
 
-      /copy QSTRPREPRC,TYPES_H
+/copy QSTRPREPRC,TYPES_H
 
-      *  Opens an given source file.
-     D SourceStreamFile_open...
-     D                 pr
-     D                                     extproc('STRPREPRC6_+
-     D                                     SourceStreamFile_open+
-     D                                     ')
-     D  i_stmf                             const  like(path_t)
+//  Opens an given source file.
+dcl-pr SourceStreamFile_open extproc('STRPREPRC6_SourceStreamFile_open');
+  i_stmf like(path_t) const;
+end-pr;
 
-      *  Returns the open status of the source file.
-     D SourceStreamFile_isOpen...
-     D                 pr              n
-     D                                     extproc('STRPREPRC6_+
-     D                                     SourceStreamFile_isOpen+
-     D                                     ')
+//  Returns the open status of the source file.
+dcl-pr SourceStreamFile_isOpen ind extproc('STRPREPRC6_SourceStreamFile_isOpen');
+end-pr;
 
-      *  Returns the current line number of the source file.
-     D SourceStreamFile_getLineNbr...
-     D                 pr            10i 0
-     D                                     extproc('STRPREPRC6_+
-     D                                     SourceStreamFile_getLineNbr+
-     D                                     ')
+//  Returns the current line number of the source file.
+dcl-pr SourceStreamFile_getLineNbr int(10) extproc('STRPREPRC6_SourceStreamFile_getLineNbr');
+end-pr;
 
-      *  Returns the length of the data field of the source file.
-     D SourceStreamFile_getDtaLength...
-     D
-     D                 pr            10i 0
-     D                                     extproc('STRPREPRC6_+
-     D                                     SourceStreamFile_getDtaLength+
-     D                                     ')
+//  Returns the length of the data field of the source file.
 
-      *  Returns the folder name of the source file.
-     D SourceStreamFile_getFolder...
-     D                 pr                  like(path_t)
-     D                                     extproc('STRPREPRC6_+
-     D                                     SourceStreamFile_getFolder+
-     D                                     ')
+dcl-pr SourceStreamFile_getDtaLength int(10) extproc('STRPREPRC6_SourceStreamFile_getDtaLength');
+end-pr;
 
-      *  Returns the file name of the source file.
-     D SourceStreamFile_getFile...
-     D                 pr                  like(path_t)
-     D                                     extproc('STRPREPRC6_+
-     D                                     SourceStreamFile_getFile+
-     D                                     ')
+//  Returns the folder name of the source file.
+dcl-pr SourceStreamFile_getFolder like(path_t) extproc('STRPREPRC6_SourceStreamFile_getFolder');
+end-pr;
 
-      *  Returns the path (folder + file name) of the source file.
-     D SourceStreamFile_getPath...
-     D                 pr                  like(path_t)
-     D                                     extproc('STRPREPRC6_+
-     D                                     SourceStreamFile_getPath+
-     D                                     ')
+//  Returns the file name of the source file.
+dcl-pr SourceStreamFile_getFile like(path_t) extproc('STRPREPRC6_SourceStreamFile_getFile');
+end-pr;
 
-      *  Reads the next line from the source file.
-     D SourceStreamFile_readLine...
-     D                 pr              n
-     D                                     extproc('STRPREPRC6_+
-     D                                     SourceStreamFile_readLine+
-     D                                     ')
-     D  io_srcDta                                 like(ds_srcFile_t.srcDta)
+//  Returns the path (folder + file name) of the source file.
+dcl-pr SourceStreamFile_getPath like(path_t) extproc('STRPREPRC6_SourceStreamFile_getPath');
+end-pr;
 
-      *  Reads the previous line from the source file.
-     D SourceStreamFile_readPrvLine...
-     D                 pr              n
-     D                                     extproc('STRPREPRC6_+
-     D                                     SourceStreamFile_readPrvLine+
-     D                                     ')
-     D  io_srcDta                                 like(ds_srcFile_t.srcDta)
+//  Reads the next line from the source file.
+dcl-pr SourceStreamFile_readLine ind extproc('STRPREPRC6_SourceStreamFile_readLine');
+  io_srcDta like(ds_srcFile_t.srcDta);
+end-pr;
 
-      *  Closes the source file.
-     D SourceStreamFile_close...
-     D                 pr
-     D                                     extproc('STRPREPRC6_+
-     D                                     SourceStreamFile_close+
-     D                                     ')
+//  Reads the previous line from the source file.
+dcl-pr SourceStreamFile_readPrvLine ind extproc('STRPREPRC6_SourceStreamFile_readPrvLine');
+  io_srcDta like(ds_srcFile_t.srcDta);
+end-pr;
 
-      *  Opens an given include file.
-     D IncludeStreamFile_open...
-     D                 pr
-     D                                     extproc('STRPREPRC6_+
-     D                                     IncludeStreamFile_open+
-     D                                     ')
-     D  i_stmf                             const  like(path_t)
+//  Closes the source file.
+dcl-pr SourceStreamFile_close extproc('STRPREPRC6_SourceStreamFile_close');
+end-pr;
 
-      *  Returns the open status of the include file.
-     D IncludeStreamFile_isOpen...
-     D                 pr              n
-     D                                     extproc('STRPREPRC6_+
-     D                                     IncludeStreamFile_isOpen+
-     D                                     ')
+//  Opens an given include file.
+dcl-pr IncludeStreamFile_open extproc('STRPREPRC6_IncludeStreamFile_open');
+  i_stmf like(path_t) const;
+end-pr;
 
-      *  Returns the current line number of the include file.
-     D IncludeStreamFile_getLineNbr...
-     D                 pr            10i 0
-     D                                     extproc('STRPREPRC6_+
-     D                                     IncludeStreamFile_getLineNbr+
-     D                                     ')
+//  Returns the open status of the include file.
+dcl-pr IncludeStreamFile_isOpen ind extproc('STRPREPRC6_IncludeStreamFile_isOpen');
+end-pr;
 
-      *  Returns the length of the data field of the include file.
-     D IncludeStreamFile_getDtaLength...
-     D
-     D                 pr            10i 0
-     D                                     extproc('STRPREPRC6_+
-     D                                     IncludeStreamFile_getDtaLength+
-     D                                     ')
+//  Returns the current line number of the include file.
+dcl-pr IncludeStreamFile_getLineNbr int(10) extproc('STRPREPRC6_IncludeStreamFile_getLineNbr');
+end-pr;
 
-      *  Returns the folder name of the include file.
-     D IncludeStreamFile_getFolder...
-     D                 pr                  like(path_t)
-     D                                     extproc('STRPREPRC6_+
-     D                                     IncludeStreamFile_getFolder+
-     D                                     ')
+//  Returns the length of the data field of the include file.
 
-      *  Returns the file name of the include file.
-     D IncludeStreamFile_getFile...
-     D                 pr                  like(path_t)
-     D                                     extproc('STRPREPRC6_+
-     D                                     IncludeStreamFile_getFile+
-     D                                     ')
+dcl-pr IncludeStreamFile_getDtaLength int(10) extproc('STRPREPRC6_IncludeStreamFile_getDtaLength');
+end-pr;
 
-      *  Returns the path (folder + file name) of the include file.
-     D IncludeStreamFile_getPath...
-     D                 pr                  like(path_t)
-     D                                     extproc('STRPREPRC6_+
-     D                                     IncludeStreamFile_getPath+
-     D                                     ')
+//  Returns the folder name of the include file.
+dcl-pr IncludeStreamFile_getFolder like(path_t) extproc('STRPREPRC6_IncludeStreamFile_getFolder');
+end-pr;
 
-      *  Reads the next line from the include file.
-     D IncludeStreamFile_readLine...
-     D                 pr              n
-     D                                     extproc('STRPREPRC6_+
-     D                                     IncludeStreamFile_readLine+
-     D                                     ')
-     D  io_srcDta                                 like(ds_srcFile_t.srcDta)
+//  Returns the file name of the include file.
+dcl-pr IncludeStreamFile_getFile like(path_t) extproc('STRPREPRC6_IncludeStreamFile_getFile');
+end-pr;
 
-      *  Reads the previous line from the include file.
-     D IncludeStreamFile_readPrvLine...
-     D                 pr              n
-     D                                     extproc('STRPREPRC6_+
-     D                                     IncludeStreamFile_readPrvLine+
-     D                                     ')
-     D  io_srcDta                                 like(ds_srcFile_t.srcDta)
+//  Returns the path (folder + file name) of the include file.
+dcl-pr IncludeStreamFile_getPath like(path_t) extproc('STRPREPRC6_IncludeStreamFile_getPath');
+end-pr;
 
-      *  Closes the include file.
-     D IncludeStreamFile_close...
-     D                 pr
-     D                                     extproc('STRPREPRC6_+
-     D                                     IncludeStreamFile_close+
-     D                                     ')
+//  Reads the next line from the include file.
+dcl-pr IncludeStreamFile_readLine ind extproc('STRPREPRC6_IncludeStreamFile_readLine');
+  io_srcDta like(ds_srcFile_t.srcDta);
+end-pr;
 
-      *  Returns the folder name of a given path.
-     D Path_getFolder...
-     D                 pr                  like(path_t)
-     D                                     extproc('STRPREPRC6_+
-     D                                     Path_getFolder+
-     D                                     ')
-     D  i_path                             const like(path_t) options(*trim)
+//  Reads the previous line from the include file.
+dcl-pr IncludeStreamFile_readPrvLine ind extproc('STRPREPRC6_IncludeStreamFile_readPrvLine');
+  io_srcDta like(ds_srcFile_t.srcDta);
+end-pr;
 
-      *  Returns the file name of a given path.
-     D Path_getFile...
-     D                 pr                  like(path_t)
-     D                                     extproc('STRPREPRC6_+
-     D                                     Path_getFile+
-     D                                     ')
-     D  i_path                             const  like(path_t) options(*trim)
+//  Closes the include file.
+dcl-pr IncludeStreamFile_close extproc('STRPREPRC6_IncludeStreamFile_close');
+end-pr;
 
-      *  Check existence of a stream file.
-     D StreamFile_exists...
-     D                 pr
-     D                                     extproc('STRPREPRC6_+
-     D                                     StreamFile_exists+
-     D                                     ')
-     D  i_stmf                             const  like(path_t) options(*trim)
+//  Returns the folder name of a given path.
+dcl-pr Path_getFolder like(path_t) extproc('STRPREPRC6_Path_getFolder');
+  i_path like(path_t) options(*trim) const;
+end-pr;
+
+//  Returns the file name of a given path.
+dcl-pr Path_getFile like(path_t) extproc('STRPREPRC6_Path_getFile');
+  i_path like(path_t) options(*trim) const;
+end-pr;
+
+//  Check existence of a stream file.
+dcl-pr StreamFile_exists extproc('STRPREPRC6_StreamFile_exists');
+  i_stmf like(path_t) options(*trim) const;
+end-pr;
 

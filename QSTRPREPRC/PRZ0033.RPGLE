@@ -1,9 +1,11 @@
-      *---------------------------------------------------------------
-      * Datenstruktur für Message-ID : PRZ0033
-      *
-      * STRPREPRC: Objekt erstellt.
-      *
-     D PRZ0033         DS
-      *   Keine Ersatzvariablen definiert!
-     D PRZ0033_SIZE    S              8B 0 INZ(0000)
-      *
+**free
+//---------------------------------------------------------------
+// Datenstruktur für Message-ID : PRZ0033
+
+// STRPREPRC: Objekt erstellt.
+
+dcl-ds PRZ0033;
+end-ds;
+//   Keine Ersatzvariablen definiert!
+dcl-s PRZ0033_SIZE bindec(8) inz(0000);
+

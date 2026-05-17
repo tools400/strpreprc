@@ -1,7 +1,9 @@
-      // ---------------------------------------------------------------
-      //  Data structure for message ID: PRZ0044
-      //  Erstellungsbefehl nicht gefunden in Quellendatei &
-     d PRZ0044         ds
-     d  PRZ00441                    256A   inz
-     d  PRZ00442                    256A   inz
-     d PRZ0044_SIZE    s             10I 0 inz(512)
+**free
+// ---------------------------------------------------------------
+//  Data structure for message ID: PRZ0044
+//  Erstellungsbefehl nicht gefunden in Quellendatei &
+dcl-ds PRZ0044;
+  PRZ00441 char(256) inz;
+  PRZ00442 char(256) inz;
+end-ds;
+dcl-s PRZ0044_SIZE int(10) inz(512);

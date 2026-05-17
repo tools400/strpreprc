@@ -1,9 +1,11 @@
-      // ---------------------------------------------------------------
-      //  Data structure for message ID: PRZ0035
+**free
+// ---------------------------------------------------------------
+//  Data structure for message ID: PRZ0035
 
-      //  Bibliothek &1 nicht gefunden.
+//  Bibliothek &1 nicht gefunden.
 
-     d PRZ0035         ds
-     d  PRZ00351                     10A   inz(*BLANKS)
-     d PRZ0035_SIZE    s             10I 0 inz(10)
+dcl-ds PRZ0035;
+  PRZ00351 char(10) inz(*blanks);
+end-ds;
+dcl-s PRZ0035_SIZE int(10) inz(10);
 

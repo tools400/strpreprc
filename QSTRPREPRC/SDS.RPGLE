@@ -1,15 +1,17 @@
-      /if not defined(SDS)
-      /define SDS
-     D sds            sds                  qualified
-     D  pgmName                      10a
-     D  status                        5s 0
-     D  prvStat                       5s 0
-     D  lastSeq                       8a
-     D  lastSubR                      8a
-     D  numParm                       3s 0
-     D  msgID                         7a
-     D  MiInstr                       4a
-     D  wrkArea                      30a
-     D  pgmLib                       10a
-     D  msgText                      80a
-      /endif
+**free
+/if not defined(SDS)
+/define SDS
+dcl-ds sds qualified psds;
+  pgmName  char(10);
+  status   zoned(5);
+  prvStat  zoned(5);
+  lastSeq  char(8);
+  lastSubR char(8);
+  numParm  zoned(3);
+  msgID    char(7);
+  MiInstr  char(4);
+  wrkArea  char(30);
+  pgmLib   char(10);
+  msgText  char(80);
+end-ds;
+/endif

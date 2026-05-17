@@ -1,9 +1,11 @@
-      *---------------------------------------------------------------
-      * Datenstruktur für Message-ID : PRZ0010
-      *
-      * Modus für Marke &1 nicht definiert.
-      *
-     D PRZ0010         DS
-     D  PRZ00101                    030A   INZ(*BLANKS)
-     D PRZ0010_LEN     S              8B 0 INZ(0030)
-      *
+**free
+//---------------------------------------------------------------
+// Datenstruktur für Message-ID : PRZ0010
+
+// Modus für Marke &1 nicht definiert.
+
+dcl-ds PRZ0010;
+  PRZ00101 char(030) inz(*blanks);
+end-ds;
+dcl-s PRZ0010_LEN bindec(8) inz(0030);
+

@@ -1,11 +1,13 @@
-      *---------------------------------------------------------------
-      * Datenstruktur für Message-ID : PRZ0013
-      *
-      * Fehler beim Öffnen der Steuerdatei &2/&1, Teildatei &3.
-      *
-     D PRZ0013         DS
-     D  PRZ00131                    010A   INZ(*BLANKS)
-     D  PRZ00132                    010A   INZ(*BLANKS)
-     D  PRZ00133                    010A   INZ(*BLANKS)
-     D PRZ0013_LEN     S              8B 0 INZ(0030)
-      *
+**free
+//---------------------------------------------------------------
+// Datenstruktur für Message-ID : PRZ0013
+
+// Fehler beim Öffnen der Steuerdatei &2/&1, Teildatei &3.
+
+dcl-ds PRZ0013;
+  PRZ00131 char(010) inz(*blanks);
+  PRZ00132 char(010) inz(*blanks);
+  PRZ00133 char(010) inz(*blanks);
+end-ds;
+dcl-s PRZ0013_LEN bindec(8) inz(0030);
+

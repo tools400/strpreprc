@@ -1,12 +1,14 @@
-      // ---------------------------------------------------------------
-      //  Data structure for message ID: PRZ0031
+**free
+// ---------------------------------------------------------------
+//  Data structure for message ID: PRZ0031
 
-      //  Verschachtelte INCLUDE Marke in Zeile &4 der Datei &2/&1, Teil
+//  Verschachtelte INCLUDE Marke in Zeile &4 der Datei &2/&1, Teil
 
-     d PRZ0032         ds
-     d  PRZ00321                    010A   INZ(*BLANKS)
-     d  PRZ00322                    010A   INZ(*BLANKS)
-     d  PRZ00323                    010A   INZ(*BLANKS)
-     d  PRZ00324                    006P 2 INZ(*ZEROS )
-     d PRZ0032_SIZE    s              8B 0 INZ(0036)
+dcl-ds PRZ0032;
+  PRZ00321 char(010) inz(*blanks);
+  PRZ00322 char(010) inz(*blanks);
+  PRZ00323 char(010) inz(*blanks);
+  PRZ00324 packed(006: 2) inz(*zeros);
+end-ds;
+dcl-s PRZ0032_SIZE bindec(8) inz(0036);
 

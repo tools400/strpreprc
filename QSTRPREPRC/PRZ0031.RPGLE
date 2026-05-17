@@ -1,9 +1,11 @@
-      // ---------------------------------------------------------------
-      //  Data structure for message ID: PRZ0031
+**free
+// ---------------------------------------------------------------
+//  Data structure for message ID: PRZ0031
 
-      //  Ungültige INCLUDE Marke in Zeile &1 gefunden.
+//  Ungültige INCLUDE Marke in Zeile &1 gefunden.
 
-     d PRZ0031         ds
-     d  PRZ00311                    006P 2 INZ(*ZEROS )
-     d PRZ0031_SIZE    s              8B 0 INZ(0004)
+dcl-ds PRZ0031;
+  PRZ00311 packed(006: 2) inz(*zeros);
+end-ds;
+dcl-s PRZ0031_SIZE bindec(8) inz(0004);
 

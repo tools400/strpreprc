@@ -1,11 +1,13 @@
-      *---------------------------------------------------------------
-      * Datenstruktur für Message-ID : PRZ0024
-      *
-      * Keine Pre-Compiler Anweisungen in Quellendatei &2/&1, Teildatei &3 gefunden.
-      *
-     D PRZ0024         DS
-     D  PRZ00241                    010A   INZ(*BLANKS)
-     D  PRZ00242                    010A   INZ(*BLANKS)
-     D  PRZ00243                    010A   INZ(*BLANKS)
-     D PRZ0024_LEN     S              8B 0 INZ(0030)
-      *
+**free
+//---------------------------------------------------------------
+// Datenstruktur für Message-ID : PRZ0024
+
+// Keine Pre-Compiler Anweisungen in Quellendatei &2/&1, Teildatei &3 gefunden.
+
+dcl-ds PRZ0024;
+  PRZ00241 char(010) inz(*blanks);
+  PRZ00242 char(010) inz(*blanks);
+  PRZ00243 char(010) inz(*blanks);
+end-ds;
+dcl-s PRZ0024_LEN bindec(8) inz(0030);
+

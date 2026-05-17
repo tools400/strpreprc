@@ -1,9 +1,8 @@
-      /if not defined(COPYRIGHT_DSPEC)
-     h COPYRIGHT('V2.3 - 15.05.2026 - mailto: thomas.raddatz@tools400.de')
-      /eof
-      /endif
-     d STRPREPRC_VERSION...
-     d                 C                   '2.3'
-     d STRPREPRC_DATE...
-     d                 C                   '15.05.2026'
-      *
+**free
+/if not defined(COPYRIGHT_DSPEC)
+ctl-opt copyright('V2.4 - 17.05.2026 - mailto: thomas.raddatz@tools400.de');
+/eof
+/endif
+dcl-c STRPREPRC_VERSION '2.4';
+dcl-c STRPREPRC_DATE '17.05.2026';
+

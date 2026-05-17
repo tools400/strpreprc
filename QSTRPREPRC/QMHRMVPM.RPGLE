@@ -1,16 +1,17 @@
-      /if not defined(QMHRMVPM)
-      /define QMHRMVPM
-      *
-      *  Remove Program Message (QMHRMVPM) API
-     d QMHRMVPM...
-     d                 PR                         extpgm('QMHRMVPM')
-     d  i_callStackE                 10a   const
-     d  i_callStackC                 10i 0 const
-     d  i_msgKey                      4a   const
-     d  i_msgToRmv                   10a   const
-     d  i_errCode                 32767a         options(*varsize)
-     d  i_lenCalStkE                 10i 0       options(*nopass)
-     d  i_calStkEQual                20a         options(*nopass)
-     d  i_rmvExcp                    10a         options(*nopass)
-     d  i_calStkeDTyp                10a         options(*nopass)
-      /endif
+**free
+/if not defined(QMHRMVPM)
+/define QMHRMVPM
+
+//  Remove Program Message (QMHRMVPM) API
+dcl-pr QMHRMVPM extpgm('QMHRMVPM');
+  i_callStackE  char(10) const;
+  i_callStackC  int(10) const;
+  i_msgKey      char(4) const;
+  i_msgToRmv    char(10) const;
+  i_errCode     char(32767) options(*varsize);
+  i_lenCalStkE  int(10) options(*nopass);
+  i_calStkEQual char(20) options(*nopass);
+  i_rmvExcp     char(10) options(*nopass);
+  i_calStkeDTyp char(10) options(*nopass);
+end-pr;
+/endif

@@ -1,9 +1,11 @@
-      *---------------------------------------------------------------
-      * Datenstruktur für Message-ID : PRZ0021
-      *
-      * Befehl CHGOBJDA nicht gefunden oder unvollständig.
-      *
-     D PRZ0021         DS
-      *   Keine Ersatzvariablen definiert!
-     D PRZ0021_LEN     S              8B 0 INZ(0512)
-      *
+**free
+//---------------------------------------------------------------
+// Datenstruktur für Message-ID : PRZ0021
+
+// Befehl CHGOBJDA nicht gefunden oder unvollständig.
+
+dcl-ds PRZ0021;
+end-ds;
+//   Keine Ersatzvariablen definiert!
+dcl-s PRZ0021_LEN bindec(8) inz(0512);
+

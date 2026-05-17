@@ -1,6 +1,8 @@
-      // ---------------------------------------------------------------
-      //  Data structure for message ID: PRZ0038
-      //  Die Parameter USESRCFILE und USESRCMBR können nicht mit dem
-     d PRZ0038         ds
-     d  PRZ00381                     70A   inz(*BLANKS)
-     d PRZ0038_SIZE    s             10I 0 inz(70)
+**free
+// ---------------------------------------------------------------
+//  Data structure for message ID: PRZ0038
+//  Die Parameter USESRCFILE und USESRCMBR können nicht mit dem
+dcl-ds PRZ0038;
+  PRZ00381 char(70) inz(*blanks);
+end-ds;
+dcl-s PRZ0038_SIZE int(10) inz(70);

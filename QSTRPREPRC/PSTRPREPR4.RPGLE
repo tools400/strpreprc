@@ -1,72 +1,51 @@
-      /if defined(PSTRPREPR4)
-      /eof
-      /endif
-      /define PSTRPREPR4
+**free
+/if defined(PSTRPREPR4)
+/eof
+/endif
+/define PSTRPREPR4
 
-     D enableEventFile...
-     D                 pr
-     D                                     extproc('STRPREPRC4_+
-     D                                     enableEventFile+
-     D                                     ')
+dcl-pr enableEventFile extproc('STRPREPRC4_enableEventFile');
+end-pr;
 
-     D isEmptyEventFile...
-     D                 pr              n
-     D                                     extproc('STRPREPRC4_+
-     D                                     isEmptyEventFile+
-     D                                     ')
-     D  i_lib                        10a   const
-     D  i_obj                        10a   const
+dcl-pr isEmptyEventFile ind extproc('STRPREPRC4_isEmptyEventFile');
+  i_lib char(10) const;
+  i_obj char(10) const;
+end-pr;
 
-     D clearEventFile...
-     D                 pr
-     D                                     extproc('STRPREPRC4_+
-     D                                     clearEventFile+
-     D                                     ')
-     D  i_obj                        10a   const
-     D  i_lib                        10a   const
+dcl-pr clearEventFile extproc('STRPREPRC4_clearEventFile');
+  i_obj char(10) const;
+  i_lib char(10) const;
+end-pr;
 
-     D prepareEventFile...
-     D                 pr
-     D                                     extproc('STRPREPRC4_+
-     D                                     prepareEventFile+
-     D                                     ')
+dcl-pr prepareEventFile extproc('STRPREPRC4_prepareEventFile');
+end-pr;
 
-     D openEventFile...
-     D                 pr              n
-     D                                     extproc('STRPREPRC4_+
-     D                                     openEventFile+
-     D                                     ')
-     D  i_obj                        10a   const
-     D  i_lib                        10a   const
-     D  i_append                       n   const
+dcl-pr openEventFile ind extproc('STRPREPRC4_openEventFile');
+  i_obj    char(10) const;
+  i_lib    char(10) const;
+  i_append ind const;
+end-pr;
 
-     D updateLDA...
-     D                 pr                  extproc('STRPREPRC4_+
-     D                                     updateLDA')
-     D  i_lib                        10a   const
-     D  i_obj                        10a   const
+dcl-pr updateLDA extproc('STRPREPRC4_updateLDA');
+  i_lib char(10) const;
+  i_obj char(10) const;
+end-pr;
 
-     D writeEventFile...
-     D                 pr                  extproc('STRPREPRC4_+
-     D                                     writeEventFile+
-     D                                     ')
-     D  i_srcFile                          const  like(path_t)
-     D  i_srcLib                     10a   const
-     D  i_srcMbr                     10a   const
-     D  i_lineNumber                 10i 0 const
-     D  i_isAbnEnd                     n   const
+dcl-pr writeEventFile extproc('STRPREPRC4_writeEventFile');
+  i_srcFile    like(path_t) const;
+  i_srcLib     char(10) const;
+  i_srcMbr     char(10) const;
+  i_lineNumber int(10) const;
+  i_isAbnEnd   ind const;
+end-pr;
 
-     D closeEventFile...
-     D                 pr                  extproc('STRPREPRC4_+
-     D                                     closeEventFile+
-     D                                     ')
+dcl-pr closeEventFile extproc('STRPREPRC4_closeEventFile');
+end-pr;
 
-     D copyEventFile...
-     D                 pr                  extproc('STRPREPRC4_+
-     D                                     copyEventFile+
-     D                                     ')
-     D  i_fromLib                    10a   const
-     D  i_fromMbr                    10a   const
-     D  i_toLib                      10a   const
-     D  i_toMbr                      10a   const
+dcl-pr copyEventFile extproc('STRPREPRC4_copyEventFile');
+  i_fromLib char(10) const;
+  i_fromMbr char(10) const;
+  i_toLib   char(10) const;
+  i_toMbr   char(10) const;
+end-pr;
 

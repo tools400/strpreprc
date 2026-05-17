@@ -1,10 +1,12 @@
-      // ---------------------------------------------------------------
-      //  Data structure for message ID: PRZ0036
+**free
+// ---------------------------------------------------------------
+//  Data structure for message ID: PRZ0036
 
-      //  Datei &1 in Bibliothek &2 nicht gefunden.
+//  Datei &1 in Bibliothek &2 nicht gefunden.
 
-     d PRZ0036         ds
-     d  PRZ00361                     10A   inz(*BLANKS)
-     d  PRZ00362                     10A   inz(*BLANKS)
-     d PRZ0036_SIZE    s             10I 0 inz(20)
+dcl-ds PRZ0036;
+  PRZ00361 char(10) inz(*blanks);
+  PRZ00362 char(10) inz(*blanks);
+end-ds;
+dcl-s PRZ0036_SIZE int(10) inz(20);
 
