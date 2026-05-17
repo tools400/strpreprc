@@ -204,9 +204,9 @@
                                  &TOLIB/STRPREPRC5  +
                                  &TOLIB/STRPREPRC6) +
                           ENTMOD(&TOLIB/STRPREPRC1) +
-                          BNDSRVPGM(&TOLIB/BASICS1  +
-                                    &TOLIB/EVENTF   +
-                                    &TOLIB/JOBLOG)  +
+                          BNDSRVPGM(*LIBL/BASICS1  +
+                                    *LIBL/EVENTF   +
+                                    *LIBL/JOBLOG)  +
                           DETAIL(*BASIC)            +
                           ACTGRP(*NEW) +
                           TGTRLS(&TGTRLS)
