@@ -1,6 +1,6 @@
 # STRPREPRC - A Tools/400 Utility
 
-STRPREPRC is utility for retrieving object creation parameters from the
+STRPREPRC is a utility for retrieving object creation parameters from the
 source member that is compiled and building and executing the final
 object creation command.
 
