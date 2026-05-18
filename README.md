@@ -8,9 +8,9 @@ object creation command.
 
 Dependencies:
 
-- BASICS1
-- EVENTF
-- JOBLOG
+- [BASICS1](https://github.com/tools400/basics1)
+- [EVENTF](https://github.com/tools400/eventf)
+- [JOBLOG](https://github.com/tools400/joblog)
 
 ## Installation
 
