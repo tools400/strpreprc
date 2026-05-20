@@ -1,8 +1,8 @@
 **free
 //---------------------------------------------------------------
-// Datenstruktur für Message-ID : PRZ0023
+// Datenstruktur fÃ¼r Message-ID : PRZ0023
 
-// Fehlender Wert für Variable an Position &1 des auszuführend
+// Fehlender Wert fÃ¼r Variable an Position &1 des auszufÃ¼hrend
 
 dcl-ds PRZ0023;
   PRZ00231 packed(010) inz(*zeros);

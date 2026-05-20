@@ -1,8 +1,8 @@
 **free
 //---------------------------------------------------------------
-// Datenstruktur für Message-ID : PRZ0018
+// Datenstruktur fÃ¼r Message-ID : PRZ0018
 
-// Der Parameter 'OBJSRCMBR' ist nicht zulässig, wenn CHGOBJD(
+// Der Parameter 'OBJSRCMBR' ist nicht zulÃ¤ssig, wenn CHGOBJD(
 
 dcl-ds PRZ0018;
 end-ds;

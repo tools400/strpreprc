@@ -21,7 +21,7 @@
 .*=====================================================================*
 .*  History:                                                           *
 .*                                                                     *
-.*  Datum       Name          Änderung                                 *
+.*  Datum       Name          Ã„nderung                                 *
 .*  ----------  ------------  ---------------------------------------  *
 .*  23.01.2007  Th.Raddatz    Added parameter TAGSREQ(...) to command. *
 .*                                                                     *
@@ -136,27 +136,27 @@ Pre-Prozessor starten - Hilfe
 :P.
 Der Befehl STRPREPRC startet den Pre-Prozessor. Der Pre-Prozessor
 durchsucht die angegebene Quellenteildatei nach Pre-Prozessor Marken und
-fügt die dort gefundenen Schlüsselworte in den Erstellungsbefehl ein,
-bzw. ersetzt bereits vorhandene Schlüsselworte. Zu ersetzende Schlüsselwörte
-müssen durch :HP3.>>PARM<<:EHP3. Marken definiert werden.
+fÃ¼gt die dort gefundenen SchlÃ¼sselworte in den Erstellungsbefehl ein,
+bzw. ersetzt bereits vorhandene SchlÃ¼sselworte. Zu ersetzende SchlÃ¼sselwÃ¶rte
+mÃ¼ssen durch :HP3.>>PARM<<:EHP3. Marken definiert werden.
 :P.
 Weiterhin kann der Pre-Prozessor Vor- und Nachlaufbefehle vor, bzw. nach
-dem eigentlichen Erstellungsbefehl ausführen.
+dem eigentlichen Erstellungsbefehl ausfÃ¼hren.
 :P.
-Über eine PDM-Kurzbefehl lassen sich die Objekte, die über Pre-Prozessor
-Anweisungen in der Quellenteildatei verfügen, leicht erstellen:
+Ã¼ber eine PDM-Kurzbefehl lassen sich die Objekte, die Ã¼ber Pre-Prozessor
+Anweisungen in der Quellenteildatei verfÃ¼gen, leicht erstellen:
 :P.
 :LINES.
 STRPREPRC USESRCFILE(&L/&F) USESRCMBR(&N) LIB(&O) OBJ(&N)
             SRCLIB(&L) SRCFILE(&F) SRCMBR(&N)
 :ELINES.
 :P.
-Obwohl der Befehl STRPREPRC ursprünglich entwickelt worden ist, um
-die eingesetzte Change Management Software an eigene Bedürfnisse
+Obwohl der Befehl STRPREPRC ursprÃ¼nglich entwickelt worden ist, um
+die eingesetzte Change Management Software an eigene BedÃ¼rfnisse
 anzupassen, kann er auch ausserhalb der Change Management Software
 verwendet werden und gute Dienste leisten.
 :P.
-Der Anweisungsblock für den Pre-Prozessor kann wie folgt aussehen:
+Der Anweisungsblock fÃ¼r den Pre-Prozessor kann wie folgt aussehen:
 :P.
 :LINES.
 0001.00    >>PRE-COMPILER<<
@@ -184,7 +184,7 @@ Der Anweisungsblock für den Pre-Prozessor kann wie folgt aussehen:
 0023.00                               MBR(*FIRST) +
 0024.00                               OVRSCOPE(*JOB);
 0025.00
-0026.00        /* Ändern Bibliotheksliste */
+0026.00        /* Ã„ndern Bibliotheksliste */
 0027.00        >>CURLIB<<           *CRTDFT;
 0028.00        >>LIBL<<             &LL;
 0029.00
@@ -202,14 +202,14 @@ Der Anweisungsblock für den Pre-Prozessor kann wie folgt aussehen:
 :HP1.Verwendung von Variablen im Pre-Prozessor-Abschnitt::EHP1.
 :P.
 Im Pre-Prozessor-Abschnitt lassen sich Variablen einbinden, um flexibler
-auf äussere Anforderungen reagieren zu können. So könnte es bspw. sinnvoll
-sein, die Objektbibliothek von aussen mitgeben zu können, um das Objekt
-je nach Anforderung in verschiedene Bibliotheken erstellen zu können.
+auf Ã¤ussere Anforderungen reagieren zu kÃ¶nnen. So kÃ¶nnte es bspw. sinnvoll
+sein, die Objektbibliothek von aussen mitgeben zu kÃ¶nnen, um das Objekt
+je nach Anforderung in verschiedene Bibliotheken erstellen zu kÃ¶nnen.
 :P.
-Die möglichen Variablen können am STRPREPRC Prompt per F9 eingeblendet
-werden, um die entsprechenden Werte angeben zu können.
+Die mÃ¶glichen Variablen kÃ¶nnen am STRPREPRC Prompt per F9 eingeblendet
+werden, um die entsprechenden Werte angeben zu kÃ¶nnen.
 :P.
-Im Zusammenspiel mit einem PDM-Kurzbefehl (siehe oben) läßt sich dies
+Im Zusammenspiel mit einem PDM-Kurzbefehl (siehe oben) lÃ¤ÃŸt sich dies
 komfortabel automatisieren.
 :P.
 :HP1.Die Bedeutung der Marken im Einzelnen::EHP1.
@@ -221,14 +221,14 @@ ein.
 
 :PT.>>END-PRE-COMPILER<<
 :PD.Diese Marke beendet den Pre-Prozessor-Abschnitt in der
-Quellendatei. Alle sonstigen Marken des Pre-Prozessors müssen sich zwischen
+Quellendatei. Alle sonstigen Marken des Pre-Prozessors mÃ¼ssen sich zwischen
 diesen beiden Marken befinden.
 
 :PT.>>CRTCMD<<
-:PD.Diese Marke definiert den über >>EXECUTE<< auszuführenden
+:PD.Diese Marke definiert den Ã¼ber >>EXECUTE<< auszufÃ¼hrenden
 Erstellungsbefehl.
 Die >>CRTCMD<< Marke ist optional. Der Erstellungsbefehl kann
-alternativ auch über den Befehl STRPREPRC mitgegeben werden. Wenn
+alternativ auch Ã¼ber den Befehl STRPREPRC mitgegeben werden. Wenn
 die >>CRTCMD<< Marke angegeben wird, dann sollte sie nur einmal
 am Anfang der Pre-Prozessor-Anweisungen definiert werden.
 
@@ -256,67 +256,67 @@ IFS Dateisystem:
 :ELINES.
 
 :PT.>>IMPORTANT<<
-:PD.Diese Marke leitet den Abschnitt für die Compiler-Schlüsselworte ein.
+:PD.Diese Marke leitet den Abschnitt fÃ¼r die Compiler-SchlÃ¼sselworte ein.
 
 :PT.>>END-IMPORTANT<<
-:PD.Diese Marke beendet den Abschnitt für die
-Compiler-Schlüsselworte. Zwischen diesen beiden Marken werden die
-Befehlsschlüsselwörter über :HP3.>>PARM<<:EHP3. Marken angegeben. Von
+:PD.Diese Marke beendet den Abschnitt fÃ¼r die
+Compiler-SchlÃ¼sselworte. Zwischen diesen beiden Marken werden die
+BefehlsschlÃ¼sselwÃ¶rter Ã¼ber :HP3.>>PARM<<:EHP3. Marken angegeben. Von
 der Verabeitung her betrachtet gibt es keinen Unterschied zwischen
-den Abschnitten IMPORTANT, COMPILE und LINK. Die Abschnitte können daher
-frei nach Gefühl verwendet werden.
+den Abschnitten IMPORTANT, COMPILE und LINK. Die Abschnitte kÃ¶nnen daher
+frei nach GefÃ¼hl verwendet werden.
 
 :PT.>>COMPILE<<
-:PD.Diese Marke leitet den Abschnitt für die Compiler-Schlüsselworte ein.
+:PD.Diese Marke leitet den Abschnitt fÃ¼r die Compiler-SchlÃ¼sselworte ein.
 
 :PT.>>END-COMPILE<<
-:PD.Diese Marke beendet den Abschnitt für die
-Compiler-Schlüsselworte. Zwischen diesen beiden Marken werden die
-Befehlsschlüsselwörter über :HP3.>>PARM<<:EHP3. Marken angegeben. Von
+:PD.Diese Marke beendet den Abschnitt fÃ¼r die
+Compiler-SchlÃ¼sselworte. Zwischen diesen beiden Marken werden die
+BefehlsschlÃ¼sselwÃ¶rter Ã¼ber :HP3.>>PARM<<:EHP3. Marken angegeben. Von
 der Verabeitung her betrachtet gibt es keinen Unterschied zwischen
-den Abschnitten IMPORTANT, COMPILE und LINK. Die Abschnitte können daher
-frei nach Gefühl verwendet werden.
+den Abschnitten IMPORTANT, COMPILE und LINK. Die Abschnitte kÃ¶nnen daher
+frei nach GefÃ¼hl verwendet werden.
 
 :PT.>>LINK<<
-:PD.Diese Marke leitet den Abschnitt für die Linker-Schlüsselworte ein.
+:PD.Diese Marke leitet den Abschnitt fÃ¼r die Linker-SchlÃ¼sselworte ein.
 
 :PT.>>END-LINK<<
-:PD.Diese Marke beendet den Abschnitt für die
-Linker Schlüsselworte. Zwischen diesen beiden Marken werden die
-Befehlsschlüsselwörter über :HP3.>>PARM<<:EHP3. Marken angegeben. Von
+:PD.Diese Marke beendet den Abschnitt fÃ¼r die
+Linker SchlÃ¼sselworte. Zwischen diesen beiden Marken werden die
+BefehlsschlÃ¶sselwÃ¶rter Ã¼ber :HP3.>>PARM<<:EHP3. Marken angegeben. Von
 der Verabeitung her betrachtet gibt es keinen Unterschied zwischen
-den Abschnitten IMPORTANT, COMPILE und LINK. Die Abschnitte können daher
-frei nach Gefühl verwendet werden.
+den Abschnitten IMPORTANT, COMPILE und LINK. Die Abschnitte kÃ¶nnen daher
+frei nach GefÃ¼hl verwendet werden.
 
 :PT.>>LIBL<<
-:PD.Diese Marke für den Befehl CHGLIBL aus, um die Bbliotheksliste
-auf den angegebenen Wert zu setzen. Die angegebenen Bibliotheken müssen
-durch Leerzeichen getrennt angegeben sein. Die überschriebene Bibliotheksliste
-steht anschließend in der Variablen :HP2.&LX:EHP2. zur Verfügung.
+:PD.Diese Marke fÃ¼r den Befehl CHGLIBL aus, um die Bbliotheksliste
+auf den angegebenen Wert zu setzen. Die angegebenen Bibliotheken mÃ¼ssen
+durch Leerzeichen getrennt angegeben sein. Die Ã¼berschriebene Bibliotheksliste
+steht anschlieÃŸend in der Variablen :HP2.&LX:EHP2. zur VerfÃ¼gung.
 
 :PT.>>CURLIB<<
-:PD.Diese Marke führt den Befehl CHGLIBL aus, um die aktuelle Bibliothek
-auf den angegebenen Wert zu setzen. Die überschriebene aktuelle Bibliothek
-steht anschließend in der Variablen :HP2.&CX:EHP2. zur Verfügung.
+:PD.Diese Marke fÃ¤hrt den Befehl CHGLIBL aus, um die aktuelle Bibliothek
+auf den angegebenen Wert zu setzen. Die Ã¼berschriebene aktuelle Bibliothek
+steht anschlieÃŸend in der Variablen :HP2.&CX:EHP2. zur VerfÃ¼gung.
 
 :PT.>>PARM<<
-:PD.Diese Marke definiert ein Schlüsselwort für den
+:PD.Diese Marke definiert ein SchlÃ¼sselwort fÃ¼r den
 Erstellungsbefehl. >>PARM<< Marken sind nur innerhalb der
-Compiler- und Linker-Abschnitte zulässig. Über >>PARM<<
-definierte Schlüsselwörter überschreiben Schlüsselwörte
-eines übergebenen oder unter :HP3.>>CMD<<:EHP3. angegebenen
+Compiler- und Linker-Abschnitte zulÃ¤ssig. Ã¼ber >>PARM<<
+definierte SchlÃ¼sselwÃ¶rter Ã¼berschreiben SchlÃ¼sselwÃ¶rter
+eines Ã¼bergebenen oder unter :HP3.>>CMD<<:EHP3. angegebenen
 Befehls.
 
 :PT.>>CMD<<
 :PD.Diese Marke definiert einen OS/400 CL-Befehl, der an dieser Stelle
-der Pre-Prozessor-Anweisungen ausgeführt werden soll. Wenn diese Marke vor
+der Pre-Prozessor-Anweisungen ausgefÃ¼hrt werden soll. Wenn diese Marke vor
 einer :HP3.>>EXECUTE<<:EHP3. Marke angegeben wird, so entspricht dies
-einem Vorlaufbefehl, der vor dem Erstellungsbefehl ausgeführt wird. Wenn
+einem Vorlaufbefehl, der vor dem Erstellungsbefehl ausgefÃ¼hrt wird. Wenn
 diese Marke nach einer :HP3.>>EXECUTE<<:EHP3. Marke angegeben wird, so
 entspricht dies einem Nachlaufbefehl, der nach dem Erstellungsbefehl
-ausgeführt wird. >>CMD<< Marken dürfen mehrfach vorkommen.
+ausgefÃ¼hrt wird. >>CMD<< Marken dÃ¼rfen mehrfach vorkommen.
 :P.
-Bei Vor- und Nachlaufbefehlen können auftretende Fehler ignoriert
+Bei Vor- und Nachlaufbefehlen kÃ¶nnen auftretende Fehler ignoriert
 werden, wie in folgendem Beispiel gezeigt:
 :P.
 :LINES.
@@ -328,35 +328,35 @@ werden, wie in folgendem Beispiel gezeigt:
 0006.00    >>END-PRE-COMPILER<<
 :ELINES.
 :P.
-Es können bis zu 50 Nachrichten angegeben werden, die bei einem
+Es kÃ¶nnen bis zu 50 Nachrichten angegeben werden, die bei einem
 auftretenden Fehler ignoriert werden.
 
 :PT.>>EXECUTE<<
-:PD.Diese Marke lässt den Erstellungsbefehl ausführen. Die >>EXECUTE<<
+:PD.Diese Marke lÃ¤sst den Erstellungsbefehl ausfÃ¼hren. Die >>EXECUTE<<
 Marke sollte nur einmal angegeben werden. Wenn die >>EXECUTE<< Marke
 nicht angegeben wird, dann wird der Erstellungsbefehl impliziet am
-Ende der Pre-Prozessor-Anweisungen ausgeführt.
+Ende der Pre-Prozessor-Anweisungen ausgefÃ¼hrt.
 :EPARML.
 
 :P.
 :HP1.Die Bedeutung der Zeilenendezeichen im Einzelnen::EHP1.
 :P.
 Die Marken :HP3.>>PARM<<:EHP3., :HP3.>>CMD<<:EHP3. und
-:HP3.>>EXECUTE<<:EHP3. müssen mit einem Zeilenendekennzeichen
+:HP3.>>EXECUTE<<:EHP3. mÃ¼ssen mit einem Zeilenendekennzeichen
 abgeschlossen werden.
 :P.
 :PARML.
 :PT.:PV.'+' - Zeichen:EPV.
 :PD.Die Zeile ist nicht abgeschlossen. Es folgt eine weitere Zeile. Die
-nachfolgende Zeile wird :HP1.ohne:EHP1. führende Leerzeichen hinzugefügt.
+nachfolgende Zeile wird :HP1.ohne:EHP1. fÃ¼hrende Leerzeichen hinzugefÃ¼gt.
 
 :PT.:PV.'-' - Zeichen:EPV.
 :PD.Die Zeile ist nicht abgeschlossen. Es folgt eine weitere Zeile. Die
-nachfolgende Zeile wird :HP1.mit:EHP1. führenden Leerzeichen
-hinzugefügt. Die Anzahl
-der führenden Leerzeichen richtet sich nach der Position des
-Befehlsschlüsselwortes. Wird z.B. OVRDBF(...) angegeben, so wird die
-Startposition der nächsten Zeile durch das 'O' von OVRDBF(...)
+nachfolgende Zeile wird :HP1.mit:EHP1. fÃ¼hrenden Leerzeichen
+hinzugefÃ¼gt. Die Anzahl
+der fÃ¼hrenden Leerzeichen richtet sich nach der Position des
+BefehlsschlÃ¼sselwortes. Wird z.B. OVRDBF(...) angegeben, so wird die
+Startposition der nÃ¤chsten Zeile durch das 'O' von OVRDBF(...)
 gekennzeichnet.
 
 :PT.:PV.';' - Zeichen:EPV.
@@ -378,7 +378,7 @@ Quellendatei (USESRCFILE) - Hilfe
 :XH3.Quellendatei (USESRCFILE)
 :P.
 Name der Quellendatei, welche die Quellenteildatei mit den
-Pre-Prozessor-Anweisungen für die Objekterstellung enthält.
+Pre-Prozessor-Anweisungen fÃ¼r die Objekterstellung enthÃ¤lt.
 :P.
 :IMHELP name='COM/SRC'.
 :P.
@@ -389,7 +389,7 @@ Pre-Prozessor-Anweisungen für die Objekterstellung enthält.
 :PT.:PV.Name der Quellendatei:EPV.
 :PD.Name der Quellendatei.
 :PT.:PV.Bibliothek:EPV.
-:PD.Name der Bibliothek, welche die Quellendatei enthält.
+:PD.Name der Bibliothek, welche die Quellendatei enthÃ¤lt.
 :EPARML.
 :EHELP.
 
@@ -400,8 +400,8 @@ Pre-Prozessor-Anweisungen für die Objekterstellung enthält.
 Teildatei (USESRCMBR) - Hilfe
 :XH3.Teildatei (USESRCMBR)
 :P.
-Name der Quellenteildatei, welche die Pre-Prozessor-Anweisungen enthält. In
-der Regel ist dies die gleiche Quellenteildatei, die auch für die
+Name der Quellenteildatei, welche die Pre-Prozessor-Anweisungen enthÃ¤lt. In
+der Regel ist dies die gleiche Quellenteildatei, die auch fÃ¼r die
 Objekterstellung verwendet wird.
 :P.
 :IMHELP name='COM/SRC'.
@@ -412,7 +412,7 @@ Objekterstellung verwendet wird.
 :PARML.
 :PT.:PV.Name der Quellenteildatei:EPV.
 :PD.Geben sie den Namen der Quellenteildatei ein, welche die
-Pre-Prozessor-Anweisungen enthält.
+Pre-Prozessor-Anweisungen enthÃ¤lt.
 :EPARML.
 :EHELP.
 
@@ -423,8 +423,8 @@ Pre-Prozessor-Anweisungen enthält.
 Quellendatenstromdatei (USESRCSTMF) - Hilfe
 :XH3.Quellendatenstromdatei (USESRCSTMF)
 :P.
-Name der IFS Quellendatenstromdatei, welche die Pre-Prozessor-Anweisungen enthält. In
-der Regel ist dies die gleiche IFS Quellendatenstromdatei, die auch für die
+Name der IFS Quellendatenstromdatei, welche die Pre-Prozessor-Anweisungen enthÃ¤lt. In
+der Regel ist dies die gleiche IFS Quellendatenstromdatei, die auch fÃ¼r die
 Objekterstellung verwendet wird.
 :P.
 :IMHELP name='COM/SRC'.
@@ -435,7 +435,7 @@ Objekterstellung verwendet wird.
 :PARML.
 :PT.:PV.Name der IFS Quellendatenstromdatei:EPV.
 :PD.Geben sie den Namen der IFS Quellendatenstromdatei ein, welche die
-Pre-Prozessor-Anweisungen enthält.
+Pre-Prozessor-Anweisungen enthÃ¤lt.
 :EPARML.
 :EHELP.
 
@@ -443,21 +443,21 @@ Pre-Prozessor-Anweisungen enthält.
 .*  Keyword:  CMD
 .********************************************
 :HELP NAME='STRPREPRC/CMD'.
-Auszuführender Befehl (CMD) - Hilfe
-:XH3.Auszuführender Befehl (CMD)
+AuszufÃ¼hrender Befehl (CMD) - Hilfe
+:XH3.AuszufÃ¼hrender Befehl (CMD)
 :P.
 Befehlszeichenfolge, mit der das Objekt erstellt werden soll. Die hier
-angegebene Befehlszeichenfolge wird über die Marke :HP3.>>EXECUTE<<:EHP3.
-ausgeführt. Wenn kein Befehl angegeben wird, dann muss der Erstellungsbefehl
+angegebene Befehlszeichenfolge wird Ã¼ber die Marke :HP3.>>EXECUTE<<:EHP3.
+ausgefÃ¼hrt. Wenn kein Befehl angegeben wird, dann muss der Erstellungsbefehl
 in der Quellenteildatei an der :HP3.>>CRTCMD<<:EHP3. Marke angegeben werden.
 :IMHELP name='COM/REQPARM'.
 :P.
 :IMHELP name='COM/VALUES'.
 :PARML.
-:PT.:PV.Auszuführender Befehl:EPV.
+:PT.:PV.AuszufÃ¼hrender Befehl:EPV.
 :PD.
 Befehlszeichenfolge der Objekterstellungsbefehls. Der
-hier angegeben Befehl überschreibt einen in der
+hier angegeben Befehl Ã¼berschreibt einen in der
 Quellenteildatei angegebenen Befehl.
 :PT.keine Angabe eines Erstellungsbefehls
 :PD.
@@ -470,17 +470,17 @@ Quellenteildatei angegeben ist.
 .*  Keyword:  OPTION  (optional)
 .********************************************
 :HELP NAME='STRPREPRC/OPTION'.
-Ereignisdatei Auswahlmögl. - Hilfe
-:XH3.Ereignisdatei Auswahlmögl. (OPTION)
+Ereignisdatei AuswahlmÃ¶gl. - Hilfe
+:XH3.Ereignisdatei AuswahlmÃ¶gl. (OPTION)
 :P.
-Gibt an, ob eine Ereignisdatei für die Verwendung durch Client-Tools
+Gibt an, ob eine Ereignisdatei fÃ¼r die Verwendung durch Client-Tools
 erstellt wird.
 :P.
 :HP3.Achtung::EHP3. Wird die Option :HP3.*EVENTF:EHP3. zur Ausgabe einer
 Ereignisdatei gesetzt, so werden die Stellen 1-20 des Local Data Area (*LDA)
 verwendet, um den Namen der Bibliothek und des Objekts an RDi/WDSCi zu
-übergeben. Die Bibliothek zur Ausgabe der EVFEreignisdatei wird in folgender
-Reihenfolge durchgeführt, bis eine benannte Bibliothek gefunden wurde:
+Ã¼bergeben. Die Bibliothek zur Ausgabe der EVFEreignisdatei wird in folgender
+Reihenfolge durchgefÃ¼hrt, bis eine benannte Bibliothek gefunden wurde:
 :P.
 :LINES.
  - Objektbibliothek (LIB)
@@ -488,16 +488,16 @@ Reihenfolge durchgeführt, bis eine benannte Bibliothek gefunden wurde:
  - Bibliothek der gelesenen Quellendatei (USESRCFILE)
 :ELINES.
 :P.
-Mit der Auswahl *EVENTF wird sichergestellt, dass Fehlerinformationen grundsätzlich
-zur Verfügung stehen. Entweder sind es die durch den Objekterstellungsbefehl
+Mit der Auswahl *EVENTF wird sichergestellt, dass Fehlerinformationen grundsÃ¤tzlich
+zur VerfÃ¼gung stehen. Entweder sind es die durch den Objekterstellungsbefehl
 protokollierten Umwandlungsfehler oder die bei einem Fehler aufgelaufenen Nachrichten
 aus dem Jobprotokoll.
 :P.
-In der Datei STRPRE2 können Paarungen Nachrichten-ID/Ersatzvariable
+In der Datei STRPRE2 kÃ¶nnen Paarungen Nachrichten-ID/Ersatzvariable
 hinterlegt werden, anhand derer STRPREPRC Informationen aus dem
 Jobprotokoll hinsichtlich der fehlerhaften Zeilennummer ziehen kann.
-Die Spalte FMT enthält hierfür die Nummer der Ersatzvariablen, welche
-die Nummer der fehlerhaften Zeile enthält.
+Die Spalte FMT enthÃ¤lt hierfÃ¼r die Nummer der Ersatzvariablen, welche
+die Nummer der fehlerhaften Zeile enthÃ¤lt.
 :P.
 Wird in der Spalte FMT '-1' eingetragen, so bedeutet dies, dass die
 zugeordnete Nachrichten-ID beim Auswerten des Job Protokolls ignoriert
@@ -508,14 +508,14 @@ wird.
 
 :PARML.
 :PT.:PK DEF.*NOEVENTF:EPK.
-:PD.Es werden keine zusätzlichen Einträge in eine Ereignisdatei zur Verwendung
+:PD.Es werden keine zusÃ¤tzlichen EintrÃ¤ge in eine Ereignisdatei zur Verwendung
 durch Client-Tools geschrieben.
 :PT.:PV.*EVENTF:EPV.
 :PD.Kommt es bei der Objekterstellung ohne Ereignisdatei oder bei einem Vor-
 oder Nachlaufbefehl zu einem Fehler, so werden die im Jobprotokoll aufgelaufenen
 Nachrichten in eine Ereignisdatei zur Verwendung durch Client-Tools geschrieben.
 :PT.:PK DEF.*NOJOBLOG:EPK.
-:PD.Es werden keine Jobprotokolleinträge ausgegeben, wenn es keinen Fehler
+:PD.Es werden keine JobprotokolleintrÃ¤ge ausgegeben, wenn es keinen Fehler
 gegeben hat.
 :PT.:PV.*ADDJOBLOG:EPV.
 :PD.Auch wenn es bei der Objekterstellung nicht zu einem Fehler gekommen ist,
@@ -530,12 +530,12 @@ Vor- oder Nachlaufbefehlen werden nicht protokolliert.
 .*  Keyword:  CHGOBJD (optional)
 .********************************************
 :HELP NAME='STRPREPRC/CHGOBJD'.
-Ändern Objektbeschreibung - Hilfe
-:XH3.Ändern Objektbeschreibung (CHGOBJD)
+Ã„ndern Objektbeschreibung - Hilfe
+:XH3.Ã„ndern Objektbeschreibung (CHGOBJD)
 :P.
 Gibt an, ob die Objektbeschreibung des zu erstellenden Objektes
-geändert werden soll. Dies kann bei nicht quellenbasierten Objekten
-sinnvoll sein, wenn diese über ein Skript erstellt werden und der
+geÃ¤ndert werden soll. Dies kann bei nicht quellenbasierten Objekten
+sinnvoll sein, wenn diese Ã¼ber ein Skript erstellt werden und der
 Standort des Skripts im Objekt abgelegt werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -543,9 +543,9 @@ Standort des Skripts im Objekt abgelegt werden soll.
 
 :PARML.
 :PT.:PK DEF.*NO:EPK.
-:PD.Die Objektbeschreibung wird nicht geändert.
+:PD.Die Objektbeschreibung wird nicht geÃ¤ndert.
 :PT.:PV.*YES:EPV.
-:PD.Die Objektbeschreibung wird geändert.
+:PD.Die Objektbeschreibung wird geÃ¤ndert.
 :EPARML.
 
 :EHELP.
@@ -557,7 +557,7 @@ Standort des Skripts im Objekt abgelegt werden soll.
 Objekttyp - Hilfe
 :XH3.Objekttyp (OBJTYPE)
 :P.
-Gibt den Typ des Objekts an, dessen Objektbeschreibung geändert
+Gibt den Typ des Objekts an, dessen Objektbeschreibung geÃ¤ndert
 werden soll.
 :IMHELP name='COM/REQPARM1'.
 :P.
@@ -565,7 +565,7 @@ werden soll.
 
 :PARML.
 :PT.:PV.Objekt-Typ:EPV.
-:PD.Typ des Objekts, dessen Objektbeschreibung geändert
+:PD.Typ des Objekts, dessen Objektbeschreibung geÃ¤ndert
 werden soll.
 :EPARML.
 
@@ -585,7 +585,7 @@ Quellendatei, aus der das Objekt erstellt worden ist.
 
 :PARML.
 :PT.:PK DEF.*SAME:EPK.
-:PD.Die Angabe der Quellendatei wird nicht geändert.
+:PD.Die Angabe der Quellendatei wird nicht geÃ¤ndert.
 :PT.:PV.*DFT:EPV.
 :PD.Name der Bibliothek, wie am Parameter :HP2.SRCFILE:EHP2. angegeben.
 :PT.:PV.Quellendatei:EPV.
@@ -608,7 +608,7 @@ Quellenbibliothek, aus der das Objekt erstellt worden ist.
 
 :PARML.
 :PT.:PK DEF.*SAME:EPK.
-:PD.Die Angabe der Quellenbibliothek wird nicht geändert.
+:PD.Die Angabe der Quellenbibliothek wird nicht geÃ¤ndert.
 :PT.:PV.*DFT:EPV.
 :PD.Name der Bibliothek, wie am Parameter :HP2.SRCLIB:EHP2. angegeben.
 :PT.:PV.Quellenbibliothek:EPV.
@@ -631,7 +631,7 @@ Quellenteildatei, aus der das Objekt erstellt worden ist.
 
 :PARML.
 :PT.:PK DEF.*SAME:EPK.
-:PD.Die Angabe der Quellenteildatei wird nicht geändert.
+:PD.Die Angabe der Quellenteildatei wird nicht geÃ¤ndert.
 :PT.:PV.*DFT:EPV.
 :PD.Name der Quellenteildatei, wie am Parameter :HP2.SRCMBR:EHP2. angegeben.
 :PT.:PV.Name der Quellenteildatei:EPV.
@@ -644,10 +644,10 @@ Quellenteildatei, aus der das Objekt erstellt worden ist.
 .*  Keyword:  LIB (optional)
 .********************************************
 :HELP NAME='STRPREPRC/LIB'.
-Wert für Bibliothek      (&LI) (LIB) - Hilfe
-:XH3.Wert für Bibliothek      (&LI) (LIB)
+Wert fÃ¼r Bibliothek      (&LI) (LIB) - Hilfe
+:XH3.Wert fÃ¼r Bibliothek      (&LI) (LIB)
 :P.
-Wert, der für die Ersatzvariable 'Bibliothek' (&LI) eingetragen
+Wert, der fÃ¼r die Ersatzvariable 'Bibliothek' (&LI) eingetragen
 werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -667,10 +667,10 @@ Objekt erstellt wird.
 .*  Keyword:  OBJ (optional)
 .********************************************
 :HELP NAME='STRPREPRC/OBJ'.
-Wert für Objekt          (&OB) (OBJ) - Hilfe
-:XH3.Wert für Objekt          (&OB) (OBJ)
+Wert fÃ¼r Objekt          (&OB) (OBJ) - Hilfe
+:XH3.Wert fÃ¼r Objekt          (&OB) (OBJ)
 :P.
-Wert, der für die Ersatzvariable 'Objekt' (&OBJ) eingetragen
+Wert, der fÃ¼r die Ersatzvariable 'Objekt' (&OBJ) eingetragen
 werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -691,10 +691,10 @@ werden soll.
 .*  Keyword:  TYPECODE (optional)
 .********************************************
 :HELP NAME='STRPREPRC/TYPECODE'.
-Wert für Type Code       (&TY) (TYPECODE) - Hilfe
-:XH3.Wert für Type Code       (&TY) (TYPECODE)
+Wert fÃ¼r Type Code       (&TY) (TYPECODE) - Hilfe
+:XH3.Wert fÃ¼r Type Code       (&TY) (TYPECODE)
 :P.
-Wert, der für die Ersatzvariable 'Type Code' (&TY) eingetragen
+Wert, der fÃ¼r die Ersatzvariable 'Type Code' (&TY) eingetragen
 werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -713,10 +713,10 @@ werden soll.
 .*  Keyword:  SRCLIB (optional)
 .********************************************
 :HELP NAME='STRPREPRC/SRCLIB'.
-Wert für Quellenbibl.    (&SL) (SRCLIB) - Hilfe
-:XH3.Wert für Quellenbibl.    (&SL) (SRCLIB)
+Wert fÃ¼r Quellenbibl.    (&SL) (SRCLIB) - Hilfe
+:XH3.Wert fÃ¼r Quellenbibl.    (&SL) (SRCLIB)
 :P.
-Wert, der für die Ersatzvariable 'Quellenbibliothek' (&SL) eingetragen
+Wert, der fÃ¼r die Ersatzvariable 'Quellenbibliothek' (&SL) eingetragen
 werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -737,10 +737,10 @@ werden soll.
 .*  Keyword:  SRCFILE (optional)
 .********************************************
 :HELP NAME='STRPREPRC/SRCFILE'.
-Wert für Quellendatei    (&SF) (SRCFILE) - Hilfe
-:XH3.Wert für Quellendatei    (&SF) (SRCFILE)
+Wert fÃ¼r Quellendatei    (&SF) (SRCFILE) - Hilfe
+:XH3.Wert fÃ¼r Quellendatei    (&SF) (SRCFILE)
 :P.
-Wert, der für die Ersatzvariable 'Quellendatei' (&SF) eingetragen
+Wert, der fÃ¼r die Ersatzvariable 'Quellendatei' (&SF) eingetragen
 werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -753,7 +753,7 @@ werden soll.
 :PD.Name der Quellendatei, wie am Parameter :HP2.USESRCFILE:EHP2. angegeben.
 :PT.:PV.Name der Quellendatei:EPV.
 :PD.Den Namen der Quellendatei eingeben, die die
-umzuwandelnde Quellenteildatei enthält.
+umzuwandelnde Quellenteildatei enthÃ¤lt.
 :EPARML.
 
 :EHELP.
@@ -762,10 +762,10 @@ umzuwandelnde Quellenteildatei enthält.
 .*  Keyword:  SRCMBR (optional)
 .********************************************
 :HELP NAME='STRPREPRC/SRCMBR'.
-Wert für Quell.Teildatei (&SM) (SRCMBR) - Hilfe
-:XH3.Wert für Quell.Teildatei (&SM) (SRCMBR)
+Wert fÃ¼r Quell.Teildatei (&SM) (SRCMBR) - Hilfe
+:XH3.Wert fÃ¼r Quell.Teildatei (&SM) (SRCMBR)
 :P.
-Wert, der für die Ersatzvariable 'Quellenteildatei' (&SM)
+Wert, der fÃ¼r die Ersatzvariable 'Quellenteildatei' (&SM)
 eingetragen werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -786,10 +786,10 @@ eingetragen werden soll.
 .*  Keyword:  TESTLIB (optional)
 .********************************************
 :HELP NAME='STRPREPRC/TESTLIB'.
-Wert für Testbibliothek  (&TL) (TESTLIB) - Hilfe
-:XH3.Wert für Testbibliothek  (&TL) (TESTLIB)
+Wert fÃ¼r Testbibliothek  (&TL) (TESTLIB) - Hilfe
+:XH3.Wert fÃ¼r Testbibliothek  (&TL) (TESTLIB)
 :P.
-Wert, der für die Ersatzvariable 'Testbibliothek' (&TL)
+Wert, der fÃ¼r die Ersatzvariable 'Testbibliothek' (&TL)
 eingetragen werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -808,10 +808,10 @@ eingetragen werden soll.
 .*  Keyword:  TESTOBJ (optional)
 .********************************************
 :HELP NAME='STRPREPRC/TESTOBJ'.
-Wert für Testobjekt      (&TO) (TESTOBJ) - Hilfe
-:XH3.Wert für Testobjekt      (&TO) (TESTOBJ)
+Wert fÃ¼r Testobjekt      (&TO) (TESTOBJ) - Hilfe
+:XH3.Wert fÃ¼r Testobjekt      (&TO) (TESTOBJ)
 :P.
-Wert, der für die Ersatzvariable 'Testobjekt' (&TO)
+Wert, der fÃ¼r die Ersatzvariable 'Testobjekt' (&TO)
 eingetragen werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -830,10 +830,10 @@ eingetragen werden soll.
 .*  Keyword:  TGTRLS (optional)
 .********************************************
 :HELP NAME='STRPREPRC/TGTRLS'.
-Wert für Zielrelease     (&TR) (TGTRLS) - Hilfe
-:XH3.Wert für Zielrelease     (&TR) (TGTRLS)
+Wert fÃ¼r Zielrelease     (&TR) (TGTRLS) - Hilfe
+:XH3.Wert fÃ¼r Zielrelease     (&TR) (TGTRLS)
 :P.
-Wert, der für die Ersatzvariable 'Zielrelease' (&TR)
+Wert, der fÃ¼r die Ersatzvariable 'Zielrelease' (&TR)
 eingetragen werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -852,10 +852,10 @@ eingetragen werden soll.
 .*  Keyword:  FRMSRCLIB (optional)
 .********************************************
 :HELP NAME='STRPREPRC/FRMSRCLIB'.
-Wert für Von-Quellenbibl.(&FL) (FRMSRCLIB) - Hilfe
-:XH3.Wert für Von-Quellenbibl.(&FL) (FRMSRCLIB)
+Wert fÃ¼r Von-Quellenbibl.(&FL) (FRMSRCLIB) - Hilfe
+:XH3.Wert fÃ¼r Von-Quellenbibl.(&FL) (FRMSRCLIB)
 :P.
-Wert, der für die Ersatzvariable 'von Quellenbibliothek' (&FL) eingetragen
+Wert, der fÃ¼r die Ersatzvariable 'von Quellenbibliothek' (&FL) eingetragen
 werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -874,10 +874,10 @@ werden soll.
 .*  Keyword:  FRMSRCFILE (optional)
 .********************************************
 :HELP NAME='STRPREPRC/FRMSRCFILE'.
-Wert für Von-Quellendatei(&FF) (FRMSRCFILE) - Hilfe
-:XH3.Wert für Von-Quellendatei(&FF) (FRMSRCFILE)
+Wert fÃ¼r Von-Quellendatei(&FF) (FRMSRCFILE) - Hilfe
+:XH3.Wert fÃ¼r Von-Quellendatei(&FF) (FRMSRCFILE)
 :P.
-Wert, der für die Ersatzvariable 'von Quellendatei' (&FF) eingetragen
+Wert, der fÃ¼r die Ersatzvariable 'von Quellendatei' (&FF) eingetragen
 werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -896,10 +896,10 @@ werden soll.
 .*  Keyword:  FRMSRCMBR (optional)
 .********************************************
 :HELP NAME='STRPREPRC/FRMSRCMBR'.
-Wert für Von-Quell.Teild.(&FM) (FRMSRCMBR) - Hilfe
-:XH3.Wert für Von-Quell.Teild.(&FM) (FRMSRCMBR)
+Wert fÃ¼r Von-Quell.Teild.(&FM) (FRMSRCMBR) - Hilfe
+:XH3.Wert fÃ¼r Von-Quell.Teild.(&FM) (FRMSRCMBR)
 :P.
-Wert, der für die Ersatzvariable 'von Quellenteildatei' (&FM)
+Wert, der fÃ¼r die Ersatzvariable 'von Quellenteildatei' (&FM)
 eingetragen werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -918,10 +918,10 @@ eingetragen werden soll.
 .*  Keyword:  USER0 (optional)
 .********************************************
 :HELP NAME='STRPREPRC/USER0'.
-Wert für Parameter       (&U0) (USER0) - Hilfe
-:XH3.Wert für Parameter       (&U0) (USER0)
+Wert fÃ¼r Parameter       (&U0) (USER0) - Hilfe
+:XH3.Wert fÃ¼r Parameter       (&U0) (USER0)
 :P.
-Wert, der für die benutzerdefinierte Ersatzvariable 0 (&U0)
+Wert, der fÃ¼r die benutzerdefinierte Ersatzvariable 0 (&U0)
 eingetragen werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -931,7 +931,7 @@ eingetragen werden soll.
 :PT.:PK DEF.*NONE:EPK.
 :PD.Es ist kein Wert angegeben.
 :PT.:PV.benutzerdefinierte Variable 0:EPV.
-:PD.Wert für die benutzerdefinierte Ersatzvariable 0 (&U0).
+:PD.Wert fÃ¼r die benutzerdefinierte Ersatzvariable 0 (&U0).
 :EPARML.
 :IMHELP name='COM/RPLVAR'.
 
@@ -941,10 +941,10 @@ eingetragen werden soll.
 .*  Keyword:  USER1 (optional)
 .********************************************
 :HELP NAME='STRPREPRC/USER1'.
-Wert für Parameter       (&U1) (USER1) - Hilfe
-:XH3.Wert für Parameter       (&U1) (USER1)
+Wert fÃ¼r Parameter       (&U1) (USER1) - Hilfe
+:XH3.Wert fÃ¼r Parameter       (&U1) (USER1)
 :P.
-Wert, der für die benutzerdefinierte Ersatzvariable 1 (&U1)
+Wert, der fÃ¼r die benutzerdefinierte Ersatzvariable 1 (&U1)
 eingetragen werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -954,7 +954,7 @@ eingetragen werden soll.
 :PT.:PK DEF.*NONE:EPK.
 :PD.Es ist kein Wert angegeben.
 :PT.:PV.benutzerdefinierte Variable 1:EPV.
-:PD.Wert für die benutzerdefinierte Ersatzvariable 1 (&U1).
+:PD.Wert fÃ¼r die benutzerdefinierte Ersatzvariable 1 (&U1).
 :EPARML.
 :IMHELP name='COM/RPLVAR'.
 
@@ -964,10 +964,10 @@ eingetragen werden soll.
 .*  Keyword:  USER2 (optional)
 .********************************************
 :HELP NAME='STRPREPRC/USER2'.
-Wert für Parameter       (&U2) (USER2) - Hilfe
-:XH3.Wert für Parameter       (&U2) (USER2)
+Wert fÃ¼r Parameter       (&U2) (USER2) - Hilfe
+:XH3.Wert fÃ¼r Parameter       (&U2) (USER2)
 :P.
-Wert, der für die benutzerdefinierte Ersatzvariable 2 (&U2)
+Wert, der fÃ¼r die benutzerdefinierte Ersatzvariable 2 (&U2)
 eingetragen werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -977,7 +977,7 @@ eingetragen werden soll.
 :PT.:PK DEF.*NONE:EPK.
 :PD.Es ist kein Wert angegeben.
 :PT.:PV.benutzerdefinierte Variable 2:EPV.
-:PD.Wert für die benutzerdefinierte Ersatzvariable 2 (&U2).
+:PD.Wert fÃ¼r die benutzerdefinierte Ersatzvariable 2 (&U2).
 :EPARML.
 :IMHELP name='COM/RPLVAR'.
 
@@ -987,10 +987,10 @@ eingetragen werden soll.
 .*  Keyword:  USER3 (optional)
 .********************************************
 :HELP NAME='STRPREPRC/USER3'.
-Wert für Parameter       (&U3) (USER3) - Hilfe
-:XH3.Wert für Parameter       (&U3) (USER3)
+Wert fÃ¼r Parameter       (&U3) (USER3) - Hilfe
+:XH3.Wert fÃ¼r Parameter       (&U3) (USER3)
 :P.
-Wert, der für die benutzerdefinierte Ersatzvariable 3 (&U3)
+Wert, der fÃ¼r die benutzerdefinierte Ersatzvariable 3 (&U3)
 eingetragen werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -1000,7 +1000,7 @@ eingetragen werden soll.
 :PT.:PK DEF.*NONE:EPK.
 :PD.Es ist kein Wert angegeben.
 :PT.:PV.benutzerdefinierte Variable 3:EPV.
-:PD.Wert für die benutzerdefinierte Ersatzvariable 3 (&U3).
+:PD.Wert fÃ¼r die benutzerdefinierte Ersatzvariable 3 (&U3).
 :EPARML.
 :IMHELP name='COM/RPLVAR'.
 
@@ -1010,10 +1010,10 @@ eingetragen werden soll.
 .*  Keyword:  USER4 (optional)
 .********************************************
 :HELP NAME='STRPREPRC/USER4'.
-Wert für Parameter       (&U4) (USER4) - Hilfe
-:XH3.Wert für Parameter       (&U4) (USER4)
+Wert fÃ¼r Parameter       (&U4) (USER4) - Hilfe
+:XH3.Wert fÃ¼r Parameter       (&U4) (USER4)
 :P.
-Wert, der für die benutzerdefinierte Ersatzvariable 4 (&U4)
+Wert, der fÃ¼r die benutzerdefinierte Ersatzvariable 4 (&U4)
 eingetragen werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -1023,7 +1023,7 @@ eingetragen werden soll.
 :PT.:PK DEF.*NONE:EPK.
 :PD.Es ist kein Wert angegeben.
 :PT.:PV.benutzerdefinierte Variable 4:EPV.
-:PD.Wert für die benutzerdefinierte Ersatzvariable 4 (&U4).
+:PD.Wert fÃ¼r die benutzerdefinierte Ersatzvariable 4 (&U4).
 :EPARML.
 :IMHELP name='COM/RPLVAR'.
 
@@ -1033,10 +1033,10 @@ eingetragen werden soll.
 .*  Keyword:  USER5 (optional)
 .********************************************
 :HELP NAME='STRPREPRC/USER5'.
-Wert für Parameter       (&U5) (USER5) - Hilfe
-:XH3.Wert für Parameter       (&U5) (USER5)
+Wert fÃ¼r Parameter       (&U5) (USER5) - Hilfe
+:XH3.Wert fÃ¼r Parameter       (&U5) (USER5)
 :P.
-Wert, der für die benutzerdefinierte Ersatzvariable 5 (&U5)
+Wert, der fÃ¼r die benutzerdefinierte Ersatzvariable 5 (&U5)
 eingetragen werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -1046,7 +1046,7 @@ eingetragen werden soll.
 :PT.:PK DEF.*NONE:EPK.
 :PD.Es ist kein Wert angegeben.
 :PT.:PV.benutzerdefinierte Variable 5:EPV.
-:PD.Wert für die benutzerdefinierte Ersatzvariable 5 (&U5).
+:PD.Wert fÃ¼r die benutzerdefinierte Ersatzvariable 5 (&U5).
 :EPARML.
 :IMHELP name='COM/RPLVAR'.
 
@@ -1056,10 +1056,10 @@ eingetragen werden soll.
 .*  Keyword:  USER6 (optional)
 .********************************************
 :HELP NAME='STRPREPRC/USER6'.
-Wert für Parameter       (&U6) (USER6) - Hilfe
-:XH3.Wert für Parameter       (&U6) (USER6)
+Wert fÃ¼r Parameter       (&U6) (USER6) - Hilfe
+:XH3.Wert fÃ¼r Parameter       (&U6) (USER6)
 :P.
-Wert, der für die benutzerdefinierte Ersatzvariable 6 (&U6)
+Wert, der fÃ¼r die benutzerdefinierte Ersatzvariable 6 (&U6)
 eingetragen werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -1069,7 +1069,7 @@ eingetragen werden soll.
 :PT.:PK DEF.*NONE:EPK.
 :PD.Es ist kein Wert angegeben.
 :PT.:PV.benutzerdefinierte Variable 6:EPV.
-:PD.Wert für die benutzerdefinierte Ersatzvariable 6 (&U6).
+:PD.Wert fÃ¼r die benutzerdefinierte Ersatzvariable 6 (&U6).
 :EPARML.
 :IMHELP name='COM/RPLVAR'.
 
@@ -1079,10 +1079,10 @@ eingetragen werden soll.
 .*  Keyword:  USER7 (optional)
 .********************************************
 :HELP NAME='STRPREPRC/USER7'.
-Wert für Parameter       (&U7) (USER7) - Hilfe
-:XH3.Wert für Parameter       (&U7) (USER7)
+Wert fÃ¼r Parameter       (&U7) (USER7) - Hilfe
+:XH3.Wert fÃ¼r Parameter       (&U7) (USER7)
 :P.
-Wert, der für die benutzerdefinierte Ersatzvariable 7 (&U7)
+Wert, der fÃ¼r die benutzerdefinierte Ersatzvariable 7 (&U7)
 eingetragen werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -1092,7 +1092,7 @@ eingetragen werden soll.
 :PT.:PK DEF.*NONE:EPK.
 :PD.Es ist kein Wert angegeben.
 :PT.:PV.benutzerdefinierte Variable 7:EPV.
-:PD.Wert für die benutzerdefinierte Ersatzvariable 7 (&U7).
+:PD.Wert fÃ¼r die benutzerdefinierte Ersatzvariable 7 (&U7).
 :EPARML.
 :IMHELP name='COM/RPLVAR'.
 
@@ -1102,10 +1102,10 @@ eingetragen werden soll.
 .*  Keyword:  USER8 (optional)
 .********************************************
 :HELP NAME='STRPREPRC/USER8'.
-Wert für Parameter       (&U8) (USER8) - Hilfe
-:XH3.Wert für Parameter       (&U8) (USER8)
+Wert fÃ¼r Parameter       (&U8) (USER8) - Hilfe
+:XH3.Wert fÃ¼r Parameter       (&U8) (USER8)
 :P.
-Wert, der für die benutzerdefinierte Ersatzvariable 8 (&U8)
+Wert, der fÃ¼r die benutzerdefinierte Ersatzvariable 8 (&U8)
 eingetragen werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -1115,7 +1115,7 @@ eingetragen werden soll.
 :PT.:PK DEF.*NONE:EPK.
 :PD.Es ist kein Wert angegeben.
 :PT.:PV.benutzerdefinierte Variable 8:EPV.
-:PD.Wert für die benutzerdefinierte Ersatzvariable 8 (&U8).
+:PD.Wert fÃ¼r die benutzerdefinierte Ersatzvariable 8 (&U8).
 :EPARML.
 :IMHELP name='COM/RPLVAR'.
 
@@ -1125,10 +1125,10 @@ eingetragen werden soll.
 .*  Keyword:  USER9 (optional)
 .********************************************
 :HELP NAME='STRPREPRC/USER9'.
-Wert für Parameter       (&U9) (USER9) - Hilfe
-:XH3.Wert für Parameter       (&U9) (USER9)
+Wert fÃ¼r Parameter       (&U9) (USER9) - Hilfe
+:XH3.Wert fÃ¼r Parameter       (&U9) (USER9)
 :P.
-Wert, der für die benutzerdefinierte Ersatzvariable 9 (&U9)
+Wert, der fÃ¼r die benutzerdefinierte Ersatzvariable 9 (&U9)
 eingetragen werden soll.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -1138,7 +1138,7 @@ eingetragen werden soll.
 :PT.:PK DEF.*NONE:EPK.
 :PD.Es ist kein Wert angegeben.
 :PT.:PV.benutzerdefinierte Variable 9:EPV.
-:PD.Wert für die benutzerdefinierte Ersatzvariable 9 (&U9).
+:PD.Wert fÃ¼r die benutzerdefinierte Ersatzvariable 9 (&U9).
 :EPARML.
 :IMHELP name='COM/RPLVAR'.
 
@@ -1148,13 +1148,13 @@ eingetragen werden soll.
 .*  Keyword:  STMF (optional)
 .********************************************
 :HELP NAME='STRPREPRC/STMF'.
-Wert für Datenstromd.  (&STMF) (STMF) - Hilfe
-:XH3.Wert für Datenstromd.  (&STMF) (STMF)
+Wert fÃ¼r Datenstromd.  (&STMF) (STMF) - Hilfe
+:XH3.Wert fÃ¼r Datenstromd.  (&STMF) (STMF)
 :P.
-Wert, der für die Ersatzvariable 'Datenstromdatei' (&STMF) eingetragen
+Wert, der fÃ¼r die Ersatzvariable 'Datenstromdatei' (&STMF) eingetragen
 werden soll.
 :P.
-Die Variable :HP2.&FOLDER:EHP2. enthält das Verzeichnis der Datenstromdatei und
+Die Variable :HP2.&FOLDER:EHP2. enthÃ¤lt das Verzeichnis der Datenstromdatei und
 in der Variablen :HP2.&FILE:EHP2. steht der Name der Datenstromdatei.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -1181,24 +1181,24 @@ Benutzerdefinierte Variablen (USRDEFVAR) - Hilfe
 Definiert eine Liste von bis zu 20 benutzerdefinierten Variablen
 und deren zugeordnete Werte. Benutzerdefinierte Variablen werden
 vor den STRPREPRC Variablen ersetzt, um benutzerdefinierte
-Variablen STRPREPRC Variablen zuordnen zu können. Dies kann
-erforderlich sein, wenn es nicht möglich ist, eine Variable
-(mit & beginnend) an einen Befehl zu übergeben.
+Variablen STRPREPRC Variablen zuordnen zu kÃ¶nnen. Dies kann
+erforderlich sein, wenn es nicht mÃ¶glich ist, eine Variable
+(mit & beginnend) an einen Befehl zu Ã¼bergeben.
 :P.
 Dies kann zum Beispiel wie folgt aussehen:
 :P.
 STRPREPRC CMD(XCRTSQLOBJ ... LIBL(V_LX)) USRDEFVAR(V_LX '&LX')
 :P.
 Damit ersetzt STRPREPC den Wert 'V_LX' des LIBL Parameters des
-XCRTSQLOBJ Befehls mit einer bei der Ausführung des >>LIBL<<
+XCRTSQLOBJ Befehls mit einer bei der AusfÃ¼hrung des >>LIBL<<
 gesicherten Bibliotheksliste.
 :P.
 Wird die aktuelle Bibliothek mit
-dem :HP2.>>CURLIB<<:EHP2. tag geändert, so steht der alte Wert in der
-Variablen :HP2.&CX:EHP2. zur Verfügung.
+dem :HP2.>>CURLIB<<:EHP2. tag geÃ¤ndert, so steht der alte Wert in der
+Variablen :HP2.&CX:EHP2. zur VerfÃ¼gung.
 :P.
-:HP2.Die Bibliotheksliste wird am Ende des Programms grundsätzlich auf den
-Anfangswert zurückgesetzt.:EHP2.
+:HP2.Die Bibliotheksliste wird am Ende des Programms grundsÃ¤tzlich auf den
+Anfangswert zurÃ¼ckgesetzt.:EHP2.
 :P.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -1209,17 +1209,17 @@ Anfangswert zurückgesetzt.:EHP2.
 :PT.:PK DEF.*NONE:EPK.
 :PD.Es ist kein Wert angegeben.
 :PT.:PV.*SAME:EPV.
-:PD.Die aktuelle Bibliothek in der Bibliotheksliste für
-den aktuellen Thread wird nicht geändert.
+:PD.Die aktuelle Bibliothek in der Bibliotheksliste fÃ¼r
+den aktuellen Thread wird nicht geÃ¤ndert.
 :PT.:PV.*CRTDFT:EPV.
-:PD.Die Bibliotheksliste für den aktuellen Thread soll
+:PD.Die Bibliotheksliste fÃ¼r den aktuellen Thread soll
 keine Bibliothek enthalten. Wenn Objekte in der
 aktuellen Bibliothek erstellt werden, wird die
 Bibliothek QGPL als aktuelle Standardbibliothek
 verwendet.
 :PT.:PV.Name:EPV.
 :PD.Den Namen der Bibliothek angeben, die den aktuellen
-Bibliothekseintrag in der Bibliotheksliste für den
+Bibliothekseintrag in der Bibliotheksliste fÃ¼r den
 aktuellen Thread ersetzt.
 :EPARML.
 :P.
@@ -1229,9 +1229,9 @@ aktuellen Thread ersetzt.
 :PD.Es ist kein Wert angegeben.
 :PT.:PV.Name:EPV.
 :PD.Die Namen der Bibliotheken angeben, die dem
-Benutzerteil der Bibliotheksliste für den aktuellen
-Thread in der Reihenfolge hinzugefügt werden sollen,
-in der sie durchsucht werden sollen. Es können bis zu
+Benutzerteil der Bibliotheksliste fÃ¼r den aktuellen
+Thread in der Reihenfolge hinzugefÃ¤gt werden sollen,
+in der sie durchsucht werden sollen. Es kÃ¶nnen bis zu
 250 Namen angegeben werden.
 :EPARML.
 :IMHELP name='COM/RPLVAR'.
@@ -1246,17 +1246,17 @@ Bibliotheksliste (LIBL) - Hilfe
 :XH3.Bibliotheksliste (LIBL)
 :P.
 Gibt eine optional zu verwendende Bibliotheksliste an. Die
-Bibliotheksliste steht in der Variablen :HP2.&LL:EHP2. zur Verfügung. Wird
+Bibliotheksliste steht in der Variablen :HP2.&LL:EHP2. zur VerfÃ¼gung. Wird
 die Bibliotheksliste im Pre-Prozessor Abschnitt mit dem :HP2.>>LIBL<<:EHP2.
-tag geändert, so steht die alte Bibliotheksliste in der
-Variablen :HP2.&LX:EHP2. zur Verfügung.
+tag geÃ¤ndert, so steht die alte Bibliotheksliste in der
+Variablen :HP2.&LX:EHP2. zur VerfÃ¼gung.
 :P.
 Wird die aktuelle Bibliothek mit
-dem :HP2.>>CURLIB<<:EHP2. tag geändert, so steht der alte Wert in der
-Variablen :HP2.&CX:EHP2. zur Verfügung.
+dem :HP2.>>CURLIB<<:EHP2. tag geÃ¤ndert, so steht der alte Wert in der
+Variablen :HP2.&CX:EHP2. zur VerfÃ¼gung.
 :P.
-:HP2.Die Bibliotheksliste wird am Ende des Programms grundsätzlich auf den
-Anfangswert zurückgesetzt.:EHP2.
+:HP2.Die Bibliotheksliste wird am Ende des Programms grundsÃ¤tzlich auf den
+Anfangswert zurÃ¼ckgesetzt.:EHP2.
 :P.
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -1267,17 +1267,17 @@ Anfangswert zurückgesetzt.:EHP2.
 :PT.:PK DEF.*NONE:EPK.
 :PD.Es ist kein Wert angegeben.
 :PT.:PV.*SAME:EPV.
-:PD.Die aktuelle Bibliothek in der Bibliotheksliste für
-den aktuellen Thread wird nicht geändert.
+:PD.Die aktuelle Bibliothek in der Bibliotheksliste fÃ¼r
+den aktuellen Thread wird nicht geÃ¤ndert.
 :PT.:PV.*CRTDFT:EPV.
-:PD.Die Bibliotheksliste für den aktuellen Thread soll
+:PD.Die Bibliotheksliste fÃ¼r den aktuellen Thread soll
 keine Bibliothek enthalten. Wenn Objekte in der
 aktuellen Bibliothek erstellt werden, wird die
 Bibliothek QGPL als aktuelle Standardbibliothek
 verwendet.
 :PT.:PV.Name:EPV.
 :PD.Den Namen der Bibliothek angeben, die den aktuellen
-Bibliothekseintrag in der Bibliotheksliste für den
+Bibliothekseintrag in der Bibliotheksliste fÃ¼r den
 aktuellen Thread ersetzt.
 :EPARML.
 :P.
@@ -1287,9 +1287,9 @@ aktuellen Thread ersetzt.
 :PD.Es ist kein Wert angegeben.
 :PT.:PV.Name:EPV.
 :PD.Die Namen der Bibliotheken angeben, die dem
-Benutzerteil der Bibliotheksliste für den aktuellen
-Thread in der Reihenfolge hinzugefügt werden sollen,
-in der sie durchsucht werden sollen. Es können bis zu
+Benutzerteil der Bibliotheksliste fÃ¼r den aktuellen
+Thread in der Reihenfolge hinzugefÃ¼gt werden sollen,
+in der sie durchsucht werden sollen. Es kÃ¶nnen bis zu
 250 Namen angegeben werden.
 :EPARML.
 :IMHELP name='COM/RPLVAR'.
@@ -1304,7 +1304,7 @@ Verwende Bibl.-Liste implizit - Hilfe
 :XH3.Verwende Bibl.-Liste implizit (USELIBL)
 :P.
 Gibt an, ob eine am Parameter :HP2.LIBL:EHP2. angegebene
-Bibliotheksliste implizit vor der Ausführung des Erstellungsbefehls
+Bibliotheksliste implizit vor der AusfÃ¼hrung des Erstellungsbefehls
 gesetzt wird, sofern kein STRPREPRC Anweisungsblock in der Quelle enthalten
 ist.
 :IMHELP name='COM/OPTPARM'.
@@ -1313,10 +1313,10 @@ ist.
 
 :PARML.
 :PT.:PV.*NO:EPV.
-:PD.Die Bibliotheksliste wird nicht gesetzt, wenn die Quelle nicht über
-einen STRPREPRC Anweisungsblock verfügt.
+:PD.Die Bibliotheksliste wird nicht gesetzt, wenn die Quelle nicht Ã¼ber
+einen STRPREPRC Anweisungsblock verfÃ¼gt.
 :PT.:PV.*YES:EPV.
-:PD.Eine angegebene Bibliotheksliste wird implizit vor der Ausführung des
+:PD.Eine angegebene Bibliotheksliste wird implizit vor der AusfÃ¼hrung des
 Erstellungsbefehls gesetzt, wenn in der Quelle kein STRPREPRC
 Anweisungsblock enthalten ist.
 :EPARML.
@@ -1331,16 +1331,16 @@ Pre-Proz. Marken erforderlich - Hilfe
 :XH3.Pre-Proz. Marken erforderlich (TAGSREQ)
 :P.
 Gibt an, ob in der zugrunde liegenden Quellenteildatei
-Pro-Prozessor Marken enthalten sein müssen oder nicht.
+Pro-Prozessor Marken enthalten sein mÃ¼ssen oder nicht.
 :IMHELP name='COM/OPTPARM'.
 :P.
 :IMHELP name='COM/VALUES'.
 
 :PARML.
 :PT.:PV.*NO:EPV.
-:PD.Es müssen keine Pre-Prozessor Anweisungen vorhanden sein.
+:PD.Es mÃ¼ssen keine Pre-Prozessor Anweisungen vorhanden sein.
 :PT.:PV.*YES:EPV.
-:PD.Pre-Prozessor Anweisungen müssen vorhanden sein. Bei fehlenden
+:PD.Pre-Prozessor Anweisungen mÃ¼ssen vorhanden sein. Bei fehlenden
 Pre-Prozessor Anweisungen wird eine Fehlernachricht PRZ0024
 geschickt.
 :EPARML.
@@ -1351,12 +1351,12 @@ geschickt.
 .*  Keyword:  EXICMDEXC
 .********************************************
 :HELP NAME='STRPREPRC/EXICMDEXC'.
-Ausgangspgm. Befehlsausführung (EXICMDEXC) - Hilfe
-:XH3.Ausgangspgm. Befehlsausführung (EXICMDEXC)
+Ausgangspgm. BefehlsausfÃ¼hrung (EXICMDEXC) - Hilfe
+:XH3.Ausgangspgm. BefehlsausfÃ¼hrung (EXICMDEXC)
 :P.
 Gibt den Namen und die Bibliothek eines Exitprogramms an, welches
-vor der Ausführung des Befehgl der >>EXECUTE<< Marke aufgerufen wird, um
-den Befehl vor der Ausführung noch nach Bedarf änderung zu können.
+vor der AusfÃ¼hrung des Befehgl der >>EXECUTE<< Marke aufgerufen wird, um
+den Befehl vor der AusfÃ¼hrung noch nach Bedarf Ã„nderung zu kÃ¶nnen.
 :P.
 :HP2.Dieser Exit wird zum Beispiel von CMOne verwendet.:EHP2.
 :IMHELP name='COM/OPTPARM'.
@@ -1389,11 +1389,11 @@ Exitprogramm gespeichert ist.
 .*  Keyword:  EXECOPT  (optional)
 .********************************************
 :HELP NAME='STRPREPRC/EXECOPT'.
-Befehlsausführungsoptionen - Hilfe
-:XH3.Befehlsausführungsoptionen (EXECOPT)
+BefehlsausfÃ¼hrungsoptionen - Hilfe
+:XH3.BefehlsausfÃ¼hrungsoptionen (EXECOPT)
 :P.
-Gibt an, welche Befehle ausgeführt werden. Die zur
-Verfügung stehenden Befehlsgruppen sind:
+Gibt an, welche Befehle ausgefÃ¼hrt werden. Die zur
+VerfÃ¼gung stehenden Befehlsgruppen sind:
 :P.
 :LINES.
  - Vorlaufbefehle
@@ -1407,13 +1407,13 @@ Verfügung stehenden Befehlsgruppen sind:
 
 :PARML.
 :PT.:PK DEF.*ALL:EPK.
-:PD.Es werden alle Befehlsgruppe ausgeführt.
+:PD.Es werden alle Befehlsgruppe ausgefÃ¼hrt.
 :PT.:PV.*PRECMDS:EPV.
-:PD.Es werden nur die Vorlaufbefehle ausgeführt.
+:PD.Es werden nur die Vorlaufbefehle ausgefÃ¼hrt.
 :PT.:PV.*CRTCMD:EPV.
-:PD.Es wird nur der Objekterstellungsbefehl ausgeführt.
+:PD.Es wird nur der Objekterstellungsbefehl ausgefÃ¼hrt.
 :PT.:PV.*POSTCMDS:EPV.
-:PD.Es werden nur die Nachlaufbefehle ausgeführt.
+:PD.Es werden nur die Nachlaufbefehle ausgefÃ¼hrt.
 :EPARML.
 
 :EHELP.
@@ -1422,8 +1422,8 @@ Verfügung stehenden Befehlsgruppen sind:
 .*  Keyword:  RNF7031  (optional)
 .********************************************
 :HELP NAME='STRPREPRC/RNF7031'.
-Unterdrücken RNF7031 Nachr. - Hilfe
-:XH3.Unterdrücken RNF7031 Nachr. (RNF7031)
+UnterdrÃ¼cken RNF7031 Nachr. - Hilfe
+:XH3.UnterdrÃ¼cken RNF7031 Nachr. (RNF7031)
 :P.
 Gibt an, ob die Compiler Nachricht RNF7031 in die Ereignisdatei
 (EVFEVENT) ausgegeben wird.
@@ -1437,10 +1437,10 @@ Gibt an, ob die Compiler Nachricht RNF7031 in die Ereignisdatei
 :PD.Es gilt die Systemeinstellung (Wert der Umgebungsvariablen
 QIBM_RPG_RNF7031_EVENTS).
 :PT.:PV.*YES:EPV.
-:PD.Die Ausgabe der Nachricht RNF7031 wird nicht unterdrückt. Dazu wird
+:PD.Die Ausgabe der Nachricht RNF7031 wird nicht unterdrÃ¼ckt. Dazu wird
 die Umgebungsvariable 'QIBM_RPG_RNF7031_EVENTS=Y' gesetzt.
 :PT.:PV.*NO:EPV.
-:PD.Die Ausgabe der Nachricht RNF7031 wird unterdrückt. Dazu wird
+:PD.Die Ausgabe der Nachricht RNF7031 wird unterdrÃ¼ckt. Dazu wird
 die Umgebungsvariable 'QIBM_RPG_RNF7031_EVENTS=N' gesetzt.
 :EPARML.
 
@@ -1455,7 +1455,7 @@ die Umgebungsvariable 'QIBM_RPG_RNF7031_EVENTS=N' gesetzt.
 .********************************************
 :HELP NAME='COM/SRC'.
 :P.
-Es müssen entweder die Werte für eine Quelledatei und -teildatei
+Es mÃ¼ssen entweder die Werte fÃ¼r eine Quelledatei und -teildatei
 oder eine Quellendatenstromdatei angegeben werden.
 :EHELP.
 
@@ -1473,7 +1473,7 @@ Dieser Parameter ist erforderlich.
 :HELP NAME='COM/REQPARM1'.
 :P.
 Dieser Parameter muss nur dann angebenen werden, wenn die
-Objektbeschreibung geändert werden soll.
+Objektbeschreibung geÃ¤ndert werden soll.
 :EHELP.
 
 .********************************************
@@ -1489,7 +1489,7 @@ Dieser Parameter ist optional.
 .********************************************
 :HELP NAME='COM/VALUES'.
 :P.
-Mögliche Werte sind:
+MÃ¶gliche Werte sind:
 :EHELP.
 
 .********************************************
@@ -1497,7 +1497,7 @@ Mögliche Werte sind:
 .********************************************
 :HELP NAME='COM/LIBRARY'.
 :P.
-Gültige Bibliothekswerte sind:
+GÃ¼ltige Bibliothekswerte sind:
 :EHELP.
 
 .********************************************
@@ -1505,8 +1505,8 @@ Gültige Bibliothekswerte sind:
 .********************************************
 :HELP NAME='COM/RPLVAR'.
 :P.
-Ersatzvariablen können an jeder Stelle der Pre-Complieranweisungen
-eingefügt und benutzt werden. Bei der Abarbeitung der
+Ersatzvariablen kÃ¶nnen an jeder Stelle der Pre-Complieranweisungen
+eingefÃ¼gt und benutzt werden. Bei der Abarbeitung der
 Pre-Prozessor-Anweisungen wird die Ersatzvariable durch den
 im Befehl STRPREPRC angegebenen Wert ersetzt.
 :P.

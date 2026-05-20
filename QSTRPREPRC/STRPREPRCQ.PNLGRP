@@ -21,7 +21,7 @@
 .*=====================================================================*
 .*  History:                                                           *
 .*                                                                     *
-.*  Datum       Name          Änderung                                 *
+.*  Datum       Name          Ã„nderung                                 *
 .*  ----------  ------------  ---------------------------------------  *
 .*  23.01.2007  Th.Raddatz    Added parameter TAGSREQ(...) to command. *
 .*                                                                     *
@@ -180,7 +180,7 @@ This is an example of a pre-compiler section in a source member:
 0023.00                               MBR(*FIRST) +
 0024.00                               OVRSCOPE(*JOB);
 0025.00
-0026.00        /* Ändern Bibliotheksliste */
+0026.00        /* Ã„ndern Bibliotheksliste */
 0027.00        >>CURLIB<<           *CRTDFT;
 0028.00        >>LIBL<<             &LL;
 0029.00

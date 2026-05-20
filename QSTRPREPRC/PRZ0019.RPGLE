@@ -1,8 +1,8 @@
 **free
 //---------------------------------------------------------------
-// Datenstruktur für Message-ID : PRZ0019
+// Datenstruktur fÃ¼r Message-ID : PRZ0019
 
-// Der Parameter 'OBJTYPE' ist nicht zulässig, wenn CHGOBJD(*N
+// Der Parameter 'OBJTYPE' ist nicht zulÃ¤ssig, wenn CHGOBJD(*N
 
 dcl-ds PRZ0019;
 end-ds;

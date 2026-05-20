@@ -1,8 +1,8 @@
 **free
 //---------------------------------------------------------------
-// Datenstruktur für Message-ID : PRZ0012
+// Datenstruktur fÃ¼r Message-ID : PRZ0012
 
-// Fehler beim Öffnen der Quellendatei &2/&1, Teildatei &3.
+// Fehler beim Ã–ffnen der Quellendatei &2/&1, Teildatei &3.
 
 dcl-ds PRZ0012;
   PRZ00121 char(010) inz(*blanks);

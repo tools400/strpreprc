@@ -21,7 +21,7 @@
      /* =================================================================== */
      /*  History:                                                           */
      /*                                                                     */
-     /*  Datum       Name          Änderung                                 */
+     /*  Datum       Name          Ã„nderung                                 */
      /*  ----------  ------------  ---------------------------------------  */
      /*  07.03.2014  Th.Raddatz    Added special value *DFT to parameters   */
      /*                            SRCLIB, SRCFILE and SRCMBR.              */
@@ -206,7 +206,7 @@
              CHGVAR     VAR(&USESRCLIB ) VALUE(%SST(&QUSESRCF 11 10))
 
  /* - - - - - - - - - - - - - - - - - - */
- /*  Prüfen der Steuerdatei STRPRE1     */
+ /*  PrÃ¼fen der Steuerdatei STRPRE1     */
  /* - - - - - - - - - - - - - - - - - - */
              CHKOBJ     OBJ(*LIBL/STRPRE1) OBJTYPE(*FILE)
              CHKOBJ     OBJ(*LIBL/STRPRE1) OBJTYPE(*FILE) +
@@ -220,7 +220,7 @@
                             RTNLIB(&XMSGFLIB)
 
  /* - - - - - - - - - - - - - - - - - - */
- /*  Prüfen Befehl CHGOBJDA             */
+ /*  PrÃ¼fen Befehl CHGOBJDA             */
  /* - - - - - - - - - - - - - - - - - - */
              IF         COND(&CHGOBJD *EQ '*YES') THEN(DO)
                CHKOBJ     OBJ(*LIBL/CHGOBJDA) OBJTYPE(*CMD)

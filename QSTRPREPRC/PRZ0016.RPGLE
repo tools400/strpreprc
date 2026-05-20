@@ -1,8 +1,8 @@
 **free
 //---------------------------------------------------------------
-// Datenstruktur für Message-ID : PRZ0016
+// Datenstruktur fÃ¼r Message-ID : PRZ0016
 
-// Der Parameter 'OBJSRCFILE' ist nicht zulässig, wenn CHGOBJD
+// Der Parameter 'OBJSRCFILE' ist nicht zulÃ¤ssig, wenn CHGOBJD
 
 dcl-ds PRZ0016;
 end-ds;

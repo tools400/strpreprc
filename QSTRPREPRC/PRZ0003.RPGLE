@@ -1,8 +1,8 @@
 **free
 //---------------------------------------------------------------
-// Datenstruktur für Message-ID : PRZ0003
+// Datenstruktur fÃ¼r Message-ID : PRZ0003
 
-// Parameteranweisung in der Betriebsart &1 unzulässig.
+// Parameteranweisung in der Betriebsart &1 unzulÃ¤ssig.
 
 dcl-ds PRZ0003;
   PRZ00031 char(030) inz(*blanks);

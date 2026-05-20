@@ -1,8 +1,8 @@
 **free
 //---------------------------------------------------------------
-// Datenstruktur für Message-ID : PRZ0030
+// Datenstruktur fÃ¼r Message-ID : PRZ0030
 
-// Wenn die Option '*EVENTF' angegeben ist, müssen auch die Pa
+// Wenn die Option '*EVENTF' angegeben ist, mÃ¼ssen auch die Pa
 // Die Option *ADDJOBLOG ist nur in Verbindung mit *EVENTF zul
 
 dcl-ds PRZ0030;

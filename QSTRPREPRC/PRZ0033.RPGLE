@@ -1,6 +1,6 @@
 **free
 //---------------------------------------------------------------
-// Datenstruktur für Message-ID : PRZ0033
+// Datenstruktur fÃ¼r Message-ID : PRZ0033
 
 // STRPREPRC: Objekt erstellt.
 

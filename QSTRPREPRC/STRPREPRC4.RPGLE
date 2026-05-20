@@ -22,7 +22,7 @@
 //=====================================================================*
 //  History:                                                           *
 //                                                                     *
-//  Datum       Name          Änderung                                 *
+//  Datum       Name          Ã„nderung                                 *
 //  ----------  ------------  ---------------------------------------  *
 //  03.02.2017  Th.Raddatz    Changed, to append the version           *
 //                            information to the job log.              *

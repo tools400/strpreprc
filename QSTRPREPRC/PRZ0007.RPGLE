@@ -1,6 +1,6 @@
 **free
 //---------------------------------------------------------------
-// Datenstruktur für Message-ID : PRZ0007
+// Datenstruktur fÃ¼r Message-ID : PRZ0007
 
 // Befehlszeichenfolge ist zu lang.
 

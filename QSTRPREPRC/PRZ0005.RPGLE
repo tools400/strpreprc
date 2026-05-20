@@ -1,8 +1,8 @@
 **free
 //---------------------------------------------------------------
-// Datenstruktur für Message-ID : PRZ0005
+// Datenstruktur fÃ¼r Message-ID : PRZ0005
 
-// Ungültiges Fortsetzungszeichen &1 in Zeile &2 gefunden.
+// UngÃ¼ltiges Fortsetzungszeichen &1 in Zeile &2 gefunden.
 
 dcl-ds PRZ0005;
   PRZ00051 char(010) inz(*blanks);

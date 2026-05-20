@@ -1,6 +1,6 @@
 **free
 //---------------------------------------------------------------
-// Datenstruktur für Message-ID : PRZ0026
+// Datenstruktur fÃ¼r Message-ID : PRZ0026
 
 // EVFEVENT Datei konnte nicht zur Ausgabe vorbereitet werden.
 

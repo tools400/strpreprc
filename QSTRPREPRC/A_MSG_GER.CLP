@@ -15,7 +15,7 @@
              DCL        VAR(&OBJ) TYPE(*CHAR) LEN(10) VALUE('STRPREPRC')
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0001                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0001                    */
      /* Falsche Reihenfolge im Betriebsmodus.                       */
      /*-------------------------------------------------------------*/
 
@@ -42,7 +42,7 @@ art &2 umgeschaltet werden.'                                          +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0002                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0002                    */
      /* Verarbeitung in Zeile &1 abgebrochen.                       */
      /*-------------------------------------------------------------*/
 
@@ -57,7 +57,7 @@ art &2 umgeschaltet werden.'                                          +
                 ) +
                 SECLVL( +
 'Hinweis  . . . . :  Ist als fehlerhafte Programmzeilenummer 0,00 ange-
-geben, so trat der Fehler bei der Prüfung der über gebenen Befehlszeic-
+geben, so trat der Fehler bei der PrÃ¼fung der Ã¼ber gebenen Befehlszeic-
 henkette auf.'                                                        +
                 ) +
                 SEV(50) +
@@ -69,8 +69,8 @@ henkette auf.'                                                        +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0003                    */
-     /* Parameteranweisung in der Betriebsart &1 unzulässig.        */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0003                    */
+     /* Parameteranweisung in der Betriebsart &1 unzulÃ¤ssig.        */
      /*-------------------------------------------------------------*/
 
              RMVMSGD MSGID(PRZ0003) MSGF(&LIB/&OBJ)
@@ -80,7 +80,7 @@ henkette auf.'                                                        +
                 MSGID(PRZ0003) +
                 MSGF(&LIB/&OBJ) +
                 MSG( +
-'Parameteranweisung in der Betriebsart &1 unzulässig.'                +
+'Parameteranweisung in der Betriebsart &1 unzulÃ¤ssig.'                +
                 ) +
                 SEV(0) +
                 FMT( +
@@ -91,8 +91,8 @@ henkette auf.'                                                        +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0004                    */
-     /* Die Marke &1 ist außerhalb der Betriebsart &2 nicht erlaubt */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0004                    */
+     /* Die Marke &1 ist auÃŸerhalb der Betriebsart &2 nicht erlaubt */
      /*-------------------------------------------------------------*/
 
              RMVMSGD MSGID(PRZ0004) MSGF(&LIB/&OBJ)
@@ -102,7 +102,7 @@ henkette auf.'                                                        +
                 MSGID(PRZ0004) +
                 MSGF(&LIB/&OBJ) +
                 MSG( +
-'Die Marke &1 ist außerhalb der Betriebsart &2 nicht erlaubt.'        +
+'Die Marke &1 ist auÃŸerhalb der Betriebsart &2 nicht erlaubt.'        +
                 ) +
                 SEV(0) +
                 FMT( +
@@ -114,8 +114,8 @@ henkette auf.'                                                        +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0005                    */
-     /* Ungültiges Fortsetzungszeichen &1 in Zeile &2 gefunden.     */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0005                    */
+     /* UngÃ¼ltiges Fortsetzungszeichen &1 in Zeile &2 gefunden.     */
      /*-------------------------------------------------------------*/
 
              RMVMSGD MSGID(PRZ0005) MSGF(&LIB/&OBJ)
@@ -125,7 +125,7 @@ henkette auf.'                                                        +
                 MSGID(PRZ0005) +
                 MSGF(&LIB/&OBJ) +
                 MSG( +
-'Ungültiges Fortsetzungszeichen &1 in Zeile &2 gefunden.'             +
+'UngÃ¼ltiges Fortsetzungszeichen &1 in Zeile &2 gefunden.'             +
                 ) +
                 SEV(40) +
                 FMT( +
@@ -137,8 +137,8 @@ henkette auf.'                                                        +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0006                    */
-     /* Das Ende des Schlüsselwortes &1 konnte nicht gefunden werde */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0006                    */
+     /* Das Ende des SchlÃ¼sselwortes &1 konnte nicht gefunden werde */
      /*-------------------------------------------------------------*/
 
              RMVMSGD MSGID(PRZ0006) MSGF(&LIB/&OBJ)
@@ -148,7 +148,7 @@ henkette auf.'                                                        +
                 MSGID(PRZ0006) +
                 MSGF(&LIB/&OBJ) +
                 MSG( +
-'Das Ende des Schlüsselwortes &1 konnte nicht gefunden werden.'       +
+'Das Ende des SchlÃ¼sselwortes &1 konnte nicht gefunden werden.'       +
                 ) +
                 SEV(40) +
                 FMT( +
@@ -159,7 +159,7 @@ henkette auf.'                                                        +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0007                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0007                    */
      /* Befehlszeichenfolge ist zu lang.                            */
      /*-------------------------------------------------------------*/
 
@@ -173,8 +173,8 @@ henkette auf.'                                                        +
 'Befehlszeichenfolge ist zu lang.'                                    +
                 ) +
                 SECLVL( +
-'Hinweis  . . . . :  Die maximale Länge einer Befehlszeichenfolge darf-
- &1 Zeichen nicht überschreiten.'                                     +
+'Hinweis  . . . . :  Die maximale LÃ¤nge einer Befehlszeichenfolge darf-
+ &1 Zeichen nicht Ã¼berschreiten.'                                     +
                 ) +
                 SEV(40) +
                 FMT( +
@@ -185,7 +185,7 @@ henkette auf.'                                                        +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0008                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0008                    */
      /* Das Zeilenendekennzeichen konnte nicht gefunden werden.     */
      /*-------------------------------------------------------------*/
 
@@ -199,8 +199,8 @@ henkette auf.'                                                        +
 'Das Zeilenendekennzeichen konnte nicht gefunden werden.'             +
                 ) +
                 SECLVL( +
-'Fehlerbeseitigung:  Fügen Sie ein Zeilenendekennzeichen in die Zeile -
-&1 ein. &N &N Gültige Zeilendenekennzeichen sind: &B &B '';'' = Zeilen-
+'Fehlerbeseitigung:  FÃ¼gen Sie ein Zeilenendekennzeichen in die Zeile -
+&1 ein. &N &N GÃ¼ltige Zeilendenekennzeichen sind: &B &B '';'' = Zeilen-
 ende &B ''+'' = Fortsetzungszeile ohne Leerzeichen &B ''-'' = Fortsetz-
 ungszeile mit Leerzeichen.'                                           +
                 ) +
@@ -213,8 +213,8 @@ ungszeile mit Leerzeichen.'                                           +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0009                    */
-     /* Unbekannter Wert "&1" für Fortsetzungszeichen gefunden.     */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0009                    */
+     /* Unbekannter Wert "&1" fÃ¼r Fortsetzungszeichen gefunden.     */
      /*-------------------------------------------------------------*/
 
              RMVMSGD MSGID(PRZ0009) MSGF(&LIB/&OBJ)
@@ -224,7 +224,7 @@ ungszeile mit Leerzeichen.'                                           +
                 MSGID(PRZ0009) +
                 MSGF(&LIB/&OBJ) +
                 MSG( +
-'Unbekannter Wert "&1" für Fortsetzungszeichen gefunden.'             +
+'Unbekannter Wert "&1" fÃ¼r Fortsetzungszeichen gefunden.'             +
                 ) +
                 SEV(40) +
                 FMT( +
@@ -235,8 +235,8 @@ ungszeile mit Leerzeichen.'                                           +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0010                    */
-     /* Modus für Marke &1 nicht definiert.                         */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0010                    */
+     /* Modus fÃ¼r Marke &1 nicht definiert.                         */
      /*-------------------------------------------------------------*/
 
              RMVMSGD MSGID(PRZ0010) MSGF(&LIB/&OBJ)
@@ -246,10 +246,10 @@ ungszeile mit Leerzeichen.'                                           +
                 MSGID(PRZ0010) +
                 MSGF(&LIB/&OBJ) +
                 MSG( +
-'Modus für Marke &1 nicht definiert.'                                 +
+'Modus fÃ¼r Marke &1 nicht definiert.'                                 +
                 ) +
                 SECLVL( +
-'Fehlerbeseitigung:  Definieren des Betriebsmodus für die Marke &1 in -
+'Fehlerbeseitigung:  Definieren des Betriebsmodus fÃ¼r die Marke &1 in -
 der Funktion f_tagToMode.'                                            +
                 ) +
                 SEV(40) +
@@ -261,8 +261,8 @@ der Funktion f_tagToMode.'                                            +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0011                    */
-     /* Die Datensatzlänge der Eingabedatei ist zu lang.            */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0011                    */
+     /* Die DatensatzlÃ¤nge der Eingabedatei ist zu lang.            */
      /*-------------------------------------------------------------*/
 
              RMVMSGD MSGID(PRZ0011) MSGF(&LIB/&OBJ)
@@ -272,13 +272,13 @@ der Funktion f_tagToMode.'                                            +
                 MSGID(PRZ0011) +
                 MSGF(&LIB/&OBJ) +
                 MSG( +
-'Die Datensatzlänge der Eingabedatei ist zu lang.'                    +
+'Die DatensatzlÃ¤nge der Eingabedatei ist zu lang.'                    +
                 ) +
                 SECLVL( +
-'Ursache  . . . . :  Die Datensatzlänge der Datei &3/&4 beträgt &1 Byt-
-e. Die maximale Datensatzlänge ist auf &2 Byte begrenzt. &N Fehlerbese-
-itigung:  Wählen Sie eine Eingabedatei aus, deren Datensatzlänge nicht-
- größer als &2 Byte ist.'                                             +
+'Ursache  . . . . :  Die DatensatzlÃ¤nge der Datei &3/&4 betrÃ¤gt &1 Byt-
+e. Die maximale DatensatzlÃ¤nge ist auf &2 Byte begrenzt. &N Fehlerbese-
+itigung:  WÃ¤hlen Sie eine Eingabedatei aus, deren DatensatzlÃ¤nge nicht-
+ grÃ¶ÃŸer als &2 Byte ist.'                                             +
                 ) +
                 SEV(40) +
                 FMT( +
@@ -292,8 +292,8 @@ itigung:  Wählen Sie eine Eingabedatei aus, deren Datensatzlänge nicht-
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0012                    */
-     /* Fehler beim Öffnen der Quellendatei &2/&1, Teildatei &3.    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0012                    */
+     /* Fehler beim Ã–ffnen der Quellendatei &2/&1, Teildatei &3.    */
      /*-------------------------------------------------------------*/
 
              RMVMSGD MSGID(PRZ0012) MSGF(&LIB/&OBJ)
@@ -303,7 +303,7 @@ itigung:  Wählen Sie eine Eingabedatei aus, deren Datensatzlänge nicht-
                 MSGID(PRZ0012) +
                 MSGF(&LIB/&OBJ) +
                 MSG( +
-'Fehler beim Öffnen der Quellendatei &2/&1, Teildatei &3.'            +
+'Fehler beim Ã–ffnen der Quellendatei &2/&1, Teildatei &3.'            +
                 ) +
                 SEV(40) +
                 FMT( +
@@ -316,8 +316,8 @@ itigung:  Wählen Sie eine Eingabedatei aus, deren Datensatzlänge nicht-
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0013                    */
-     /* Fehler beim Öffnen der Steuerdatei &2/&1, Teildatei &3.     */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0013                    */
+     /* Fehler beim Ã–ffnen der Steuerdatei &2/&1, Teildatei &3.     */
      /*-------------------------------------------------------------*/
 
              RMVMSGD MSGID(PRZ0013) MSGF(&LIB/&OBJ)
@@ -327,7 +327,7 @@ itigung:  Wählen Sie eine Eingabedatei aus, deren Datensatzlänge nicht-
                 MSGID(PRZ0013) +
                 MSGF(&LIB/&OBJ) +
                 MSG( +
-'Fehler beim Öffnen der Steuerdatei &2/&1, Teildatei &3.'             +
+'Fehler beim Ã–ffnen der Steuerdatei &2/&1, Teildatei &3.'             +
                 ) +
                 SEV(40) +
                 FMT( +
@@ -340,8 +340,8 @@ itigung:  Wählen Sie eine Eingabedatei aus, deren Datensatzlänge nicht-
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0014                    */
-     /* Auszuführender Befehl fehlt. Weitere Verarbeitung nicht mög */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0014                    */
+     /* AuszufÃ¼hrender Befehl fehlt. Weitere Verarbeitung nicht mÃ¶g */
      /*-------------------------------------------------------------*/
 
              RMVMSGD MSGID(PRZ0014) MSGF(&LIB/&OBJ)
@@ -351,13 +351,13 @@ itigung:  Wählen Sie eine Eingabedatei aus, deren Datensatzlänge nicht-
                 MSGID(PRZ0014) +
                 MSGF(&LIB/&OBJ) +
                 MSG( +
-'Auszuführender Befehl fehlt. Weitere Verarbeitung nicht möglich.'    +
+'AuszufÃ¼hrender Befehl fehlt. Weitere Verarbeitung nicht mÃ¶glich.'    +
                 ) +
                 SECLVL( +
-'Ursache  . . . . :  Der Parameter CMD() wurde mit Leerzeichen übergeb-
-en und es wurde kein Schlüsselwort >>CRTCMD<< in der Quellenteildatei -
-gefunden.  &N Fehlerbeseitigung:  Angeben Parameter CMD() oder einfüge-
-n Schlüsselwort >>CRTCMD<< in der Quellenteildatei.'                  +
+'Ursache  . . . . :  Der Parameter CMD() wurde mit Leerzeichen Ã¼bergeb-
+en und es wurde kein SchlÃ¼sselwort >>CRTCMD<< in der Quellenteildatei -
+gefunden.  &N Fehlerbeseitigung:  Angeben Parameter CMD() oder einfÃ¼ge-
+n SchlÃ¼sselwort >>CRTCMD<< in der Quellenteildatei.'                  +
                 ) +
                 SEV(40) +
      /*   No replacement variables defined!                         */ +
@@ -366,7 +366,7 @@ n Schlüsselwort >>CRTCMD<< in der Quellenteildatei.'                  +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0015                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0015                    */
      /* Fehler im Erstellungsbefehl gefunden.                       */
      /*-------------------------------------------------------------*/
 
@@ -391,8 +391,8 @@ n Schlüsselwort >>CRTCMD<< in der Quellenteildatei.'                  +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0016                    */
-     /* Der Parameter 'OBJSRCFILE' ist nicht zulässig, wenn CHGOBJD */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0016                    */
+     /* Der Parameter 'OBJSRCFILE' ist nicht zulÃ¤ssig, wenn CHGOBJD */
      /*-------------------------------------------------------------*/
 
              RMVMSGD MSGID(PRZ0016) MSGF(&LIB/&OBJ)
@@ -402,7 +402,7 @@ n Schlüsselwort >>CRTCMD<< in der Quellenteildatei.'                  +
                 MSGID(PRZ0016) +
                 MSGF(&LIB/&OBJ) +
                 MSG( +
-'Der Parameter ''OBJSRCFILE'' ist nicht zulässig, wenn CHGOBJD(*NO) an-
+'Der Parameter ''OBJSRCFILE'' ist nicht zulÃ¤ssig, wenn CHGOBJD(*NO) an-
 gegeben ist.'                                                         +
                 ) +
                 SEV(40) +
@@ -412,8 +412,8 @@ gegeben ist.'                                                         +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0017                    */
-     /* Der Parameter 'OBJSRCLIB' ist nicht zulässig, wenn CHGOBJD( */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0017                    */
+     /* Der Parameter 'OBJSRCLIB' ist nicht zulÃ¤ssig, wenn CHGOBJD( */
      /*-------------------------------------------------------------*/
 
              RMVMSGD MSGID(PRZ0017) MSGF(&LIB/&OBJ)
@@ -423,7 +423,7 @@ gegeben ist.'                                                         +
                 MSGID(PRZ0017) +
                 MSGF(&LIB/&OBJ) +
                 MSG( +
-'Der Parameter ''OBJSRCLIB'' ist nicht zulässig, wenn CHGOBJD(*NO) ang-
+'Der Parameter ''OBJSRCLIB'' ist nicht zulÃ¤ssig, wenn CHGOBJD(*NO) ang-
 egeben ist.'                                                          +
                 ) +
                 SEV(40) +
@@ -433,8 +433,8 @@ egeben ist.'                                                          +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0018                    */
-     /* Der Parameter 'OBJSRCMBR' ist nicht zulässig, wenn CHGOBJD( */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0018                    */
+     /* Der Parameter 'OBJSRCMBR' ist nicht zulÃ¤ssig, wenn CHGOBJD( */
      /*-------------------------------------------------------------*/
 
              RMVMSGD MSGID(PRZ0018) MSGF(&LIB/&OBJ)
@@ -444,7 +444,7 @@ egeben ist.'                                                          +
                 MSGID(PRZ0018) +
                 MSGF(&LIB/&OBJ) +
                 MSG( +
-'Der Parameter ''OBJSRCMBR'' ist nicht zulässig, wenn CHGOBJD(*NO) ang-
+'Der Parameter ''OBJSRCMBR'' ist nicht zulÃ¤ssig, wenn CHGOBJD(*NO) ang-
 egeben ist.'                                                          +
                 ) +
                 SEV(40) +
@@ -454,8 +454,8 @@ egeben ist.'                                                          +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0019                    */
-     /* Der Parameter 'OBJTYPE' ist nicht zulässig, wenn CHGOBJD(*N */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0019                    */
+     /* Der Parameter 'OBJTYPE' ist nicht zulÃ¤ssig, wenn CHGOBJD(*N */
      /*-------------------------------------------------------------*/
 
              RMVMSGD MSGID(PRZ0019) MSGF(&LIB/&OBJ)
@@ -465,7 +465,7 @@ egeben ist.'                                                          +
                 MSGID(PRZ0019) +
                 MSGF(&LIB/&OBJ) +
                 MSG( +
-'Der Parameter ''OBJTYPE'' ist nicht zulässig, wenn CHGOBJD(*NO) angeg-
+'Der Parameter ''OBJTYPE'' ist nicht zulÃ¤ssig, wenn CHGOBJD(*NO) angeg-
 eben ist.'                                                            +
                 ) +
                 SEV(40) +
@@ -475,7 +475,7 @@ eben ist.'                                                            +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0020                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0020                    */
      /* Der Parameter 'OBJTYPE' muss angegeben werden, wenn CHGOBJD */
      /*-------------------------------------------------------------*/
 
@@ -496,8 +496,8 @@ ngegeben ist.'                                                        +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0021                    */
-     /* Befehl CHGOBJDA nicht gefunden oder unvollständig.          */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0021                    */
+     /* Befehl CHGOBJDA nicht gefunden oder unvollstÃ¤ndig.          */
      /*-------------------------------------------------------------*/
 
              RMVMSGD MSGID(PRZ0021) MSGF(&LIB/&OBJ)
@@ -507,7 +507,7 @@ ngegeben ist.'                                                        +
                 MSGID(PRZ0021) +
                 MSGF(&LIB/&OBJ) +
                 MSG( +
-'Befehl CHGOBJDA nicht gefunden oder unvollständig.'                  +
+'Befehl CHGOBJDA nicht gefunden oder unvollstÃ¤ndig.'                  +
                 ) +
                 SEV(40) +
      /*   No replacement variables defined!                         */ +
@@ -516,7 +516,7 @@ ngegeben ist.'                                                        +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0022                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0022                    */
      /* Verarbeitung abgebrochen.                                   */
      /*-------------------------------------------------------------*/
 
@@ -536,8 +536,8 @@ ngegeben ist.'                                                        +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0023                    */
-     /* Fehlender Wert für Variable an Position &1 des auszuführend */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0023                    */
+     /* Fehlender Wert fÃ¼r Variable an Position &1 des auszufÃ¼hrend */
      /*-------------------------------------------------------------*/
 
              RMVMSGD MSGID(PRZ0023) MSGF(&LIB/&OBJ)
@@ -547,7 +547,7 @@ ngegeben ist.'                                                        +
                 MSGID(PRZ0023) +
                 MSGF(&LIB/&OBJ) +
                 MSG( +
-'Fehlender Wert für Variable an Position &1 des auszuführenden Befehls-
+'Fehlender Wert fÃ¼r Variable an Position &1 des auszufÃ¼hrenden Befehls-
 .'                                                                    +
                 ) +
                 SECLVL( +
@@ -563,7 +563,7 @@ ngegeben ist.'                                                        +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0024                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0024                    */
      /* Keine Pre-Compiler Anweisungen in Quellendatei &2/&1, Teild */
      /*-------------------------------------------------------------*/
 
@@ -588,7 +588,7 @@ funden.'                                                              +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0025                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0025                    */
      /* EVFEVENT Datei in Bibliothek &1 oder das Job Protokoll konn */
      /*-------------------------------------------------------------*/
 
@@ -600,7 +600,7 @@ funden.'                                                              +
                 MSGF(&LIB/&OBJ) +
                 MSG( +
 'EVFEVENT Datei in Bibliothek &1 oder das Job Protokoll konnte nicht g-
-eöffnet werden.'                                                      +
+eÃ¶ffnet werden.'                                                      +
                 ) +
                 SEV(40) +
                 FMT( +
@@ -611,7 +611,7 @@ eöffnet werden.'                                                      +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0026                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0026                    */
      /* EVFEVENT Datei konnte nicht zur Ausgabe vorbereitet werden. */
      /*-------------------------------------------------------------*/
 
@@ -631,8 +631,8 @@ eöffnet werden.'                                                      +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0027                    */
-     /* Wenn die Option '*EVENTF' angegeben ist, müssen auch die Pa */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0027                    */
+     /* Wenn die Option '*EVENTF' angegeben ist, mÃ¼ssen auch die Pa */
      /*-------------------------------------------------------------*/
 
              RMVMSGD MSGID(PRZ0027) MSGF(&LIB/&OBJ)
@@ -642,7 +642,7 @@ eöffnet werden.'                                                      +
                 MSGID(PRZ0027) +
                 MSGF(&LIB/&OBJ) +
                 MSG( +
-'Wenn die Option ''*EVENTF'' angegeben ist, müssen auch die Parameter -
+'Wenn die Option ''*EVENTF'' angegeben ist, mÃ¼ssen auch die Parameter -
 LIB() und OBJ() angegeben werden.'                                    +
                 ) +
                 SEV(40) +
@@ -652,7 +652,7 @@ LIB() und OBJ() angegeben werden.'                                    +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0028                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0028                    */
      /* Erstellungsbefehl nicht gefunden in Quellendatei &2/&1, Tei */
      /*-------------------------------------------------------------*/
 
@@ -667,8 +667,8 @@ LIB() und OBJ() angegeben werden.'                                    +
 '                                                                     +
                 ) +
                 SECLVL( +
-'Ursache  . . . . :  Die Teildatei enthält keine Pre-Compiler Anweisun-
-gen und es wurde kein Erstellungsbefehl im Parameter ''Auszuführender -
+'Ursache  . . . . :  Die Teildatei enthÃ¤lt keine Pre-Compiler Anweisun-
+gen und es wurde kein Erstellungsbefehl im Parameter ''AuszufÃ¼hrender -
 Befehl'' (CMD) angegeben.'                                            +
                 ) +
                 SEV(40) +
@@ -682,7 +682,7 @@ Befehl'' (CMD) angegeben.'                                            +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0029                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0029                    */
      /* &1                                                          */
      /*-------------------------------------------------------------*/
 
@@ -704,7 +704,7 @@ Befehl'' (CMD) angegeben.'                                            +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0030                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0030                    */
      /* Die Option *ADDJOBLOG ist nur in Verbindung mit *EVENTF zul */
      /*-------------------------------------------------------------*/
 
@@ -715,7 +715,7 @@ Befehl'' (CMD) angegeben.'                                            +
                 MSGID(PRZ0030) +
                 MSGF(&LIB/&OBJ) +
                 MSG( +
-'Die Option *ADDJOBLOG ist nur in Verbindung mit *EVENTF zulässig.'   +
+'Die Option *ADDJOBLOG ist nur in Verbindung mit *EVENTF zulÃ¤ssig.'   +
                 ) +
                 SEV(30) +
      /*   No replacement variables defined!                         */ +
@@ -724,8 +724,8 @@ Befehl'' (CMD) angegeben.'                                            +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0031                    */
-     /* Ungültige INCLUDE Marke in Zeile &1 gefunden.               */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0031                    */
+     /* UngÃ¼ltige INCLUDE Marke in Zeile &1 gefunden.               */
      /*-------------------------------------------------------------*/
 
              RMVMSGD MSGID(PRZ0031) MSGF(&LIB/&OBJ)
@@ -735,7 +735,7 @@ Befehl'' (CMD) angegeben.'                                            +
                 MSGID(PRZ0031) +
                 MSGF(&LIB/&OBJ) +
                 MSG( +
-'Ungültige INCLUDE Marke in Zeile &1 gefunden.'                       +
+'UngÃ¼ltige INCLUDE Marke in Zeile &1 gefunden.'                       +
                 ) +
                 SECLVL( +
 'Ursache  . . . . :  Es fehlt entweder die Datei oder die Teildatei. D-
@@ -750,7 +750,7 @@ as richtige Format ist:&P >>INCLUDE<< [Bibliothek]/Datei Teildatei;'  +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0032                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0032                    */
      /* Verschachtelte INCLUDE Marke in Zeile &4 der Datei &2/&1, T */
      /*-------------------------------------------------------------*/
 
@@ -780,7 +780,7 @@ as richtige Format ist:&P >>INCLUDE<< [Bibliothek]/Datei Teildatei;'  +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0033                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0033                    */
      /* STRPREPRC: Objekt erstellt.                                 */
      /*-------------------------------------------------------------*/
 
@@ -800,7 +800,7 @@ as richtige Format ist:&P >>INCLUDE<< [Bibliothek]/Datei Teildatei;'  +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0034                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0034                    */
      /* STRPREPRC: Fehlernachricht &1 wurde aufgrund von MONMSG ign */
      /*-------------------------------------------------------------*/
 
@@ -822,7 +822,7 @@ as richtige Format ist:&P >>INCLUDE<< [Bibliothek]/Datei Teildatei;'  +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0035                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0035                    */
      /* Bibliothek &1 nicht gefunden.                               */
      /*-------------------------------------------------------------*/
 
@@ -844,7 +844,7 @@ as richtige Format ist:&P >>INCLUDE<< [Bibliothek]/Datei Teildatei;'  +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0036                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0036                    */
      /* Datei &1 in Bibliothek &2 nicht gefunden.                   */
      /*-------------------------------------------------------------*/
 
@@ -867,7 +867,7 @@ as richtige Format ist:&P >>INCLUDE<< [Bibliothek]/Datei Teildatei;'  +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0037                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0037                    */
      /* Teildatei &3 von Datei &1 in Bibliothek &2 nicht gefunden.  */
      /*-------------------------------------------------------------*/
 
@@ -891,8 +891,8 @@ as richtige Format ist:&P >>INCLUDE<< [Bibliothek]/Datei Teildatei;'  +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0038                    */
-     /* Die Parameter USESRCFILE und USESRCMBR können nicht mit dem */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0038                    */
+     /* Die Parameter USESRCFILE und USESRCMBR kÃ¶nnen nicht mit dem */
      /*-------------------------------------------------------------*/
 
              RMVMSGD MSGID(PRZ0038) MSGF(&LIB/&OBJ)
@@ -902,7 +902,7 @@ as richtige Format ist:&P >>INCLUDE<< [Bibliothek]/Datei Teildatei;'  +
                 MSGID(PRZ0038) +
                 MSGF(&LIB/&OBJ) +
                 MSG( +
-'Die Parameter USESRCFILE und USESRCMBR können nicht mit dem Parameter-
+'Die Parameter USESRCFILE und USESRCMBR kÃ¶nnen nicht mit dem Parameter-
  USESRCSTMF angegeben werden.'                                        +
                 ) +
                 SEV(30) +
@@ -914,7 +914,7 @@ as richtige Format ist:&P >>INCLUDE<< [Bibliothek]/Datei Teildatei;'  +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0039                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0039                    */
      /* Entweder USESRCFILE und USESRCMBR oder USESRCSTMF angeben.  */
      /*-------------------------------------------------------------*/
 
@@ -936,8 +936,8 @@ as richtige Format ist:&P >>INCLUDE<< [Bibliothek]/Datei Teildatei;'  +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0040                    */
-     /* Wert *DFT ist unzulässig für SRCFILE, SRCLIB und SRCMBR, we */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0040                    */
+     /* Wert *DFT ist unzulÃ¤ssig fÃ¼r SRCFILE, SRCLIB und SRCMBR, we */
      /*-------------------------------------------------------------*/
 
              RMVMSGD MSGID(PRZ0040) MSGF(&LIB/&OBJ)
@@ -947,7 +947,7 @@ as richtige Format ist:&P >>INCLUDE<< [Bibliothek]/Datei Teildatei;'  +
                 MSGID(PRZ0040) +
                 MSGF(&LIB/&OBJ) +
                 MSG( +
-'Wert *DFT ist unzulässig für SRCFILE, SRCLIB und SRCMBR, wenn USESRCS-
+'Wert *DFT ist unzulÃ¤ssig fÃ¼r SRCFILE, SRCLIB und SRCMBR, wenn USESRCS-
 TMF angegeben ist.'                                                   +
                 ) +
                 SEV(30) +
@@ -959,8 +959,8 @@ TMF angegeben ist.'                                                   +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0041                    */
-     /* Datei &1 kann nicht geöffnet werden.                        */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0041                    */
+     /* Datei &1 kann nicht geÃ¶ffnet werden.                        */
      /*-------------------------------------------------------------*/
 
              RMVMSGD MSGID(PRZ0041) MSGF(&LIB/&OBJ)
@@ -970,7 +970,7 @@ TMF angegeben ist.'                                                   +
                 MSGID(PRZ0041) +
                 MSGF(&LIB/&OBJ) +
                 MSG( +
-'Datei &1 kann nicht geöffnet werden.'                                +
+'Datei &1 kann nicht geÃ¶ffnet werden.'                                +
                 ) +
                 SECLVL( +
 'Hinweis  . . . . :  &2 - &3'                                         +
@@ -986,8 +986,8 @@ TMF angegeben ist.'                                                   +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0042                    */
-     /* Die Datensatzlänge der IFS Datei ist zu lang.               */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0042                    */
+     /* Die DatensatzlÃ¤nge der IFS Datei ist zu lang.               */
      /*-------------------------------------------------------------*/
 
              RMVMSGD MSGID(PRZ0042) MSGF(&LIB/&OBJ)
@@ -997,13 +997,13 @@ TMF angegeben ist.'                                                   +
                 MSGID(PRZ0042) +
                 MSGF(&LIB/&OBJ) +
                 MSG( +
-'Die Datensatzlänge der IFS Datei ist zu lang.'                       +
+'Die DatensatzlÃ¤nge der IFS Datei ist zu lang.'                       +
                 ) +
                 SECLVL( +
-'Ursache  . . . . :  Die Datensatzlänge der IFS Datei beträgt &1 Byte.-
- Die maximale Datensatzlänge ist auf &2 Byte begrenzt. &N Fehlerbeseit-
-igung:  Wählen Sie eine Eingabedatei aus, deren Datensatzlänge nicht g-
-rößer als &2 Byte ist. Der Name der Datei ist: &N Datei  . . . . . :  -
+'Ursache  . . . . :  Die DatensatzlÃ¤nge der IFS Datei betrÃ¤gt &1 Byte.-
+ Die maximale DatensatzlÃ¤nge ist auf &2 Byte begrenzt. &N Fehlerbeseit-
+igung:  WÃ¤hlen Sie eine Eingabedatei aus, deren DatensatzlÃ¤nge nicht g-
+rÃ¶ÃŸer als &2 Byte ist. Der Name der Datei ist: &N Datei  . . . . . :  -
 &4 &N Verzeichnis  . . :  &4'                                         +
                 ) +
                 SEV(40) +
@@ -1018,7 +1018,7 @@ rößer als &2 Byte ist. Der Name der Datei ist: &N Datei  . . . . . :  -
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0043                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0043                    */
      /* Datei nicht gefunden: &1                                    */
      /*-------------------------------------------------------------*/
 
@@ -1042,7 +1042,7 @@ rößer als &2 Byte ist. Der Name der Datei ist: &N Datei  . . . . . :  -
              RCLRSC LVL(*)
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0044                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0044                    */
      /* Erstellungsbefehl nicht gefunden in Quellendatei &1         */
      /*-------------------------------------------------------------*/
 
@@ -1056,7 +1056,7 @@ rößer als &2 Byte ist. Der Name der Datei ist: &N Datei  . . . . . :  -
 'Erstellungsbefehl nicht gefunden in Quellendatei &1'                 +
                 ) +
                 SECLVL( +
-'Fehlerbeseitigung:  Hinzufügen Erstellungsbefehl. &N Datei  . . . . .-
+'Fehlerbeseitigung:  HinzufÃ¼gen Erstellungsbefehl. &N Datei  . . . . .-
  :  &2 &N Verzeichnis  . . :  &1'                                     +
                 ) +
                 SEV(40) +
@@ -1069,7 +1069,7 @@ rößer als &2 Byte ist. Der Name der Datei ist: &N Datei  . . . . . :  -
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0045                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0045                    */
      /* Keine Pre-Compiler Anweisungen in Quellendatei &2           */
      /*-------------------------------------------------------------*/
 
@@ -1083,7 +1083,7 @@ rößer als &2 Byte ist. Der Name der Datei ist: &N Datei  . . . . . :  -
 'Keine Pre-Compiler Anweisungen in Quellendatei &2'                   +
                 ) +
                 SECLVL( +
-'Fehlerbeseitigung:  Hinzufügen Pre-Compiler Anweisungen. &N Datei  . -
+'Fehlerbeseitigung:  HinzufÃ¼gen Pre-Compiler Anweisungen. &N Datei  . -
 . . . . :  &2 &N Verzeichnis  . . :  &1'                              +
                 ) +
                 SEV(40) +

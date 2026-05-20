@@ -22,7 +22,7 @@
 //=====================================================================*
 //  History:                                                           *
 //                                                                     *
-//  Datum       Name          Änderung                                 *
+//  Datum       Name          Ã„nderung                                 *
 //  ----------  ------------  ---------------------------------------  *
 //  21.05.2002  Th.Raddatz    Removed special characters from src mbr  *
 //                                                                     *
@@ -544,7 +544,7 @@ dcl-pr CEEUTX extproc('CEEUTX');
 end-pr;
 
 // =============================================================
-//  Ausführen Pre-Prozessor
+//  AusfÃ¼hren Pre-Prozessor
 // =============================================================
 dcl-proc run export;
   dcl-pi *n;
@@ -597,19 +597,19 @@ dcl-proc run export;
   //  Nachrichten
   //  ... Falsche Reihenfolge im Betriebsmodus.
 /copy QSTRPREPRC,PRZ0001
-  //  ... Fehler beim Öffnen der Steuerdatei &2/&1, Teildatei &3.
+  //  ... Fehler beim Ã–ffnen der Steuerdatei &2/&1, Teildatei &3.
 /copy QSTRPREPRC,PRZ0013
-  //  ... Auszuführender Befehl fehlt. Weitere Verarbeitung nich . . .
+  //  ... AuszufÃ¼hrender Befehl fehlt. Weitere Verarbeitung nich . . .
 /copy QSTRPREPRC,PRZ0014
   //  ... Keine Pre-Compiler Anweisungen in Quellendatei &2/&1, Teildatei &3 gefunden.
 /copy QSTRPREPRC,PRZ0024
-  //  ... EVFEVENT Datei in Bibliothek &1 oder das Job Protokoll konnte nicht geöffnet
+  //  ... EVFEVENT Datei in Bibliothek &1 oder das Job Protokoll konnte nicht geÃ¶ffnet
 /copy QSTRPREPRC,PRZ0025
   //  ... EVFEVENT Datei konnte nicht zur Ausgabe vorbereitet werden.
 /copy QSTRPREPRC,PRZ0026
   //  ... Erstellungsbefehl nicht gefunden in Quellendatei &2/&1, Teildatei &3.
 /copy QSTRPREPRC,PRZ0028
-  //  ... Die Option *ADDJOBLOG ist nur in Verbindung mit *EVENTF zulässig.
+  //  ... Die Option *ADDJOBLOG ist nur in Verbindung mit *EVENTF zulÃ¤ssig.
 /copy QSTRPREPRC,PRZ0030
   //  ... Erstellungsbefehl nicht gefunden in Quellendatei &1
 /copy QSTRPREPRC,PRZ0044
@@ -797,7 +797,7 @@ dcl-proc run export;
     endAbnormal();
   endif;
 
-  // Entfernen der "Öffnen" Nachrichten
+  // Entfernen der "Ã¶ffnen" Nachrichten
   p_rmvPgmMsg(cMsg_Rmv_All);
 
   // Formatieren Befehl
@@ -807,9 +807,9 @@ dcl-proc run export;
   mode = cMODE_SCAN;
   pushMode(mode);
 
-  // Initialisieren "Ausführen Befehl implizit"
+  // Initialisieren "AusfÃ¼hren Befehl implizit"
   // Der Erstellungsbefehl wird ohne Pre-Prozessor
-  // Abschnitt ausgeführt
+  // Abschnitt ausgefÃ¼hrt
   execCmdImplizit = cTrue;
 
   // Initialisieren "STRPREPRC" Anweisungen gefunden
@@ -826,7 +826,7 @@ dcl-proc run export;
       // ermitteln neue Betriebsart
       newMode = tagToMode(tag);
 
-      // prüfen Betriebsartenwechsel
+      // prÃ¼fen Betriebsartenwechsel
       if (not checkMode(mode: newMode));
         endAbnormal();
       endif;
@@ -912,7 +912,7 @@ dcl-proc run export;
                                  : srcDta
                                  : lineData.continue);
 
-      // prüfen auf Fortsetzungszeile
+      // prÃ¼fen auf Fortsetzungszeile
       if (lineData.continue <> cEND_OF_LINE);
         iter;
       else;
@@ -940,13 +940,13 @@ dcl-proc run export;
         endAbnormal();
       endif;
 
-      // zufügen Schlüsselwortdaten
+      // zufÃ¼gen SchlÃ¼sselwortdaten
       lineData.keyData = addData(cTAG_PARM
                                  : lineData.keyData
                                  : srcDta
                                  : lineData.continue );
 
-      // prüfen auf Fortsetzungszeile
+      // prÃ¼fen auf Fortsetzungszeile
       if (lineData.continue <> cEND_OF_LINE);
         iter;
       else;
@@ -966,13 +966,13 @@ dcl-proc run export;
 
     // Befehl-Anweisung    >>CMD<<
     if (mode = cMODE_CMD);
-      // zufügen Schlüsselwortdaten
+      // zufÃ¼gen SchlÃ¼sselwortdaten
       lineData.keyData = addData(cTAG_CMD
                                  : lineData.keyData
                                  : srcDta
                                  : lineData.continue);
 
-      // prüfen auf Fortsetzungszeile
+      // prÃ¼fen auf Fortsetzungszeile
       if (lineData.continue <> cEND_OF_LINE);
         iter;
       else;
@@ -985,13 +985,13 @@ dcl-proc run export;
 
     // Befehl-Anweisung    >>INCLUDE<<
     if (mode = cMODE_INCLUDE);
-      // zufügen Schlüsselwortdaten
+      // zufÃ¼gen SchlÃ¼sselwortdaten
       lineData.keyData = addData(cTAG_INCLUDE
                                  : lineData.keyData
                                  : srcDta
                                  : lineData.continue);
 
-      // prüfen auf Fortsetzungszeile
+      // prÃ¼fen auf Fortsetzungszeile
       if (lineData.continue <> cEND_OF_LINE);
         iter;
       else;
@@ -1004,13 +1004,13 @@ dcl-proc run export;
 
     // Befehl-Anweisung    >>LIBL<<
     if (mode = cMODE_LIBL);
-      // zufügen Schlüsselwortdaten
+      // zufÃ¼gen SchlÃ¼sselwortdaten
       lineData.keyData = addData(cTAG_LIBL
                                  : lineData.keyData
                                  : srcDta
                                  : lineData.continue);
 
-      // prüfen auf Fortsetzungszeile
+      // prÃ¼fen auf Fortsetzungszeile
       if (lineData.continue <> cEND_OF_LINE);
         iter;
       else;
@@ -1025,13 +1025,13 @@ dcl-proc run export;
 
     // Befehl-Anweisung    >>CURLIB<<
     if (mode = cMODE_CURLIB);
-      // zufügen Schlüsselwortdaten
+      // zufÃ¼gen SchlÃ¼sselwortdaten
       lineData.keyData = addData(cTAG_CURLIB
                                  : lineData.keyData
                                  : srcDta
                                  : lineData.continue);
 
-      // prüfen auf Fortsetzungszeile
+      // prÃ¼fen auf Fortsetzungszeile
       if (lineData.continue <> cEND_OF_LINE);
         iter;
       else;
@@ -1066,7 +1066,7 @@ dcl-proc run export;
     IncludeFile_close();
   endif;
 
-  // Ausführen >>EXECUTE<< implizit, weil
+  // AusfÃ¼hren >>EXECUTE<< implizit, weil
   // kein Pre-Prozessor Abschnitt gefunden werden konnte
   isCmdMissingError = cFalse;
   if (execCmdImplizit = cTrue);
@@ -1310,7 +1310,7 @@ dcl-proc replaceVars;
   dcl-s posOfVar like(int4_t) inz;
   dcl-s i int(5);
 
-  //  ... Fehlender Wert für Variable an Position &1 des auszuführenden Befehls.
+  //  ... Fehlender Wert fÃ¼r Variable an Position &1 des auszufÃ¼hrenden Befehls.
 /copy QSTRPREPRC,PRZ0023
 
   cmdString = i_cmd;
@@ -1489,7 +1489,7 @@ dcl-proc replaceVars;
     replaceVar('&FILE': i_variables.file: cmdString);
   endif;
 
-  // Prüfen, ob alle Variablen ersetzt worden sind
+  // PrÃ¼fen, ob alle Variablen ersetzt worden sind
   posOfVar = %scan('&': cmdString);
 
   if (posOfVar <> 0);
@@ -1721,7 +1721,7 @@ dcl-proc performIncludeMember;
   dcl-s file varchar(10);
   dcl-s member varchar(10);
 
-  //  ... Ungültige INCLUDE Marke in Zeile &1 gefunden.
+  //  ... UngÃ¼ltige INCLUDE Marke in Zeile &1 gefunden.
 /copy QSTRPREPRC,PRZ0031
 
   s = 1;
@@ -1808,7 +1808,7 @@ dcl-proc loadMonitoredMessageIDs;
       // ermitteln neue Betriebsart
       newMode = tagToMode(tag);
 
-      // prüfen Betriebsartenwechsel
+      // prÃ¼fen Betriebsartenwechsel
       if (not checkMode(mode: newMode));
         endAbnormal();
       endif;
@@ -1823,13 +1823,13 @@ dcl-proc loadMonitoredMessageIDs;
     // MsgID-Anweisung     >>MSGID<<
     if (mode = cMODE_MSGID);
 
-      // zufügen Schlüsselwortdaten
+      // zufÃ¼gen SchlÃ¼sselwortdaten
       lineData.keyData = addData(cTAG_MSGID
       : lineData.keyData
       : srcDta
       : lineData.continue );
 
-      // prüfen auf Fortsetzungszeile
+      // prÃ¼fen auf Fortsetzungszeile
       if (lineData.continue <> cEND_OF_LINE);
         iter;
       else;
@@ -2138,7 +2138,7 @@ dcl-proc retrieveEventFile;
 end-proc;
 
 // =============================================================
-//  Zusammenbauen Schlüsselwortdaten
+//  Zusammenbauen SchlÃ¼sselwortdaten
 // =============================================================
 dcl-proc addData;
   dcl-pi *n like(keyData_t);
@@ -2152,11 +2152,11 @@ dcl-proc addData;
   dcl-s keyData like(keyData_t) inz;
 
   //  Nachrichten
-  //  ... Ungültiges Fortsetzungszeichen &1 in Zeile &2 gefunden.
+  //  ... UngÃ¼ltiges Fortsetzungszeichen &1 in Zeile &2 gefunden.
 /copy QSTRPREPRC,PRZ0005
   //  ... Das Zeilenendekennzeichen konnte nicht gefunden werden.
 /copy QSTRPREPRC,PRZ0008
-  //  ... Unbekannter Wert "&1" für Fortsetzungszeichen gefunden.
+  //  ... Unbekannter Wert "&1" fÃ¼r Fortsetzungszeichen gefunden.
 /copy QSTRPREPRC,PRZ0009
 
   //  Arbeitsfelder
@@ -2191,10 +2191,10 @@ dcl-proc addData;
     x = x - 1;
   enddo;
 
-  // ermitteln Datenlänge Fortsetzungszeichen
+  // ermitteln DatenlÃ¤nge Fortsetzungszeichen
   dataLen = x - start;
 
-  // prüfen Datenlänge
+  // prÃ¼fen DatenlÃ¤nge
   if (dataLen < 0);
     clear PRZ0008;
 
@@ -2208,10 +2208,10 @@ dcl-proc addData;
     endAbnormal();
   endif;
 
-  // Wenn eine Datenlänge ermittelt werden konnte, ...
+  // Wenn eine DatenlÃ¤nge ermittelt werden konnte, ...
   if (dataLen > 0);
     // ... dann
-    //     zufügen neue Daten zu Schlüsselwort bei ...
+    //     zufÃ¼gen neue Daten zu SchlÃ¼sselwort bei ...
     select;
     when (io_continue = cNEW_LINE);     // ... neue Zeile
       keyData = %subst(i_srcDta: start: dataLen);
@@ -2224,8 +2224,8 @@ dcl-proc addData;
 
     other;
       // ... dieser Fall kann nicht eintreten
-      //     weil über die Prüfung von dataLen sichergestellt ist,
-      //     dass immer ein gültiges Fortsetzungszeichen vorhanden ist.
+      //     weil Ã¼ber die PrÃ¼fung von dataLen sichergestellt ist,
+      //     dass immer ein gÃ¼ltiges Fortsetzungszeichen vorhanden ist.
       //     Dennoch:
       clear PRZ0009;
       PRZ00091 = io_continue;
@@ -2242,7 +2242,7 @@ dcl-proc addData;
   // ermitteln neues Fortsetzungszeichen
   io_continue = %subst(i_srcdta: x: %len(io_continue));
 
-  // prüfen neues Fortsetzungszeichen
+  // prÃ¼fen neues Fortsetzungszeichen
   if (io_continue <> cEND_OF_LINE) and
   (io_continue <> cTRUNC_CONT) and
   (io_continue <> cCONT);
@@ -2292,7 +2292,7 @@ dcl-proc getWidthValue;
     return width;
   endif;
 
-  // Überspringen von Leerzeichen zwischen >>WIDTH<< und der angegebenen Breite
+  // Ã¼berspringen von Leerzeichen zwischen >>WIDTH<< und der angegebenen Breite
   x = x + %len(cTAG_WIDTH);
   x = %check(' ': %subst(i_srcDta: 1: i_length): x);
 
@@ -2311,7 +2311,7 @@ dcl-proc getWidthValue;
 end-proc;
 
 // =============================================================
-//  Ersetzen/Hinzufügen Schlüsselwort
+//  Ersetzen/HinzufÃ¼gen SchlÃ¼sselwort
 // =============================================================
 dcl-proc replaceCmdKeyWord;
   dcl-pi *n like(cmdLong_t);
@@ -2323,7 +2323,7 @@ dcl-proc replaceCmdKeyWord;
   dcl-s cmd like(cmdLong_t) inz;
 
   //  Nachrichten
-  //  ... Das Ende des Schlüsselwortes &1 konnte nicht gefunden werden.
+  //  ... Das Ende des SchlÃ¼sselwortes &1 konnte nicht gefunden werden.
 /copy QSTRPREPRC,PRZ0006
 
   //  Arbeitsfelder
@@ -2340,7 +2340,7 @@ dcl-proc replaceCmdKeyWord;
   token = %subst(i_keyData: 1: x);
 
   // ermitteln Ende des Befehlswortes ...
-  // ... überspringen führende Leerzeichen
+  // ... Ã¼berspringen fÃ¼hrende Leerzeichen
   x = %check(' ': i_cmd);
   // ... suchen Leerzeichen nach Befehlswort
   x = %scan(' ': i_cmd: x);
@@ -2360,7 +2360,7 @@ dcl-proc replaceCmdKeyWord;
   // Wenn das Token gefunden werden konnte, ...
   if (startPos <> 0);
     // ... dann
-    //     ermitteln Länge des Schlüsselwortes ...
+    //     ermitteln LÃ¤nge des SchlÃ¼sselwortes ...
     x = startPos + %len(token);
     numBracket = 1;
     dataLen = %len(token);
@@ -2389,10 +2389,10 @@ dcl-proc replaceCmdKeyWord;
 
     endfor;
 
-    // Wenn der Klammernzähler <> 0 ist, ...
+    // Wenn der KlammernzÃ¤hler <> 0 ist, ...
     if (numBracket <> 0);
       // ... dann
-      //     konnte das Ende des Schlüsselwortes
+      //     konnte das Ende des SchlÃ¼sselwortes
       //     nicht gefunden werden
       clear PRZ0006;
       PRZ00061 = %subst(token: 1: %len(token) - 1);
@@ -2400,12 +2400,12 @@ dcl-proc replaceCmdKeyWord;
       endAbnormal();
     endif;
 
-    // austauschen Schlüsselwort
+    // austauschen SchlÃ¼sselwort
     cmd = %replace(i_keyData: i_cmd: startPos: dataLen);
 
   else;
     // ... sonst
-    //     anfügen Schlüsselwort
+    //     anfÃ¼gen SchlÃ¼sselwort
     cmd = %trim(i_cmd) + ' ' + i_keyData;
   endif;
 
@@ -2414,7 +2414,7 @@ dcl-proc replaceCmdKeyWord;
 end-proc;
 
 // =============================================================
-//  Ermitteln Länge von srcDta
+//  Ermitteln LÃ¤nge von srcDta
 // =============================================================
 dcl-proc getSrcDataLength;
   dcl-pi *n like(int4_t);
@@ -2471,7 +2471,7 @@ dcl-proc getStartPos;
 end-proc;
 
 // =============================================================
-//  Prüfen auf gültiges Tag
+//  PrÃ¼fen auf gÃ¼ltiges Tag
 // =============================================================
 dcl-proc isTag;
   dcl-pi *n like(bool_t);
@@ -2569,13 +2569,13 @@ dcl-proc isTag;
       leave;
     endif;
 
-    // Ausführen "Hauptbefehl"
+    // AusfÃ¼hren "Hauptbefehl"
     if (retrieveTag(cTAG_EXECUTE: i_srcDta: o_tag));
       isTag = cTrue;
       leave;
     endif;
 
-    // Ausführen Pre-/Post-Anweisung
+    // AusfÃ¼hren Pre-/Post-Anweisung
     if (retrieveTag(cTAG_CMD: i_srcDta: o_tag));
       isTag = cTrue;
       leave;
@@ -2587,13 +2587,13 @@ dcl-proc isTag;
       leave;
     endif;
 
-    // Ausführen Anweisung zum Setzen einer Bibliotheksliste
+    // AusfÃ¼hren Anweisung zum Setzen einer Bibliotheksliste
     if (retrieveTag(cTAG_LIBL: i_srcDta: o_tag));
       isTag = cTrue;
       leave;
     endif;
 
-    // Ausführen Anweisung zum Setzen der aktuellen Bibliothek
+    // AusfÃ¼hren Anweisung zum Setzen der aktuellen Bibliothek
     if (retrieveTag(cTAG_CURLIB: i_srcDta: o_tag));
       isTag = cTrue;
       leave;
@@ -2646,7 +2646,7 @@ dcl-proc tagToMode;
   dcl-s mode like(mode_t) inz;
 
   //  Nachrichten
-  //  ... Das Ende des Schlüsselwortes &1 konnte nicht gefunden werden.
+  //  ... Das Ende des SchlÃ¼sselwortes &1 konnte nicht gefunden werden.
 /copy QSTRPREPRC,PRZ0010
 
   select;
@@ -2706,11 +2706,11 @@ dcl-proc tagToMode;
   when (i_tag = cTAG_MSGID);
     mode = cMODE_MSGID;
 
-  // Ausführen "Hauptbefehl"
+  // AusfÃ¼hren "Hauptbefehl"
   when (i_tag = cTAG_EXECUTE);
     mode  = cMODE_EXECUTE;
 
-  // Ausführen Pre-/Post-Befehle
+  // AusfÃ¼hren Pre-/Post-Befehle
   when (i_tag = cTAG_CMD);
     mode  = cMODE_CMD;
 
@@ -2718,17 +2718,17 @@ dcl-proc tagToMode;
   when (i_tag = cTAG_INCLUDE);
     mode  = cMODE_INCLUDE;
 
-  // Ausführen Anweisung zum Setzen einer Bibliotheksliste
+  // AusfÃ¼hren Anweisung zum Setzen einer Bibliotheksliste
   when (i_tag = cTAG_LIBL);
     mode  = cMODE_LIBL;
 
-  // Ausführen Anweisung zum Setzen der aktuellen Bibliothek
+  // AusfÃ¼hren Anweisung zum Setzen der aktuellen Bibliothek
   when (i_tag = cTAG_CURLIB);
     mode  = cMODE_CURLIB;
 
   other;
     // ... darf nicht vorkommen, da alle Tags, die erkannt werden
-    //     auch umgesetzt werden müssen.
+    //     auch umgesetzt werden mÃ¼ssen.
     //     Dennoch:
     clear PRZ0010;
     PRZ00101 = i_tag;
@@ -2741,7 +2741,7 @@ dcl-proc tagToMode;
 end-proc;
 
 // =============================================================
-//  Ändern Betriebsmodus
+//  Ã„ndern Betriebsmodus
 // =============================================================
 dcl-proc checkMode;
   dcl-pi *n ind;
@@ -2833,14 +2833,14 @@ dcl-proc popMode;
 end-proc;
 
 // =============================================================
-//  Prüfen CL Befehl
+//  PrÃ¼fen CL Befehl
 // =============================================================
 dcl-proc validateCmd;
   dcl-pi *n like(bool_t);
     i_cmd like(cmdLong_t) value;
   end-pi;
 
-  //  Definitionen für QCAPCMD
+  //  Definitionen fÃ¼r QCAPCMD
   dcl-ds optCtrl likeds(cpop0100_t) inz;
   dcl-s retCmd like(cmdLongFixLen_t) inz;
   dcl-s retCmdLenAvl int(10) inz(%len(retCmd));
@@ -2903,7 +2903,7 @@ dcl-proc executeCmd;
   dcl-s msgFile like(msg_t.file) inz;
   dcl-s msgLib like(msg_t.lib) inz;
 
-  // Definitionen für Ausgangsprogramm
+  // Definitionen fÃ¼r Ausgangsprogramm
   dcl-s cmdLongFixLength like(cmdLongFixLen_t);
   dcl-s cmdLongLength packed(15: 5);
   dcl-s exitPgmName varchar(21);
@@ -2913,7 +2913,7 @@ dcl-proc executeCmd;
     length packed(15: 5) options(*nopass: *omit);
   end-pr;
 
-  //  Definitionen für QCAPCMD
+  //  Definitionen fÃ¼r QCAPCMD
   dcl-ds optCtrl likeds(cpop0100_t) inz;
   dcl-s retCmd like(cmdLongFixLen_t) inz;
   dcl-s retCmdLenAvl int(10) inz(%len(retCmd));
@@ -3105,7 +3105,7 @@ dcl-proc formatCmd;
   //  ... Fehler im Erstellungsbefehl gefunden.
 /copy QSTRPREPRC,PRZ0015
 
-  //  Definitionen für QCAPCMD
+  //  Definitionen fÃ¼r QCAPCMD
   dcl-s cmd like(i_cmd);
   dcl-ds optCtrl likeds(cpop0100_t) inz;
   dcl-s retCmd like(cmdLongFixLen_t) inz;
@@ -3135,7 +3135,7 @@ dcl-proc formatCmd;
   QCAPCMD(cmd: %len(cmd): optCtrl: %size(optCtrl): 'CPOP0100'
   : retCmd: retCmdLenAvl: retCmdLenRtn: errCode);
 
-  // Prüfen API-Fehler ...
+  // PrÃ¼fen API-Fehler ...
   if (f_isApiError(errCode));
     msg = f_cvtApiErrCodeToMsg(errCode);
     msg.type = cTYPE_DIAG;
@@ -3146,7 +3146,7 @@ dcl-proc formatCmd;
     endAbnormal();
   endif;
 
-  // Prüfen Länge der Befehlszeichenkette ...
+  // PrÃ¼fen LÃ¤nge der Befehlszeichenkette ...
   if (retCmdLenRtn > retCmdLenAvl);
     clear PRZ0007;
     PRZ00071 = retCmdLenAvl;
@@ -3219,7 +3219,7 @@ dcl-proc endOK;
   dcl-ds qEventf likeds(i_qEventf);
 
   //  Nachrichten
-  //  ... EVFEVENT Datei in Bibliothek &1 oder das Job Protokoll konnte nht geöffnet
+  //  ... EVFEVENT Datei in Bibliothek &1 oder das Job Protokoll konnte nht geÃ¶ffnet
 /copy QSTRPREPRC,PRZ0025
 
   if (%parms() >= p_qEventf and %addr(i_qEventf) <> *null);
@@ -3252,7 +3252,7 @@ dcl-proc writeJobLogToEventf;
   dcl-s isEmpty ind;
   dcl-s doAppend ind;
   dcl-s doAppendJobLog ind;
-  //  ... EVFEVENT Datei in Bibliothek &1 oder das Job Protokoll konnte nicht geöffnet
+  //  ... EVFEVENT Datei in Bibliothek &1 oder das Job Protokoll konnte nicht geÃ¶ffnet
 /copy QSTRPREPRC,PRZ0025
 
   monitor;

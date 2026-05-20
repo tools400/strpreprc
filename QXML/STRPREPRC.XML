@@ -51,7 +51,7 @@
       appblddate CDATA #REQUIRED
      >
      ]>
-<upload  appname="STRPREPRC"  appauthor="Thomas Raddatz"  appblddate=" 5/17/2026">
+<upload  appname="STRPREPRC"  appauthor="Thomas Raddatz"  appblddate=" 5/20/2026">
 <install_instructions><![CDATA[
      *----------------------------------------------------------------      ------
      *  1. Upload entire XML to your AS/400 to a source file 112 long, into any mbr
@@ -1503,9 +1503,9 @@ srccssid=  "01141">
                                  &TOLIB/STRPREPRC5  +
                                  &TOLIB/STRPREPRC6) +
                           ENTMOD(&TOLIB/STRPREPRC1) +
-                          BNDSRVPGM(&TOLIB/BASICS1  +
-                                    &TOLIB/EVENTF   +
-                                    &TOLIB/JOBLOG)  +
+                          BNDSRVPGM(*LIBL/BASICS1  +
+                                    *LIBL/EVENTF   +
+                                    *LIBL/JOBLOG)  +
                           DETAIL(*BASIC)            +
                           ACTGRP(*NEW) +
                           TGTRLS(&TGTRLS)
@@ -6678,7 +6678,7 @@ müssen durch :HP3.>>PARM<<:EHP3. Marken definiert werden.
 Weiterhin kann der Pre-Prozessor Vor- und Nachlaufbefehle vor, bzw. nach
 dem eigentlichen Erstellungsbefehl ausführen.
 :P.
-Über eine PDM-Kurzbefehl lassen sich die Objekte, die über Pre-Prozessor
+über eine PDM-Kurzbefehl lassen sich die Objekte, die über Pre-Prozessor
 Anweisungen in der Quellenteildatei verfügen, leicht erstellen:
 :P.
 :LINES.
@@ -6818,7 +6818,7 @@ frei nach Gefühl verwendet werden.
 :PT.>>END-LINK<<
 :PD.Diese Marke beendet den Abschnitt für die
 Linker Schlüsselworte. Zwischen diesen beiden Marken werden die
-Befehlsschlüsselwörter über :HP3.>>PARM<<:EHP3. Marken angegeben. Von
+Befehlsschlösselwörter über :HP3.>>PARM<<:EHP3. Marken angegeben. Von
 der Verabeitung her betrachtet gibt es keinen Unterschied zwischen
 den Abschnitten IMPORTANT, COMPILE und LINK. Die Abschnitte können daher
 frei nach Gefühl verwendet werden.
@@ -6830,15 +6830,15 @@ durch Leerzeichen getrennt angegeben sein. Die überschriebene Bibliotheksliste
 steht anschließend in der Variablen :HP2.&LX:EHP2. zur Verfügung.
 
 :PT.>>CURLIB<<
-:PD.Diese Marke führt den Befehl CHGLIBL aus, um die aktuelle Bibliothek
+:PD.Diese Marke fährt den Befehl CHGLIBL aus, um die aktuelle Bibliothek
 auf den angegebenen Wert zu setzen. Die überschriebene aktuelle Bibliothek
 steht anschließend in der Variablen :HP2.&CX:EHP2. zur Verfügung.
 
 :PT.>>PARM<<
 :PD.Diese Marke definiert ein Schlüsselwort für den
 Erstellungsbefehl. >>PARM<< Marken sind nur innerhalb der
-Compiler- und Linker-Abschnitte zulässig. Über >>PARM<<
-definierte Schlüsselwörter überschreiben Schlüsselwörte
+Compiler- und Linker-Abschnitte zulässig. über >>PARM<<
+definierte Schlüsselwörter überschreiben Schlüsselwörter
 eines übergebenen oder unter :HP3.>>CMD<<:EHP3. angegebenen
 Befehls.
 
@@ -7765,7 +7765,7 @@ aktuellen Thread ersetzt.
 :PT.:PV.Name:EPV.
 :PD.Die Namen der Bibliotheken angeben, die dem
 Benutzerteil der Bibliotheksliste für den aktuellen
-Thread in der Reihenfolge hinzugefügt werden sollen,
+Thread in der Reihenfolge hinzugefägt werden sollen,
 in der sie durchsucht werden sollen. Es können bis zu
 250 Namen angegeben werden.
 :EPARML.
@@ -7891,7 +7891,7 @@ Ausgangspgm. Befehlsausführung (EXICMDEXC) - Hilfe
 :P.
 Gibt den Namen und die Bibliothek eines Exitprogramms an, welches
 vor der Ausführung des Befehgl der >>EXECUTE<< Marke aufgerufen wird, um
-den Befehl vor der Ausführung noch nach Bedarf änderung zu können.
+den Befehl vor der Ausführung noch nach Bedarf Änderung zu können.
 :P.
 :HP2.Dieser Exit wird zum Beispiel von CMOne verwendet.:EHP2.
 :IMHELP name='COM/OPTPARM'.
@@ -9634,10 +9634,10 @@ end-ds;
 dcl-c STMF_UTF8 '/home/raddatz/temp/strpreprct.utf8';
 
 dcl-c LINE_BEGIN '--- begin of data (LF) ---';
-dcl-c LINE_1 '1. line ï¿½ï¿½ï¿½ CR (short line)';
-dcl-c LINE_2 '2. line ï¿½ï¿½ï¿½ LF (longer line)';
-dcl-c LINE_3 '3. line ï¿½ï¿½ï¿½ CRLF (even longer line)';
-dcl-c LINE_4 '4. line ï¿½ï¿½ï¿½ LFCR (longest line ever)';
+dcl-c LINE_1 '1. line --> CR (short line)';
+dcl-c LINE_2 '2. line --> LF (longer line)';
+dcl-c LINE_3 '3. line --> CRLF (even longer line)';
+dcl-c LINE_4 '4. line --> LFCR (longest line ever)';
 dcl-c LINE_END '---- end of data (./.) ----';
 
 dcl-ds LINES qualified;
@@ -13093,7 +13093,7 @@ dcl-proc run export;
     endAbnormal();
   endif;
 
-  // Entfernen der "Öffnen" Nachrichten
+  // Entfernen der "öffnen" Nachrichten
   p_rmvPgmMsg(cMsg_Rmv_All);
 
   // Formatieren Befehl
@@ -14588,7 +14588,7 @@ dcl-proc getWidthValue;
     return width;
   endif;
 
-  // Überspringen von Leerzeichen zwischen >>WIDTH<< und der angegebenen Breite
+  // überspringen von Leerzeichen zwischen >>WIDTH<< und der angegebenen Breite
   x = x + %len(cTAG_WIDTH);
   x = %check(' ': %subst(i_srcDta: 1: i_length): x);
 

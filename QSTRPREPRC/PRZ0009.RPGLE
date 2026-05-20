@@ -1,8 +1,8 @@
 **free
 //---------------------------------------------------------------
-// Datenstruktur für Message-ID : PRZ0009
+// Datenstruktur fÃ¼r Message-ID : PRZ0009
 
-// Unbekannter Wert "&1" für Fortsetzungszeichen gefunden.
+// Unbekannter Wert "&1" fÃ¼r Fortsetzungszeichen gefunden.
 
 dcl-ds PRZ0009;
   PRZ00091 char(010) inz(*blanks);

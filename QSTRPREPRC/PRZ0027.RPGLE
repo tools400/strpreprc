@@ -1,8 +1,8 @@
 **free
 //---------------------------------------------------------------
-// Datenstruktur für Message-ID : PRZ0027
+// Datenstruktur fÃ¼r Message-ID : PRZ0027
 
-// Wenn die Option '*EVENTF' angegeben ist, müssen auch die Pa
+// Wenn die Option '*EVENTF' angegeben ist, mÃ¼ssen auch die Pa
 
 dcl-ds PRZ0027;
 end-ds;

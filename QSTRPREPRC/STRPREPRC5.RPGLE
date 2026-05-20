@@ -22,7 +22,7 @@
 //=====================================================================*
 //  History:                                                           *
 //                                                                     *
-//  Datum       Name          Änderung                                 *
+//  Datum       Name          Ã„nderung                                 *
 //  ----------  ------------  ---------------------------------------  *
 //  21.03.2022  Th.Raddatz    Added Member_exists().                   *
 //                                                                     *
@@ -408,9 +408,9 @@ dcl-proc QSYSSourceFile_open;
     i_mbr      like(mbr_t) const;
   end-pi;
 
-  //  ... Die Datensatzlänge der Eingabedatei ist zu lang.
+  //  ... Die DatensatzlÃ¤nge der Eingabedatei ist zu lang.
 /copy QSTRPREPRC,PRZ0011
-  //  ... Fehler beim Öffnen der Quellendatei &2/&1, Teildatei &3.
+  //  ... Fehler beim Ã–ffnen der Quellendatei &2/&1, Teildatei &3.
 /copy QSTRPREPRC,PRZ0012
 
   // Does not work, because CHKOBJ does not resolve members
@@ -436,7 +436,7 @@ dcl-proc QSYSSourceFile_open;
         f1.rcdLen -
         (%size(ds_srcFile_t.srcSeq) + %size(ds_srcFile_t.srcDat));
 
-  // Prüfen der Datensatzlänge
+  // PrÃ¼fen der DatensatzlÃ¤nge
   if (f1.rcdLen > MAX_RCD_LEN);
     clear PRZ0011;
     PRZ00111 = f1.rcdLen;

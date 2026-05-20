@@ -1,8 +1,8 @@
 **free
 //---------------------------------------------------------------
-// Datenstruktur für Message-ID : PRZ0006
+// Datenstruktur fÃ¼r Message-ID : PRZ0006
 
-// Das Ende des Schlüsselwortes &1 konnte nicht gefunden werde
+// Das Ende des SchlÃ¼sselwortes &1 konnte nicht gefunden werde
 
 dcl-ds PRZ0006;
   PRZ00061 char(010) inz(*blanks);

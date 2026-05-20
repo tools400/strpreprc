@@ -1,8 +1,8 @@
 **free
 //---------------------------------------------------------------
-// Datenstruktur für Message-ID : PRZ0017
+// Datenstruktur fÃ¼r Message-ID : PRZ0017
 
-// Der Parameter 'OBJSRCLIB' ist nicht zulässig, wenn CHGOBJD(
+// Der Parameter 'OBJSRCLIB' ist nicht zulÃ¤ssig, wenn CHGOBJD(
 
 dcl-ds PRZ0017;
 end-ds;

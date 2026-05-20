@@ -1,8 +1,8 @@
 **free
 //---------------------------------------------------------------
-// Datenstruktur für Message-ID : PRZ0021
+// Datenstruktur fÃ¼r Message-ID : PRZ0021
 
-// Befehl CHGOBJDA nicht gefunden oder unvollständig.
+// Befehl CHGOBJDA nicht gefunden oder unvollstÃ¤ndig.
 
 dcl-ds PRZ0021;
 end-ds;

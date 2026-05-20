@@ -1,7 +1,7 @@
 **free
 // ---------------------------------------------------------------
 //  Data structure for message ID: PRZ0040
-//  Wert *DFT ist unzulässig für SRCFILE, SRCLIB und SRCMBR, we
+//  Wert *DFT ist unzulÃ¤ssig fÃ¼r SRCFILE, SRCLIB und SRCMBR, we
 dcl-ds PRZ0040;
   PRZ00401 char(70) inz(*blanks);
 end-ds;

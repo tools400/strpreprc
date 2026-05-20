@@ -1,6 +1,6 @@
 **free
 //---------------------------------------------------------------
-// Datenstruktur für Message-ID : PRZ0028
+// Datenstruktur fÃ¼r Message-ID : PRZ0028
 
 // Erstellungsbefehl nicht gefunden in Quellendatei &2/&1, Teildatei &3.
 

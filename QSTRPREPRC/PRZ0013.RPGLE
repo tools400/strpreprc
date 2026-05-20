@@ -1,8 +1,8 @@
 **free
 //---------------------------------------------------------------
-// Datenstruktur für Message-ID : PRZ0013
+// Datenstruktur fÃ¼r Message-ID : PRZ0013
 
-// Fehler beim Öffnen der Steuerdatei &2/&1, Teildatei &3.
+// Fehler beim Ã–ffnen der Steuerdatei &2/&1, Teildatei &3.
 
 dcl-ds PRZ0013;
   PRZ00131 char(010) inz(*blanks);

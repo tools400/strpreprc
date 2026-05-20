@@ -1,6 +1,6 @@
 **free
 //---------------------------------------------------------------
-// Datenstruktur für Message-ID : PRZ0002
+// Datenstruktur fÃ¼r Message-ID : PRZ0002
 
 // Verarbeitung in Zeile &1 abgebrochen.
 

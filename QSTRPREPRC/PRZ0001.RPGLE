@@ -1,6 +1,6 @@
 **free
 //---------------------------------------------------------------
-// Datenstruktur für Message-ID : PRZ0001
+// Datenstruktur fÃ¼r Message-ID : PRZ0001
 
 // Falsche Reihenfolge im Betriebsmodus.
 

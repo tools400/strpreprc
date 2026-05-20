@@ -1,7 +1,7 @@
 **free
 // ---------------------------------------------------------------
 //  Data structure for message ID: PRZ0041
-//  Datei &1 kann nicht geöffnet werden.
+//  Datei &1 kann nicht geÃ¶ffnet werden.
 dcl-ds PRZ0041;
   PRZ00411 char(512) inz(*blanks);
   PRZ00412 char(10) inz(*blanks);

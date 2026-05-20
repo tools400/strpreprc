@@ -1,6 +1,6 @@
 **free
 //---------------------------------------------------------------
-// Datenstruktur für Message-ID : PRZ0008
+// Datenstruktur fÃ¼r Message-ID : PRZ0008
 
 // Das Zeilenendekennzeichen konnte nicht gefunden werden.
 

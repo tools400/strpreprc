@@ -21,7 +21,7 @@
      /* =================================================================== */
      /*  History:                                                           */
      /*                                                                     */
-     /*  Datum       Name          Änderung                                 */
+     /*  Datum       Name          Ã„nderung                                 */
      /*  ----------  ------------  ---------------------------------------  */
      /*  23.01.2007  Th.Raddatz    Added parameter TAGSREQ(...) to command. */
      /*  09.04.2015  Hildebrandt   Added parameter EXICMDEXC to command.    */
@@ -475,7 +475,7 @@
                                (&USESRCMBR  *NE ' ')) +
                           NBRTRUE(*ALL) MSGID(PRZ0039)
 
- /* ... *DFT nicht zulässig für         */
+ /* ... *DFT nicht zulÃ¤ssig fÃ¼r         */
  /*     SRCLIB, SRCFILE und SRCMBR,     */
  /*     wenn USESRCSTMF angegeben ist   */
              DEP        CTL(&USESRCSTMF *NE ' ') +

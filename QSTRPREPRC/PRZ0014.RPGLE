@@ -1,8 +1,8 @@
 **free
 //---------------------------------------------------------------
-// Datenstruktur für Message-ID : PRZ0014
+// Datenstruktur fÃ¼r Message-ID : PRZ0014
 
-// Auszuführender Befehl fehlt. Weitere Verarbeitung nicht mög
+// AuszufÃ¼hrender Befehl fehlt. Weitere Verarbeitung nicht mÃ¶g
 
 dcl-ds PRZ0014;
 end-ds;

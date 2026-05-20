@@ -1,8 +1,8 @@
 **free
 //---------------------------------------------------------------
-// Datenstruktur für Message-ID : PRZ0025
+// Datenstruktur fÃ¼r Message-ID : PRZ0025
 
-// EVFEVENT Datei in Bibliothek &1 oder das Job Protokoll konnte nicht geöffne
+// EVFEVENT Datei in Bibliothek &1 oder das Job Protokoll konnte nicht geÃ¶ffne
 
 dcl-ds PRZ0025;
   PRZ00251 char(010) inz(*blanks);

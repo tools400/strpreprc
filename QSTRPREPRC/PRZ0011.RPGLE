@@ -1,8 +1,8 @@
 **free
 //---------------------------------------------------------------
-// Datenstruktur für Message-ID : PRZ0011
+// Datenstruktur fÃ¼r Message-ID : PRZ0011
 
-// Die Datensatzlänge der Eingabedatei ist zu lang.
+// Die DatensatzlÃ¤nge der Eingabedatei ist zu lang.
 
 dcl-ds PRZ0011;
   PRZ00111 packed(010) inz(*zeros);

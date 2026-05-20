@@ -72,10 +72,10 @@ end-ds;
 dcl-c STMF_UTF8 '/home/raddatz/temp/strpreprct.utf8';
 
 dcl-c LINE_BEGIN '--- begin of data (LF) ---';
-dcl-c LINE_1 '1. line ��� CR (short line)';
-dcl-c LINE_2 '2. line ��� LF (longer line)';
-dcl-c LINE_3 '3. line ��� CRLF (even longer line)';
-dcl-c LINE_4 '4. line ��� LFCR (longest line ever)';
+dcl-c LINE_1 '1. line --> CR (short line)';
+dcl-c LINE_2 '2. line --> LF (longer line)';
+dcl-c LINE_3 '3. line --> CRLF (even longer line)';
+dcl-c LINE_4 '4. line --> LFCR (longest line ever)';
 dcl-c LINE_END '---- end of data (./.) ----';
 
 dcl-ds LINES qualified;

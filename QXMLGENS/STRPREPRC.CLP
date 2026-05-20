@@ -19,7 +19,7 @@
 /* -------------------------------------------------------------------------- */
              XMLGENINC  XINCLUDE(*YES)
 
-             XMLGENVRS XSRCFILE(QSTRPREPRC) XSRCLIB(TOOLS400) XSRCMBR(COPYRIGHT)
+             XMLGENVRS XSRCFILE(QSTRPREPRC) XSRCLIB(STRPREPRCD) XSRCMBR(COPYRIGHT)
 
              XMLGENCND  XMSG('Select language (GER, ENG)') +
                           XVALUES(GER ENG) XVAR(&LANG)
@@ -33,397 +33,397 @@
 /*  Deploy source member              */
 /* ---------------------------------- */
              XMLGENMBR  XMBR(A_INSTALL ) XMBRATR(CLLE ) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM) +
                           XGENCRT(*NO) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(A_MSG_ENG ) XMBRATR(CLP  ) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM) +
                           XGENCRT(*NO) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(A_MSG_GER ) XMBRATR(CLP  ) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM) +
                           XGENCRT(*NO) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(A_README  ) XMBRATR(TXT  ) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM) +
                           XGENCRT(*NO) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(COPYRIGHT ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM) +
                           XGENCRT(*NO) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(H_SPEC    ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM) +
                           XGENCRT(*NO) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(TYPES_H   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM) +
                           XGENCRT(*NO) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0001   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM) +
                           XGENCRT(*NO) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0002   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM) +
                           XGENCRT(*NO) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0003   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM) +
                           XGENCRT(*NO) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0004   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM) +
                           XGENCRT(*NO) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0005   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0006   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0007   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0008   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0009   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0010   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0011   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0012   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0013   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0014   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0015   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0016   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0017   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0018   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0019   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0020   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0021   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0022   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0023   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0024   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0025   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0026   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0027   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0028   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0029   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0030   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0031   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0032   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0033   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0034   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0035   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0036   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0037   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0038   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0039   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0040   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0041   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0042   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0043   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0044   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PRZ0045   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PSTRPREPR2) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PSTRPREPR3) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PSTRPREPR4) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PSTRPREPR5) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(PSTRPREPR6) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(QCAPCMD   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(QMHRCVPM  ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(QMHRMVPM  ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(QMHRTVM   ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(QUSRMBRD  ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(QWCRTVCA  ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(STRPREPRCP) XMBRATR(PNLGRP) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PNLGRP) +
                           XGENCRT(*NO) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(STRPREPRCQ) XMBRATR(PNLGRP) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PNLGRP) +
                           XGENCRT(*NO) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(STRPREPRCT) XMBRATR(SQLRPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PNLGRP) +
                           XGENCRT(*NO) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(SDS       ) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*PGM ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(STRPRE1   ) XMBRATR(PF   ) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*FILE  ) +
                           XGENCRT(*NO) XPARAM('MAXMBRS(1)')
 
              XMLGENMBR  XMBR(STRPRE2   ) XMBRATR(PF   ) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*FILE  ) +
                           XGENCRT(*NO) XPARAM('MAXMBRS(1)')
 
              XMLGENMBR  XMBR(STRPREPRC ) XMBRATR(MAKPGM) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*MODULE) +
                           XGENCRT(*NO) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(STRPREPRC1) XMBRATR(CLLE ) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*MODULE) +
                           XGENCRT(*NO) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(STRPREPRC2) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*MODULE) +
                           XGENCRT(*NO) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(STRPREPRC3) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*MODULE) +
                           XGENCRT(*NO) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(STRPREPRC4) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*MODULE) +
                           XGENCRT(*NO) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(STRPREPRC5) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*MODULE) +
                           XGENCRT(*NO) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(STRPREPRC5) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*MODULE) +
                           XGENCRT(*NO) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(STRPREPRC6) XMBRATR(RPGLE) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*MODULE) +
                           XGENCRT(*NO) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(STRPREPRCG) XMBRATR(CMD  ) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*CMD ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(STRPREPRCE) XMBRATR(CMD  ) +
-                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(TOOLS400) +
+                          XFROMSRCF(QSTRPREPRC) XFROMSRCL(STRPREPRCD) +
                           XTOSRCF(QSTRPREPRC) XOBJTYPE(*CMD ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 

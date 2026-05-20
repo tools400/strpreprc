@@ -1,6 +1,6 @@
 **free
 //---------------------------------------------------------------
-// Datenstruktur für Message-ID : PRZ0024
+// Datenstruktur fÃ¼r Message-ID : PRZ0024
 
 // Keine Pre-Compiler Anweisungen in Quellendatei &2/&1, Teildatei &3 gefunden.
 

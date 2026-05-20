@@ -1,6 +1,6 @@
 **free
 //---------------------------------------------------------------
-// Datenstruktur für Message-ID : PRZ0015
+// Datenstruktur fÃ¼r Message-ID : PRZ0015
 
 // Fehler im Erstellungsbefehl gefunden.
 

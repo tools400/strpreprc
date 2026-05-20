@@ -1,8 +1,8 @@
 **free
 //---------------------------------------------------------------
-// Datenstruktur für Message-ID : PRZ0004
+// Datenstruktur fÃ¼r Message-ID : PRZ0004
 
-// Die Marke &1 ist außerhalb der Betriebsart &2 nicht erlaubt
+// Die Marke &1 ist auÃŸerhalb der Betriebsart &2 nicht erlaubt
 
 dcl-ds PRZ0004;
   PRZ00041 char(030) inz(*blanks);

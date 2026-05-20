@@ -15,7 +15,7 @@
              DCL        VAR(&OBJ) TYPE(*CHAR) LEN(10) VALUE('STRPREPRC')
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0001                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0001                    */
      /* Wrong mode sequence.                                        */
      /*-------------------------------------------------------------*/
 
@@ -43,7 +43,7 @@ he corresponding END-xxx tag.'                                        +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0002                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0002                    */
      /* Execution canceled in line &1.                              */
      /*-------------------------------------------------------------*/
 
@@ -69,7 +69,7 @@ d during the creation command was checked.'                           +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0003                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0003                    */
      /* Parameter tags are not allowed in mode &1.                  */
      /*-------------------------------------------------------------*/
 
@@ -91,7 +91,7 @@ d during the creation command was checked.'                           +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0004                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0004                    */
      /* The tag &1 is not allowed outside mode &2.                  */
      /*-------------------------------------------------------------*/
 
@@ -114,7 +114,7 @@ d during the creation command was checked.'                           +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0005                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0005                    */
      /* Unkown continuation character &1 in line &2.                */
      /*-------------------------------------------------------------*/
 
@@ -137,7 +137,7 @@ d during the creation command was checked.'                           +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0006                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0006                    */
      /* End of keyword &1 not found.                                */
      /*-------------------------------------------------------------*/
 
@@ -159,7 +159,7 @@ d during the creation command was checked.'                           +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0007                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0007                    */
      /* Creation command too long.                                  */
      /*-------------------------------------------------------------*/
 
@@ -185,7 +185,7 @@ d during the creation command was checked.'                           +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0008                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0008                    */
      /* The end-of-line character could not be found.               */
      /*-------------------------------------------------------------*/
 
@@ -212,7 +212,7 @@ ntinuation without blanks &B ''-'' = Continuation with blanks.'       +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0009                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0009                    */
      /* Unknown continuation character "&1".                        */
      /*-------------------------------------------------------------*/
 
@@ -234,7 +234,7 @@ ntinuation without blanks &B ''-'' = Continuation with blanks.'       +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0010                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0010                    */
      /* Mode for tag &1 not defined.                                */
      /*-------------------------------------------------------------*/
 
@@ -260,7 +260,7 @@ ntinuation without blanks &B ''-'' = Continuation with blanks.'       +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0011                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0011                    */
      /* Record length of source file exceeds maximum.               */
      /*-------------------------------------------------------------*/
 
@@ -290,7 +290,7 @@ cord length of the source file.'                                      +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0012                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0012                    */
      /* Error when opening source file &2/&1, source member &3.     */
      /*-------------------------------------------------------------*/
 
@@ -314,7 +314,7 @@ cord length of the source file.'                                      +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0013                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0013                    */
      /* Error when opening control file &2/&1, member &3.           */
      /*-------------------------------------------------------------*/
 
@@ -338,7 +338,7 @@ cord length of the source file.'                                      +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0014                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0014                    */
      /* Missing creation command.                                   */
      /*-------------------------------------------------------------*/
 
@@ -364,7 +364,7 @@ cord length of the source file.'                                      +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0015                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0015                    */
      /* Error in the creation command. Execution ended in error.    */
      /*-------------------------------------------------------------*/
 
@@ -389,7 +389,7 @@ cord length of the source file.'                                      +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0016                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0016                    */
      /* Parameter 'OBJSRCFILE' not allowed if CHGOBJD(*NO) has been */
      /*-------------------------------------------------------------*/
 
@@ -410,7 +410,7 @@ ed.'                                                                  +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0017                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0017                    */
      /* Parameter 'OBJSRCLIB' not allowed if CHGOBJD(*NO) has been  */
      /*-------------------------------------------------------------*/
 
@@ -431,7 +431,7 @@ d.'                                                                   +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0018                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0018                    */
      /* Parameter 'OBJSRCMBR' not allowed if CHGOBJD(*NO) has been  */
      /*-------------------------------------------------------------*/
 
@@ -452,7 +452,7 @@ d.'                                                                   +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0019                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0019                    */
      /* Parameter 'OBJTYPE' not allowed if CHGOBJD(*NO) has been sp */
      /*-------------------------------------------------------------*/
 
@@ -473,7 +473,7 @@ d.'                                                                   +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0020                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0020                    */
      /* Parameter 'OBJTYPE' must be entered if CHGOBJD(*YES) has be */
      /*-------------------------------------------------------------*/
 
@@ -494,7 +494,7 @@ fied.'                                                                +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0021                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0021                    */
      /* Command CHGOBJDA not found.                                 */
      /*-------------------------------------------------------------*/
 
@@ -514,7 +514,7 @@ fied.'                                                                +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0022                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0022                    */
      /* Execution canceled. See joblog for details.                 */
      /*-------------------------------------------------------------*/
 
@@ -534,7 +534,7 @@ fied.'                                                                +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0023                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0023                    */
      /* Missing value for replacement variable at position &1 of co */
      /*-------------------------------------------------------------*/
 
@@ -561,7 +561,7 @@ ng.'                                                                  +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0024                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0024                    */
      /* No Pre-Compiler instructions found in source file &2/&1, so */
      /*-------------------------------------------------------------*/
 
@@ -586,7 +586,7 @@ r &3.'                                                                +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0025                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0025                    */
      /* Could not open EVFEVENT file in library &1 or job log.      */
      /*-------------------------------------------------------------*/
 
@@ -608,7 +608,7 @@ r &3.'                                                                +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0026                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0026                    */
      /* Could not prepare the event file.                           */
      /*-------------------------------------------------------------*/
 
@@ -628,7 +628,7 @@ r &3.'                                                                +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0027                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0027                    */
      /* When option '*EVENTF' is specified, parameters LIB() and OB */
      /*-------------------------------------------------------------*/
 
@@ -649,7 +649,7 @@ r &3.'                                                                +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0028                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0028                    */
      /* Object creation command not found in member &3 of file &2/& */
      /*-------------------------------------------------------------*/
 
@@ -678,7 +678,7 @@ ags and no creation command had been specified at parameter ''Creation-
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0029                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0029                    */
      /* &1                                                          */
      /*-------------------------------------------------------------*/
 
@@ -700,7 +700,7 @@ ags and no creation command had been specified at parameter ''Creation-
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0030                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0030                    */
      /* Option *ADDJOBLOG can only be used in conjunction with *EVE */
      /*-------------------------------------------------------------*/
 
@@ -722,7 +722,7 @@ ags and no creation command had been specified at parameter ''Creation-
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0031                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0031                    */
      /* Invalid INCLUDE tag found in line &1.                       */
      /*-------------------------------------------------------------*/
 
@@ -748,7 +748,7 @@ e expected format is: &P >>INCLUDE<< [Library]/File Member;'          +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0032                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0032                    */
      /* Nested INCLUDE tag found in line &4 of file &2/&3, member & */
      /*-------------------------------------------------------------*/
 
@@ -776,7 +776,7 @@ e expected format is: &P >>INCLUDE<< [Library]/File Member;'          +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0033                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0033                    */
      /* STRPREPRC: Object created.                                  */
      /*-------------------------------------------------------------*/
 
@@ -796,7 +796,7 @@ e expected format is: &P >>INCLUDE<< [Library]/File Member;'          +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0034                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0034                    */
      /* STRPREPRC: Error message &1 ignored due to MONMSG.          */
      /*-------------------------------------------------------------*/
 
@@ -818,7 +818,7 @@ e expected format is: &P >>INCLUDE<< [Library]/File Member;'          +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0035                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0035                    */
      /* Library &1 not found.                                       */
      /*-------------------------------------------------------------*/
 
@@ -840,7 +840,7 @@ e expected format is: &P >>INCLUDE<< [Library]/File Member;'          +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0036                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0036                    */
      /* File &1 in library &2 not found.                            */
      /*-------------------------------------------------------------*/
 
@@ -863,7 +863,7 @@ e expected format is: &P >>INCLUDE<< [Library]/File Member;'          +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0037                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0037                    */
      /* Member &3 file &1 in library &2 not found.                  */
      /*-------------------------------------------------------------*/
 
@@ -887,7 +887,7 @@ e expected format is: &P >>INCLUDE<< [Library]/File Member;'          +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0038                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0038                    */
      /* The USESRCFILE and USESRCMBR parameters cannot be specified */
      /*-------------------------------------------------------------*/
 
@@ -910,7 +910,7 @@ USESRCSTMF parameter.'                                                +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0039                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0039                    */
      /* Either USESRCFILE and USESRCMBR or USESRCSTMF must be speci */
      /*-------------------------------------------------------------*/
 
@@ -932,7 +932,7 @@ USESRCSTMF parameter.'                                                +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0040                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0040                    */
      /* Value *DFT is not allowed for SRCFILE, SRCLIB and SRCMBR wh */
      /*-------------------------------------------------------------*/
 
@@ -955,7 +955,7 @@ TMF is specified.'                                                    +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0041                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0041                    */
      /* Unable to open file &1.                                     */
      /*-------------------------------------------------------------*/
 
@@ -982,7 +982,7 @@ TMF is specified.'                                                    +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0042                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0042                    */
      /* Record length of IFS source file exceeds maximum.           */
      /*-------------------------------------------------------------*/
 
@@ -1013,7 +1013,7 @@ t file whose record length does not exceed &2 byte. &N File . . . . . -
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0043                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0043                    */
      /* Stream file not found: &1                                   */
      /*-------------------------------------------------------------*/
 
@@ -1035,7 +1035,7 @@ t file whose record length does not exceed &2 byte. &N File . . . . . -
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0044                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0044                    */
      /* Object creation command not found in stream file: &2        */
      /*-------------------------------------------------------------*/
 
@@ -1062,7 +1062,7 @@ t file whose record length does not exceed &2 byte. &N File . . . . . -
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD für Message-ID :   PRZ0045                    */
+     /*   Cmd-ADDMSGD fÃ¼r Message-ID :   PRZ0045                    */
      /* Keine Pre-Compiler Anweisungen in Quellendatei &2           */
      /*-------------------------------------------------------------*/
 

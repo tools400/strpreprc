@@ -22,7 +22,7 @@
 //=====================================================================*
 //  History:                                                           *
 //                                                                     *
-//  Datum       Name          Änderung                                 *
+//  Datum       Name          Ã„nderung                                 *
 //  ----------  ------------  ---------------------------------------  *
 //  26.03.2022  Th.Raddatz    Added stream file support.               *
 //                                                                     *
@@ -383,7 +383,7 @@ dcl-proc IFSSourceStreamFile_open;
   dcl-s errorNbr int(10);
   dcl-s errorText like(cErrorText_t);
 
-  //  ... Datei &1 kann nicht geöffnet werden.
+  //  ... Datei &1 kann nicht geÃ¶ffnet werden.
 /copy QSTRPREPRC,PRZ0041
 
   reset hStmf;
@@ -550,7 +550,7 @@ dcl-proc IFSSourceStreamFile_readLine;
   dcl-ds prvCurrLine likeds(line_t);
   dcl-s i int(10);
 
-  //  ... MSG: Die Datensatzlänge der IFS Datei ist zu lang.
+  //  ... MSG: Die DatensatzlÃ¤nge der IFS Datei ist zu lang.
 /copy QSTRPREPRC,PRZ0042
 
   io_srcDta = '';

@@ -1,6 +1,6 @@
 **free
 //---------------------------------------------------------------
-// Datenstruktur für Message-ID : PRZ0020
+// Datenstruktur fÃ¼r Message-ID : PRZ0020
 
 // Der Parameter 'OBJTYPE' muss angegeben werden, wenn CHGOBJD
 
